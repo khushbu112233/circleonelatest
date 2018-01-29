@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -16,28 +15,21 @@ import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.ActivityHistoryBinding;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
-import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class HistoryActivity extends AppCompatActivity
 {
     LoginSession session;
     String user_id ;
-
     ArrayList<HistoryModel> historyModelArrayList = new ArrayList<>();
     HistoryAdapter historyAdapter ;
     ActivityHistoryBinding activityHistoryBinding;
@@ -63,19 +55,6 @@ public class HistoryActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-    }
-
-
-    @Override
     public void onBackPressed() {
         finish();
     }
@@ -88,10 +67,6 @@ public class HistoryActivity extends AppCompatActivity
         protected void onPreExecute()
         {
             super.onPreExecute();
-           /* dialog = new ProgressDialog(getActivity());
-            dialog.setMessage("Finding Events...");
-            dialog.show();*/
-
             String loading = "History" ;
             CustomProgressDialog(loading, HistoryActivity.this);
         }
@@ -99,16 +74,23 @@ public class HistoryActivity extends AppCompatActivity
         @Override
         protected String doInBackground(String... urls)
         {
-            return HistoryPost(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("UserId",user_id);
+                jsonObject.accumulate("numofrecords", "100");
+                jsonObject.accumulate("pageno", "1" );
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
-        // onPostExecute displays the results of the AsyncTask.
+
         @Override
         protected void onPostExecute(String result)
         {
-            Utility.freeMemory();
-//            dialog.dismiss();
             dismissProgress();
-
             try
             {
                 if(result == "")
@@ -165,64 +147,5 @@ public class HistoryActivity extends AppCompatActivity
                 e.printStackTrace();
             }
         }
-    }
-
-    public  String HistoryPost(String url)
-    {
-        Utility.freeMemory();
-        Utility.freeMemory();
-        InputStream inputStream = null;
-        String result = "";
-        try
-        {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("UserId",user_id);
-            jsonObject.accumulate("numofrecords", "100");
-            jsonObject.accumulate("pageno", "1" );
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
     }
 }

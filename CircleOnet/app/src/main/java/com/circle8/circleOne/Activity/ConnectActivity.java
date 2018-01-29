@@ -21,7 +21,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -43,29 +42,20 @@ import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.ActivityConnect2Binding;
 import com.squareup.picasso.Picasso;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
-import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class ConnectActivity extends AppCompatActivity
 {
-    private static final int PERMISSION_REQUEST_CODE = 200;
-    int left;
-    int right;
     View tvConnectLine2, tvConnectLine1;
     private String tag_id, profile_id, friendProfile_id;
     List<CharSequence> list = new ArrayList<CharSequence>();
@@ -80,8 +70,7 @@ public class ConnectActivity extends AppCompatActivity
     int motionLength = 0;
     int lineWidth = 0 , roundWidth = 0;
     private ArrayList<ConnectProfileModel> connectingTags = new ArrayList<>();
-    private String Mobile1 = "", Mobile2 = "";
-    private String displayProfile;
+    private String Mobile1 = "", Mobile2 = "",displayProfile;
     ActivityConnect2Binding activityConnect2Binding;
     ListView listView1;
     static Activity activity;
@@ -157,43 +146,6 @@ public class ConnectActivity extends AppCompatActivity
             }
         });
 
-/*
-        rlConnect.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-
-            public void onGlobalLayout() {
-                Utility.freeMemory();
-                int height = rlConnect.getHeight();
-                int width = rlConnect.getWidth();
-                left = rlConnect.getLeft();
-                right = rlConnect.getTop();
-                //don't forget to remove the listener to prevent being called again by future layout events:
-                rlConnect.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-            }
-        });
-*/
-
-       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        {
-            Utility.freeMemory();
-            motionLength = 180 ;
-        }
-        else
-        {
-            motionLength = 180 ;
-        }*/
-
-        /*Rect loc = new Rect();
-        int[] location = new int[2];
-        rlConnect.getLocationOnScreen(location);
-
-        loc.left = location[0];
-        loc.top = location[1];
-        loc.right = loc.left + rlConnect.getWidth();
-        loc.bottom = loc.top + rlConnect.getHeight();*/
-
-//        Rect r_connect =
-//        Toast.makeText(getApplicationContext(),"Connect pos: "+rlConnect.getX() +","+rlConnect.getY() ,Toast.LENGTH_LONG).show();
-
         Intent intent = getIntent();
 //        tag_id = intent.getStringExtra("tag_id");
         tag_id = "en100000001";
@@ -213,69 +165,6 @@ public class ConnectActivity extends AppCompatActivity
         {
             new HttpAsyncTask().execute(Utility.BASE_URL+"ConnectProfile");
         }
-
-       /* new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
-        new HttpAsyncTaskGroupsFetch().execute(Utility.BASE_URL+"Group/MyGroupsTaggedWithFriendProfile");
-*/
-
-//        Toast.makeText(getApplicationContext(),"ProfileID & FriendID "+profile_id+" "+friendProfile_id,Toast.LENGTH_LONG).show();
-
-/*
-        if (tag_id.equals("en100000001")){
-            level = "2";
-        }
-        else if (tag_id.equals("en100000002")){
-            level = "3";
-        }
-        else if (tag_id.equals("en100000003")){
-            level = "4";
-        }
-        else if (tag_id.equals("en100000004")){
-            level = "5";
-        }
-        else if (tag_id.equals("en100000005")){
-            level = "6";
-        }
-        else if (tag_id.equals("en100000006")){
-            level = "1";
-        }
-        else if (tag_id.equals("en100000007")){
-            level = "4";
-        }
-        else {
-            level = "6";
-        }*/
-      /*  final List<NFCModel> modelList = db.getNFCbyTag(tag_id);
-        try
-        {
-            if (modelList != null)
-            {
-                for (NFCModel tag1 : modelList)
-                {
-                    // Toast.makeText(getApplicationContext(), tag1.getName(), Toast.LENGTH_LONG).show();
-
-                    //Bitmap bmp = BitmapFactory.decodeByteArray(tag1.getCard_front(), 0, tag1.getCard_front().length);
-                   // imgCard.setImageResource(tag1.getCard_front());
-
-                    //  Bitmap bmp1 = BitmapFactory.decodeByteArray(tag1.getUser_image(), 0, tag1.getUser_image().length);
-//                    ivProfileImage.setImageResource(tag1.getUser_image());
-//                    profile = tag1.getUser_image();
-                    tvPersonName.setText(tag1.getName());
-                    tvCompanyName.setText(tag1.getCompany());
-                    txtWeb.setText(tag1.getWebsite());
-                    txtMail.setText(tag1.getEmail());
-                    txtNum.setText(tag1.getPh_no());
-                   // txtWork.setText(tag1.getWork_no());
-                    txtMob.setText(tag1.getMob_no());
-                    tvPersonDesignation.setText(tag1.getDesignation());
-                }
-            }
-
-        }
-        catch (Exception e){  }*/
-
-//        int x_left = rlConnect.getLeft();
-//        Toast.makeText(getApplicationContext(),"From Left: "+x_left, Toast.LENGTH_SHORT).show();
 
         activityConnect2Binding.ivConnectImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -313,9 +202,7 @@ public class ConnectActivity extends AppCompatActivity
                     }
                 });
 
-               /* WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
-                wmlp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
-                wmlp.y = 300;*/   //y position
+
                 dialog.show();
             }
         });
@@ -356,12 +243,7 @@ public class ConnectActivity extends AppCompatActivity
             }
         });
 
-      /*  boolean result = Utility.checkContactPermission(ConnectActivity.this);
-        if (result)
-        {
-            contactExists(getApplicationContext(), "+91 ");
-        }
-*/
+
         activityConnect2Binding.rlConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -439,29 +321,11 @@ public class ConnectActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
-               /* Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 1);
-                startActivity(go);*/
+
                 finish();
             }
         });
 
-//        imgConnecting.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent go = new Intent(getApplicationContext(),Connect3Activity.class);
-//
-//                // you pass the position you want the viewpager to show in the extra,
-//                // please don't forget to define and initialize the position variable
-//                // properly
-//
-//                startActivity(go);
-//                finish();
-//            }
-//        });
 
         activityConnect2Binding.imgAddGroupFriend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -556,65 +420,6 @@ public class ConnectActivity extends AppCompatActivity
         return loc;
     }
 
-    public String POSTRequest(String url) {
-        Utility.freeMemory();
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("Operation", "Request");
-            jsonObject.accumulate("RequestType", "");
-            jsonObject.accumulate("connection_date", Utility.currentDate());
-            jsonObject.accumulate("friendProfileId", friendProfile_id);
-            jsonObject.accumulate("myProfileId", profile_id);
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
-
     private class HttpAsyncAddFriendTask extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -622,13 +427,6 @@ public class ConnectActivity extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           /* dialog = new ProgressDialog(ConnectActivity.this);
-            dialog.setMessage("Requesting Friend...");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
 
             String loading = "Requesting friend" ;
             CustomProgressDialog(loading, ConnectActivity.this);
@@ -636,7 +434,18 @@ public class ConnectActivity extends AppCompatActivity
 
         @Override
         protected String doInBackground(String... urls) {
-            return POSTRequest(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("Operation", "Request");
+                jsonObject.accumulate("RequestType", "");
+                jsonObject.accumulate("connection_date", Utility.currentDate());
+                jsonObject.accumulate("friendProfileId", friendProfile_id);
+                jsonObject.accumulate("myProfileId", profile_id);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return POST2(urls[0],jsonObject);
         }
 
         // onPostExecute displays the results of the AsyncTask.
@@ -673,8 +482,6 @@ public class ConnectActivity extends AppCompatActivity
             }
         }
     }
-
-
     public boolean contactExists(Context context, String number) {
         Utility.freeMemory();
 /// number is the phone number
@@ -708,9 +515,7 @@ public class ConnectActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
-
         activityConnect2Binding.ivConnectImg.setVisibility(View.VISIBLE);
-        //new HttpAsyncTask().execute(Utility.BASE_URL+"ConnectProfile");
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
@@ -720,13 +525,6 @@ public class ConnectActivity extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           /* dialog = new ProgressDialog(ConnectActivity.this);
-            dialog.setMessage("Displaying Records...");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
 
             String loading = "Displaying records" ;
             CustomProgressDialog(loading, ConnectActivity.this);
@@ -735,7 +533,14 @@ public class ConnectActivity extends AppCompatActivity
         @Override
         protected String doInBackground(String... urls)
         {
-            return POST(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("friendprofileID", friendProfile_id );
+                jsonObject.accumulate("myprofileID", profile_id);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return POST2(urls[0],jsonObject);
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
@@ -966,86 +771,28 @@ public class ConnectActivity extends AppCompatActivity
         }
     }
 
-
-    public  String POST(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try
-        {
-            Utility.freeMemory();
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("friendprofileID", friendProfile_id );
-            jsonObject.accumulate("myprofileID", profile_id);
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
-
     private class HttpAsyncTaskGroupAddFriend extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            /*dialog = new ProgressDialog(ConnectActivity.this);
-            dialog.setMessage("Adding Friend...");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
-
             String loading = "Adding friend" ;
             CustomProgressDialog(loading, ConnectActivity.this);
         }
 
         @Override
         protected String doInBackground(String... urls) {
-            return GroupAddFriendPost(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("GroupIDs", selectedStrings1);
+                jsonObject.accumulate("ProfileId", friendProfile_id);
+                jsonObject.accumulate("UserId", user_id);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return POST2(urls[0],jsonObject);
         }
 
         // onPostExecute displays the results of the AsyncTask.
@@ -1077,62 +824,6 @@ public class ConnectActivity extends AppCompatActivity
         }
     }
 
-    public String GroupAddFriendPost(String url) {
-        Utility.freeMemory();
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("GroupIDs", selectedStrings1);
-            jsonObject.accumulate("ProfileId", friendProfile_id);
-            jsonObject.accumulate("UserId", user_id);
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
     private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -1141,10 +832,6 @@ public class ConnectActivity extends AppCompatActivity
         protected void onPreExecute()
         {
             super.onPreExecute();
-           /* dialog = new ProgressDialog(ConnectActivity.this);
-            dialog.setMessage("Fetching Circles...");
-            dialog.show();
-            dialog.setCancelable(false);*/
 
             String loading = "Fetching data" ;
             CustomProgressDialog(loading, ConnectActivity.this);
@@ -1152,7 +839,15 @@ public class ConnectActivity extends AppCompatActivity
 
         @Override
         protected String doInBackground(String... urls) {
-            return GroupFetchPost(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("UserId", user_id);
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return POST2(urls[0],jsonObject);
         }
 
         // onPostExecute displays the results of the AsyncTask.
@@ -1201,63 +896,6 @@ public class ConnectActivity extends AppCompatActivity
             }
         }
     }
-
-    public String GroupFetchPost(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try
-        {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("UserId", user_id);
-            jsonObject.accumulate("numofrecords", "10");
-            jsonObject.accumulate("pageno", "1");
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
     private class HttpAsyncTaskGroupsFetch extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -1265,17 +903,24 @@ public class ConnectActivity extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-          /*  dialog = new ProgressDialog(CardDetail.this);
-            dialog.setMessage("Fetching My Account...");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
+
         }
 
         @Override
         protected String doInBackground(String... urls)
         {
-            return FetchGroupDataPost(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("ProfileId", friendProfile_id);
+                jsonObject.accumulate("UserId", user_id );
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1" );
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
@@ -1333,9 +978,6 @@ public class ConnectActivity extends AppCompatActivity
                         {
                             activityConnect2Binding.tvAddedGroupInfo.setVisibility(View.GONE);
                         }
-                            /*GroupsInCardDetailAdapter groupsInCardDetailAdapter = new GroupsInCardDetailAdapter(CardDetail.this, img,name,desc);
-                            groupListView.setAdapter(groupsInCardDetailAdapter);
-                            groupsInCardDetailAdapter.notifyDataSetChanged();*/
 
                         GroupsRecyclerAdapter groupsRecyclerAdapter = new GroupsRecyclerAdapter(ConnectActivity.this, img, name, desc);
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -1349,71 +991,9 @@ public class ConnectActivity extends AppCompatActivity
                 {
                     Toast.makeText(getBaseContext(), "Not able to fetch circles..", Toast.LENGTH_LONG).show();
                 }
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         }
     }
-
-    public  String FetchGroupDataPost(String url)
-    {
-        Utility.freeMemory();
-        InputStream inputStream = null;
-        String result = "";
-        try
-        {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("ProfileId", friendProfile_id);
-            jsonObject.accumulate("UserId", user_id );
-            jsonObject.accumulate("numofrecords", "10");
-            jsonObject.accumulate("pageno", "1" );
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
 }

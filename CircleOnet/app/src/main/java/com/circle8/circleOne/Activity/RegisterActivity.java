@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,7 +16,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Typeface;
-import android.hardware.fingerprint.FingerprintManager;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -55,14 +53,11 @@ import com.circle8.circleOne.MultiContactPicker;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.AsyncRequest;
 import com.circle8.circleOne.Utils.Pref;
-import com.circle8.circleOne.Utils.PrefUtils;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.chat.ChatHelper;
 import com.circle8.circleOne.databinding.ActivityRegisterBinding;
-import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
 import com.hbb20.CountryCodePicker;
-import com.linkedin.platform.LISessionManager;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.core.helper.StringifyArrayList;
@@ -80,7 +75,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -119,10 +113,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.crypto.Cipher;
-
 import static com.circle8.circleOne.Activity.LoginActivity.pushToken;
-import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
+import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 import static com.circle8.circleOne.Utils.Validation.validate;
@@ -1037,291 +1029,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         //  Upload();
         activityRegisterBinding.imgProfileCard.setImageBitmap(thumbnail);
 
-/*
-        try
-        {
-            ei = new ExifInterface(String.valueOf(targetUri));
-            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
-
-            switch (orientation)
-            {
-                case ExifInterface.ORIENTATION_ROTATE_90:
-                    rotatedBitmap = rotateImage(thumbnail, 90);
-                    activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
-                    final_ImgBase64 = BitMapToString(rotatedBitmap);
-                    Upload();
-                    break;
-
-                case ExifInterface.ORIENTATION_ROTATE_180:
-                    rotatedBitmap = rotateImage(thumbnail, 180);
-                    activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
-                    final_ImgBase64 = BitMapToString(rotatedBitmap);
-                    Upload();
-                    break;
-
-                case ExifInterface.ORIENTATION_ROTATE_270:
-                    rotatedBitmap = rotateImage(thumbnail, 270);
-                    activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
-                    final_ImgBase64 = BitMapToString(rotatedBitmap);
-                    Upload();
-                    break;
-
-                case ExifInterface.ORIENTATION_NORMAL:
-                    rotatedBitmap = thumbnail;
-                    activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
-                    final_ImgBase64 = BitMapToString(rotatedBitmap);
-                    Upload();
-                    break;
-
-                default:
-                    rotatedBitmap = thumbnail;
-                    activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
-                    final_ImgBase64 = BitMapToString(rotatedBitmap);
-                    Upload();
-                    break;
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-*/
-    }
-
-    public String POST(String url) {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-            String date_DOB = "";
-            if (activityRegisterBinding.etDD.getText().toString().equals("") || activityRegisterBinding.etMM.getText().toString().equals("") || activityRegisterBinding.etYYYY.getText().toString().equals("")){
-                date_DOB = "";
-            }
-            else {
-                date_DOB = activityRegisterBinding.etDD.getText().toString() + "/" + activityRegisterBinding.etMM.getText().toString() + "/" + activityRegisterBinding.etYYYY.getText().toString();
-            }
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("Facebook", Facebook);
-            jsonObject.accumulate("FirstName", first_name);
-            jsonObject.accumulate("Gender", gender);
-            jsonObject.accumulate("Google", Google);
-            jsonObject.accumulate("LastName", last_name);
-            jsonObject.accumulate("Linkedin", Linkedin);
-            jsonObject.accumulate("Password", password);
-            jsonObject.accumulate("Phone", phone_no);
-            jsonObject.accumulate("Photo_String", register_img);
-            jsonObject.accumulate("Platform", "Android");
-            jsonObject.accumulate("ReferralCode", refferelCode);
-            jsonObject.accumulate("Token", pushToken);
-            jsonObject.accumulate("Twitter", Twitter);
-            jsonObject.accumulate("UserName", email);
-            jsonObject.accumulate("dob", date_DOB);
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
-    public String POST1(String url) {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("ImgBase64", final_ImgBase64);
-            jsonObject.accumulate("classification", "userphoto");
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
-    public String POSTQ_ID(String url) {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("Q_ID", Q_ID);
-            jsonObject.accumulate("UserId", UserID);
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
-    public String POSTLogin(String url) {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("Password", password);
-            jsonObject.accumulate("Platform", "Android");
-            jsonObject.accumulate("Token", pushToken);
-            jsonObject.accumulate("UserName", email);
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
     }
 
 
@@ -1343,7 +1050,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         protected String doInBackground(String... urls) {
-            return POSTLogin(urls[0]);
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("Password", password);
+                jsonObject.accumulate("Platform", "Android");
+                jsonObject.accumulate("Token", pushToken);
+                jsonObject.accumulate("UserName", email);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return POST2(urls[0],jsonObject);
         }
 
         // onPostExecute displays the results of the AsyncTask.
@@ -1766,7 +1484,37 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         protected String doInBackground(String... urls) {
-            return POST(urls[0]);
+            String date_DOB = "";
+            if (activityRegisterBinding.etDD.getText().toString().equals("") || activityRegisterBinding.etMM.getText().toString().equals("") || activityRegisterBinding.etYYYY.getText().toString().equals("")){
+                date_DOB = "";
+            }
+            else {
+                date_DOB = activityRegisterBinding.etDD.getText().toString() + "/" + activityRegisterBinding.etMM.getText().toString() + "/" + activityRegisterBinding.etYYYY.getText().toString();
+            }
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("Facebook", Facebook);
+                jsonObject.accumulate("FirstName", first_name);
+                jsonObject.accumulate("Gender", gender);
+                jsonObject.accumulate("Google", Google);
+                jsonObject.accumulate("LastName", last_name);
+                jsonObject.accumulate("Linkedin", Linkedin);
+                jsonObject.accumulate("Password", password);
+                jsonObject.accumulate("Phone", phone_no);
+                jsonObject.accumulate("Photo_String", register_img);
+                jsonObject.accumulate("Platform", "Android");
+                jsonObject.accumulate("ReferralCode", refferelCode);
+                jsonObject.accumulate("Token", pushToken);
+                jsonObject.accumulate("Twitter", Twitter);
+                jsonObject.accumulate("UserName", email);
+                jsonObject.accumulate("dob", date_DOB);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
 
         // onPostExecute displays the results of the AsyncTask.
@@ -1865,7 +1613,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         protected String doInBackground(String... urls) {
-            return POST2(urls[0]);
+            return POSTGET(urls[0]);
         }
 
         // onPostExecute displays the results of the AsyncTask.
@@ -1881,31 +1629,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    public String POST2(String url) {
+    public String POSTGET(String url) {
         InputStream inputStream = null;
         String result = "";
         try {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
             HttpGet httpPost = new HttpGet(url);
-
-            // 6. set httpPost Entity
-            //   httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
             HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
             if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
@@ -1949,7 +1683,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         protected String doInBackground(String... urls) {
-            return POST1(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("ImgBase64", final_ImgBase64);
+                jsonObject.accumulate("classification", "userphoto");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
 
         // onPostExecute displays the results of the AsyncTask.
@@ -2006,7 +1749,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         protected String doInBackground(String... urls) {
-            return POSTQ_ID(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("Q_ID", Q_ID);
+                jsonObject.accumulate("UserId", UserID);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
 
         // onPostExecute displays the results of the AsyncTask.
@@ -2121,7 +1873,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 httpPost.setHeader("Content-type", "application/json");
 //                httpPost.setHeader(HTTP.CONTENT_TYPE, "application/json");
 
-                //Post Data
                 List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(5);
                 nameValuePair.add(new BasicNameValuePair("CompanyName", company_name));
                 nameValuePair.add(new BasicNameValuePair("FName", first_name));
@@ -2130,7 +1881,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 nameValuePair.add(new BasicNameValuePair("Pwd", password));
                 nameValuePair.add(new BasicNameValuePair("UserName", user_name));
 
-                //Encoding POST data
                 try {
                     httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
                 } catch (UnsupportedEncodingException e) {

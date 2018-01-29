@@ -62,6 +62,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static com.circle8.circleOne.Activity.CardsActivity.Connection_Limit;
+import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class List2Fragment extends Fragment
@@ -433,7 +434,20 @@ public class List2Fragment extends Fragment
 
         @Override
         protected String doInBackground(String... urls) {
-            return POSTSearch(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("FindBy", "NAME");
+                jsonObject.accumulate("Search", fragmentList2Binding.searchView.getText().toString());
+                jsonObject.accumulate("SearchType", "Local" );
+                jsonObject.accumulate("UserID", UserId);
+                jsonObject.accumulate("numofrecords", "30");
+                jsonObject.accumulate("pageno", "1");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
 
         // onPostExecute displays the results of the AsyncTask.
@@ -542,7 +556,7 @@ public class List2Fragment extends Fragment
             gridAdapter.notifyDataSetChanged();
         } catch (Exception e) {
         }
-       // CallApi();
+        // CallApi();
         new HttpAsyncTask().execute(Utility.BASE_URL+SortFragment.CardListApi);
     }
     private ArrayList<ImageItem> getData() {
@@ -587,7 +601,42 @@ public class List2Fragment extends Fragment
 
         @Override
         protected String doInBackground(String... urls) {
-            return POST(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+
+                if (SortFragment.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
+                    jsonObject.accumulate("Type", SortFragment.SortType);
+                    jsonObject.accumulate("numofrecords", "10");
+                    jsonObject.accumulate("pageno", pageno);
+                    jsonObject.accumulate("userid", UserId);
+                }
+                else if (SortFragment.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
+                    jsonObject.accumulate("ProfileID", SortFragment.ProfileArrayId);
+                    jsonObject.accumulate("Type", SortFragment.SortType);
+                    jsonObject.accumulate("numofrecords", "10");
+//            jsonObject.accumulate("pageno", pageno);
+                    jsonObject.accumulate("pageno", pageno);
+                }
+                else if (SortFragment.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
+                    jsonObject.accumulate("group_ID", SortFragment.groupId);
+                    jsonObject.accumulate("profileId", SortFragment.ProfileArrayId);
+                    jsonObject.accumulate("numofrecords", "10");
+//            jsonObject.accumulate("pageno", pageno);
+                    jsonObject.accumulate("pageno", pageno);
+                }
+                else if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")) {
+                    jsonObject.accumulate("FindBy", SortFragment.FindBY );
+                    jsonObject.accumulate("Search", SortFragment.Search );
+                    jsonObject.accumulate("SearchType", "Local" );
+                    jsonObject.accumulate("UserID", UserId );
+                    jsonObject.accumulate("numofrecords", "100" );
+                    jsonObject.accumulate("pageno", "1" );
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return POST2(urls[0],jsonObject);
         }
 
         // onPostExecute displays the results of the AsyncTask.
@@ -664,8 +713,8 @@ public class List2Fragment extends Fragment
                                     if (fragmentList2Binding.gridView.getLastVisiblePosition() >= count - threshold) {
                                         // rlLoadMore.setVisibility(View.VISIBLE);
                                         // Execute LoadMoreDataTask AsyncTask
-                                      // CallApi();
-                                         new HttpAsyncTask().execute(Utility.BASE_URL+SortFragment.CardListApi);
+                                        // CallApi();
+                                        new HttpAsyncTask().execute(Utility.BASE_URL+SortFragment.CardListApi);
                                     }
                                 } else {
 
@@ -688,149 +737,6 @@ public class List2Fragment extends Fragment
         }
     }
 
-    public String POSTSearch(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try
-        {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("FindBy", "NAME");
-            jsonObject.accumulate("Search", fragmentList2Binding.searchView.getText().toString());
-            jsonObject.accumulate("SearchType", "Local" );
-            jsonObject.accumulate("UserID", UserId);
-            jsonObject.accumulate("numofrecords", "30");
-            jsonObject.accumulate("pageno", "1");
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
-    public static String POST(String url) {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-
-            if (SortFragment.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
-
-                jsonObject.accumulate("Type", SortFragment.SortType);
-                jsonObject.accumulate("numofrecords", "10");
-                jsonObject.accumulate("pageno", pageno);
-                jsonObject.accumulate("userid", UserId);
-            }
-            else if (SortFragment.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
-                jsonObject.accumulate("ProfileID", SortFragment.ProfileArrayId);
-                jsonObject.accumulate("Type", SortFragment.SortType);
-                jsonObject.accumulate("numofrecords", "10");
-//            jsonObject.accumulate("pageno", pageno);
-                jsonObject.accumulate("pageno", pageno);
-            }
-            else if (SortFragment.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
-                jsonObject.accumulate("group_ID", SortFragment.groupId);
-                jsonObject.accumulate("profileId", SortFragment.ProfileArrayId);
-                jsonObject.accumulate("numofrecords", "10");
-//            jsonObject.accumulate("pageno", pageno);
-                jsonObject.accumulate("pageno", pageno);
-            }
-            else if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")) {
-                jsonObject.accumulate("FindBy", SortFragment.FindBY );
-                jsonObject.accumulate("Search", SortFragment.Search );
-                jsonObject.accumulate("SearchType", "Local" );
-                jsonObject.accumulate("UserID", UserId );
-                jsonObject.accumulate("numofrecords", "100" );
-                jsonObject.accumulate("pageno", "1" );
-
-            }
-
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-        pageno++;
-        // 11. return result
-        return result;
-    }
     public static void GetData(Context context)
     {
         //newly added

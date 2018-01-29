@@ -1,15 +1,13 @@
 package com.circle8.circleOne.Activity;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.TouchImageView;
-import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
 
 public class ImageZoom extends AppCompatActivity {
@@ -18,13 +16,10 @@ public class ImageZoom extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_zoom);
-
         Intent intent = getIntent();
         String displayProfile = intent.getStringExtra("displayProfile");
         TouchImageView img = (TouchImageView) findViewById(R.id.imgTouch);
         ImageView imgBack = (ImageView) findViewById(R.id.imgBack);
-        Utility.freeMemory();
-      //  img.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         if (displayProfile.equals(""))
         {
             img.setImageResource(R.drawable.usr_1);
@@ -33,32 +28,12 @@ public class ImageZoom extends AppCompatActivity {
         {
             Picasso.with(getApplicationContext()).load(displayProfile).resize(500,500).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(img);
         }
-
-
-       // img.setImageResource(R.drawable.walkthrough_1);
         img.setMaxZoom(4f);
-       // setContentView(img);
-
-
-        imgBack.setOnClickListener(new View.OnClickListener() {
+       imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
     }
-
-    @Override
-    protected void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-    }
-
-
-}
+ }

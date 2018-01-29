@@ -160,9 +160,6 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
         activityCardDetailBinding = DataBindingUtil.inflate(
                 inflater, R.layout.activity_card_detail, container, false);
         view = activityCardDetailBinding.getRoot();
-        Utility.freeMemory();
-        Utility.deleteCache(getActivity());
-        Log.e("act","click");
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         referralCodeSession = new ReferralCodeSession(getActivity());
         loginSession = new LoginSession(getActivity());
@@ -214,16 +211,11 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
             e.printStackTrace();
         }
 
-//        Toast.makeText(getApplicationContext(), DateInitiated.toString(),Toast.LENGTH_SHORT).show();
-
-
         activityCardDetailBinding.includeLayoutDetails.tvDateInitiated.setText(DateInitiated);
 
         allTaggs = new ArrayList<>();
 
         if (netCheck == false) {
-            Utility.freeMemory();
-            Utility.deleteCache(getActivity());
             Toast.makeText(getActivity(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
         } else {
 
@@ -319,7 +311,6 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
         activityCardDetailBinding.includeLayoutSocial.imgMail.setOnClickListener(this);
         activityCardDetailBinding.includeLayoutSocial.imgSMS.setOnClickListener(this);
         activityCardDetailBinding.includeLayoutSocial.imgCall.setOnClickListener(this);
-
 
         return view;
     }
@@ -529,11 +520,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                                         Intent it = new Intent(Intent.ACTION_SENDTO, uri);
                                         it.putExtra("sms_body", "");
                                         startActivity(it);
-                       /* Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                        smsIntent.setType("vnd.android-dir/mms-sms");
-                        smsIntent.putExtra("address", txtMob.getText().toString());
-                        smsIntent.putExtra("sms_body", "");
-                        startActivity(smsIntent);*/
+
                                     }
                                 }
                             }
@@ -990,17 +977,17 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
             addresses = geocoder.getFromLocation(latitude,longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
             if (addresses != null) {
                 try {
-                   // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
+                    // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
                     return addresses.get(0);
                 }
                 catch (Exception e){
                     activityCardDetailBinding.includeLayoutDetails.lnrNfcLocation.setVisibility(View.GONE);
-                   // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
+                    // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
                 }
             }
             else {
                 activityCardDetailBinding.includeLayoutDetails.lnrNfcLocation.setVisibility(View.GONE);
-               // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
+                // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
 
             }
 
@@ -1058,67 +1045,10 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
             }
         }
         else {
-          //  activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
+            //  activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
 
         }
     }
-
-    /*public String POST2(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try
-        {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("ProfileId", profile_id);
-            jsonObject.accumulate("numofrecords", "10" );
-            jsonObject.accumulate("pageno", "1" );
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }*/
 
     @Override
     public void onDialogCreated(QBChatDialog chatDialog) {
@@ -1244,117 +1174,6 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
         }
         return cnt;
     }
-
-   /* public String POST4(String url) {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("UserId", user_id);
-            jsonObject.accumulate("numofrecords", "10");
-            jsonObject.accumulate("pageno", "1");
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-*/
-    /*public String POST5(String url) {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("GroupIDs", selectedStrings);
-            jsonObject.accumulate("ProfileId", profile_id);
-            jsonObject.accumulate("UserId", user_id);
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-*/
-
 
     private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String>
     {
@@ -1502,15 +1321,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           /* dialog = new ProgressDialog(getActivity());
-            dialog.setMessage("Fetching Cards...");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
-
-            String loading = "Fetching profile" ;
+                    String loading = "Fetching profile" ;
             CustomProgressDialog(loading,getActivity());
         }
 
@@ -1593,7 +1404,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                     }
                     else {
 //                        imgChat.setVisibility(View.VISIBLE);
-                       // activityCardDetailBinding.tvSendMessage.setVisibility(View.VISIBLE);
+                        // activityCardDetailBinding.tvSendMessage.setVisibility(View.VISIBLE);
 
                         activityCardDetailBinding.tvSendMessage.setVisibility(View.GONE);
                         occupant_id = Integer.parseInt(Q_ID);
@@ -1612,14 +1423,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
 
                             @Override
                             public void onError(QBResponseException e) {
-                      /*  showErrorSnackbar(R.string.select_users_get_users_error, e,
-                                new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        loadUsersFromQb();
-                                    }
-                                });
-                        progressBar.setVisibility(View.GONE);*/
+
                             }
                         });
 
@@ -1698,19 +1502,6 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                         activityCardDetailBinding.includeLayoutSocial.linkedInUrl.setImageResource(R.drawable.icon_linkedin);
                         activityCardDetailBinding.includeLayoutSocial.linkedInUrl.setEnabled(true);
                     }
-
-
-//                        txtName.setText(jsonObject.getString("FirstName")+" "+jsonObject.getString("LastName"));
-//                        txtDesi.setText(jsonObject.getString("Designation"));
-//                        txtCompany.setText(jsonObject.getString("CompanyName"));
-//                        txtEmail.setText(jsonObject.getString("Emailid"));
-//                        txtMob.setText(jsonObject.getString("PrimaryPhone"));
-//                        txtPH.setText(jsonObject.getString("OfficePhone"));
-                        /*txtAddress.setText(jsonObject.getString("Address1") + " " + jsonObject.getString("Address2")
-                            + " " + jsonObject.getString("Address3") + " " + jsonObject.getString("Address4")
-                            + " " + jsonObject.getString("City")  + " " + jsonObject.getString("State")
-                            + " " + jsonObject.getString("Country") + " " + jsonObject.getString("Postalcode"));*/
-//                    txtWebsite.setText(jsonObject.getString("Website"));
 
                     personName = jsonObject.getString("FirstName") + " " + jsonObject.getString("LastName");
 
@@ -1887,23 +1678,6 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                         GeocodingLocation locationAddress1 = new GeocodingLocation();
                         locationAddress1.getAddressFromLocation(personAddress, getActivity(), new GeocoderHandler());
                     }
-
-                        /*FriendConnection nfcModelTag = new FriendConnection();
-                        nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));
-                        nfcModelTag.setCompany(object.getString("CompanyName"));
-                        nfcModelTag.setEmail(object.getString("UserName"));
-                        nfcModelTag.setWebsite("");
-                        nfcModelTag.setMob_no(object.getString("Phone"));
-                        nfcModelTag.setDesignation(object.getString("Designation"));
-                        nfcModelTag.setCard_front(object.getString("Card_Front"));
-                        nfcModelTag.setCard_back(object.getString("Card_Back"));
-                        nfcModelTag.setUser_image(object.getString("UserPhoto"));
-                        nfcModelTag.setProfile_id(object.getString("ProfileId"));
-
-                        nfcModelTag.setNfc_tag("en000000001");
-                        allTags.add(nfcModelTag);*/
-//                        GetData(getContext());
-
                 } else {
                     Toast.makeText(getActivity(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
@@ -1936,16 +1710,16 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                         Double Longitude = bundle.getDouble("longitude");
 
                         createMarker(Latitude,Longitude);
-                     //   activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
+                        //   activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
                     }
                     else {
 //                        Toast.makeText(getActivity(),msg,Toast.LENGTH_LONG).show();
                         if (locationAddress.contains(",")) {
                             createMarker1(locationAddress.split(",")[1]);
-                           // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
+                            // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
                         }else
                         {
-                           // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
+                            // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
                         }
                     }
                     break;
@@ -1953,63 +1727,8 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                     locationAddress = null;
                     latLang = null ;
             }
-//            tvLatLang.setText(latLang+" of "+locationAddress);
         }
     }
-
-   /* public String POST(String url) {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("profileid", profile_id);
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-*/
 
     @Override
     public void onResume() {
@@ -2036,11 +1755,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-          /*  dialog = new ProgressDialog(getActivity());
-            dialog.setMessage("Fetching My Account...");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
+
         }
 
         @Override
@@ -2115,10 +1830,6 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                         {
                             activityCardDetailBinding.includeLayoutDetails.tvAddedGroupInfo.setVisibility(View.GONE);
                         }
-                            /*GroupsInCardDetailAdapter groupsInCardDetailAdapter = new GroupsInCardDetailAdapter(getActivity(), img,name,desc);
-                            groupListView.setAdapter(groupsInCardDetailAdapter);
-                            groupsInCardDetailAdapter.notifyDataSetChanged();*/
-
                         GroupsRecyclerAdapter groupsRecyclerAdapter = new GroupsRecyclerAdapter(getActivity(), img, name, desc);
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                         activityCardDetailBinding.includeLayoutDetails.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true));
@@ -2135,65 +1846,6 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         }
     }
-
- /*   public  String FetchGroupDataPost(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try
-        {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("ProfileId", profile_id);
-            jsonObject.accumulate("UserId", user_id );
-            jsonObject.accumulate("numofrecords", "10");
-            jsonObject.accumulate("pageno", "1" );
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }*/
 }

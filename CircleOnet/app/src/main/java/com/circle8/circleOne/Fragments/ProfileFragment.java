@@ -42,6 +42,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
@@ -64,27 +65,18 @@ import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.FragmentProfileBinding;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginResult;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.squareup.picasso.Picasso;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.InputStream;
+
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -93,6 +85,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -100,18 +93,15 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import retrofit.http.HEAD;
-
 import static android.graphics.Color.WHITE;
 import static com.circle8.circleOne.Utils.Utility.POST2;
-import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static com.circle8.circleOne.Utils.Utility.mergeBitmaps;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener
 {
     static Bitmap bitmapQR,overlay;
     static ProgressDialog progressDialog ;
-    static ArrayList<String> profile_array, NameArray, DesignationArray, profileImage_array;
+    static ArrayList<String> profile_array,profileImage_array;
     private static LoginSession session;
     public static ArrayList<ProfileModel> allTags ;
     static JSONArray array, arrayEvents,jsonArray;
@@ -144,8 +134,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
     {
         Utility.freeMemory();
         super.onCreate(savedInstanceState);
-        //   FacebookSdk.sdkInitialize(getContext());
-
+        FacebookSdk.sdkInitialize(getContext());
     }
 
     @Override
@@ -167,10 +156,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
         mContext =getActivity();
         allTaggs = new ArrayList<>();
+
         profileSession = new ProfileSession(getContext());
         session = new LoginSession(getContext());
         progressDialog = new ProgressDialog(getActivity());
         referralCodeSession = new ReferralCodeSession(getContext());
+
+        HashMap<String, String> referral = referralCodeSession.getReferralDetails();
+        refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
+
 
         SpannableString ss = new SpannableString("Ask your friends to write a Testimonial for you(100 words or less),Please choose from your CircleOne contacts and send a request.");
         ClickableSpan clickableSpan = new ClickableSpan() {
@@ -713,10 +707,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         protected String doInBackground(String... urls)
         {
             allTags = new ArrayList<>();
-            HashMap<String, String> referral = referralCodeSession.getReferralDetails();
-            try {
-                refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
-            }catch (Exception e){}
+
             HashMap<String, String> profile = profileSession.getProfileDetails();
             profileIndex = Integer.parseInt(profile.get(ProfileSession.KEY_PROFILE_INDEX));
 
@@ -740,25 +731,21 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         @Override
         protected void onPostExecute(String result)
         {
-
             fragmentProfileBinding.rlProgressDialog.setVisibility(View.GONE);
             try
             {
-
                 if (result != null)
                 {
                     JSONObject jsonObject = new JSONObject(result);
                     jsonArray = jsonObject.getJSONArray("Profiles");
-                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                     profile_array = new ArrayList<String>();
                     profileImage_array = new ArrayList<>();
-                    NameArray = new ArrayList<>();
-                    DesignationArray = new ArrayList<>();
                     listAssociation = new ArrayList<>();
+                    image = new ArrayList<>();
                     for (int i = 0; i < jsonArray.length(); i++)
                     {
+
                         JSONObject object = jsonArray.getJSONObject(i);
-                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
                         if (object.getString("ProfileName").toString().equals("")){
                             profile_array.add(object.getString("FirstName") + " " + object.getString("LastName"));
                         }
@@ -767,10 +754,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                         }
 
                         profileImage_array.add(object.getString("UserPhoto"));
-
-                        NameArray.add(object.getString("FirstName") + " " + object.getString("LastName"));
-                        DesignationArray.add(object.getString("Designation"));
-
                         nfcModelTag = new ProfileModel();
                         nfcModelTag.setUserID(object.getString("UserID"));
                         nfcModelTag.setFirstName(object.getString("FirstName"));
@@ -811,46 +794,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                         allTags.add(nfcModelTag);
 
                     }
-
-                    profile_array.add("Add New Profile");
-                    profileImage_array.add("");
-
-                    try {
-                        displayProfile = allTags.get(profileIndex).getUserPhoto();
-                    }catch (Exception e){
-                        profileSession.createProfileSession("0");
-                        profileIndex = 0;
-                        displayProfile = allTags.get(profileIndex).getUserPhoto();
-                    }
-
-                    TestimonialProfileId = allTags.get(profileIndex).getProfileID();
-                    personName = allTags.get(profileIndex).getFirstName() + " "+ allTags.get(profileIndex).getLastName() ;
-                    if(personName.equalsIgnoreCase("") || personName.equalsIgnoreCase("null"))
-                    {
-                        fragmentProfileBinding.includeFrame2.tvPersonName.setVisibility(View.GONE);
-                        fragmentProfileBinding.llNameBox.setVisibility(View.GONE);
-                    }
-                    else
-                    {
-                        fragmentProfileBinding.tvName.setText(personName);
-                        fragmentProfileBinding.includeFrame2.tvPersonName.setText(personName);
-                    }
-
-                    fragmentProfileBinding.tvProfileName.setText(allTags.get(profileIndex).getProfile());
-
-                    if (allTags.get(profileIndex).getAttachment_FileName().toString().equals("") || allTags.get(profileIndex).getAttachment_FileName().toString() == null ||
-                            allTags.get(profileIndex).getAttachment_FileName().toString().equals("null")) {
-
-                        fragmentProfileBinding.txtAttachment.setVisibility(View.GONE);
-                        fragmentProfileBinding.lblAttachment.setVisibility(View.GONE);
-                    }
-                    else {
-                        fragmentProfileBinding.txtAttachment.setVisibility(View.VISIBLE);
-                        fragmentProfileBinding.lblAttachment.setVisibility(View.VISIBLE);
-
-                        fragmentProfileBinding.txtAttachment.setText(allTags.get(profileIndex).getAttachment_FileName());
-                    }
-
                     try
                     {
                         JSONObject object = jsonArray.getJSONObject(profileIndex);
@@ -882,8 +825,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                         for (int i1 = 0; i1 < array.length(); i1++) {
 
                             listAssociation.add(array.getString(i1));
-
-
                             String name = array.getString(i1);
                             String remainder;
                             if (name.contains(":")) {
@@ -906,14 +847,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                         }else {
                             countAssociation = array.length();
                         }
-
                         int countEvents;
                         if (arrayEvents.length()>=5){
                             countEvents = 5;
                         }else {
                             countEvents = arrayEvents.length();
                         }
-
                         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, countAssociation, GridLayoutManager.HORIZONTAL, false);
                         fragmentProfileBinding.recyclerAssociation.setAdapter(new TextRecyclerAdapter(listAssociation));
                         fragmentProfileBinding.recyclerAssociation.setLayoutManager(gridLayoutManager);
@@ -923,31 +862,60 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                         fragmentProfileBinding.recyclerEvents.setLayoutManager(gridLayoutManager1);
                         if (listAssociation.size() == 0){
                             fragmentProfileBinding.txtAssociationList.setVisibility(View.GONE);
-                            // recyclerAssociation.setVisibility(View.GONE);
                             fragmentProfileBinding.txtNoAssociation.setVisibility(View.VISIBLE);
                         }
                         else {
                             fragmentProfileBinding.txtAssociationList.setVisibility(View.VISIBLE);
-                            // recyclerAssociation.setVisibility(View.VISIBLE);
                             fragmentProfileBinding.txtNoAssociation.setVisibility(View.GONE);
                         }
 
                         if (listEvents.size() == 0){
                             fragmentProfileBinding.txtEventsListfinal.setVisibility(View.GONE);
-                            // recyclerEvents.setVisibility(View.GONE);
                             fragmentProfileBinding.txtNoEvent.setVisibility(View.VISIBLE);
                         }
                         else {
                             fragmentProfileBinding.txtEventsListfinal.setVisibility(View.VISIBLE);
-                            // recyclerEvents.setVisibility(View.VISIBLE);
                             fragmentProfileBinding.txtNoEvent.setVisibility(View.GONE);
                         }
-
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    profile_array.add("Add New Profile");
+                    profileImage_array.add("");
 
+                    try {
+                        displayProfile = allTags.get(profileIndex).getUserPhoto();
+                    }catch (Exception e){
+                        profileSession.createProfileSession("0");
+                        profileIndex = 0;
+                        displayProfile = allTags.get(profileIndex).getUserPhoto();
+                    }
+
+                    TestimonialProfileId = allTags.get(profileIndex).getProfileID();
+                    personName = allTags.get(profileIndex).getFirstName() + " "+ allTags.get(profileIndex).getLastName() ;
+                    if(personName.equalsIgnoreCase("") || personName.equalsIgnoreCase("null"))
+                    {
+                        fragmentProfileBinding.includeFrame2.tvPersonName.setVisibility(View.GONE);
+                        fragmentProfileBinding.llNameBox.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        fragmentProfileBinding.tvName.setText(personName);
+                        fragmentProfileBinding.includeFrame2.tvPersonName.setText(personName);
+                    }
+                    fragmentProfileBinding.tvProfileName.setText(allTags.get(profileIndex).getProfile());
+                    if (allTags.get(profileIndex).getAttachment_FileName().toString().equals("") || allTags.get(profileIndex).getAttachment_FileName().toString() == null ||
+                            allTags.get(profileIndex).getAttachment_FileName().toString().equals("null")) {
+
+                        fragmentProfileBinding.txtAttachment.setVisibility(View.GONE);
+                        fragmentProfileBinding.lblAttachment.setVisibility(View.GONE);
+                    }
+                    else {
+                        fragmentProfileBinding.txtAttachment.setVisibility(View.VISIBLE);
+                        fragmentProfileBinding.lblAttachment.setVisibility(View.VISIBLE);
+
+                        fragmentProfileBinding.txtAttachment.setText(allTags.get(profileIndex).getAttachment_FileName());
+                    }
                     if (allTags.get(profileIndex).getCard_Front().equalsIgnoreCase("") || allTags.get(profileIndex).getCard_Back().equalsIgnoreCase("")) {
                         fragmentProfileBinding.appbar.setVisibility(View.GONE);
                     } else {
@@ -1090,8 +1058,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     personAddress =
                             allTags.get(profileIndex).getAddress1()+ " "
                                     +allTags.get(profileIndex).getAddress2() + " "
-                            /*+ allTags.get(profileIndex).getAddress3()  + " "
-                            + allTags.get(profileIndex).getAddress4() + " "*/
                                     + allTags.get(profileIndex).getCity() + " "
                                     + allTags.get(profileIndex).getState() + " "
                                     + allTags.get(profileIndex).getCountry() + " "
@@ -1106,10 +1072,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     {
                         fragmentProfileBinding.tvAddress.setText(personAddress);
                     }
-
-                    image = new ArrayList<>();
-
-
                     if (allTags.get(profileIndex).getUserPhoto().equals(""))
                     {
                         fragmentProfileBinding.includeFrame2.progressBar1.setVisibility(View.GONE);
@@ -1128,9 +1090,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                                     }
                                 });
                     }
-
-                    new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
-
                     try
                     {
                         if(allTags.get(profileIndex).getCard_Front().equals(""))
@@ -1177,54 +1136,47 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     //   viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
                     fragmentProfileBinding.viewPager1.setAdapter(myPager);
 
-                    final Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            //Do something after 100ms
-                            try
-                            {
-                                barName = encrypt(TestimonialProfileId, secretKey);
-                            }
-                            catch (UnsupportedEncodingException e) {
-                                e.printStackTrace();
-                            } catch (InvalidKeyException e) {
-                                e.printStackTrace();
-                            } catch (NoSuchAlgorithmException e) {
-                                e.printStackTrace();
-                            } catch (NoSuchPaddingException e) {
-                                e.printStackTrace();
-                            } catch (InvalidAlgorithmParameterException e) {
-                                e.printStackTrace();
-                            } catch (IllegalBlockSizeException e) {
-                                e.printStackTrace();
-                            } catch (BadPaddingException e) {
-                                e.printStackTrace();
-                            }
-                            try {
-                                //setting size of qr code
-                                int width =600;
-                                int height = 600;
-                                int smallestDimension = width < height ? width : height;
+                    try
+                    {
+                        barName = encrypt(TestimonialProfileId, secretKey);
+                    }
+                    catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    } catch (InvalidKeyException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchPaddingException e) {
+                        e.printStackTrace();
+                    } catch (InvalidAlgorithmParameterException e) {
+                        e.printStackTrace();
+                    } catch (IllegalBlockSizeException e) {
+                        e.printStackTrace();
+                    } catch (BadPaddingException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        //setting size of qr code
+                        int width =600;
+                        int height = 600;
+                        int smallestDimension = width < height ? width : height;
 
-                                String qrCodeData = barName;
-                                //setting parameters for qr code
-                                String charset = "UTF-8";
-                                Map<EncodeHintType, ErrorCorrectionLevel> hintMap =new HashMap<EncodeHintType, ErrorCorrectionLevel>();
-                                hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
-                                CreateQRCode(mContext, qrCodeData, charset, hintMap, smallestDimension, smallestDimension);
+                        String qrCodeData = barName;
+                        //setting parameters for qr code
+                        String charset = "UTF-8";
+                        Map<EncodeHintType, ErrorCorrectionLevel> hintMap =new HashMap<EncodeHintType, ErrorCorrectionLevel>();
+                        hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+                        CreateQRCode(mContext, qrCodeData, charset, hintMap, smallestDimension, smallestDimension);
 
-                            } catch (Exception ex) {
-                                Log.e("QrGenerate",ex.getMessage());
-                            }
-                        }
-                    }, 5000);
-                    // for bar code generating
+                    } catch (Exception ex) {
+                        Log.e("QrGenerate",ex.getMessage());
+                    }
                 }
                 else
                 {
                     Toast.makeText(mContext, "Not able to load Profiles..", Toast.LENGTH_LONG).show();
                 }
+                new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
 
             } catch (JSONException e) {
                 e.printStackTrace();

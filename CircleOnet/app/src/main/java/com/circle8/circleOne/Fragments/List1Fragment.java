@@ -332,8 +332,8 @@ public class List1Fragment extends Fragment
 
         nfcModel.clear();
         pageno = 1;
-         new HttpAsyncTask().execute(Utility.BASE_URL+SortFragment.CardListApi);
-       // CallApi();
+        new HttpAsyncTask().execute(Utility.BASE_URL+SortFragment.CardListApi);
+        // CallApi();
     }
 
     public static void CallApi() {
@@ -813,15 +813,6 @@ public class List1Fragment extends Fragment
         }
     };
 
-    @Override
-    public void onResume() {
-        super.onResume();
-//        CardsActivity.setActionBarTitle("Cards - "+nfcModel.size());
-//        callFirst();
-//        nfcModel.clear();
-//        GetData(getContext());
-    }
-
     public static void CustomProgressDialog(final String loading)
     {
         fragmentList1Binding.rlProgressDialog.setVisibility(View.VISIBLE);
@@ -839,21 +830,31 @@ public class List1Fragment extends Fragment
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-//            dialog = new ProgressDialog(getActivity());
-//            dialog.setMessage("Searching Records...");
-            //dialog.setTitle("Saving Reminder");
-            //  dialog.show();
-            //  dialog.setCancelable(false);
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
-
             String loading = "Searching" ;
             CustomProgressDialog(loading);
         }
 
         @Override
         protected String doInBackground(String... urls) {
-            return POSTSearch(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("FindBy", "NAME");
+                if (!SearchFromDashboard.equals("")){
+                    jsonObject.accumulate("Search", SearchFromDashboard);
+                }
+                else {
+                    jsonObject.accumulate("Search", fragmentList1Binding.searchView.getText().toString());
+                }
+                jsonObject.accumulate("SearchType", "Local" );
+                jsonObject.accumulate("UserID", UserId);
+                jsonObject.accumulate("numofrecords", "30");
+                jsonObject.accumulate("pageno", "1");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
 
         // onPostExecute displays the results of the AsyncTask.
@@ -948,65 +949,6 @@ public class List1Fragment extends Fragment
                 e.printStackTrace();
             }
         }
-    }
-
-    public static String POSTSearch(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try
-        {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("FindBy", "NAME");
-            if (!SearchFromDashboard.equals("")){
-                jsonObject.accumulate("Search", SearchFromDashboard);
-            }
-            else {
-                jsonObject.accumulate("Search", fragmentList1Binding.searchView.getText().toString());
-            }
-            jsonObject.accumulate("SearchType", "Local" );
-            jsonObject.accumulate("UserID", UserId);
-            jsonObject.accumulate("numofrecords", "30");
-            jsonObject.accumulate("pageno", "1");
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
     }
 
     public static void GetData(Context context)

@@ -418,13 +418,6 @@ public class Utility
             HttpPost httpPost = new HttpPost(url);
             String json = "";
 
-            // 3. build jsonObject
-           /* JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("ProfileId", profile_id);
-            jsonObject.accumulate("numofrecords", "10" );
-            jsonObject.accumulate("pageno", "1" );
-*/
-            // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
 
             // ** Alternative way to convert Person object to JSON string usin Jackson Lib

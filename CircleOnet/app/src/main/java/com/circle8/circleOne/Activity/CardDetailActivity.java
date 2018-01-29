@@ -30,7 +30,6 @@ import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -523,11 +522,6 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
                                         Intent it = new Intent(Intent.ACTION_SENDTO, uri);
                                         it.putExtra("sms_body", "");
                                         startActivity(it);
-                       /* Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                        smsIntent.setType("vnd.android-dir/mms-sms");
-                        smsIntent.putExtra("address", txtMob.getText().toString());
-                        smsIntent.putExtra("sms_body", "");
-                        startActivity(smsIntent);*/
                                     }
                                 }
                             }
@@ -777,18 +771,10 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
                 new QBEntityCallback<QBChatDialog>() {
                     @Override
                     public void onSuccess(QBChatDialog dialog, Bundle args) {
-                        //isProcessingResultInProgress = false;
-                        // dialogsManager.sendSystemMessageAboutCreatingDialog(systemMessagesManager, dialog);
-                        //  ChatActivity.startForResult(cardsActivity, 165, dialog);
-                        // finish();
-                        //   ProgressDialogFragment.hide(getSupportFragmentManager());
                     }
 
                     @Override
                     public void onError(QBResponseException e) {
-                        //isProcessingResultInProgress = false;
-                        //ProgressDialogFragment.hide(getSupportFragmentManager());
-                        //showErrorSnackbar(R.string.dialogs_creation_error, null, null);
                     }
                 }
         );
@@ -1053,68 +1039,10 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
             }
         }
         else {
-           // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
-
         }
 
     }
 
-    /*public String POST2(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try
-        {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("ProfileId", profile_id);
-            jsonObject.accumulate("numofrecords", "10" );
-            jsonObject.accumulate("pageno", "1" );
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }*/
 
     @Override
     public void onDialogCreated(QBChatDialog chatDialog) {
@@ -1229,128 +1157,6 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
         }
     }
 
-    private int getCheckedItemCount(){
-        int cnt = 0;
-        SparseBooleanArray positions = binding.listView.getCheckedItemPositions();
-        int itemCount = binding.listView.getCount();
-
-        for(int i=0;i<itemCount;i++){
-            if(positions.get(i))
-                cnt++;
-        }
-        return cnt;
-    }
-
-   /* public String POST4(String url) {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("UserId", user_id);
-            jsonObject.accumulate("numofrecords", "10");
-            jsonObject.accumulate("pageno", "1");
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-*/
-    /*public String POST5(String url) {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("GroupIDs", selectedStrings);
-            jsonObject.accumulate("ProfileId", profile_id);
-            jsonObject.accumulate("UserId", user_id);
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-*/
-
 
     private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String>
     {
@@ -1364,9 +1170,6 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
             dialog.setMessage("Fetching circles...");
             //dialog.show();
             dialog.setCancelable(false);
-
-            /*String loading = "Fetching Circles" ;
-            CustomProgressDialog(loading);*/
         }
 
         @Override
@@ -1498,13 +1301,6 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           /* dialog = new ProgressDialog(cardsActivity);
-            dialog.setMessage("Fetching Cards...");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
 
             String loading = "Fetching profile" ;
             CustomProgressDialog(loading,cardsActivity);
@@ -1607,14 +1403,6 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
 
                             @Override
                             public void onError(QBResponseException e) {
-                      /*  showErrorSnackbar(R.string.select_users_get_users_error, e,
-                                new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        loadUsersFromQb();
-                                    }
-                                });
-                        progressBar.setVisibility(View.GONE);*/
                             }
                         });
 
@@ -1762,10 +1550,7 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
                         //                   Phone1.trim();
 //                        Phone1 = Phone1.trim();
                         Phone1 = Phone1.replaceAll("\\s+", "").trim();
-                        /*int number = Integer.parseInt(Phone1);
-//                        Phone1 = Phone1.replaceAll("\\s++$", "");
-                        String number1 = String.valueOf(number);
-                        txtPH.setText(String.valueOf(number));*/
+
                         activityCardDetailBinding.includeLayoutDetails.txtPH.setText(Phone1);
                     }
 
@@ -1880,25 +1665,7 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
                         GeocodingLocation locationAddress1 = new GeocodingLocation();
                         locationAddress1.getAddressFromLocation(personAddress, getApplicationContext(), new GeocoderHandler());
 
-//                       createMarker1(personAddress,(add1+add2));
-
                     }
-
-                        /*FriendConnection nfcModelTag = new FriendConnection();
-                        nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));
-                        nfcModelTag.setCompany(object.getString("CompanyName"));
-                        nfcModelTag.setEmail(object.getString("UserName"));
-                        nfcModelTag.setWebsite("");
-                        nfcModelTag.setMob_no(object.getString("Phone"));
-                        nfcModelTag.setDesignation(object.getString("Designation"));
-                        nfcModelTag.setCard_front(object.getString("Card_Front"));
-                        nfcModelTag.setCard_back(object.getString("Card_Back"));
-                        nfcModelTag.setUser_image(object.getString("UserPhoto"));
-                        nfcModelTag.setProfile_id(object.getString("ProfileId"));
-
-                        nfcModelTag.setNfc_tag("en000000001");
-                        allTags.add(nfcModelTag);*/
-//                        GetData(getContext());
 
                 } else {
                     Toast.makeText(cardsActivity, "Not able to load Cards..", Toast.LENGTH_LONG).show();
@@ -1932,16 +1699,12 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
                         Double Longitude = bundle.getDouble("longitude");
 
                         createMarker(Latitude,Longitude);
-                       // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
                     }
                     else {
-//                        Toast.makeText(cardsActivity,msg,Toast.LENGTH_LONG).show();
                         if (locationAddress.contains(",")) {
                             createMarker1(locationAddress.split(",")[1]);
-                         //   activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
                         }else
                         {
-                           // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
                         }
                     }
                     break;
@@ -1949,63 +1712,8 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
                     locationAddress = null;
                     latLang = null ;
             }
-//            tvLatLang.setText(latLang+" of "+locationAddress);
         }
     }
-
-   /* public String POST(String url) {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("profileid", profile_id);
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-*/
 
     @Override
     public void onResume() {
@@ -2032,11 +1740,7 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-          /*  dialog = new ProgressDialog(cardsActivity);
-            dialog.setMessage("Fetching My Account...");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
+
         }
 
         @Override
@@ -2111,9 +1815,6 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
                         {
                             activityCardDetailBinding.includeLayoutDetails.tvAddedGroupInfo.setVisibility(View.GONE);
                         }
-                            /*GroupsInCardDetailAdapter groupsInCardDetailAdapter = new GroupsInCardDetailAdapter(cardsActivity, img,name,desc);
-                            groupListView.setAdapter(groupsInCardDetailAdapter);
-                            groupsInCardDetailAdapter.notifyDataSetChanged();*/
 
                         GroupsRecyclerAdapter groupsRecyclerAdapter = new GroupsRecyclerAdapter(cardsActivity, img, name, desc);
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(cardsActivity);
@@ -2127,69 +1828,9 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
                 {
                     Toast.makeText(cardsActivity, "Not able to fetch circles", Toast.LENGTH_LONG).show();
                 }
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         }
     }
-
- /*   public  String FetchGroupDataPost(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try
-        {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("ProfileId", profile_id);
-            jsonObject.accumulate("UserId", user_id );
-            jsonObject.accumulate("numofrecords", "10");
-            jsonObject.accumulate("pageno", "1" );
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }*/
 }

@@ -35,7 +35,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.circle8.circleOne.ApplicationUtils.MyApplication;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Helper.ReferralCodeSession;
 import com.circle8.circleOne.R;
@@ -44,11 +43,6 @@ import com.circle8.circleOne.databinding.MyAccountBinding;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -59,7 +53,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -71,7 +64,7 @@ import java.util.HashMap;
 
 import static com.circle8.circleOne.Activity.RegisterActivity.BitMapToString;
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
-import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 import static com.circle8.circleOne.Utils.Validation.updateRegisterValidate;
 
@@ -86,7 +79,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     private String image;
     private ProgressDialog pDialog;
     private String  first_name, last_name, phone_no, password, c_password ;
-      private LoginSession session;
+    private LoginSession session;
     private String user_id, email_id, user_img, user_pass, user_Gender, user_Photo ;
     private String encodedImageData, register_img;
 
@@ -144,7 +137,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         myAccountBinding.etYYYY.setVisibility(View.VISIBLE);
         myAccountBinding.tvYear.setVisibility(View.GONE);
 
-       // new HttpAsyncTaskFetchLoginData().execute("http://circle8.asia:8999/Onet.svc/UserLogin");
+        // new HttpAsyncTaskFetchLoginData().execute("http://circle8.asia:8999/Onet.svc/UserLogin");
 
         myAccountBinding.etUserName.setText(user.get(LoginSession.KEY_EMAIL));
         referralCodeSession = new ReferralCodeSession(getApplicationContext());
@@ -222,7 +215,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             else
             {
                 myAccountBinding.progressBar1.setVisibility(View.VISIBLE);
-               // Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+user_Photo).resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(imgProfile);
+                // Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+user_Photo).resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(imgProfile);
 
                 Glide.with(this).load(Utility.BASE_IMAGE_URL+"UserProfile/"+user_Photo)
                         .asBitmap()
@@ -534,7 +527,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         }
         if ( v == myAccountBinding.ivEditImg)
         {
-           // Toast.makeText(getApplicationContext(), "Now you can edit your information", Toast.LENGTH_LONG).show();
+            // Toast.makeText(getApplicationContext(), "Now you can edit your information", Toast.LENGTH_LONG).show();
             myAccountBinding.etFirstName.setEnabled(true);
             myAccountBinding.etFirstName.requestFocus();
             myAccountBinding.etLastName.setEnabled(true);
@@ -638,7 +631,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             {
                 if (final_ImgBase64.equals(""))
                 {
-                   // Toast.makeText(getApplicationContext(), "Upload Image", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getApplicationContext(), "Upload Image", Toast.LENGTH_SHORT).show();
                     register_img = user_img;
                     new HttpAsyncTaskUpdateRegister().execute(Utility.BASE_URL+"UpdateRegistration");
                 }
@@ -861,7 +854,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                     else {
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
                     }
-                 //   bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
+                    //   bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
 
                     File destination = new File(Environment.getExternalStorageDirectory(),
                             System.currentTimeMillis() + ".jpg");
@@ -959,7 +952,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                     // final_ImgBase64 = resizeBase64Image(s);
                     Log.d("base64string ", final_ImgBase64);
 //                  Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
-                //    Upload();
+                    //    Upload();
                     myAccountBinding.imgProfile.setImageBitmap(resizedBitmap);
                 }
                 catch (FileNotFoundException e)
@@ -1168,14 +1161,22 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         @Override
         protected String doInBackground(String... urls)
         {
-            return PhotoUploadPost(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("ImgBase64", final_ImgBase64 );
+                jsonObject.accumulate("classification", "userphoto" );
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-           Utility.rlProgressDialog.setVisibility(View.GONE);
+            Utility.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -1212,62 +1213,6 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-    public  String PhotoUploadPost(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try
-        {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("ImgBase64", final_ImgBase64 );
-            jsonObject.accumulate("classification", "userphoto" );
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
 
     private class HttpAsyncTaskUpdateRegister extends AsyncTask<String, Void, String>
     {
@@ -1289,7 +1234,31 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         @Override
         protected String doInBackground(String... urls)
         {
-            return UpdateRegisterPost(urls[0]);
+            String date_DOB = "";
+            if (myAccountBinding.etDD.getText().toString().equals("") || myAccountBinding.etMM.getText().toString().equals("") || myAccountBinding.etYYYY.getText().toString().equals("")){
+                date_DOB = "";
+            }
+            else {
+                date_DOB = myAccountBinding.etDD.getText().toString() + "/" + myAccountBinding.etMM.getText().toString() + "/" + myAccountBinding.etYYYY.getText().toString();
+            }
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("FirstName", first_name );
+                jsonObject.accumulate("Gender", gender );
+                jsonObject.accumulate("LastName", last_name);
+                jsonObject.accumulate("Password", password);
+                jsonObject.accumulate("Phone", phone_no);
+                jsonObject.accumulate("Photo_String",register_img);
+                jsonObject.accumulate("UserId", user_id );
+                jsonObject.accumulate("UserName", email_id);
+                jsonObject.accumulate("dob", date_DOB);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return POST2(urls[0],jsonObject);
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
@@ -1349,77 +1318,6 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-    public  String UpdateRegisterPost(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try
-        {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            String date_DOB = "";
-            if (myAccountBinding.etDD.getText().toString().equals("") || myAccountBinding.etMM.getText().toString().equals("") || myAccountBinding.etYYYY.getText().toString().equals("")){
-                date_DOB = "";
-            }
-            else {
-                date_DOB = myAccountBinding.etDD.getText().toString() + "/" + myAccountBinding.etMM.getText().toString() + "/" + myAccountBinding.etYYYY.getText().toString();
-            }
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("FirstName", first_name );
-            jsonObject.accumulate("Gender", gender );
-            jsonObject.accumulate("LastName", last_name);
-            jsonObject.accumulate("Password", password);
-            jsonObject.accumulate("Phone", phone_no);
-            jsonObject.accumulate("Photo_String",register_img);
-            jsonObject.accumulate("UserId", user_id );
-            jsonObject.accumulate("UserName", email_id);
-            jsonObject.accumulate("dob", date_DOB);
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
     private class HttpAsyncTaskFetchLoginData extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -1440,7 +1338,18 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         @Override
         protected String doInBackground(String... urls)
         {
-            return FetchLoginDataPost(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("Password", user_pass );
+                jsonObject.accumulate("Platform", "Android" );
+                jsonObject.accumulate("Token", "1234567890");
+                jsonObject.accumulate("UserName", email_id );
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
@@ -1481,64 +1390,6 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-    public  String FetchLoginDataPost(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try
-        {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("Password", user_pass );
-            jsonObject.accumulate("Platform", "Android" );
-            jsonObject.accumulate("Token", "1234567890");
-            jsonObject.accumulate("UserName", email_id );
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
     private class HttpAsyncTaskProfiles extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -1561,7 +1412,16 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         @Override
         protected String doInBackground(String... urls)
         {
-            return MyProfilePost(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("numofrecords", "10" );
+                jsonObject.accumulate("pageno", "1" );
+                jsonObject.accumulate("userid", user_id);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
@@ -1573,64 +1433,4 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
         }
     }
-
-    public  String MyProfilePost(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try
-        {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("numofrecords", "10" );
-            jsonObject.accumulate("pageno", "1" );
-            jsonObject.accumulate("userid", user_id);
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
-
-
 }

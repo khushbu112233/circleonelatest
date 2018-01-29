@@ -60,10 +60,6 @@ import static android.graphics.Color.WHITE;
 import static com.circle8.circleOne.Fragments.ProfileFragment.encrypt;
 import static com.circle8.circleOne.Utils.Utility.mergeBitmaps;
 
-/**
- * Created by Ample-Arch on 06-01-2018.
- */
-
 public class DashboardFragment extends Fragment {
     public static FragmentDashboardLayoutBinding fragmentDashboardLayoutBinding;
     View view;

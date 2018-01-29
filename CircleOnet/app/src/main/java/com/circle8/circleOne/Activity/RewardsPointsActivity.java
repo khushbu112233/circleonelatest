@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.EarnPointsAdapter;
-import com.circle8.circleOne.Adapter.ExpandableListAdapter1;
 import com.circle8.circleOne.Adapter.MerchantExpandableAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.EarnPointsModel;
@@ -35,8 +34,6 @@ import com.circle8.circleOne.databinding.ActivityRewardsPointsBinding;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,6 +48,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
+import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
@@ -104,11 +102,6 @@ public class RewardsPointsActivity extends Fragment implements View.OnClickListe
     }
     private void init()
     {
-
-//        getHistory();
-//        createGroupList();
-//        createCollection();
-
 
         setGroupIndicatorToRight();
 
@@ -390,7 +383,7 @@ public class RewardsPointsActivity extends Fragment implements View.OnClickListe
         {
 //            dialog.dismiss();
             dismissProgress();
-            new HttpAsyncGetHistoryReedemedPoints().execute(Utility.BASE_URL+"Rewards/History_ReedemedPoints");           // post
+            new HttpAsyncGetHistoryReedemedPoints().execute(Utility.BASE_URL+"Rewards/History_ReedemedPoints");
 
             try
             {
@@ -528,24 +521,11 @@ public class RewardsPointsActivity extends Fragment implements View.OnClickListe
         try {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
             HttpGet httpPost = new HttpGet(url);
-
-            // 6. set httpPost Entity
-            //   httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
             HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
-
-            // 10. convert inputstream to string
             if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
@@ -558,138 +538,6 @@ public class RewardsPointsActivity extends Fragment implements View.OnClickListe
         // 11. return result
         return result;
     }
-
-    public String PostGetProductCategory(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpGet httpPost = new HttpGet(url);
-
-            // 6. set httpPost Entity
-            //   httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
-    public String PostGetProducts(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpGet httpPost = new HttpGet(url);
-
-            // 6. set httpPost Entity
-            //   httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
-    public String PostGetProductsByCategory(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("ProductCategoryID", "1");
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
-
 
     private class HttpAsyncGetBalance extends AsyncTask<String, Void, String>
     {
@@ -710,7 +558,14 @@ public class RewardsPointsActivity extends Fragment implements View.OnClickListe
 
         @Override
         protected String doInBackground(String... urls) {
-            return PostGetBalance(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("userid", userId);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
 
         @Override
@@ -745,60 +600,6 @@ public class RewardsPointsActivity extends Fragment implements View.OnClickListe
         }
     }
 
-    public String PostGetBalance(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("userid", userId);
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
     private class HttpAsyncGetHistoryEarnedPoints extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -818,7 +619,14 @@ public class RewardsPointsActivity extends Fragment implements View.OnClickListe
 
         @Override
         protected String doInBackground(String... urls) {
-            return PostGetHistoryEarnedPoints(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("userid", userId);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
 
         @Override
@@ -891,59 +699,6 @@ public class RewardsPointsActivity extends Fragment implements View.OnClickListe
         }
     }
 
-    public String PostGetHistoryEarnedPoints(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("userid", userId);
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
 
     private class HttpAsyncGetHistoryReedemedPoints extends AsyncTask<String, Void, String>
     {
@@ -964,7 +719,15 @@ public class RewardsPointsActivity extends Fragment implements View.OnClickListe
 
         @Override
         protected String doInBackground(String... urls) {
-            return PostGetHistoryReedemedPoints(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("FilterId", userId);
+                jsonObject.accumulate("FilterType", "user");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
 
         @Override
@@ -973,7 +736,7 @@ public class RewardsPointsActivity extends Fragment implements View.OnClickListe
 //            dialog.dismiss();
             //dismissProgress();
             // Toast.makeText(RewardsPointsActivity.this, result, Toast.LENGTH_LONG).show();
-            new HttpAsyncGetBalance().execute(Utility.BASE_URL+"Rewards/GetBalance");                                 // post
+            new HttpAsyncGetBalance().execute(Utility.BASE_URL+"Rewards/GetBalance");
 
             try
             {
@@ -1048,60 +811,4 @@ public class RewardsPointsActivity extends Fragment implements View.OnClickListe
             }
         }
     }
-
-    public String PostGetHistoryReedemedPoints(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("FilterId", userId);
-            jsonObject.accumulate("FilterType", "user");
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
 }

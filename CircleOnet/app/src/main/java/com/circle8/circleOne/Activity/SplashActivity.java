@@ -63,21 +63,7 @@ public class SplashActivity extends AppCompatActivity
                     }
 
                 }
-
-
             }
         },1000);
-    }
-
-    @Override
-    protected void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
     }
 }

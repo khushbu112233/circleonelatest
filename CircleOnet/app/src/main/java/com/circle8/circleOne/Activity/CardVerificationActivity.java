@@ -18,21 +18,12 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.ActivityCardVerificationBinding;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;
@@ -40,16 +31,14 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
-import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class CardVerificationActivity extends AppCompatActivity implements View.OnClickListener
@@ -78,11 +67,9 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
             mActivityCardVerificationBinding.ivAddCard.setVisibility(View.GONE);
         }
 
-        // create an intent with tag data and deliver to this activity
         mPendingIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
 
-        // set an intent filter for all MIME data
         IntentFilter ndefIntent = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
         try {
             ndefIntent.addDataType("*/*");
@@ -94,8 +81,6 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
         mNFCTechLists = new String[][] { new String[] { NfcF.class.getName() } };
 
         mActivityCardVerificationBinding.imgBackCard.setOnClickListener(this);
-
-//        new HttpAsyncActivateNFC().execute(Utility.BASE_URL+"NFCSecurity/ActivateNFC");                               // post
     }
 
 
@@ -106,8 +91,6 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
         Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
         String s = "";
-
-        // parse through all NDEF messages and their records and pick text type only
         Parcelable[] data = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
 
         if (data != null) {
@@ -139,7 +122,6 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
             }
 
         }
-        //Toast.makeText(getApplicationContext(), arrayNFC.toString(), Toast.LENGTH_LONG).show();
         if (arrayNFC.size() == 1){
             Utility.freeMemory();
             mActivityCardVerificationBinding.txtNoGroup.setText("Your Card is already verified..");
@@ -149,7 +131,6 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
             Utility.freeMemory();
             ProfileId = arrayNFC.get(0).toString();
             CardCode = arrayNFC.get(1).toString();
-           // Toast.makeText(getApplicationContext(), ProfileId + " " + CardCode, Toast.LENGTH_LONG).show();
             new HttpAsyncActivateNFC().execute(Utility.BASE_URL+"NFCSecurity/ActivateNFC");
         }
         else {
@@ -157,7 +138,6 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
             mActivityCardVerificationBinding.txtNoGroup.setText("Please use only CircleOne NFC-Card for unlock");
             mActivityCardVerificationBinding.ivAddCard.setVisibility(View.GONE);
         }
-        //txtNoGroup.setText(s);
     }
 
     public String decrypt(String value, String key)
@@ -170,10 +150,8 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
 
     public byte[] decrypt(byte[] ArrayOfByte1, byte[] ArrayOfByte2, byte[] ArrayOfByte3)
             throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
-        // setup AES cipher in CBC mode with PKCS #5 padding
         Cipher localCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         Utility.freeMemory();
-        // decrypt
         localCipher.init(2, new SecretKeySpec(ArrayOfByte2, "AES"), new IvParameterSpec(ArrayOfByte3));
         return localCipher.doFinal(ArrayOfByte1);
     }
@@ -187,14 +165,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
         return arrayOfByte1;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-    }
-
-
-    @Override
+        @Override
     public void onResume() {
         super.onResume();
         Utility.freeMemory();
@@ -233,27 +204,26 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
         protected void onPreExecute()
         {
             super.onPreExecute();
-           /* dialog = new ProgressDialog(MerchantDetailActivity.this);
-            dialog.setMessage("Get Details...");
-            dialog.show();
-            dialog.setCancelable(false);*/
-
-            String loading = "Activating NFC card" ;
+                     String loading = "Activating NFC card" ;
             CustomProgressDialog(loading, CardVerificationActivity.this);
         }
 
         @Override
         protected String doInBackground(String... urls) {
-            return PostNFCCard(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("card_code", CardCode);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
 
         @Override
         protected void onPostExecute(String result)
         {
-            Utility.freeMemory();
-//            dialog.dismiss();
             dismissProgress();
-          //  Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
                 if (result != null)
@@ -275,59 +245,4 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
             }
         }
     }
-
-    public String PostNFCCard(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("card_code", CardCode);
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
 }

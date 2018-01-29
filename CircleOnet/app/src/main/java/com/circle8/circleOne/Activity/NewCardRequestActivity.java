@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -21,21 +20,15 @@ import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
-import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class NewCardRequestActivity extends AppCompatActivity
@@ -102,7 +95,7 @@ public class NewCardRequestActivity extends AppCompatActivity
                         ivAlphaImg.setVisibility(View.GONE);
                         rlLayTwo.setVisibility(View.GONE);
                         listView.setEnabled(true);
-                        
+
                         int count = position + 1;
                         Intent i = new Intent(getApplicationContext(), NewCardRequestDetailActivity.class);
                         i.putExtra("person", allTags.get(position).getFirstName() + " " + allTags.get(position).getLastName());
@@ -149,77 +142,6 @@ public class NewCardRequestActivity extends AppCompatActivity
 
     }
 
-    @Override
-    protected void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-    }
-
-
-    public  String POST5(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try
-        {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("numofrecords", "100" );
-            jsonObject.accumulate("pageno", "1" );
-            jsonObject.accumulate("userid", UserID);
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
-
     private class HttpAsyncTaskProfiles extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -227,13 +149,6 @@ public class NewCardRequestActivity extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            /*dialog = new ProgressDialog(NewCardRequestActivity.this);
-            dialog.setMessage("Fetching Profiles...");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
             String loading = "Fetching profiles" ;
             CustomProgressDialog(loading, NewCardRequestActivity.this);
         }
@@ -241,7 +156,17 @@ public class NewCardRequestActivity extends AppCompatActivity
         @Override
         protected String doInBackground(String... urls)
         {
-            return POST5(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("numofrecords", "100" );
+                jsonObject.accumulate("pageno", "1" );
+                jsonObject.accumulate("userid", UserID);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override

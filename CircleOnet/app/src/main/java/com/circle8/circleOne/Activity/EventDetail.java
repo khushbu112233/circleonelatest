@@ -13,14 +13,11 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +30,6 @@ import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.ActivityEventDetailBinding;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,9 +64,6 @@ public class EventDetail extends AppCompatActivity implements View.OnClickListen
         imgDrawer.setVisibility(View.GONE);
         imgBack.setVisibility(View.VISIBLE);
         imgBack.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
-
-       // Intent i = getIntent();
-       // event_ID = i.getStringExtra("Event_ID");
 
         new HttpAsyncTask().execute(Utility.BASE_URL+"Events/GetDetails");
 
@@ -151,12 +144,6 @@ public class EventDetail extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-    }
-
     public void showDialog(Context context, int x, int y){
         // x -->  X-Cordinate
         // y -->  Y-Cordinate
@@ -166,16 +153,6 @@ public class EventDetail extends AppCompatActivity implements View.OnClickListen
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setContentView(R.layout.listview_with_text_image);
         dialog.setCanceledOnTouchOutside(true);
-
-        LinearLayout lnrMyAcc = (LinearLayout) dialog.findViewById(R.id.lnrMyAcc);
-       /* lnrMyAcc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Profile.class);
-                startActivity(intent);
-                dialog.dismiss();
-            }
-        });*/
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
@@ -413,11 +390,6 @@ public class EventDetail extends AppCompatActivity implements View.OnClickListen
 
                     activityEventDetailBinding.tvEventAddress.setText(address1+address2+address3+address4+city+state+country+postalCode);
 
-                   /* tvEventAddress.setText(eventDetail.getString("Address1")+", "+eventDetail.getString("Address2")+", "+
-                            eventDetail.getString("Address3")+", "+eventDetail.getString("Address4")+", "+
-                            eventDetail.getString("City")+", "+eventDetail.getString("State")+", "+
-                            eventDetail.getString("Country")+"("+eventDetail.getString("PostalCode")+")");*/
-
                     try
                     {
                         JSONArray showTiming = response.getJSONArray("showTimings");
@@ -450,12 +422,5 @@ public class EventDetail extends AppCompatActivity implements View.OnClickListen
             }
         }
     }
-
-    @Override
-    protected void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
-
 }
 

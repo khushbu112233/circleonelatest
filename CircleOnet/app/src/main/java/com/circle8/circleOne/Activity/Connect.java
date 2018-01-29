@@ -33,10 +33,4 @@ public class Connect extends AppCompatActivity {
         super.onPause();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-    }
-
 }

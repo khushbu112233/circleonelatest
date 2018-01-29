@@ -9,38 +9,25 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
-
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.ActivityContactUsBinding;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
-import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class ContactUsActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener
 {
-
-
     private String subject, description, email, contactNo, contactType ;
     private LoginSession session;
     ActivityContactUsBinding activityContactUsBinding;
@@ -50,9 +37,6 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
     {
         super.onCreate(savedInstanceState);
         activityContactUsBinding = DataBindingUtil.setContentView(this,R.layout.activity_contact_us);
-
-        Utility.freeMemory();
-
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         email = user.get(LoginSession.KEY_EMAIL);
@@ -78,8 +62,6 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         }
 
         activityContactUsBinding.spContactType.setOnItemSelectedListener(this);
-
-
         activityContactUsBinding.imgBack.setOnClickListener(this);
         activityContactUsBinding.lnrAddress.setOnClickListener(this);
         activityContactUsBinding.ivMessage.setOnClickListener(this);
@@ -106,18 +88,6 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         activityContactUsBinding.spContactType.setAdapter(dataAdapter);
 
-    }
-
-    @Override
-    protected void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
     }
 
     @Override
@@ -203,16 +173,10 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         if ( v == activityContactUsBinding.googleUrl)
         {
             Utility.freeMemory();
-            /*Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
-            intent.putExtra("url", Utility.BASE_IMAGE_URL+"Other_doc/"+txtAttachment.getText().toString());
-            startActivity(intent);*/
         }
         if ( v == activityContactUsBinding.youtubeUrl)
         {
             Utility.freeMemory();
-           /* Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
-            intent.putExtra("url", Utility.BASE_IMAGE_URL+"Other_doc/"+txtAttachment.getText().toString());
-            startActivity(intent);*/
         }
 
         if ( v == activityContactUsBinding.lnrAddress)
@@ -346,11 +310,6 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
             }
             else
             {
-               /* Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"+"general@circle.asia"));
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
-                emailIntent.putExtra(Intent.EXTRA_TEXT, description);
-                startActivity(Intent.createChooser(emailIntent, "Choose mail options..."));*/
-
                 new HttpAsyncTaskSendMessage().execute("http://circle8.asia:8082/Onet.svc/ContactUs");
             }
         }
@@ -378,10 +337,6 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            /*dialog = new ProgressDialog(ContactUsActivity.this);
-            dialog.setMessage("Sending...");
-            dialog.show();
-            dialog.setCancelable(false);*/
 
             String loading = "Sending" ;
             CustomProgressDialog(loading, ContactUsActivity.this);
@@ -389,7 +344,18 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
 
         @Override
         protected String doInBackground(String... urls) {
-            return SendMessagePost(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("Contact_Type", contactType);
+                jsonObject.accumulate("Desc", description);
+                jsonObject.accumulate("Email", email);
+                jsonObject.accumulate("Mobile", contactNo);
+                jsonObject.accumulate("Subject", subject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
 
         // onPostExecute displays the results of the AsyncTask.
@@ -428,62 +394,4 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
             }
         }
     }
-
-    public String SendMessagePost(String url) {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("Contact_Type", contactType);
-            jsonObject.accumulate("Desc", description);
-            jsonObject.accumulate("Email", email);
-            jsonObject.accumulate("Mobile", contactNo);
-            jsonObject.accumulate("Subject", subject);
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
 }

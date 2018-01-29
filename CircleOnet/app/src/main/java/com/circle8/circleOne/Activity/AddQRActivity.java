@@ -3,8 +3,6 @@ package com.circle8.circleOne.Activity;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
@@ -18,15 +16,12 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.util.Base64;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Toast;
-
 import com.circle8.circleOne.Fragments.CardsFragment;
 import com.circle8.circleOne.Fragments.DashboardFragment;
 import com.circle8.circleOne.Helper.LoginSession;
@@ -35,17 +30,9 @@ import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.ActivityAddQrBinding;
 import com.google.zxing.Result;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;
@@ -54,20 +41,17 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-
 import me.dm7.barcodescanner.core.DisplayUtils;
 import me.dm7.barcodescanner.core.IViewFinder;
 import me.dm7.barcodescanner.core.ViewFinderView;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
-
-import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.POST2;
 
 public class AddQRActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler
 {
@@ -89,15 +73,9 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_qr);
 
-
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
-        Utility.deleteCache(getApplicationContext());
-
         profileId = user.get(LoginSession.KEY_PROFILEID);
-       /* mScannerView = new ZXingScannerView(this);
-        contentFrame.addView(mScannerView);
-        CameraScann();*/
         netCheck = Utility.isNetworkAvailable(getApplicationContext());
         mBinding.btnRescan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,14 +95,6 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
         };
         mBinding.contentFrame.addView(mScannerView);
         CameraScann();
-
-       /* Boolean aBoolean = Utility.checkCameraPermission(AddQRActivity.this);
-        if (aBoolean == true) {*/
-
-//            mScannerView.setResultHandler(this);
-//            mScannerView.startCamera();
-//      /*  }*/
-
         mBinding.imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,23 +104,12 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
                 finish();
             }
         });
-
-    }
-
-    @Override
-    protected void onPause() {
-        Utility.deleteCache(getApplicationContext());
-
-        Utility.freeMemory();
-        super.onPause();
     }
 
     public String decrypt(String value, String key)
             throws GeneralSecurityException, IOException {
 
         try {
-            Utility.deleteCache(getApplicationContext());
-            Utility.freeMemory();
             byte[] value_bytes = Base64.decode(value, 0);
             byte[] key_bytes = getKeyBytes(key);
             return new String(decrypt(value_bytes, key_bytes, key_bytes), "UTF-8");
@@ -164,8 +123,6 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
         // setup AES cipher in CBC mode with PKCS #5 padding
         Utility.freeMemory();
         Cipher localCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-
-        // decrypt
         localCipher.init(2, new SecretKeySpec(ArrayOfByte2, "AES"), new IvParameterSpec(ArrayOfByte3));
         return localCipher.doFinal(ArrayOfByte1);
     }
@@ -182,14 +139,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
     @Override
     public void handleResult(Result rawResult)
     {
-//        Toast.makeText(this, "Contents = " + rawResult.getText() +
-//                ", Format = " + rawResult.getBarcodeFormat().toString()+
-//                ", Points = "+rawResult.getResultPoints(), Toast.LENGTH_SHORT).show();
-
-        //    nfcProfileId = decrypt(scanQr, secretKey);
-        // scanQr = rawResult.getText();
         scanFormat = rawResult.getBarcodeFormat().toString();
-        //    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
 
         try {
             Utility.freeMemory();
@@ -202,7 +152,6 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
 
             } else
             {
-                // Toast.makeText(getApplicationContext(), scanQr, Toast.LENGTH_LONG).show();
                 try {
                     mScannerView.stopCamera();
                     CameraScann();
@@ -226,127 +175,16 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
                             //Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
                         }
                     }
-
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                 }
             }
-
         } catch (GeneralSecurityException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //AlertDisplay();
-
-//        Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                mScannerView.resumeCameraPreview(QrActivity.this);
-//            }
-//        }, 2000);
     }
-
-
-    public void AlertDisplay()
-    {
-//        String verify = sharedPreferences.getString("verify","");
-        AlertDialog.Builder alert = new AlertDialog.Builder(AddQRActivity.this);
-        alert.setTitle("Add QR");
-        alert.setMessage("Scan Item: " +scanQr);
-        alert.setPositiveButton("OK", new DialogInterface.OnClickListener(){
-            @Override
-            public void onClick(DialogInterface adialog, int which)
-            {
-                adialog.cancel();
-                mScannerView.stopCamera();
-                CameraScann();
-                new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
-            }
-        });
-//        alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface adialog, int which)
-//            {
-//
-//            }
-//        });
-        AlertDialog alertDialog = alert.create();
-        alertDialog.show();
-    }
-
-    public String POST(String url) {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            Calendar c = Calendar.getInstance();
-            System.out.println("Current time =&gt; "+c.getTime());
-
-            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-            String formattedDate = df.format(c.getTime());
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-
-            jsonObject.accumulate("Latitude", lat);
-            jsonObject.accumulate("Location", "");
-            jsonObject.accumulate("Longitude", lng);
-            jsonObject.accumulate("Operation", "Request");
-            jsonObject.accumulate("RequestType", "NFC");
-            jsonObject.accumulate("connection_date", formattedDate);
-            jsonObject.accumulate("friendProfileId", scanQr);
-            jsonObject.accumulate("myProfileId", profileId);
-
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
-
-
-
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
@@ -355,24 +193,37 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
             super.onPreExecute();
             dialog = new ProgressDialog(AddQRActivity.this);
             dialog.setMessage("Adding records...");
-            //dialog.setTitle("Saving Reminder");
             dialog.show();
             dialog.setCancelable(false);
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
         }
 
         @Override
         protected String doInBackground(String... urls) {
-            return POST(urls[0]);
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+            String formattedDate = df.format(c.getTime());
+            JSONObject jsonObject = new JSONObject();
+
+            try {
+                jsonObject.accumulate("Latitude", lat);
+                jsonObject.accumulate("Location", "");
+                jsonObject.accumulate("Longitude", lng);
+                jsonObject.accumulate("Operation", "Request");
+                jsonObject.accumulate("RequestType", "NFC");
+                jsonObject.accumulate("connection_date", formattedDate);
+                jsonObject.accumulate("friendProfileId", scanQr);
+                jsonObject.accumulate("myProfileId", profileId);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();
             Utility.freeMemory();
-            //  Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result == "") {
                     Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
@@ -389,7 +240,6 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
                                 .addToBackStack(null)
                                 .commit();
-
                         DashboardActivity.activityDashboardBinding.includefooter.imgCard.setImageResource(R.drawable.ic_icon1b);
                         DashboardActivity.activityDashboardBinding.includefooter.imgDashboard.setImageResource(R.drawable.ic_dashboard_gray);
                         DashboardActivity.activityDashboardBinding.includefooter.imgProfile.setImageResource(R.drawable.ic_icon4);
@@ -402,59 +252,11 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
                         }else {
                             DashboardActivity.activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
                             DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
-
                         }
-                        /*CardsFragment.mViewPager.getCurrentItem();
-                        List1Fragment.webCall();
-                        List2Fragment.webCall();
-                        List3Fragment.webCall();
-                        List4Fragment.webCall();*/
                     } else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
-
-                 /*   try
-                    {
-//                    List2Fragment.allTaggs.clear();
-                        List2Fragment.nfcModel.clear();
-                        List2Fragment.gridAdapter.notifyDataSetChanged();
-                        List2Fragment.GetData(context);
-                    }
-                    catch(Exception e) {    }
-
-                    try
-                    {
-
-//                    List3Fragment.allTaggs.clear();
-                        List3Fragment.nfcModel1.clear();
-                        List3Fragment.gridAdapter.notifyDataSetChanged();
-                        List3Fragment.GetData(context);
-                    }
-                    catch(Exception e) {    }
-
-                    try
-                    {
-
-//                    List4Fragment.allTaggs.clear();
-                        List4Fragment.nfcModel1.clear();
-                        List4Fragment.gridAdapter.notifyDataSetChanged();
-                        List4Fragment.GetData(context);
-                    }
-                    catch(Exception e) {    }
-
-                    try
-                    {
-
-//                    List1Fragment.allTags.clear();
-                        List1Fragment.nfcModel.clear();
-                        List1Fragment.mAdapter.notifyDataSetChanged();
-                        List1Fragment.mAdapter1.notifyDataSetChanged();
-                        List1Fragment.GetData(context);
-                    }
-                    catch(Exception e) {    }*/
-
                 }
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -462,33 +264,12 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-    }
-
-    @Override
     public void onResume()
     {
-        Utility.freeMemory();
         super.onResume();
         mScannerView.setResultHandler(this);
         mScannerView.startCamera();
-//        CameraScreen();
     }
-
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        mScannerView.setResultHandler(this);
-//        mScannerView.startCamera();
-//    }
-
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//        mScannerView.stopCamera();
-//    }
 
     public void CameraScann()
     {
@@ -513,28 +294,22 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
         public Paint mLaserPaint;
         public Paint mFinderMaskPaint;
         public Paint mBorderPaint;
-
         private final int mDefaultLaserColor = getResources().getColor(R.color.viewfinder_laser);
         private final int mDefaultMaskColor = getResources().getColor(R.color.viewfinder_mask);
         private final int mDefaultBorderColor = getResources().getColor(R.color.viewfinder_border);
         private final int mDefaultBorderStrokeWidth = getResources().getInteger(R.integer.viewfinder_border_width);
         private final int mDefaultBorderLineLength = getResources().getInteger(R.integer.viewfinder_border_length);
-
         private static final int[] SCANNER_ALPHA = {0, 64, 128, 192, 255, 192, 128, 64};
         private int scannerAlpha;
         private static final int POINT_SIZE = 10;
         private static final long ANIMATION_DELAY = 80l;
-
         private Rect mFramingRect;
-
         private static final float SQUARE_DIMENSION_RATIO = 7f/8;
         private static final float PORTRAIT_WIDTH_RATIO = 6f/8;
         private static final float PORTRAIT_WIDTH_HEIGHT_RATIO = 0.75f;
-
         private static final float LANDSCAPE_HEIGHT_RATIO = 5f/8;
         private static final float LANDSCAPE_WIDTH_HEIGHT_RATIO = 1.4f;
         private static final int MIN_DIMENSION_DIFF = 50;
-
         protected boolean mSquareViewFinder = true ;
 
         public CustomViewFinderView(Context context) {
@@ -553,9 +328,6 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
             PAINT.setAntiAlias(true);
             float textPixelSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, TRADE_MARK_TEXT_SIZE_SP, getResources().getDisplayMetrics());
             PAINT.setTextSize(textPixelSize);
-//            setSquareViewFinder(true);
-
-            //set up laser paint
             mLaserPaint = new Paint();
             mLaserPaint.setColor(mDefaultLaserColor);
             mLaserPaint.setStyle(Paint.Style.FILL);
@@ -654,8 +426,6 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
 
         public void drawLaser(Canvas canvas) {
             Rect framingRect = getFramingRect();
-
-            // Draw a red "laser scanner" line through the middle to show decoding is active
             mLaserPaint.setAlpha(SCANNER_ALPHA[scannerAlpha]);
             scannerAlpha = (scannerAlpha + 1) % SCANNER_ALPHA.length;
             int middle = framingRect.height() / 2 + framingRect.top;
@@ -666,11 +436,6 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
                     framingRect.top - POINT_SIZE,
                     framingRect.right + POINT_SIZE,
                     framingRect.bottom + POINT_SIZE);
-        }
-
-        // TODO: Need a better way to configure this. Revisit when working on 2.0
-        public void setSquareViewFinder(boolean set) {
-            mSquareViewFinder = set;
         }
 
         public void setupViewFinder() {
@@ -711,19 +476,15 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
                     height = (int) (PORTRAIT_WIDTH_HEIGHT_RATIO * width);
                 }
             }
-
             if(width > getWidth()) {
                 width = getWidth() - MIN_DIMENSION_DIFF;
             }
-
             if(height > getHeight()) {
                 height = getHeight() - MIN_DIMENSION_DIFF;
             }
-
             int leftOffset = (viewResolution.x - width) / 2;
             int topOffset = (viewResolution.y - height) / 2;
             mFramingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
         }
     }
-
 }
