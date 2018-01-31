@@ -17,7 +17,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -51,21 +50,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Adapter.AddEventAdapter;
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.CardViewDataAdapter;
 import com.circle8.circleOne.Adapter.CustomAdapter;
-import com.circle8.circleOne.Adapter.PopupMenuAdapter;
-import com.circle8.circleOne.Adapter.TextRecyclerAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Helper.ProfileSession;
 import com.circle8.circleOne.Helper.ReferralCodeSession;
@@ -101,8 +94,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.TwitterAuthProvider;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.linkedin.platform.APIHelper;
 import com.linkedin.platform.LISessionManager;
 import com.linkedin.platform.errors.LIApiError;
@@ -138,8 +129,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -147,13 +136,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-
+import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static junit.framework.Assert.assertEquals;
 
@@ -1518,7 +1503,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                         fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
                         //hideProgressDialog();
 //                    //    dismissProgress();
-                       // fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
+                        // fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
                         // [END_EXCLUDE]
                     }
                 });
@@ -1560,61 +1545,6 @@ public class EditProfileActivity extends AppCompatActivity implements
         }
     }
 
-    public  String POST9(String url)
-    {
-        Utility.freeMemory();
-        InputStream inputStream = null;
-        String result = "";
-        try
-        {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("ProfileID", profileId );
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
     private class HttpAsyncTaskProfileDelete extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -1637,7 +1567,14 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected String doInBackground(String... urls)
         {
-            return POST9(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("ProfileID", profileId );
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
@@ -1645,7 +1582,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         {
             Utility.freeMemory();
 //            dialog.dismiss();
-           // dismissProgress();
+            // dismissProgress();
             fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
             try
             {
@@ -1759,7 +1696,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         {
 
 //            progressDialog.dismiss();
-           // dismissProgress();
+            // dismissProgress();
             fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
             // App code
             GraphRequest request = GraphRequest.newMeRequest(
@@ -1802,7 +1739,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         public void onError(FacebookException e)
         {
 //            progressDialog.dismiss();
-          //  dismissProgress();
+            //  dismissProgress();
             fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
         }
     };
@@ -1886,215 +1823,6 @@ public class EditProfileActivity extends AppCompatActivity implements
         startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_GALLERY_CARD);
     }
 
-    private void cameraCardIntent() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, REQUEST_CAMERA_CARD);
-    }
-
-    public String POST6(String url) {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            if (companyID == null){
-                companyID = "";
-            }
-
-            if (industryID == null){
-                industryID = "";
-            }
-
-            if (designationID == null){
-                designationID = "";
-            }
-
-            JSONArray jsonArray = new JSONArray();
-            jsonArray.put(1011);
-
-            String name = fragmentEditProfileBinding.edtFirstName.getText().toString()+" "+fragmentEditProfileBinding.edtLastName.getText().toString();
-            String kept = name.substring(0, name.indexOf(" "));
-            String remainder = name.substring(name.indexOf(" ") + 1, name.length());
-            JSONArray jsonArray1 = new JSONArray();
-            jsonArray1.put(1);
-
-            List<String> al = new ArrayList<>();
-            if (arrayEvents != null) {
-                for (int i=0;i<arrayEvents.length();i++){
-                    al.add(arrayEvents.getString(i));
-                }
-            }
-// add elements to al, including duplicates
-            Set<String> hs = new HashSet<>();
-            hs.addAll(al);
-            al.clear();
-            al.addAll(hs);
-            arrayEvents = new JSONArray(al);
-
-
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("Address1", fragmentEditProfileBinding.edtAddress1.getText().toString());
-            jsonObject.accumulate("Address2", fragmentEditProfileBinding.edtAddress2.getText().toString());
-            jsonObject.accumulate("Address3", fragmentEditProfileBinding.edtAddress3.getText().toString() + " " + fragmentEditProfileBinding.edtAddress4.getText().toString());
-            jsonObject.accumulate("Address4", fragmentEditProfileBinding.ccpAddress5.getSelectedCountryName().toString() + " " + fragmentEditProfileBinding.edtAddress6.getText().toString());
-            jsonObject.accumulate("Address_ID", "1");
-            jsonObject.accumulate("Address_Type", "work");
-            jsonObject.accumulate("AssociationIDs", arrayAssociation);
-            jsonObject.accumulate("Attachment_FileName",fragmentEditProfileBinding.etAttachFile.getText().toString());
-            jsonObject.accumulate("Card_Back", fragmentEditProfileBinding.txtCardBack.getText().toString());
-            jsonObject.accumulate("Card_Front", fragmentEditProfileBinding.txtCardFront.getText().toString());
-            jsonObject.accumulate("City", fragmentEditProfileBinding.edtAddress3.getText().toString());
-            jsonObject.accumulate("CompanyDesc", fragmentEditProfileBinding.edtCompanyDesc.getText().toString());
-            jsonObject.accumulate("CompanyID", companyID);
-            jsonObject.accumulate("CompanyName", fragmentEditProfileBinding.autoCompleteCompany.getText().toString());
-            jsonObject.accumulate("Country", fragmentEditProfileBinding.ccpAddress5.getSelectedCountryName().toString());
-            jsonObject.accumulate("Designation", fragmentEditProfileBinding.autoCompleteDesignation.getText().toString());
-            jsonObject.accumulate("DesignationID", designationID);
-            jsonObject.accumulate("Email1", fragmentEditProfileBinding.edtEmail.getText().toString());
-            jsonObject.accumulate("Email2", fragmentEditProfileBinding.edtEmail2.getText().toString());
-            jsonObject.accumulate("Facebook", strFB);
-            jsonObject.accumulate("Fax1", Fax1);
-            jsonObject.accumulate("Fax2", Fax2);
-            jsonObject.accumulate("Google", strGoogle);
-            jsonObject.accumulate("IndustryID", industryID);
-            jsonObject.accumulate("IndustryName", fragmentEditProfileBinding.autoCompleteIndustry.getText().toString());
-            jsonObject.accumulate("Linkedin", strLinkedin);
-            jsonObject.accumulate("Mobile1", Mobile1);
-            jsonObject.accumulate("Mobile2", Mobile2);
-            jsonObject.accumulate("Phone1", Phone1);
-            jsonObject.accumulate("Phone2", Phone2);
-            jsonObject.accumulate("Postalcode", fragmentEditProfileBinding.edtAddress6.getText().toString());
-            jsonObject.accumulate("ProfileID", profileId);
-            jsonObject.accumulate("Profile_Desc", fragmentEditProfileBinding.edtProfileDesc.getText().toString());
-            jsonObject.accumulate("Profile_Type", "");
-            jsonObject.accumulate("State", fragmentEditProfileBinding.edtAddress4.getText().toString());
-            jsonObject.accumulate("Twitter", strTwitter);
-            jsonObject.accumulate("UserID", UserID);
-            jsonObject.accumulate("Website", fragmentEditProfileBinding.edtWebsite.getText().toString());
-            jsonObject.accumulate("Youtube", strYoutube);
-            jsonObject.accumulate("Event_Cat_IDs", arrayEvents);
-            jsonObject.accumulate("ProfileName", fragmentEditProfileBinding.edtProfileName.getText().toString());
-            jsonObject.accumulate("UserPhoto", UserPhoto);
-            jsonObject.accumulate("FirstName", fragmentEditProfileBinding.edtFirstName.getText().toString());
-            jsonObject.accumulate("LastName", fragmentEditProfileBinding.edtLastName.getText().toString());
-
-
-         /*   jsonObject.accumulate("Facebook", strFB);
-            jsonObject.accumulate("Google", strGoogle);
-            jsonObject.accumulate("IndustryID", industryID);
-            jsonObject.accumulate("IndustryName", autoCompleteIndustry.getText().toString());
-            jsonObject.accumulate("Linkedin", strLinkedin);
-            jsonObject.accumulate("Phone", edtWork.getText().toString());
-            jsonObject.accumulate("Phone_type", "work");
-            jsonObject.accumulate("Postalcode", edtAddress6.getText().toString());
-            jsonObject.accumulate("ProfileID", profileId);
-            jsonObject.accumulate("Profile_Desc", ProfileDesc);
-            jsonObject.accumulate("Profile_Type", "work");
-            jsonObject.accumulate("State", edtAddress4.getText().toString());
-            jsonObject.accumulate("Twitter", strTwitter);
-            jsonObject.accumulate("UserID", UserID);
-            jsonObject.accumulate("Website", edtWebsite.getText().toString());*/
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
-    public String POST4(String url) {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("ProfileId", profileId);
-            jsonObject.accumulate("numofrecords", "10");
-            jsonObject.accumulate("pageno", "1");
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
 
     public String POST3(String url) {
         InputStream inputStream = null;
@@ -2103,17 +1831,9 @@ public class EditProfileActivity extends AppCompatActivity implements
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
-            // 2. make POST request to the given URL
             HttpGet httpPost = new HttpGet(url);
-
-            // 6. set httpPost Entity
-            //   httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
             HttpResponse httpResponse = httpclient.execute(httpPost);
 
             // 9. receive response as inputStream
@@ -2133,158 +1853,24 @@ public class EditProfileActivity extends AppCompatActivity implements
         // 11. return result
         return result;
     }
-
-    public static String POST10(String url) {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("ImgBase64", final_ImgBase64);
-            jsonObject.accumulate("classification", "userphoto");
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
 
     public static String POST7(String url) {
         InputStream inputStream = null;
         String result = "";
         try {
-            // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
             HttpPost httpPost = new HttpPost(url);
             String json = "";
-
-            // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("ImgBase64", final_ImgBase64);
             jsonObject.accumulate("classification", "card");
-
-            // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
             StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
             httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
             HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
-    public String POST8(String url) {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("FileName", fragmentEditProfileBinding.etAttachFile.getText().toString());
-            jsonObject.accumulate("ImgBase64", Attach_String);
-            jsonObject.accumulate("classification", "others");
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
             if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
@@ -2302,27 +1888,12 @@ public class EditProfileActivity extends AppCompatActivity implements
         InputStream inputStream = null;
         String result = "";
         try {
-            // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
             HttpGet httpPost = new HttpGet(url);
-
-            // 6. set httpPost Entity
-            //   httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
             HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
             if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
@@ -2336,83 +1907,16 @@ public class EditProfileActivity extends AppCompatActivity implements
         return result;
     }
 
-    public String POST5(String url) {
+    public String POST(String url) {
         InputStream inputStream = null;
         String result = "";
         try {
-            // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("profileid", profileId);
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
-    public String POST2(String url) {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
             HttpGet httpPost = new HttpGet(url);
-
-            // 6. set httpPost Entity
-            //   httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
             HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
             if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
@@ -2433,17 +1937,11 @@ public class EditProfileActivity extends AppCompatActivity implements
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
-            // 2. make POST request to the given URL
             HttpGet httpPost = new HttpGet(url);
 
-            // 6. set httpPost Entity
-            //   httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-type", "application/json");
 
-            // 8. Execute POST request to the given URL
             HttpResponse httpResponse = httpclient.execute(httpPost);
 
             // 9. receive response as inputStream
@@ -2459,135 +1957,6 @@ public class EditProfileActivity extends AppCompatActivity implements
                 eventList.add(st);
 
             }
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
-    public String POST(String url) {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-            if (companyID == null){
-                companyID = "";
-            }
-
-            if (industryID == null){
-                industryID = "";
-            }
-
-            if (designationID == null){
-                designationID = "";
-            }
-
-            JSONArray jsonArray = new JSONArray();
-            jsonArray.put(1011);
-
-            List<String> al = new ArrayList<>();
-            if (arrayEvents != null) {
-                for (int i=0;i<arrayEvents.length();i++){
-                    al.add(arrayEvents.getString(i));
-                }
-            }
-// add elements to al, including duplicates
-            Set<String> hs = new HashSet<>();
-            hs.addAll(al);
-            al.clear();
-            al.addAll(hs);
-            arrayEvents = new JSONArray(al);
-
-//            String name = edtUserName.getText().toString();
-            String name = fragmentEditProfileBinding.edtFirstName.getText().toString()+" "+fragmentEditProfileBinding.edtLastName.getText().toString();
-            String kept = name.substring(0, name.indexOf(" "));
-            String remainder = name.substring(name.indexOf(" ") + 1, name.length());
-            JSONArray jsonArray1 = new JSONArray();
-            jsonArray1.put(1);
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("Address1", fragmentEditProfileBinding.edtAddress1.getText().toString());
-            jsonObject.accumulate("Address2", fragmentEditProfileBinding.edtAddress2.getText().toString());
-            jsonObject.accumulate("Address3", fragmentEditProfileBinding.edtAddress3.getText().toString() + " " + fragmentEditProfileBinding.edtAddress4.getText().toString());
-            jsonObject.accumulate("Address4", fragmentEditProfileBinding.ccpAddress5.getSelectedCountryName().toString() + " " + fragmentEditProfileBinding.edtAddress6.getText().toString());
-            jsonObject.accumulate("Address_ID", "");
-            jsonObject.accumulate("Address_Type", "");
-            jsonObject.accumulate("AssociationIDs", arrayAssociation);
-            jsonObject.accumulate("Attachment_FileName", fragmentEditProfileBinding.etAttachFile.getText().toString());
-            jsonObject.accumulate("Card_Back", fragmentEditProfileBinding.txtCardBack.getText().toString());
-            jsonObject.accumulate("Card_Front", fragmentEditProfileBinding.txtCardFront.getText().toString());
-            jsonObject.accumulate("City", fragmentEditProfileBinding.edtAddress3.getText().toString());
-            jsonObject.accumulate("CompanyDesc", fragmentEditProfileBinding.edtCompanyDesc.getText().toString());
-            jsonObject.accumulate("CompanyID", companyID);
-            jsonObject.accumulate("CompanyName", fragmentEditProfileBinding.autoCompleteCompany.getText().toString());
-            jsonObject.accumulate("Country", fragmentEditProfileBinding.ccpAddress5.getSelectedCountryName().toString());
-            jsonObject.accumulate("Designation", fragmentEditProfileBinding.autoCompleteDesignation.getText().toString());
-            jsonObject.accumulate("DesignationID", designationID);
-            jsonObject.accumulate("Email1", fragmentEditProfileBinding.edtEmail.getText().toString());
-            jsonObject.accumulate("Email2", fragmentEditProfileBinding.edtEmail2.getText().toString());
-            jsonObject.accumulate("Facebook", strFB);
-            jsonObject.accumulate("Fax1", Fax1);
-            jsonObject.accumulate("Fax2", Fax2);
-            jsonObject.accumulate("Google", strGoogle);
-            jsonObject.accumulate("IndustryID", industryID);
-            jsonObject.accumulate("IndustryName", fragmentEditProfileBinding.autoCompleteIndustry.getText().toString());
-            jsonObject.accumulate("Linkedin", strLinkedin);
-            jsonObject.accumulate("Mobile1", Mobile1);
-            jsonObject.accumulate("Mobile2", Mobile2);
-            jsonObject.accumulate("Phone1", Phone1);
-            jsonObject.accumulate("Phone2", Phone2);
-            jsonObject.accumulate("Postalcode", fragmentEditProfileBinding.edtAddress6.getText().toString());
-            jsonObject.accumulate("ProfileID", profileId);
-            jsonObject.accumulate("Profile_Desc", fragmentEditProfileBinding.edtProfileDesc.getText().toString());
-            jsonObject.accumulate("Profile_Type", "");
-            jsonObject.accumulate("State", fragmentEditProfileBinding.edtAddress4.getText().toString());
-            jsonObject.accumulate("Twitter", strTwitter);
-            jsonObject.accumulate("UserID", UserID);
-            jsonObject.accumulate("Website", fragmentEditProfileBinding.edtWebsite.getText().toString());
-            jsonObject.accumulate("Youtube", strYoutube);
-            jsonObject.accumulate("Event_Cat_IDs", arrayEvents);
-            jsonObject.accumulate("ProfileName", fragmentEditProfileBinding.edtProfileName.getText().toString());
-            jsonObject.accumulate("UserPhoto", UserPhoto);
-            jsonObject.accumulate("FirstName", fragmentEditProfileBinding.edtFirstName.getText().toString());
-            jsonObject.accumulate("LastName", fragmentEditProfileBinding.edtLastName.getText().toString());
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
             // 10. convert inputstream to string
             if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
@@ -2862,16 +2231,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                         CardSwipe.holder.imageView.setImageBitmap(bitmap);
                         new HttpAsyncTaskBackUpload().execute(Utility.BASE_URL+"ImgUpload");
                     }
-                   /* else if (cropType.equals("attachment")){
-                        Uri imgUri = getImageUri(getApplicationContext(), bitmap);
-                        // CALL THIS METHOD TO GET THE ACTUAL PATH
-                        File imgFile = new File(getRealPathFromURI(imgUri));
 
-                        String imgPath = getRealPathFromURI(imgUri);
-                        size_calculate(imgPath);
-
-                      //  size_calculate(picturePath);
-                    }*/
                     else {
                         fragmentEditProfileBinding.includeTop.imgProfile.setImageBitmap(bitmap);
                         new HttpAsyncTaskUserUpload().execute(Utility.BASE_URL+"ImgUpload");
@@ -2903,11 +2263,6 @@ public class EditProfileActivity extends AppCompatActivity implements
         }
         else
         {
-            // If the user has not previously signed in on this device or the sign-in has expired,
-            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
-            // single sign-on will occur in this branch.
-
-//            showProgressDialog();
 
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override
@@ -2921,15 +2276,6 @@ public class EditProfileActivity extends AppCompatActivity implements
 
     private void showProgressDialog()
     {
-       /* if (mProgressDialog == null)
-        {
-            mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage("Google Login..");
-            mProgressDialog.setIndeterminate(true);
-        }
-
-        mProgressDialog.show();*/
-
         String loading = "Google login" ;
         CustomProgressDialog(loading);
 
@@ -2941,19 +2287,10 @@ public class EditProfileActivity extends AppCompatActivity implements
     private void updateUI(boolean isSignedIn) {
         if (isSignedIn) {
             fragmentEditProfileBinding.btnSignIn.setVisibility(View.GONE);
-            //loginSession.createLoginSession(user.getDisplayName(), user.getEmail(), String.valueOf(user.getPhotoUrl()), "");
-          /*  Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
-            intent.putExtra("viewpager_position", 0);
-            startActivity(intent);
-            finish();*/
-            // btnSignOut.setVisibility(View.VISIBLE);
-            //  btnRevokeAccess.setVisibility(View.VISIBLE);
-            // llProfileLayout.setVisibility(View.VISIBLE);
+
         } else {
             fragmentEditProfileBinding.btnSignIn.setVisibility(View.VISIBLE);
-            //  btnSignOut.setVisibility(View.GONE);
-            //  btnRevokeAccess.setVisibility(View.GONE);
-            // llProfileLayout.setVisibility(View.GONE);
+
         }
     }
 
@@ -2985,10 +2322,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     }
 
     private void onSelectFromGalleryResultCard(Intent data) {
-        Uri selectedImageUri = data.getData();
-//        imagepath = getPath(selectedImageUri);
-
-        Bitmap bm = null;
+           Bitmap bm = null;
         if (data != null) {
             Uri targetUri = data.getData();
             Bitmap bitmap;
@@ -2996,125 +2330,15 @@ public class EditProfileActivity extends AppCompatActivity implements
                 bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
                 originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
 
-               /* Intent intent = new Intent(getApplicationContext(), com.circle8.circleOne.ScanBotGallery.MainActivity.class);
-                intent.putExtra("bitmap", originalBitmap);
-                intent.putExtra("from", "edit");
-                startActivity(intent);*/
-             /*   editPolygonView.setImageBitmap(originalBitmap);
-
-
-                new InitImageViewTask().executeOnExecutor(Executors.newSingleThreadExecutor(), originalBitmap);
-*/
-
-                // image = ConvertBitmapToString(resizedBitmap);
-                /*final_ImgBase64 = BitMapToString(resizedBitmap);
-                // final_ImgBase64 = resizeBase64Image(s);
-                Log.d("base64string ", final_ImgBase64);
-//                Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
-                // Upload();
-                CardSwipe.imageView.setImageBitmap(resizedBitmap);
-                if (cardType.equals("front"))
-                    new HttpAsyncTaskFrontUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
-                else if (cardType.equals("back"))
-                    new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");*/
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
 
-//        BmToString(bm);
-    }
-
-    public static void crop(Bitmap bitmap) {
-        // crop & warp image by selected polygon (editPolygonView.getPolygon())
-       /* final Bitmap documentImage = new ContourDetector().processImageF(
-                originalBitmap, editPolygonView.getPolygon(), ContourDetector.IMAGE_FILTER_NONE);
-
-        editPolygonView.setVisibility(View.GONE);
-        cropButton.setVisibility(View.GONE);
-
-        resultImageView.setImageBitmap(documentImage);
-        resultImageView.setVisibility(View.VISIBLE);
-        backButton.setVisibility(View.VISIBLE);
-        rltGallery.setVisibility(View.GONE);*/
-        final_ImgBase64 = BitMapToString(bitmap);
-        // final_ImgBase64 = resizeBase64Image(s);
-        Log.d("base64string ", final_ImgBase64);
-//                Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
-        // Upload();
-        CardSwipe.holder.imageView.setImageBitmap(bitmap);
-        if (cardType.equals("front"))
-            new HttpAsyncTaskFrontUpload().execute(Utility.BASE_URL+"ImgUpload");
-        else if (cardType.equals("back"))
-            new HttpAsyncTaskBackUpload().execute(Utility.BASE_URL+"ImgUpload");
-    }
-
-    public String POSTImage(String url) {
-        InputStream inputStream = null;
-        String result = "";
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("ImgBase64", final_ImgBase64);
-            jsonObject.accumulate("classification", "userphoto");
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
     }
 
     private void onSelectFromGalleryResult(Intent data) {
-       /* Uri selectedImageUri = data.getData();
-        String imgPath = getPath(selectedImageUri);
-
-        File imgFile = new File(imgPath);
-        String imgName = imgFile.getName();
-*/
-//        etAttachFile.setText(imgName);
-        //call method
-
-
         Uri selectedImage = data.getData();
         String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
@@ -3162,9 +2386,6 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         String imgName = imgFile.getName();
 
-//        etAttachFile.setText(imgName);
-
-        //call method
         size_calculate(imgPath);
 
         File destination = new File(Environment.getExternalStorageDirectory(), System.currentTimeMillis() + ".jpg");
@@ -3207,74 +2428,15 @@ public class EditProfileActivity extends AppCompatActivity implements
         String freeSpace = String.valueOf(docsFile.getFreeSpace());
         String usableSpace = String.valueOf(docsFile.getUsableSpace());
 
-        /*float fileSize = docsFile.length();
-              fileSize = fileSize / 1024 ;
-
-        String value = null ;
-
-        float final_fileSize = 0;
-        float mb_size = 0;
-
-        if(fileSize >= 1024)
-        {
-            value = (fileSize/1024)+"MB";
-
-            mb_size = fileSize/1024 ;
-        }
-        else
-        {
-            value = (fileSize)+"KB";
-
-            final_fileSize = fileSize ;
-        }
-
-        if(mb_size > 3.00)
-        {
-//            Toast.makeText(getApplicationContext(),"File is greater than 3MB"+mb_size,Toast.LENGTH_LONG).show();
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(EditProfileActivity.this);
-            alertDialogBuilder.setTitle("Warning!");
-            alertDialogBuilder.setMessage("Please select file less than 3MB.");
-            alertDialogBuilder.setCancelable(false)
-                    .setPositiveButton("Okay",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id)
-                                {
-                                    dialog.dismiss();
-                                }
-                            });
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
-        }
-        else
-        {
-            etAttachFile.setText(docsName);
-        }*/
-
-//        Toast.makeText(getApplicationContext(),"Space:- \nTotal: "+totalSpace+
-//                "\n Free: "+freeSpace+"\n Usable: "+usableSpace+"\n Size: "+value+"\n Final Size: "+final_fileSize,Toast.LENGTH_LONG).show();
-
     }
 
     private void onSelectFromAudio(Intent data) {
-        //the selected audio.
-//        Uri uri = data.getData();
-       /* String audioPath = data.getData().getPath();
-        File audioFile = new File(audioPath);
-        String audioName = audioFile.getName();
-        etAttachFile.setText(audioName);
-
-        Toast.makeText(getApplicationContext(),"Audio path: "+audioPath,Toast.LENGTH_LONG).show();*/
-
-//        mMediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
 
         Uri selectedImageUri = data.getData();
         String audioPath = getPath(selectedImageUri);
 
         File audioFile = new File(audioPath);
         String audioName = audioFile.getName();
-
-//        etAttachFile.setText(audioName);
-
         size_calculate(audioPath);
     }
 
@@ -3337,17 +2499,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         File auxFile = new File(uri.toString());
         assertEquals(file.getAbsolutePath(), auxFile.getAbsolutePath());
 
-       /* new File(uri.getPath());
-//        or
-        new File(uri.toString());
-
-//        NOTE: url.toString() return a String in the format: "file:///mnt/sdcard/myPicture.jpg",
-// whereas url.getPath() returns a String in the format: "/mnt/sdcard/myPicture.jpg",  */
-
-        // and
-//        new File(new URI(androidURI.toString()));
-
-    }
+          }
 
     private class HttpAsyncTaskAssociation extends AsyncTask<String, Void, String>
     {
@@ -3357,14 +2509,6 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPreExecute()
         {
             super.onPreExecute();
-           /* dialog = new ProgressDialog(EditProfileActivity.this);
-            dialog.setMessage("Get Association..");
-            dialog.show();
-            dialog.setCancelable(false);*/
-
-            /*String loading = "Get Association" ;
-
-            CustomProgressDialog(loading,activity);*/
         }
 
         @Override
@@ -3375,10 +2519,6 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPostExecute(String result)
         {
-//            dialog.dismiss();
-//          dismissProgress();
-           // fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
-//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
 
                 mAdapter1 = new CardViewDataAdapter(eventList);
@@ -3434,29 +2574,114 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           /* dialog = new ProgressDialog(EditProfileActivity.this);
-            dialog.setMessage("Creating Profile..");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
+
             String loading = "Creating profile" ;
             CustomProgressDialog(loading);
 
         }
 
         @Override
-        protected String doInBackground(String... urls) {
-            return POST6(urls[0]);
+        protected String doInBackground(String... urls)
+        {
+            if (companyID == null){
+                companyID = "";
+            }
+
+            if (industryID == null){
+                industryID = "";
+            }
+
+            if (designationID == null){
+                designationID = "";
+            }
+
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.put(1011);
+
+            String name = fragmentEditProfileBinding.edtFirstName.getText().toString()+" "+fragmentEditProfileBinding.edtLastName.getText().toString();
+            String kept = name.substring(0, name.indexOf(" "));
+            String remainder = name.substring(name.indexOf(" ") + 1, name.length());
+            JSONArray jsonArray1 = new JSONArray();
+            jsonArray1.put(1);
+
+            List<String> al = new ArrayList<>();
+            if (arrayEvents != null) {
+                for (int i=0;i<arrayEvents.length();i++){
+                    try {
+                        al.add(arrayEvents.getString(i));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+// add elements to al, including duplicates
+            Set<String> hs = new HashSet<>();
+            hs.addAll(al);
+            al.clear();
+            al.addAll(hs);
+            arrayEvents = new JSONArray(al);
+
+
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("Address1", fragmentEditProfileBinding.edtAddress1.getText().toString());
+                jsonObject.accumulate("Address2", fragmentEditProfileBinding.edtAddress2.getText().toString());
+                jsonObject.accumulate("Address3", fragmentEditProfileBinding.edtAddress3.getText().toString() + " " + fragmentEditProfileBinding.edtAddress4.getText().toString());
+                jsonObject.accumulate("Address4", fragmentEditProfileBinding.ccpAddress5.getSelectedCountryName().toString() + " " + fragmentEditProfileBinding.edtAddress6.getText().toString());
+                jsonObject.accumulate("Address_ID", "1");
+                jsonObject.accumulate("Address_Type", "work");
+                jsonObject.accumulate("AssociationIDs", arrayAssociation);
+                jsonObject.accumulate("Attachment_FileName",fragmentEditProfileBinding.etAttachFile.getText().toString());
+                jsonObject.accumulate("Card_Back", fragmentEditProfileBinding.txtCardBack.getText().toString());
+                jsonObject.accumulate("Card_Front", fragmentEditProfileBinding.txtCardFront.getText().toString());
+                jsonObject.accumulate("City", fragmentEditProfileBinding.edtAddress3.getText().toString());
+                jsonObject.accumulate("CompanyDesc", fragmentEditProfileBinding.edtCompanyDesc.getText().toString());
+                jsonObject.accumulate("CompanyID", companyID);
+                jsonObject.accumulate("CompanyName", fragmentEditProfileBinding.autoCompleteCompany.getText().toString());
+                jsonObject.accumulate("Country", fragmentEditProfileBinding.ccpAddress5.getSelectedCountryName().toString());
+                jsonObject.accumulate("Designation", fragmentEditProfileBinding.autoCompleteDesignation.getText().toString());
+                jsonObject.accumulate("DesignationID", designationID);
+                jsonObject.accumulate("Email1", fragmentEditProfileBinding.edtEmail.getText().toString());
+                jsonObject.accumulate("Email2", fragmentEditProfileBinding.edtEmail2.getText().toString());
+                jsonObject.accumulate("Facebook", strFB);
+                jsonObject.accumulate("Fax1", Fax1);
+                jsonObject.accumulate("Fax2", Fax2);
+                jsonObject.accumulate("Google", strGoogle);
+                jsonObject.accumulate("IndustryID", industryID);
+                jsonObject.accumulate("IndustryName", fragmentEditProfileBinding.autoCompleteIndustry.getText().toString());
+                jsonObject.accumulate("Linkedin", strLinkedin);
+                jsonObject.accumulate("Mobile1", Mobile1);
+                jsonObject.accumulate("Mobile2", Mobile2);
+                jsonObject.accumulate("Phone1", Phone1);
+                jsonObject.accumulate("Phone2", Phone2);
+                jsonObject.accumulate("Postalcode", fragmentEditProfileBinding.edtAddress6.getText().toString());
+                jsonObject.accumulate("ProfileID", profileId);
+                jsonObject.accumulate("Profile_Desc", fragmentEditProfileBinding.edtProfileDesc.getText().toString());
+                jsonObject.accumulate("Profile_Type", "");
+                jsonObject.accumulate("State", fragmentEditProfileBinding.edtAddress4.getText().toString());
+                jsonObject.accumulate("Twitter", strTwitter);
+                jsonObject.accumulate("UserID", UserID);
+                jsonObject.accumulate("Website", fragmentEditProfileBinding.edtWebsite.getText().toString());
+                jsonObject.accumulate("Youtube", strYoutube);
+                jsonObject.accumulate("Event_Cat_IDs", arrayEvents);
+                jsonObject.accumulate("ProfileName", fragmentEditProfileBinding.edtProfileName.getText().toString());
+                jsonObject.accumulate("UserPhoto", UserPhoto);
+                jsonObject.accumulate("FirstName", fragmentEditProfileBinding.edtFirstName.getText().toString());
+                jsonObject.accumulate("LastName", fragmentEditProfileBinding.edtLastName.getText().toString());
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
-//            dialog.dismiss();
-           // dismissProgress();
             fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
@@ -3475,14 +2700,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                             finish();
                         }else {
                             Toast.makeText(getApplicationContext(), "Successfully added", Toast.LENGTH_SHORT).show();
-                           /* Intent go = new Intent(getApplicationContext(), CardsActivity.class);
-
-                            // you pass the position you want the viewpager to show in the extra,
-                            // please don't forget to define and initialize the position variable
-                            // properly
-                            go.putExtra("viewpager_position", 3);
-                            startActivity(go);*/
-                            finish();
+                                                      finish();
                         }
                     } else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
@@ -3502,18 +2720,21 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            /*dialog = new ProgressDialog(getActivity());
-            dialog.setMessage("Fetching Testimonials...");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
-        }
+                   }
 
         @Override
         protected String doInBackground(String... urls) {
-            return POST4(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("ProfileId", profileId);
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
 
         // onPostExecute displays the results of the AsyncTask.
@@ -3531,7 +2752,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                         fragmentEditProfileBinding.txtMore.setVisibility(View.GONE);
                         fragmentEditProfileBinding.txtTestimonial.setVisibility(View.VISIBLE);
                     } else {
-                      //  fragmentEditProfileBinding.lstTestimonial.setVisibility(View.VISIBLE);
+                        //  fragmentEditProfileBinding.lstTestimonial.setVisibility(View.VISIBLE);
                         fragmentEditProfileBinding.txtMore.setVisibility(View.VISIBLE);
                         fragmentEditProfileBinding.txtTestimonial.setVisibility(View.GONE);
                     }
@@ -3577,13 +2798,6 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           /* dialog = new ProgressDialog(EditProfileActivity.this);
-            dialog.setMessage("Loading..");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
 
             String loading = "Loading" ;
             CustomProgressDialog(loading);
@@ -3599,8 +2813,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPostExecute(String result)
         {
-//            dialog.dismiss();
-           // dismissProgress();
+
             fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
@@ -3640,13 +2853,6 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           /* dialog = new ProgressDialog(EditProfileActivity.this);
-            dialog.setMessage("Loading..");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
 
             String loading = "Loading" ;
             CustomProgressDialog(loading);
@@ -3662,8 +2868,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPostExecute(String result)
         {
-//            dialog.dismiss();
-           // dismissProgress();
+
             fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
@@ -3704,13 +2909,6 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           /* dialog = new ProgressDialog(EditProfileActivity.this);
-            dialog.setMessage("Loading..");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
             String loading = "Profile loading" ;
             CustomProgressDialog(loading);
 
@@ -3718,19 +2916,23 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         @Override
         protected String doInBackground(String... urls) {
-            return POST5(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("profileid", profileId);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
-//            dialog.dismiss();
-          //  dismissProgress();
+
             fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 
-//          dismissProgress();
-            // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
 
             try
@@ -3942,7 +3144,6 @@ public class EditProfileActivity extends AppCompatActivity implements
                     } catch (Exception e) {
 
                     }
-
                     try {
 
                         int selectedPos2 = industry.indexOf((String) IndustryName);
@@ -3950,7 +3151,6 @@ public class EditProfileActivity extends AppCompatActivity implements
                     } catch (Exception e) {
 
                     }
-
 
                     if (strFB.equals("") || strFB.equals(null))
                     {
@@ -4006,12 +3206,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     fragmentEditProfileBinding.edtProfileDesc.setText(ProfileDesc);
                     fragmentEditProfileBinding.edtEmail.setText(Email1);
                     fragmentEditProfileBinding.edtEmail2.setText(Email2);
-                    //  edtPrimary.setText(Mobile1);
-                    //  edtWork.setText(Phone1);
-                    // edtWork2.setText(Phone2);
-                    // edtPrimary2.setText(Mobile2);
-                    //   edtFax1.setText(Fax1);
-                    //  edtFax2.setText(Fax2);
+
                     fragmentEditProfileBinding.edtWebsite.setText(Website);
                    /* edtAddress1.setText(Address1 + " " + Address2);
                     edtAddress2.setText(Address3 + " " + Address4);*/
@@ -4028,12 +3223,6 @@ public class EditProfileActivity extends AppCompatActivity implements
 
                     fragmentEditProfileBinding.etAttachFile.setText(Attachment_FileName);
 
-                   /* if (Card_Front.equalsIgnoreCase("") || Card_Back.equalsIgnoreCase("")) {
-                        appbar.setVisibility(View.GONE);
-                    } else {
-                        appbar.setVisibility(View.VISIBLE);
-                    }*/
-
                     fragmentEditProfileBinding.txtCardFront.setText(Card_Front);
                     fragmentEditProfileBinding.txtCardBack.setText(Card_Back);
                     if (UserPhoto.equals("")) {
@@ -4043,24 +3232,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                                 .onlyScaleDown().skipMemoryCache().into(fragmentEditProfileBinding.includeTop.imgProfile);
                     }
 
-                   /* image = new ArrayList<>();
-                    image.add(Utility.BASE_IMAGE_URL+"Cards/" + Card_Front);
-                    image.add(Utility.BASE_IMAGE_URL+"Cards/" + Card_Back);
-                    myPager = new CardSwipe(getApplicationContext(), image);*/
-
-                   /* mViewPager.setClipChildren(false);
-                    mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                    mViewPager.setOffscreenPageLimit(1);
-                    //  mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
-                    mViewPager.setAdapter(myPager);
-*/
-                   /* viewPager1.setClipChildren(false);
-                    viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                    viewPager1.setOffscreenPageLimit(1);
-                    // viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
-                    viewPager1.setAdapter(myPager);*/
-
-                } else {
+                          } else {
                     Toast.makeText(getApplicationContext(), "Not able to load profile..", Toast.LENGTH_LONG).show();
                 }
 
@@ -4076,13 +3248,6 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            /*dialog = new ProgressDialog(EditProfileActivity.this);
-            dialog.setMessage("Loading..");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
 
             String loading = "Loading" ;
             CustomProgressDialog(loading);
@@ -4091,15 +3256,14 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         @Override
         protected String doInBackground(String... urls) {
-            return POST2(urls[0]);
+            return POST(urls[0]);
         }
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
-//            dialog.dismiss();
-           // dismissProgress();
+
             fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
@@ -4135,30 +3299,112 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           /* dialog = new ProgressDialog(EditProfileActivity.this);
-            dialog.setMessage("Updating Profile..");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
-
-            String loading = "Updating profile" ;
+                      String loading = "Updating profile" ;
             CustomProgressDialog(loading);
 
         }
 
         @Override
         protected String doInBackground(String... urls) {
-            return POST(urls[0]);
+            String json = "";
+            if (companyID == null){
+                companyID = "";
+            }
+
+            if (industryID == null){
+                industryID = "";
+            }
+
+            if (designationID == null){
+                designationID = "";
+            }
+
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.put(1011);
+
+            List<String> al = new ArrayList<>();
+            if (arrayEvents != null) {
+                for (int i=0;i<arrayEvents.length();i++){
+                    try {
+                        al.add(arrayEvents.getString(i));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+// add elements to al, including duplicates
+            Set<String> hs = new HashSet<>();
+            hs.addAll(al);
+            al.clear();
+            al.addAll(hs);
+            arrayEvents = new JSONArray(al);
+
+//            String name = edtUserName.getText().toString();
+            String name = fragmentEditProfileBinding.edtFirstName.getText().toString()+" "+fragmentEditProfileBinding.edtLastName.getText().toString();
+            String kept = name.substring(0, name.indexOf(" "));
+            String remainder = name.substring(name.indexOf(" ") + 1, name.length());
+            JSONArray jsonArray1 = new JSONArray();
+            jsonArray1.put(1);
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("Address1", fragmentEditProfileBinding.edtAddress1.getText().toString());
+                jsonObject.accumulate("Address2", fragmentEditProfileBinding.edtAddress2.getText().toString());
+                jsonObject.accumulate("Address3", fragmentEditProfileBinding.edtAddress3.getText().toString() + " " + fragmentEditProfileBinding.edtAddress4.getText().toString());
+                jsonObject.accumulate("Address4", fragmentEditProfileBinding.ccpAddress5.getSelectedCountryName().toString() + " " + fragmentEditProfileBinding.edtAddress6.getText().toString());
+                jsonObject.accumulate("Address_ID", "");
+                jsonObject.accumulate("Address_Type", "");
+                jsonObject.accumulate("AssociationIDs", arrayAssociation);
+                jsonObject.accumulate("Attachment_FileName", fragmentEditProfileBinding.etAttachFile.getText().toString());
+                jsonObject.accumulate("Card_Back", fragmentEditProfileBinding.txtCardBack.getText().toString());
+                jsonObject.accumulate("Card_Front", fragmentEditProfileBinding.txtCardFront.getText().toString());
+                jsonObject.accumulate("City", fragmentEditProfileBinding.edtAddress3.getText().toString());
+                jsonObject.accumulate("CompanyDesc", fragmentEditProfileBinding.edtCompanyDesc.getText().toString());
+                jsonObject.accumulate("CompanyID", companyID);
+                jsonObject.accumulate("CompanyName", fragmentEditProfileBinding.autoCompleteCompany.getText().toString());
+                jsonObject.accumulate("Country", fragmentEditProfileBinding.ccpAddress5.getSelectedCountryName().toString());
+                jsonObject.accumulate("Designation", fragmentEditProfileBinding.autoCompleteDesignation.getText().toString());
+                jsonObject.accumulate("DesignationID", designationID);
+                jsonObject.accumulate("Email1", fragmentEditProfileBinding.edtEmail.getText().toString());
+                jsonObject.accumulate("Email2", fragmentEditProfileBinding.edtEmail2.getText().toString());
+                jsonObject.accumulate("Facebook", strFB);
+                jsonObject.accumulate("Fax1", Fax1);
+                jsonObject.accumulate("Fax2", Fax2);
+                jsonObject.accumulate("Google", strGoogle);
+                jsonObject.accumulate("IndustryID", industryID);
+                jsonObject.accumulate("IndustryName", fragmentEditProfileBinding.autoCompleteIndustry.getText().toString());
+                jsonObject.accumulate("Linkedin", strLinkedin);
+                jsonObject.accumulate("Mobile1", Mobile1);
+                jsonObject.accumulate("Mobile2", Mobile2);
+                jsonObject.accumulate("Phone1", Phone1);
+                jsonObject.accumulate("Phone2", Phone2);
+                jsonObject.accumulate("Postalcode", fragmentEditProfileBinding.edtAddress6.getText().toString());
+                jsonObject.accumulate("ProfileID", profileId);
+                jsonObject.accumulate("Profile_Desc", fragmentEditProfileBinding.edtProfileDesc.getText().toString());
+                jsonObject.accumulate("Profile_Type", "");
+                jsonObject.accumulate("State", fragmentEditProfileBinding.edtAddress4.getText().toString());
+                jsonObject.accumulate("Twitter", strTwitter);
+                jsonObject.accumulate("UserID", UserID);
+                jsonObject.accumulate("Website", fragmentEditProfileBinding.edtWebsite.getText().toString());
+                jsonObject.accumulate("Youtube", strYoutube);
+                jsonObject.accumulate("Event_Cat_IDs", arrayEvents);
+                jsonObject.accumulate("ProfileName", fragmentEditProfileBinding.edtProfileName.getText().toString());
+                jsonObject.accumulate("UserPhoto", UserPhoto);
+                jsonObject.accumulate("FirstName", fragmentEditProfileBinding.edtFirstName.getText().toString());
+                jsonObject.accumulate("LastName", fragmentEditProfileBinding.edtLastName.getText().toString());
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
-//            dialog.dismiss();
-           // dismissProgress();
+
             Log.e("result",""+result);
             fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
@@ -4180,56 +3426,14 @@ public class EditProfileActivity extends AppCompatActivity implements
                         }
                         else
                         {
-
-
-                            //ProfileFragment.callMyProfile();
-                            Toast.makeText(getApplicationContext(), "Successfully updated", Toast.LENGTH_SHORT).show();
+   Toast.makeText(getApplicationContext(), "Successfully updated", Toast.LENGTH_SHORT).show();
                             finish();
 
-                           /* Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
-                            overridePendingTransition(0, 0);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            finish();
-                            overridePendingTransition(0, 0);
-                            startActivity(intent);*/
-
-                          /*  ProfileFragment.mHandler = new Handler();
-
-                            ProfileFragment.mHandler.postDelayed(ProfileFragment.m_Runnable,1000);
-*/
-                           /* new Thread(new Runnable() {
-
-                                @Override
-                                public void run() {
-
-                                    // TODO Auto-generated method stub
-                                    try {
-
-                                     //   Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
-                                        Intent go = new Intent(getApplicationContext(), CardsActivity.class);
-
-                                        // you pass the position you want the viewpager to show in the extra,
-                                        // please don't forget to define and initialize the position variable
-                                        // properly
-                                        go.putExtra("viewpager_position", 3);
-                                        startActivity(go);
-
-                                    } catch (Exception ex) {
-                                        ex.printStackTrace();
-                                    }
-
-
-                                }
-
-
-                            }).start();*/
                         }
                     } else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
-
-                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
-                }
+          }
             } catch (JSONException e1) {
                 e1.printStackTrace();
             }
@@ -4259,8 +3463,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPostExecute(String result)
         {
-//            dialog.dismiss();
-          //  dismissProgress();
+
             fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
@@ -4271,12 +3474,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     String success = jsonObject.getString("success").toString();
 
                     if (success.equals("1") && ImgName != null) {
-                        /*Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(intent);
-                        finish();*/
-                        // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
-                        fragmentEditProfileBinding.txtCardFront.setText(ImgName);
+                               fragmentEditProfileBinding.txtCardFront.setText(ImgName);
                     } else {
                         Toast.makeText(activity, "Error while uploading image..", Toast.LENGTH_LONG).show();
                     }
@@ -4305,15 +3503,23 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         @Override
         protected String doInBackground(String... urls) {
-            return POST8(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("FileName", fragmentEditProfileBinding.etAttachFile.getText().toString());
+                jsonObject.accumulate("ImgBase64", Attach_String);
+                jsonObject.accumulate("classification", "others");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return POST2(urls[0],jsonObject);
         }
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
-//            dialog.dismiss();
-            //dismissProgress();
+
             fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
@@ -4323,12 +3529,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     String success = jsonObject.getString("success").toString();
 
                     if (success.equals("1") && ImgName != null) {
-                        /*Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(intent);
-                        finish();*/
-                        // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
-                        fragmentEditProfileBinding.etAttachFile.setText(ImgName);
+                       fragmentEditProfileBinding.etAttachFile.setText(ImgName);
                     } else {
                         Toast.makeText(getBaseContext(), "Error while uploading image..", Toast.LENGTH_LONG).show();
                     }
@@ -4355,15 +3556,22 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         @Override
         protected String doInBackground(String... urls) {
-            return POST10(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("ImgBase64", final_ImgBase64);
+                jsonObject.accumulate("classification", "userphoto");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
-//            dialog.dismiss();
-          //  dismissProgress();
+
             fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
@@ -4375,13 +3583,8 @@ public class EditProfileActivity extends AppCompatActivity implements
 
                     if (success.equals("1") && ImgName != null) {
                         Toast.makeText(activity, "uploaded", Toast.LENGTH_LONG).show();
-                       /* Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(intent);
-                        finish();*/
-                        // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
-                        UserPhoto = ImgName;
-                        // fragmentEditProfileBinding.txtCardBack.setText(ImgName);
-                    } else {
+                    UserPhoto = ImgName;
+                     } else {
                         Toast.makeText(activity, "Error while uploading image..", Toast.LENGTH_LONG).show();
                     }
                 } else {
@@ -4415,8 +3618,6 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPostExecute(String result)
         {
-//            dialog.dismiss();
-            //dismissProgress();
             fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
@@ -4427,12 +3628,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     String success = jsonObject.getString("success").toString();
 
                     if (success.equals("1") && ImgName != null) {
-                        /*Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(intent);
-                        finish();*/
-                        // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
-                        fragmentEditProfileBinding.txtCardBack.setText(ImgName);
+                             fragmentEditProfileBinding.txtCardBack.setText(ImgName);
                     } else {
                         Toast.makeText(activity, "Error while uploading image..", Toast.LENGTH_LONG).show();
                     }
@@ -4447,87 +3643,6 @@ public class EditProfileActivity extends AppCompatActivity implements
         }
     }
 
-    private class HttpAsyncTaskEventList extends AsyncTask<String, Void, String>
-    {
-        ProgressDialog dialog;
-
-        @Override
-        protected void onPreExecute()
-        {
-            super.onPreExecute();
-           /* dialog = new ProgressDialog(getActivity());
-            dialog.setMessage("Finding Events...");
-            dialog.show();*/
-
-            String loading = "Finding events" ;
-            CustomProgressDialog(loading);
-        }
-
-        @Override
-        protected String doInBackground(String... urls)
-        {
-            return EventListPost(urls[0]);
-        }
-        // onPostExecute displays the results of the AsyncTask.
-        @Override
-        protected void onPostExecute(String result)
-        {
-//            dialog.dismiss();
-            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
-//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
-
-            try
-            {
-                if(result == "")
-                {
-                    Toast.makeText(getApplicationContext(), "Check data connection", Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-                    JSONObject response = new JSONObject(result);
-                    String message = response.getString("message");
-                    String success = response.getString("success");
-                    String count = response.getString("count");
-                    String pageno = response.getString("pageno");
-                    String numofrecords = response.getString("numofrecords");
-
-                    JSONArray eventList = response.getJSONArray("EventList");
-
-                    if(eventList.length() == 0)
-                    {
-
-                    }
-                    else
-                    {
-                        for(int i = 0 ; i <= eventList.length() ; i++ )
-                        {
-                            JSONObject eList = eventList.getJSONObject(i);
-                            EventModel eventModel = new EventModel();
-                            eventModel.setEvent_ID(eList.getString("Event_ID"));
-                            eventModel.setEvent_Name(eList.getString("Event_Name"));
-                            eventModel.setEvent_Type(eList.getString("Event_Type"));
-                            eventModel.setEvent_Category_ID(eList.getString("Event_Category_ID"));
-                            eventModel.setEvent_Category_Name(eList.getString("Event_Category_Name"));
-                            eventModelArrayList.add(eventModel);
-
-                            String Event_ID = eList.getString("Event_ID") ;
-                            String Event_Name = eList.getString("Event_Name") ;
-                            String Event_Type = eList.getString("Event_Type") ;
-                            String Event_Category_ID = eList.getString("Event_Category_ID") ;
-                            String Event_Category_Name = eList.getString("Event_Category_Name") ;
-
-                            eventCategoryIDList.add(Event_Category_ID);
-
-                        }
-                    }
-                }
-            }
-            catch (JSONException e)
-            {
-                e.printStackTrace();
-            }
-        }
-    }
     public static void CustomProgressDialog(final String loading)
     {
         fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.VISIBLE);
@@ -4538,83 +3653,4 @@ public class EditProfileActivity extends AppCompatActivity implements
         fragmentEditProfileBinding.txtProgressing.setText(loading+"...");
 
     }
-    public  String EventListPost(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try
-        {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("my_userid", "" );
-            jsonObject.accumulate("numofrecords", "10");
-            jsonObject.accumulate("pageno", "1" );
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
-
-
-   /* private void getFile()
-    {
-        File file = new File(getPath(uri));
-    }*/
-
-   /* public String getPath(Uri uri)
-    {
-        String[] projection = { MediaStore.Images.Media.DATA };
-        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
-        if (cursor == null) return null;
-        int column_index =             cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        String s=cursor.getString(column_index);
-        cursor.close();
-        return s;
-    }*/
-
-
-
-
 }
