@@ -101,6 +101,12 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 }
             }
         }.start();
+        luckyDrawLayoutBinding.imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         luckyDrawLayoutBinding.includePrize.imgPrize.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override

@@ -44,8 +44,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:theme,android:allowBackup">
-        <meta-data android:name="com.onesignal.NotificationOpened.DEFAULT" android:value="DISABLE" />
-
+        <meta-data
+            android:name="com.onesignal.NotificationOpened.DEFAULT"
+            android:value="DISABLE" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -104,7 +105,6 @@
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout"
             android:screenOrientation="portrait">
 
-
             <!--
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
@@ -128,7 +128,6 @@
         <activity
             android:name=".Fragments.ConnectFragment"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".Activity.EventsSelectOption"
             android:screenOrientation="portrait" />
@@ -281,7 +280,7 @@
         <activity
             android:name=".Activity.LuckyDrawActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar"/>
+            android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.RewardsPointsActivity1"
             android:screenOrientation="portrait"
@@ -320,17 +319,19 @@
             android:name=".Activity.CreateGroupActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
-<!--        <activity
+        <!--
+            <activity
             android:name=".Activity.MerchantDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar" />-->
+            android:theme="@style/NoActionbar" />
+        -->
         <activity
             android:name=".Activity.AttachmentDisplay"
             android:theme="@style/NoActionbarSplash" />
         <activity
             android:name=".Activity.CardVerificationActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar"></activity>
+            android:theme="@style/NoActionbar" />
         <activity
             android:name=".chat.DialogsActivity"
             android:screenOrientation="portrait" />
@@ -360,7 +361,8 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".Activity.DashboardActivity"
+        <activity
+            android:name=".Activity.DashboardActivity"
             android:theme="@style/NoActionbar">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
@@ -384,6 +386,7 @@
                 <data android:mimeType="application/com.circle8.circleone" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.AddManuallyActivity"></activity>
     </application>
 
 </manifest>
