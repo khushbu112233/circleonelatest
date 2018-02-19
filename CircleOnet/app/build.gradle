@@ -146,6 +146,8 @@ dependencies {
     implementation project(':imgLoaderlibrary')
     implementation 'com.flurry.android:analytics:6.3.1'
     implementation 'com.squareup.okhttp:okhttp:2.4.0'
+    implementation 'com.skyfishjy.ripplebackground:library:1.0.1'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
 }

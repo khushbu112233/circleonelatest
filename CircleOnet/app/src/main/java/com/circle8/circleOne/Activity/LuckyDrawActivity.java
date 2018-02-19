@@ -119,113 +119,55 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 }
             }
         }.start();
-        luckyDrawLayoutBinding.includePrize.imgPrize.setOnClickListener(new View.OnClickListener() {
+        luckyDrawLayoutBinding.includePrize.rtlRefresh.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
 
-                Collections.shuffle(allCards);
                 mp.start();
-
-                Toast.makeText(getApplicationContext(), String.valueOf(allCards.size()), Toast.LENGTH_LONG).show();
-
-                if(allCards.get(0).getPrize_Name().contains("CircleOne"))
-                {
-                    luckyDrawLayoutBinding.txt1.setVisibility(View.VISIBLE);
-                    luckyDrawLayoutBinding.img1.setVisibility(View.GONE);
-                    luckyDrawLayoutBinding.txt1.setText(allCards.get(0).getPrize_Name().split(" ")[0]);
-                    luckyDrawLayoutBinding.txtpoint1.setText(allCards.get(0).getPrize_Name().split(" ")[1]);
-                }else
-                {
-                    luckyDrawLayoutBinding.txt1.setVisibility(View.GONE);
-                    luckyDrawLayoutBinding.img1.setVisibility(View.VISIBLE);
-                    luckyDrawLayoutBinding.txtpoint1.setText(allCards.get(0).getPrize_Name());
-                }
-                if(allCards.get(1).getPrize_Name().contains("CircleOne"))
-                {
-                    luckyDrawLayoutBinding.txt2.setVisibility(View.VISIBLE);
-                    luckyDrawLayoutBinding.img2.setVisibility(View.GONE);
-                    luckyDrawLayoutBinding.txt2.setText(allCards.get(1).getPrize_Name().split(" ")[0]);
-                    luckyDrawLayoutBinding.txtpoint2.setText(allCards.get(1).getPrize_Name().split(" ")[1]);
-                }else
-                {
-                    luckyDrawLayoutBinding.txt2.setVisibility(View.GONE);
-                    luckyDrawLayoutBinding.img2.setVisibility(View.VISIBLE);
-                    luckyDrawLayoutBinding.txtpoint2.setText(allCards.get(1).getPrize_Name());
-                }
-                if(allCards.get(2).getPrize_Name().contains("CircleOne"))
-                {
-                    luckyDrawLayoutBinding.txt3.setVisibility(View.VISIBLE);
-                    luckyDrawLayoutBinding.img3.setVisibility(View.GONE);
-                    luckyDrawLayoutBinding.txt3.setText(allCards.get(2).getPrize_Name().split(" ")[0]);
-                    luckyDrawLayoutBinding.txtpoint3.setText(allCards.get(2).getPrize_Name().split(" ")[1]);
-                }else
-                {
-                    luckyDrawLayoutBinding.txt3.setVisibility(View.GONE);
-                    luckyDrawLayoutBinding.img3.setVisibility(View.VISIBLE);
-                    luckyDrawLayoutBinding.txtpoint3.setText(allCards.get(2).getPrize_Name());
-                }
-                if(allCards.get(3).getPrize_Name().contains("CircleOne"))
-                {
-                    luckyDrawLayoutBinding.txt4.setVisibility(View.VISIBLE);
-                    luckyDrawLayoutBinding.img4.setVisibility(View.GONE);
-                    luckyDrawLayoutBinding.txt4.setText(allCards.get(3).getPrize_Name().split(" ")[0]);
-                    luckyDrawLayoutBinding.txtpoint4.setText(allCards.get(3).getPrize_Name().split(" ")[1]);
-                }else
-                {
-                    luckyDrawLayoutBinding.txt4.setVisibility(View.GONE);
-                    luckyDrawLayoutBinding.img4.setVisibility(View.VISIBLE);
-                    luckyDrawLayoutBinding.txtpoint4.setText(allCards.get(3).getPrize_Name());
-                }
-                if(allCards.get(4).getPrize_Name().contains("CircleOne"))
-                {
-                    luckyDrawLayoutBinding.txt5.setVisibility(View.VISIBLE);
-                    luckyDrawLayoutBinding.img5.setVisibility(View.GONE);
-                    luckyDrawLayoutBinding.txt5.setText(allCards.get(4).getPrize_Name().split(" ")[0]);
-                    luckyDrawLayoutBinding.txtpoint5.setText(allCards.get(4).getPrize_Name().split(" ")[1]);
-                }else
-                {
-                    luckyDrawLayoutBinding.txt5.setVisibility(View.GONE);
-                    luckyDrawLayoutBinding.img5.setVisibility(View.VISIBLE);
-                    luckyDrawLayoutBinding.txtpoint5.setText(allCards.get(4).getPrize_Name());
-                }
-                if(allCards.get(5).getPrize_Name().contains("CircleOne"))
-                {
-                    luckyDrawLayoutBinding.txt6.setVisibility(View.VISIBLE);
-                    luckyDrawLayoutBinding.img6.setVisibility(View.GONE);
-                    luckyDrawLayoutBinding.txt6.setText(allCards.get(5).getPrize_Name().split(" ")[0]);
-                    luckyDrawLayoutBinding.txtpoint6.setText(allCards.get(5).getPrize_Name().split(" ")[1]);
-                }else
-                {
-                    luckyDrawLayoutBinding.txt6.setVisibility(View.GONE);
-                    luckyDrawLayoutBinding.img6.setVisibility(View.VISIBLE);
-                    luckyDrawLayoutBinding.txtpoint6.setText(allCards.get(5).getPrize_Name());
-                }
-                if(allCards.get(6).getPrize_Name().contains("CircleOne"))
-                {
-                    luckyDrawLayoutBinding.txt7.setVisibility(View.VISIBLE);
-                    luckyDrawLayoutBinding.img7.setVisibility(View.GONE);
-                    luckyDrawLayoutBinding.txt7.setText(allCards.get(6).getPrize_Name().split(" ")[0]);
-                    luckyDrawLayoutBinding.txtpoint7.setText(allCards.get(6).getPrize_Name().split(" ")[1]);
-                }else
-                {
-                    luckyDrawLayoutBinding.txt7.setVisibility(View.GONE);
-                    luckyDrawLayoutBinding.img7.setVisibility(View.VISIBLE);
-                    luckyDrawLayoutBinding.txtpoint7.setText(allCards.get(6).getPrize_Name());
-                }
-                if(allCards.get(7).getPrize_Name().contains("CircleOne"))
-                {
-                    luckyDrawLayoutBinding.txt8.setVisibility(View.VISIBLE);
-                    luckyDrawLayoutBinding.img8.setVisibility(View.GONE);
-                    luckyDrawLayoutBinding.txt8.setText(allCards.get(7).getPrize_Name().split(" ")[0]);
-                    luckyDrawLayoutBinding.txtpoint8.setText(allCards.get(7).getPrize_Name().split(" ")[1]);
-                }else
-                {
-                    luckyDrawLayoutBinding.txt8.setVisibility(View.GONE);
-                    luckyDrawLayoutBinding.img8.setVisibility(View.VISIBLE);
-                    luckyDrawLayoutBinding.txtpoint8.setText(allCards.get(7).getPrize_Name());
+                count = 0;
+                prizeIdList = new ArrayList<>();
+                if (luckyDrawLayoutBinding.easyFlipView1.isBackSide()) {
+                    luckyDrawLayoutBinding.easyFlipView1.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView1.flipTheView(true);
                 }
 
+                if (luckyDrawLayoutBinding.easyFlipView2.isBackSide()) {
+                    luckyDrawLayoutBinding.easyFlipView2.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView2.flipTheView(true);
+                }
+
+                if (luckyDrawLayoutBinding.easyFlipView3.isBackSide()) {
+                    luckyDrawLayoutBinding.easyFlipView3.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView3.flipTheView(true);
+                }
+
+                if (luckyDrawLayoutBinding.easyFlipView4.isBackSide()) {
+                    luckyDrawLayoutBinding.easyFlipView4.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView4.flipTheView(true);
+                }
+
+                if (luckyDrawLayoutBinding.easyFlipView5.isBackSide()) {
+                    luckyDrawLayoutBinding.easyFlipView5.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView5.flipTheView(true);
+                }
+
+                if (luckyDrawLayoutBinding.easyFlipView6.isBackSide()) {
+                    luckyDrawLayoutBinding.easyFlipView6.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView6.flipTheView(true);
+                }
+
+                if (luckyDrawLayoutBinding.easyFlipView7.isBackSide()) {
+                    luckyDrawLayoutBinding.easyFlipView7.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView7.flipTheView(true);
+                }
+
+                if (luckyDrawLayoutBinding.easyFlipView8.isBackSide()) {
+                    luckyDrawLayoutBinding.easyFlipView8.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView8.flipTheView(true);
+                }
+
+                Collections.shuffle(allCards);
                 Log.e("prizeIdList",""+prizeIdList);
 
                 ObjectAnimator flip1 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView1, "rotationY", 180f, 360f);

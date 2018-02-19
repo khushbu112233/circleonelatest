@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
+    <LinearLayout
+        android:weightSum="4"
         android:id="@+id/include_prize_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal">
         <LinearLayout
+            android:gravity="center"
+            android:layout_weight="1"
             android:id="@+id/rlprize"
-            android:layout_width="70dp"
-            android:layout_height="90dp"
-            android:layout_marginLeft="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <FrameLayout
@@ -36,23 +38,25 @@
                     android:layout_centerVertical="true"/>
             </FrameLayout>
             <TextView
+                android:layout_marginTop="-5dp"
                 android:id="@+id/txtPrize"
                 android:layout_below="@+id/imgPrize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Prizes"
-                android:textColor="@color/colorPrimary"
+                android:textColor="#F0DB91"
                 android:gravity="center_vertical"
                 android:layout_centerVertical="true"/>
         </LinearLayout>
         <LinearLayout
+            android:gravity="center"
+            android:layout_weight="1"
             android:id="@+id/rtlHistory"
-            android:layout_toRightOf="@+id/rlprize"
-            android:layout_width="70dp"
-            android:layout_height="90dp"
-            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -75,24 +79,26 @@
                     android:layout_centerVertical="true"/>
             </FrameLayout>
             <TextView
+                android:layout_marginTop="-5dp"
                 android:id="@+id/txtHistory"
-                android:layout_below="@id/imgHistory"
+                android:layout_below="@+id/imgPrize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:layout_gravity="center"
                 android:text="History"
-                android:textColor="@color/colorPrimary"
-                android:gravity="center"
+                android:textColor="#F0DB91"
+                android:gravity="center_vertical"
                 android:layout_centerVertical="true"/>
         </LinearLayout>
+
         <LinearLayout
-            android:layout_toRightOf="@+id/rtlHistory"
+            android:gravity="center"
+            android:layout_weight="1"
             android:id="@+id/rtlToken"
-            android:layout_width="70dp"
-            android:layout_height="90dp"
-            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -114,26 +120,27 @@
                     android:gravity="center_vertical"
                     android:layout_centerVertical="true"/>
             </FrameLayout>
-
             <TextView
+                android:layout_marginTop="-5dp"
                 android:id="@+id/txtToken"
+                android:layout_below="@+id/imgPrize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Token"
-                android:layout_below="@+id/imgToken"
-                android:textColor="@color/colorPrimary"
-                android:gravity="center"
+                android:textColor="#F0DB91"
+                android:gravity="center_vertical"
                 android:layout_centerVertical="true"/>
         </LinearLayout>
+
         <LinearLayout
+            android:gravity="center"
+            android:layout_weight="1"
             android:id="@+id/rtlRefresh"
-            android:layout_toRightOf="@+id/rtlToken"
-            android:layout_width="70dp"
-            android:layout_height="90dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -155,18 +162,18 @@
                     android:gravity="center_vertical"
                     android:layout_centerVertical="true"/>
             </FrameLayout>
-
-
             <TextView
+                android:layout_marginTop="-5dp"
                 android:id="@+id/txtRefresh"
-                android:layout_below="@+id/imgRefresh"
+                android:layout_below="@+id/imgPrize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Refresh"
-                android:textColor="@color/colorPrimary"
-                android:gravity="center"
+                android:textColor="#F0DB91"
+                android:gravity="center_vertical"
                 android:layout_centerVertical="true"/>
         </LinearLayout>
-    </RelativeLayout>
+
+    </LinearLayout>
 </layout>
