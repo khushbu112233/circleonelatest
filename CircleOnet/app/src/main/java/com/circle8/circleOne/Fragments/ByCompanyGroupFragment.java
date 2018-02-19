@@ -141,6 +141,17 @@ public class ByCompanyGroupFragment extends Fragment
         return view;
     }
 
+
+
+  /*  @Override
+    public void onResume()
+    {
+        super.onResume();
+//        connectLists.clear();
+        connectTags.clear();
+        GetData(getContext());
+    }*/
+
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -148,6 +159,14 @@ public class ByCompanyGroupFragment extends Fragment
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+           /* dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Searching Records...");
+            //dialog.setTitle("Saving Reminder");
+            //  dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+
             String loading = "Searching" ;
             CustomProgressDialog(loading,getActivity());
         }
@@ -167,7 +186,6 @@ public class ByCompanyGroupFragment extends Fragment
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             return POST2(urls[0],jsonObject);
         }
         // onPostExecute displays the results of the AsyncTask.
@@ -232,6 +250,11 @@ public class ByCompanyGroupFragment extends Fragment
                             connectModel.setWebsite(iCon.getString("Website"));
                             connectTags.add(connectModel);
 
+                            /*connectListAdapter = new SearchGroupMemberAdapter(getContext(),R.layout.row_add_group_member, connectTags);
+                            listView.setAdapter(connectListAdapter);
+                            connectListAdapter.notifyDataSetChanged();*/
+
+//                            GetData(getContext());
                         }
 
                         connectListAdapter = new SearchGroupMemberAdapter(getContext(),R.layout.row_add_group_member, connectTags);

@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
@@ -91,17 +90,7 @@ public class WriteTestimonialActivity extends AppCompatActivity implements View.
         }
     }
 
-    @Override
-    protected void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-    }
 
     @Override
     public void onClick(View v)
@@ -171,7 +160,6 @@ public class WriteTestimonialActivity extends AppCompatActivity implements View.
                 jsonObject.accumulate("Testimonial_text", testimonial_String);
                 jsonObject.accumulate("friendprofileID", friendProfileId);
                 jsonObject.accumulate("myprofileID", profileId);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -179,7 +167,6 @@ public class WriteTestimonialActivity extends AppCompatActivity implements View.
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
@@ -217,39 +204,18 @@ public class WriteTestimonialActivity extends AppCompatActivity implements View.
         }
     }
 
+
     public  void CustomProgressDialog(final String loading)
     {
         rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
+        tvProgressing.setText(loading+"...");
 
         Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
         ivConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
         ivConnecting2.startAnimation(anim1);
 
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        tvProgressing.setText(loading+".");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        tvProgressing.setText(loading+"..");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        tvProgressing.setText(loading+"...");
-                    }
-                }
-            }, i);
-        }
+
     }
 
 

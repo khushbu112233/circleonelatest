@@ -105,7 +105,37 @@ public class FingerPrintLogin extends AppCompatActivity {
             }
         });
 
+       /* txtSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userString = mPref.getUserData();
+                mUser = mGson.fromJson(userString, UserObject.class);
+                if (mUser != null) {
+                    loginSession.createLoginSession(mUser.getProfileid(), mUser.getUserId(), mUser.getUsername(), mUser.getEmail(), mUser.getImage(), mUser.getGender(), mUser.getPassword(), mUser.getDob(), mUser.getPhone());
+                 //   Toast.makeText(getApplicationContext(), "LoggedIn Successfully..", Toast.LENGTH_LONG).show();
+
+                    // login with only fingerprint
+                    if (prefs.getBoolean("firstrun", true)) {
+                        // Do first run stuff here then set 'firstrun' as false
+                        // using the following line to edit/commit prefs
+                        Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                        startActivity(intent);
+                        prefs.edit().putBoolean("firstrun", false).commit();
+                    } else {
+                        Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                        userIntent.putExtra("viewpager_position", 0);
+                        startActivity(userIntent);
+                        finish();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "You must register before login with fingerprint", Toast.LENGTH_LONG).show();
+                }
+            }
+        });*/
+
     }
+
+
 
 
     private void checkDeviceFingerprintSupport() {
@@ -202,7 +232,7 @@ public class FingerPrintLogin extends AppCompatActivity {
 
                     prefs.edit().putBoolean("firstrun", false).commit();
                 } else {
-                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                    Intent userIntent = new Intent(getApplicationContext(), DashboardActivity.class);
                     userIntent.putExtra("viewpager_position", 0);
                     startActivity(userIntent);
                     finish();
@@ -388,7 +418,7 @@ public class FingerPrintLogin extends AppCompatActivity {
 
                     prefs.edit().putBoolean("firstrun", false).commit();
                 } else {
-                    Intent userIntent = new Intent(context, CardsActivity.class);
+                    Intent userIntent = new Intent(context, DashboardActivity.class);
                     userIntent.putExtra("viewpager_position", 0);
                     startActivity(userIntent);
                     finish();

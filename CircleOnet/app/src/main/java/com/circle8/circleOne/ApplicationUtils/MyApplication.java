@@ -1,28 +1,37 @@
 package com.circle8.circleOne.ApplicationUtils;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.os.Build;
+import android.net.Uri;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.circle8.circleOne.Activity.CardsActivity;
+import com.circle8.circleOne.Activity.DashboardActivity;
+import com.circle8.circleOne.Activity.EventsActivity;
+import com.circle8.circleOne.Activity.GroupsActivity;
+import com.circle8.circleOne.Activity.NewCardRequestActivity;
+import com.circle8.circleOne.Activity.NotificationActivity;
+import com.circle8.circleOne.Activity.RewardsPointsActivity;
+import com.circle8.circleOne.Activity.SubscriptionActivity;
 import com.circle8.circleOne.ConnectivityReceiver;
+import com.circle8.circleOne.Fragments.ConnectFragment;
 import com.circle8.circleOne.Helper.CustomSharedPreference;
 import com.circle8.circleOne.Model.SampleConfigs;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.ConfigUtils;
 import com.circle8.circleOne.Utils.Consts;
+import com.circle8.circleOne.Utils.Pref;
 import com.facebook.FacebookSdk;
+import com.flurry.android.FlurryAgent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -50,22 +59,21 @@ import io.fabric.sdk.android.Fabric;
 public class MyApplication extends CoreApp
 {
     public static final String TAG = MyApplication.class.getSimpleName();
-
     private RequestQueue mRequestQueue;
     private static MyApplication mInstance ;
     private static SampleConfigs sampleConfigs;
-
     private Gson gson;
     private GsonBuilder builder;
-
+    String CircleOnePage = "";
+    Object activityToLaunch = null;
+    public static String notiStatus = "";
     private CustomSharedPreference shared;
-    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
+
     @Override
     protected void attachBaseContext(Context base)
     {
         super.attachBaseContext(base);
         MultiDex.install(this);
-
     }
 
     @Override
@@ -74,6 +82,9 @@ public class MyApplication extends CoreApp
         super.onCreate();
         initImageLoader(getApplicationContext());
         mInstance = this ;
+        new FlurryAgent.Builder()
+                .withLogEnabled(false)
+                .build(this, "DXJDJBZWD7XQKHR3CVXW");
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         try
@@ -88,6 +99,7 @@ public class MyApplication extends CoreApp
         }
         catch (PackageManager.NameNotFoundException e) { }
         catch ( NoSuchAlgorithmException e ) {  }
+
         TwitterAuthConfig authConfig = new TwitterAuthConfig(
                 getString(R.string.twitter_consumer_key),
                 getString(R.string.twitter_consumer_secret));
@@ -95,10 +107,101 @@ public class MyApplication extends CoreApp
         FacebookSdk.sdkInitialize(getApplicationContext());
         ActivityLifecycle.init(this);
         initSampleConfigs();
+
         builder = new GsonBuilder();
         gson = builder.create();
         shared = new CustomSharedPreference(getApplicationContext());
+        notiStatus = CircleOnePage;
+       /* Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+    //    intent.putExtra("openURL", openURL);
+        startActivity(intent);*/
+        //      if(CircleOnePage!=null)
+        // {
+       /* if(CircleOnePage.equalsIgnoreCase("dashboard"))
+        {
+            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
 
+        }else if(CircleOnePage.equalsIgnoreCase("event"))
+        {
+            Intent intent = new Intent(getApplicationContext(), EventsActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
+            Toast.makeText(getApplicationContext(),"events",Toast.LENGTH_SHORT).show();
+        }
+        else if(CircleOnePage.equalsIgnoreCase("rewards"))
+        {
+            Intent intent = new Intent(getApplicationContext(), RewardsPointsActivity1.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
+        }
+        else if(CircleOnePage.equalsIgnoreCase("notification"))
+        {
+            Intent intent = new Intent(getApplicationContext(), NotificationActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
+        }
+        else if(CircleOnePage.equalsIgnoreCase("connect"))
+        {
+            Intent intent = new Intent(getApplicationContext(), ConnectActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
+        }
+        else if(CircleOnePage.equalsIgnoreCase("newcard"))
+        {
+            Intent intent = new Intent(getApplicationContext(), NewCardRequestActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
+        }
+        else if(CircleOnePage.equalsIgnoreCase("circle"))
+        {
+            Intent intent = new Intent(getApplicationContext(), GroupsActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
+        }
+        else if(CircleOnePage.equalsIgnoreCase("updateapp"))
+        {
+            Intent viewIntent =
+                    new Intent("android.intent.action.VIEW",
+                            Uri.parse("http://circle8.asia/mobileapp.html"));
+            viewIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            startActivity(viewIntent);
+                *//*Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);*//*
+
+        }
+        else if(CircleOnePage.equalsIgnoreCase("card"))
+        {
+            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
+        }
+        else if(CircleOnePage.equalsIgnoreCase("subscription"))
+        {
+            Intent intent = new Intent(getApplicationContext(), SubscriptionActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
+        }*/
+   /*     Intent intent = new Intent(getApplicationContext(), (Class<?>) activityToLaunch);
+        // intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+             // startActivity(intent);
+        startActivity(intent);
+*/
+
+        // }
         OneSignal.startInit(this)
                 .autoPromptLocation(false) // default call promptLocation later
                 .setNotificationReceivedHandler(new ExampleNotificationReceivedHandler())
@@ -205,12 +308,114 @@ public class MyApplication extends CoreApp
 
             if (data != null) {
                 customKey = data.optString("customkey", null);
-                if (customKey != null)
-                    Log.i("OneSignalExample", "customkey set with value: " + customKey);
+               /* CircleOnePage = data.optString("CircleOnePage",null);
+
+                    if(CircleOnePage!=null)
+                    {
+                   *//* notiStatus = CircleOnePage;
+                    Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("openURL", openURL);
+                    startActivity(intent);*//*
+                    if(CircleOnePage.equalsIgnoreCase("dashboard")) {
+                        Pref.setValue(getApplicationContext(),"noti","1");
+                        Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                       // intent.putExtra("openURL", openURL);
+                        startActivity(intent);
+
+                      //  Toast.makeText(getApplicationContext(), customKey, Toast.LENGTH_LONG).show();
+
+                    }else if(CircleOnePage.equalsIgnoreCase("event"))
+                    {
+                        Pref.setValue(getApplicationContext(),"noti","1");
+                        Intent intent = new Intent(getApplicationContext(),  EventsActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    //    intent.putExtra("openURL", openURL);
+                        startActivity(intent);
+
+                     //   Toast.makeText(getApplicationContext(), customKey, Toast.LENGTH_LONG).show();
+
+                    }else if(CircleOnePage.equalsIgnoreCase("rewards"))
+                    {
+                        Pref.setValue(getApplicationContext(),"noti","1");
+                        Intent intent = new Intent(getApplicationContext(),RewardsPointsActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                      //  intent.putExtra("openURL", openURL);
+                        startActivity(intent);
+
+                     //   Toast.makeText(getApplicationContext(), customKey, Toast.LENGTH_LONG).show();
+
+                    }else if(CircleOnePage.equalsIgnoreCase("notification"))
+                    {
+                        Pref.setValue(getApplicationContext(),"noti","1");
+                        Intent intent = new Intent(getApplicationContext(),NotificationActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                     //   intent.putExtra("openURL", openURL);
+                        startActivity(intent);
+
+                       // Toast.makeText(getApplicationContext(), customKey, Toast.LENGTH_LONG).show();
+
+                    }else if(CircleOnePage.equalsIgnoreCase("connect"))
+                    {
+                        Pref.setValue(getApplicationContext(),"noti","1");
+                        Intent intent = new Intent(getApplicationContext(), ConnectFragment.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                     //   intent.putExtra("openURL", openURL);
+                        startActivity(intent);
+
+                      //  Toast.makeText(getApplicationContext(), customKey, Toast.LENGTH_LONG).show();
+
+                    }else if(CircleOnePage.equalsIgnoreCase("newcard"))
+                    {
+                        Pref.setValue(getApplicationContext(),"noti","1");
+                        Intent intent = new Intent(getApplicationContext(), NewCardRequestActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                      //  intent.putExtra("openURL", openURL);
+                        startActivity(intent);
+
+                       // Toast.makeText(getApplicationContext(), customKey, Toast.LENGTH_LONG).show();
+
+                    }else if(CircleOnePage.equalsIgnoreCase("circle"))
+                    {
+                        Pref.setValue(getApplicationContext(),"noti","1");
+                        Intent intent = new Intent(getApplicationContext(),GroupsActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                       // intent.putExtra("openURL", openURL);
+                        startActivity(intent);
+
+                     //   Toast.makeText(getApplicationContext(), customKey, Toast.LENGTH_LONG).show();
+
+                    }else if(CircleOnePage.equalsIgnoreCase("updateapp"))
+                    {
+                        Pref.setValue(getApplicationContext(),"noti","1");
+                        Intent viewIntent =
+                                new Intent("android.intent.action.VIEW",
+                                        Uri.parse("http://circle8.asia/mobileapp.html"));
+                        viewIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                        startActivity(viewIntent);
+                    }else if(CircleOnePage.equalsIgnoreCase("card"))
+                    {
+                        Pref.setValue(getApplicationContext(),"noti","1");
+                        Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }else if(CircleOnePage.equalsIgnoreCase("subscription"))
+                    {
+                        Pref.setValue(getApplicationContext(),"noti","1");
+                        Intent intent = new Intent(getApplicationContext(), SubscriptionActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                }*/
+                if (customKey != null) {
+                    Toast.makeText(getApplicationContext(), customKey, Toast.LENGTH_LONG).show();
+                    Log.e("OneSignalExample", "customkey set with value: " + customKey);
+                }
             }
         }
     }
-
 
     private class ExampleNotificationOpenedHandler implements OneSignal.NotificationOpenedHandler {
         // This fires when a notification is opened by tapping on it.
@@ -220,49 +425,136 @@ public class MyApplication extends CoreApp
             JSONObject data = result.notification.payload.additionalData;
             String launchUrl = result.notification.payload.launchURL; // update docs launchUrl
 
-            String customKey;
-            String openURL = null;
-            Object activityToLaunch = CardsActivity.class;
+            String customKey = null;
+            String openURL = null;/*
+            String CircleOnePage = null;
+            Object activityToLaunch=null;*/
 
             if (data != null) {
                 customKey = data.optString("customkey", null);
                 openURL = data.optString("openURL", null);
+                 CircleOnePage = data.optString("CircleOnePage",null);
 
-                if (customKey != null)
-                    Log.i("OneSignalExample", "customkey set with value: " + customKey);
+                if(CircleOnePage!=null)
+                {
+                   /* notiStatus = CircleOnePage;
+                    Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("openURL", openURL);
+                    startActivity(intent);*/
+                    if(CircleOnePage.equalsIgnoreCase("dashboard")) {
+                        Pref.setValue(getApplicationContext(),"noti","1");
+                        Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                      //  intent.putExtra("openURL", openURL);
+                        startActivity(intent);
 
-                if (openURL != null)
-                    Log.i("OneSignalExample", "openURL to webview with URL value: " + openURL);
+                      //  Toast.makeText(getApplicationContext(), customKey, Toast.LENGTH_LONG).show();
+
+                    }else if(CircleOnePage.equalsIgnoreCase("event"))
+                    {
+                        Pref.setValue(getApplicationContext(),"noti","1");
+                        Intent intent = new Intent(getApplicationContext(),  EventsActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                       // intent.putExtra("openURL", openURL);
+                        startActivity(intent);
+
+                      //  Toast.makeText(getApplicationContext(), customKey, Toast.LENGTH_LONG).show();
+
+                    }else if(CircleOnePage.equalsIgnoreCase("rewards"))
+                    {
+                        Pref.setValue(getApplicationContext(),"noti","1");
+                        Intent intent = new Intent(getApplicationContext(),RewardsPointsActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                       // intent.putExtra("openURL", openURL);
+                        startActivity(intent);
+
+                       // Toast.makeText(getApplicationContext(), customKey, Toast.LENGTH_LONG).show();
+
+                    }else if(CircleOnePage.equalsIgnoreCase("notification"))
+                    {
+                        Pref.setValue(getApplicationContext(),"noti","1");
+                        Intent intent = new Intent(getApplicationContext(),NotificationActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                       // intent.putExtra("openURL", openURL);
+                        startActivity(intent);
+
+                      //  Toast.makeText(getApplicationContext(), customKey, Toast.LENGTH_LONG).show();
+
+                    }else if(CircleOnePage.equalsIgnoreCase("connect"))
+                    {
+                        Pref.setValue(getApplicationContext(),"noti","1");
+                        Intent intent = new Intent(getApplicationContext(), ConnectFragment.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                       // intent.putExtra("openURL", openURL);
+                        startActivity(intent);
+
+                       // Toast.makeText(getApplicationContext(), customKey, Toast.LENGTH_LONG).show();
+
+                    }else if(CircleOnePage.equalsIgnoreCase("newcard"))
+                    {
+                        Pref.setValue(getApplicationContext(),"noti","1");
+                        Intent intent = new Intent(getApplicationContext(), NewCardRequestActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                       // intent.putExtra("openURL", openURL);
+                        startActivity(intent);
+
+                      //  Toast.makeText(getApplicationContext(), customKey, Toast.LENGTH_LONG).show();
+
+                    }else if(CircleOnePage.equalsIgnoreCase("circle"))
+                    {
+                        Pref.setValue(getApplicationContext(),"noti","1");
+                        Intent intent = new Intent(getApplicationContext(),GroupsActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                       // intent.putExtra("openURL", openURL);
+                        startActivity(intent);
+
+                       // Toast.makeText(getApplicationContext(), customKey, Toast.LENGTH_LONG).show();
+
+                    }else if(CircleOnePage.equalsIgnoreCase("updateapp"))
+                    {
+                        Pref.setValue(getApplicationContext(),"noti","1");
+                        Intent viewIntent =
+                                new Intent("android.intent.action.VIEW",
+                                        Uri.parse("http://circle8.asia/mobileapp.html"));
+                        viewIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                        startActivity(viewIntent);
+                    }else if(CircleOnePage.equalsIgnoreCase("card"))
+                    {
+                        Pref.setValue(getApplicationContext(),"noti","1");
+                        Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                      //  intent.putExtra("openURL", openURL);
+                        startActivity(intent);
+
+                      //  Toast.makeText(getApplicationContext(), customKey, Toast.LENGTH_LONG).show();
+
+                    }else if(CircleOnePage.equalsIgnoreCase("subscription"))
+                    {
+                        Pref.setValue(getApplicationContext(),"noti","1");
+                        Intent intent = new Intent(getApplicationContext(), SubscriptionActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                       // intent.putExtra("openURL", openURL);
+                        startActivity(intent);
+
+                      //  Toast.makeText(getApplicationContext(), customKey, Toast.LENGTH_LONG).show();
+
+                    }
+                }
             }
 
             if (actionType == OSNotificationAction.ActionType.ActionTaken) {
                 Log.i("OneSignalExample", "Button pressed with id: " + result.action.actionID);
                 if (result.action.actionID.equals("id1")) {
                     Log.i("OneSignalExample", "button id called: " + result.action.actionID);
-                    activityToLaunch = CardsActivity.class;
+                    // activityToLaunch = CardsActivity.class;
                 } else {
                     Log.i("OneSignalExample", "button id called: " + result.action.actionID);
                 }
 
             }
-            // The following can be used to open an Activity of your choice.
-            // Replace - getApplicationContext() - with any Android Context.
-            // Intent intent = new Intent(getApplicationContext(), YourActivity.class);
-            Intent intent = new Intent(getApplicationContext(), (Class<?>) activityToLaunch);
-            // intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra("openURL", openURL);
-            Log.i("OneSignalExample", "openURL = " + openURL);
-            // startActivity(intent);
-            startActivity(intent);
 
-            // Add the following to your AndroidManifest.xml to prevent the launching of your main Activity
-            //   if you are calling startActivity above.
-     /*
-        <application ...>
-          <meta-data android:name="com.onesignal.NotificationOpened.DEFAULT" android:value="DISABLE" />
-        </application>
-     */
         }
     }
 

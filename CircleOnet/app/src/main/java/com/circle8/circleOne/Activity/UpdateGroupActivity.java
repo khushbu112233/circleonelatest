@@ -11,7 +11,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -128,7 +127,7 @@ public class UpdateGroupActivity extends AppCompatActivity
         ivMiniCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // selectImage();
+                // selectImage();
                 CropImage.activity(null)
                         .setCropShape(CropImageView.CropShape.OVAL)
                         .setGuidelines(CropImageView.Guidelines.ON)
@@ -154,7 +153,7 @@ public class UpdateGroupActivity extends AppCompatActivity
                     {
                         GroupImage = groupPhoto;
                         new HttpAsyncTaskGroupUpdate().execute(Utility.BASE_URL+"Group/Update");
-                       // Toast.makeText(getApplicationContext(), "Upload Circle Image", Toast.LENGTH_LONG).show();
+                        // Toast.makeText(getApplicationContext(), "Upload Circle Image", Toast.LENGTH_LONG).show();
 //                            tvProfileInfo.setVisibility(View.VISIBLE);
                     }else {
                         new HttpAsyncTaskPhotoUpload().execute(Utility.BASE_URL+"ImgUpload");
@@ -176,17 +175,7 @@ public class UpdateGroupActivity extends AppCompatActivity
 
     }
 
-    @Override
-    protected void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-    }
 
     private class HttpAsyncTaskPhotoUpload extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
@@ -210,7 +199,6 @@ public class UpdateGroupActivity extends AppCompatActivity
             try {
                 jsonObject.accumulate("ImgBase64", final_ImgBase64);
                 jsonObject.accumulate("classification", "group");
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -218,7 +206,6 @@ public class UpdateGroupActivity extends AppCompatActivity
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
@@ -262,13 +249,6 @@ public class UpdateGroupActivity extends AppCompatActivity
         protected void onPreExecute()
         {
             super.onPreExecute();
-            /*dialog = new ProgressDialog(UpdateGroupActivity.this);
-            dialog.setMessage("Updating Circle...");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
 
             String loading = "Updating circle" ;
             CustomProgressDialog(loading);
@@ -276,6 +256,7 @@ public class UpdateGroupActivity extends AppCompatActivity
 
         @Override
         protected String doInBackground(String... urls) {
+
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.accumulate("GroupDesc", GroupDesc);
@@ -287,11 +268,9 @@ public class UpdateGroupActivity extends AppCompatActivity
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
@@ -517,37 +496,11 @@ public class UpdateGroupActivity extends AppCompatActivity
     public void CustomProgressDialog(final String loading)
     {
         rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
+        tvProgressing.setText(loading+"...");
 
         Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
         ivConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
         ivConnecting2.startAnimation(anim1);
-
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        tvProgressing.setText(loading+".");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        tvProgressing.setText(loading+"..");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        tvProgressing.setText(loading+"...");
-                    }
-
-                }
-            }, i);
-        }
     }
-
 }

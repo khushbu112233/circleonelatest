@@ -143,11 +143,6 @@ public class ByTitleGroupFragment extends Fragment
         return view;
     }
 
-    @Override
-    public void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
 
    /* @Override
     public void onResume()
@@ -165,6 +160,13 @@ public class ByTitleGroupFragment extends Fragment
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+           /* dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Searching Records...");
+            //dialog.setTitle("Saving Reminder");
+            // dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
 
             String loading = "Searching" ;
             CustomProgressDialog(loading,getActivity());

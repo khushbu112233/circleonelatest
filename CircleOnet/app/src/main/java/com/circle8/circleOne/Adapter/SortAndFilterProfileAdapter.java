@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.circle8.circleOne.Activity.Connect;
-import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
@@ -40,12 +38,12 @@ public class SortAndFilterProfileAdapter extends BaseAdapter
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return position;
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     static class ViewHolder
@@ -85,7 +83,7 @@ public class SortAndFilterProfileAdapter extends BaseAdapter
         else
         {
             Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+profileModelArrayList.get(position).getUserPhoto())
-                    .resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(holder.profileImg);
+                    .resize(300,300).onlyScaleDown().placeholder(R.drawable.usr_1).into(holder.profileImg);
         }
 
         return vi;

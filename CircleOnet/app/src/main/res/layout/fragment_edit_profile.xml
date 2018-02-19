@@ -87,45 +87,45 @@
                     android:alpha="0.8"
                     android:background="@color/colorAccent">
 
-                <RelativeLayout
-                    android:tag="sticky"
-                    android:background="#83ced4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    <RelativeLayout
+                        android:tag="sticky"
+                        android:background="#83ced4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:id="@+id/imgBack"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
-                        android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
-                        android:tint="@color/white"/>
+                        <ImageView
+                            android:id="@+id/imgBack"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+                            android:tint="@color/white"/>
 
-                    <com.circle8.circleOne.Utils.cgTextView
-                        android:id="@+id/txtprofile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="8dp"
-                        android:text="Profile"
-                        android:textColor="@color/white"
-                        android:textSize="17dp" />
+                        <com.circle8.circleOne.Utils.cgTextView
+                            android:id="@+id/txtprofile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="8dp"
+                            android:text="Profile"
+                            android:textColor="@color/white"
+                            android:textSize="17dp" />
 
-                    <ImageView
-                        android:visibility="visible"
-                        android:id="@+id/imgProfileMenu"
-                        android:layout_width="22dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="5dp"
-                        android:src="@drawable/ic_dehaze_black_24dp" />
+                        <ImageView
+                            android:visibility="visible"
+                            android:id="@+id/imgProfileMenu"
+                            android:layout_width="22dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="5dp"
+                            android:src="@drawable/ic_dehaze_black_24dp" />
 
-                </RelativeLayout>
+                    </RelativeLayout>
                 </FrameLayout>
 
                 <android.support.design.widget.CoordinatorLayout
@@ -275,26 +275,34 @@
                                     android:id="@+id/lnrBasicInfo"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
                                     android:layout_marginTop="5dp"
                                     android:gravity="center_vertical"
                                     android:orientation="horizontal"
                                     android:weightSum="3">
 
+                                    <ImageView
+                                        android:layout_marginRight="10dp"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_marginLeft="0dp"
+                                        android:layout_gravity="center_vertical"
+                                        android:src="@drawable/ic_info_sv" />
+
                                     <com.circle8.circleOne.Utils.cgTextView
                                         android:textColor="@color/colorPrimary"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="Basic Info"
-                                        android:layout_weight="2"/>
+                                        android:text="Basi Info"
+                                        android:layout_weight="2"
+                                        />
 
                                     <ImageView
+                                        android:layout_weight="1"
                                         android:id="@+id/ivArrowImgBasic"
                                         android:layout_width="wrap_content"
                                         android:layout_height="15dp"
-                                        android:layout_marginLeft="0dp"
-                                        android:layout_weight="0.1"
                                         android:layout_gravity="center_vertical"
                                         android:src="@drawable/ic_down_arrow_blue" />
 
@@ -305,62 +313,22 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical">
-                                <LinearLayout
-                                    android:visibility="visible"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
-                                    android:layout_marginTop="10dp"
-                                    android:gravity="center_vertical"
-                                    android:orientation="horizontal">
-
-                                    <ImageView
-                                        android:tint="@color/colorPrimary"
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_marginRight="20dp"
-                                        android:src="@drawable/new_profile1" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="*"
-                                        android:textColor="@color/colorPrimary"/>
-
-                                    <com.circle8.circleOne.Utils.cgEditView
-                                        android:id="@+id/edtProfileName"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center_vertical"
-                                        android:paddingBottom="10dp"
-                                        android:paddingLeft="10dp"
-                                        android:hint="Profile Name"
-                                        android:textSize="13sp"
-                                        android:backgroundTint="@color/colorPrimary"/>
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
-                                    android:layout_marginTop="0dp"
-                                    android:gravity="center_vertical"
-                                    android:orientation="horizontal">
-
-                                    <ImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_marginRight="20dp"
-                                        android:src="@drawable/ic_acc_blue" />
-
                                     <LinearLayout
-                                        android:layout_marginTop="0dp"
+                                        android:visibility="visible"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:weightSum="1">
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="15dp"
+                                        android:layout_marginTop="10dp"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:tint="@color/colorPrimary"
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:layout_marginRight="20dp"
+                                            android:src="@drawable/new_profile1" />
 
                                         <TextView
                                             android:layout_width="wrap_content"
@@ -369,896 +337,871 @@
                                             android:textColor="@color/colorPrimary"/>
 
                                         <com.circle8.circleOne.Utils.cgEditView
-                                            android:id="@+id/edtFirstName"
-                                            android:layout_weight="0.5"
-                                            android:textSize="13sp"
-                                            android:backgroundTint="@color/colorPrimary"
-                                            android:hint="First Name"
-                                            android:paddingLeft="10dp"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:inputType="textPersonName|text"/>
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="*"
-                                            android:textColor="@color/colorPrimary"/>
-
-                                        <com.circle8.circleOne.Utils.cgEditView
-                                            android:id="@+id/edtLastName"
-                                            android:layout_weight="0.5"
-                                            android:textSize="13sp"
-                                            android:backgroundTint="@color/colorPrimary"
-                                            android:hint="Last Name"
-                                            android:paddingLeft="10dp"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:inputType="textPersonName|text"/>
-                                    </LinearLayout>
-
-                                    <!--
-                                                                <com.circle8.circleOne.Utils.cgEditView
-                                                                    android:id="@+id/edtUserName"
-                                                                    android:layout_width="match_parent"
-                                                                    android:layout_height="wrap_content"
-                                                                    android:gravity="center_vertical"
-                                                                    android:paddingBottom="10dp"
-                                                                    android:paddingLeft="10dp"
-                                                                    android:hint="Full Name"
-                                                                    android:textSize="13sp"
-                                                                    android:backgroundTint="@color/colorPrimary"/>
-                                    -->
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
-                                    android:layout_marginTop="0dp"
-                                    android:gravity="center_vertical"
-                                    android:orientation="horizontal">
-
-                                    <ImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_marginRight="20dp"
-                                        android:src="@drawable/ic_ceo" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="*"
-                                        android:textColor="@color/colorPrimary"/>
-
-                                    <AutoCompleteTextView
-                                        android:id="@+id/autoCompleteDesignation"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:ems="10"
-                                        android:gravity="center_vertical"
-                                        android:hint="Title"
-                                        android:paddingBottom="10dp"
-                                        android:paddingLeft="10dp"
-                                        android:textSize="13sp"
-                                        android:backgroundTint="@color/colorPrimary"/>
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
-                                    android:layout_marginTop="0dp"
-                                    android:gravity="center_vertical"
-                                    android:orientation="horizontal">
-
-                                    <ImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_marginRight="20dp"
-                                        android:src="@drawable/ic_group_blue" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="*"
-                                        android:textColor="@color/colorPrimary"/>
-
-                                    <AutoCompleteTextView
-                                        android:id="@+id/autoCompleteCompany"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:ems="10"
-                                        android:gravity="center_vertical"
-                                        android:paddingBottom="10dp"
-                                        android:paddingLeft="10dp"
-                                        android:hint="Company Name"
-                                        android:textSize="13sp"
-                                        android:backgroundTint="@color/colorPrimary"/>
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
-                                    android:layout_marginTop="0dp"
-                                    android:gravity="center_vertical"
-                                    android:orientation="horizontal">
-
-                                    <ImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_marginRight="20dp"
-                                        android:src="@drawable/ic_branding" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="*"
-                                        android:textColor="@color/colorPrimary"/>
-
-                                    <AutoCompleteTextView
-                                        android:id="@+id/autoCompleteIndustry"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:ems="10"
-                                        android:gravity="center_vertical"
-                                        android:hint="Industry"
-                                        android:paddingBottom="10dp"
-                                        android:paddingLeft="10dp"
-                                        android:textSize="13sp"
-                                        android:backgroundTint="@color/colorPrimary"/>
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:id="@+id/llMobileBox1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
-                                    android:gravity="center_vertical">
-
-                                    <ImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_marginRight="20dp"
-                                        android:src="@drawable/ic_mob_blue" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="*"
-                                        android:textColor="@color/colorPrimary"/>
-
-                                    <com.hbb20.CountryCodePicker
-                                        app:ccp_defaultNameCode="SG"
-                                        app:ccp_defaultPhoneCode="65"
-                                        android:visibility="visible"
-                                        app:ccpDialog_searchEditTextTint="@color/colorPrimary"
-                                        app:ccp_textSize="15dp"
-                                        app:ccpDialog_textColor="@color/colorPrimary"
-                                        android:textColor="@color/colorPrimary"
-                                        android:textSize="15dp"
-                                        app:ccp_showNameCode="false"
-                                        app:ccp_showPhoneCode="true"
-                                        app:ccp_showFlag="false"
-                                        app:ccp_contentColor="@color/black"
-                                        android:layout_marginRight="0dp"
-                                        android:id="@+id/ccp3"
-                                        android:layout_gravity="center_vertical"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content" />
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:weightSum="1">
-
-                                        <com.circle8.circleOne.Utils.cgEditView
-                                            android:id="@+id/edtPrimary"
-                                            android:inputType="number"
+                                            android:id="@+id/edtProfileName"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:gravity="center_vertical"
                                             android:paddingBottom="10dp"
                                             android:paddingLeft="10dp"
-                                            android:hint="Mobile 1"
+                                            android:hint="Profile Name"
                                             android:textSize="13sp"
-                                            android:layout_weight="0.8"
-                                            android:layout_marginRight="10dp"
                                             android:backgroundTint="@color/colorPrimary"/>
-
-                                        <ImageView
-                                            android:id="@+id/ivMobAdd"
-                                            android:layout_width="20dp"
-                                            android:layout_height="match_parent"
-                                            android:src="@drawable/ic_plus_blue"
-                                            android:layout_weight="0.2"/>
-
                                     </LinearLayout>
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:id="@+id/llMobileBox2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
-                                    android:gravity="center_vertical"
-                                    android:visibility="gone">
-
-                                    <ImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_marginRight="20dp"
-                                        android:src="@drawable/ic_mob_blue" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="*"
-                                        android:textColor="@color/colorPrimary"/>
-
-                                    <com.hbb20.CountryCodePicker
-                                        android:inputType="number"
-                                        app:ccp_defaultPhoneCode="65"
-                                        android:visibility="visible"
-                                        app:ccpDialog_searchEditTextTint="@color/colorPrimary"
-                                        app:ccp_textSize="15dp"
-                                        app:ccpDialog_textColor="@color/colorPrimary"
-                                        android:textColor="@color/colorPrimary"
-                                        android:textSize="15dp"
-                                        app:ccp_showNameCode="false"
-                                        app:ccp_showPhoneCode="true"
-                                        app:ccp_showFlag="false"
-                                        app:ccp_contentColor="@color/black"
-                                        android:layout_marginRight="0dp"
-                                        android:id="@+id/ccp4"
-                                        android:layout_gravity="center_vertical"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content" />
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:weightSum="1">
-
-                                        <com.circle8.circleOne.Utils.cgEditView
-                                            android:id="@+id/edtPrimary2"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:gravity="center_vertical"
-                                            android:paddingBottom="10dp"
-                                            android:paddingLeft="10dp"
-                                            android:hint="Mobile 2"
-                                            android:textSize="13sp"
-                                            android:layout_weight="0.8"
-                                            android:layout_marginRight="10dp"
-                                            android:backgroundTint="@color/colorPrimary"/>
-
-                                        <ImageView
-                                            android:layout_width="20dp"
-                                            android:layout_height="match_parent"
-                                            android:layout_weight="0.2"/>
-
-                                    </LinearLayout>
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:id="@+id/llTelephoneBox1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
-                                    android:gravity="center_vertical">
-
-                                    <ImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_marginRight="20dp"
-                                        android:src="@drawable/ic_phone_blue" />
-
-                                    <com.hbb20.CountryCodePicker
-                                        app:ccp_defaultPhoneCode="65"
-                                        android:visibility="visible"
-                                        app:ccpDialog_searchEditTextTint="@color/colorPrimary"
-                                        app:ccp_textSize="15dp"
-                                        app:ccpDialog_textColor="@color/colorPrimary"
-                                        android:textColor="@color/colorPrimary"
-                                        android:textSize="15dp"
-                                        app:ccp_showNameCode="false"
-                                        app:ccp_showPhoneCode="true"
-                                        app:ccp_showFlag="false"
-                                        app:ccp_contentColor="@color/black"
-                                        android:layout_marginRight="0dp"
-                                        android:id="@+id/ccp1"
-                                        android:layout_gravity="center_vertical"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content" />
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:weightSum="1">
-
-                                        <com.circle8.circleOne.Utils.cgEditView
-                                            android:id="@+id/edtWork"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:gravity="center_vertical"
-                                            android:paddingBottom="10dp"
-                                            android:paddingLeft="10dp"
-                                            android:hint="Phone 1"
-                                            android:inputType="number"
-                                            android:textSize="13sp"
-                                            android:layout_weight="0.8"
-                                            android:layout_marginRight="10dp"
-                                            android:backgroundTint="@color/colorPrimary"/>
-
-                                        <ImageView
-                                            android:id="@+id/ivTeleAdd"
-                                            android:layout_width="20dp"
-                                            android:layout_height="match_parent"
-                                            android:src="@drawable/ic_plus_blue"
-                                            android:layout_weight="0.2"/>
-
-                                    </LinearLayout>
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:id="@+id/llTelephoneBox2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
-                                    android:gravity="center_vertical"
-                                    android:visibility="gone">
-
-                                    <ImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_marginRight="20dp"
-                                        android:src="@drawable/ic_phone_blue" />
-
-                                    <com.hbb20.CountryCodePicker
-                                        app:ccp_defaultPhoneCode="65"
-                                        android:visibility="visible"
-                                        app:ccpDialog_searchEditTextTint="@color/colorPrimary"
-                                        app:ccp_textSize="15dp"
-                                        app:ccpDialog_textColor="@color/colorPrimary"
-                                        android:textColor="@color/colorPrimary"
-                                        android:textSize="15dp"
-                                        app:ccp_showNameCode="false"
-                                        app:ccp_showPhoneCode="true"
-                                        app:ccp_showFlag="false"
-                                        app:ccp_contentColor="@color/black"
-                                        android:layout_marginRight="0dp"
-                                        android:id="@+id/ccp2"
-                                        android:layout_gravity="center_vertical"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content" />
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:weightSum="1">
-
-                                        <com.circle8.circleOne.Utils.cgEditView
-                                            android:id="@+id/edtWork2"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:gravity="center_vertical"
-                                            android:paddingBottom="10dp"
-                                            android:inputType="number"
-                                            android:paddingLeft="10dp"
-                                            android:hint="Phone 2"
-                                            android:textSize="13sp"
-                                            android:layout_weight="0.8"
-                                            android:layout_marginRight="10dp"
-                                            android:backgroundTint="@color/colorPrimary"/>
-
-                                        <ImageView
-                                            android:layout_width="20dp"
-                                            android:layout_height="match_parent"
-                                            android:layout_weight="0.2"/>
-
-                                    </LinearLayout>
-
-                                </LinearLayout>
-
-                                <!--
-                                                        <LinearLayout
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="wrap_content"
-                                                            android:layout_marginLeft="20dp"
-                                                            android:layout_marginRight="15dp"
-                                                            android:gravity="center_vertical"
-                                                            android:orientation="horizontal"
-                                                            android:weightSum="1">
-
-                                                            <LinearLayout
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content"
-                                                                android:layout_marginTop="0dp"
-                                                                android:layout_weight="0.5"
-                                                                android:gravity="center_vertical"
-                                                                android:orientation="horizontal">
-
-                                                                <ImageView
-                                                                    android:layout_width="20dp"
-                                                                    android:layout_height="20dp"
-                                                                    android:layout_marginRight="20dp"
-                                                                    android:src="@drawable/ic_phone_blue" />
-
-                                                                <com.circle8.circleOne.Utils.cgEditView
-                                                                    android:id="@+id/edtWork"
-                                                                    android:layout_width="match_parent"
-                                                                    android:layout_height="wrap_content"
-                                                                    android:gravity="center_vertical"
-                                                                    android:paddingBottom="10dp"
-                                                                    android:paddingLeft="10dp"
-                                                                    android:hint="phone1"
-                                                                    android:textSize="13sp" />
-                                                            </LinearLayout>
-
-                                                            <LinearLayout
-
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content"
-                                                                android:layout_marginTop="0dp"
-                                                                android:layout_weight="0.5"
-                                                                android:gravity="center_vertical"
-                                                                android:orientation="horizontal">
-
-                                                                <ImageView
-                                                                    android:layout_width="20dp"
-                                                                    android:layout_height="20dp"
-                                                                    android:layout_marginRight="20dp"
-                                                                    android:src="@drawable/ic_phone_blue" />
-
-                                                                <com.circle8.circleOne.Utils.cgEditView
-                                                                    android:id="@+id/edtWork2"
-                                                                    android:layout_width="match_parent"
-                                                                    android:layout_height="wrap_content"
-                                                                    android:gravity="center_vertical"
-                                                                    android:paddingBottom="10dp"
-                                                                    android:paddingLeft="10dp"
-                                                                    android:hint="phone2"
-                                                                    android:textSize="13sp" />
-                                                            </LinearLayout>
-
-                                                        </LinearLayout>
-                                -->
-
-                                <!--
-                                                        <LinearLayout
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="wrap_content"
-                                                            android:layout_marginLeft="20dp"
-                                                            android:layout_marginRight="15dp"
-                                                            android:gravity="center_vertical"
-                                                            android:orientation="horizontal"
-                                                            android:weightSum="1">
-
-                                                            <LinearLayout
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content"
-                                                                android:layout_marginTop="0dp"
-                                                                android:layout_weight="0.5"
-                                                                android:gravity="center_vertical"
-                                                                android:orientation="horizontal">
-
-                                                                <ImageView
-                                                                    android:layout_width="20dp"
-                                                                    android:layout_height="20dp"
-                                                                    android:layout_marginRight="20dp"
-                                                                    android:src="@drawable/ic_mob_blue" />
-
-                                                                <com.circle8.circleOne.Utils.cgEditView
-                                                                    android:id="@+id/edtPrimary"
-                                                                    android:layout_width="match_parent"
-                                                                    android:layout_height="wrap_content"
-                                                                    android:gravity="center_vertical"
-                                                                    android:paddingBottom="10dp"
-                                                                    android:paddingLeft="10dp"
-                                                                    android:hint="mobile1"
-                                                                    android:textSize="13sp" />
-                                                            </LinearLayout>
-
-                                                            <LinearLayout
-
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content"
-                                                                android:layout_marginTop="0dp"
-                                                                android:layout_weight="0.5"
-                                                                android:gravity="center_vertical"
-                                                                android:orientation="horizontal">
-
-                                                                <ImageView
-                                                                    android:layout_width="20dp"
-                                                                    android:layout_height="20dp"
-                                                                    android:layout_marginRight="20dp"
-                                                                    android:src="@drawable/ic_mob_blue" />
-
-                                                                <com.circle8.circleOne.Utils.cgEditView
-                                                                    android:id="@+id/edtPrimary2"
-                                                                    android:layout_width="match_parent"
-                                                                    android:layout_height="wrap_content"
-                                                                    android:gravity="center_vertical"
-                                                                    android:paddingBottom="10dp"
-                                                                    android:paddingLeft="10dp"
-                                                                    android:hint="mobile2"
-                                                                    android:textSize="13sp" />
-                                                            </LinearLayout>
-
-                                                        </LinearLayout>
-                                -->
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
-                                    android:layout_marginTop="0dp"
-                                    android:gravity="center_vertical"
-                                    android:orientation="horizontal">
-
-                                    <ImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_marginRight="20dp"
-                                        android:src="@drawable/ic_mail_blue" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="*"
-                                        android:textColor="@color/colorPrimary"/>
-
-                                    <com.circle8.circleOne.Utils.cgEditView
-                                        android:id="@+id/edtEmail"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center_vertical"
-                                        android:paddingBottom="10dp"
-                                        android:paddingLeft="10dp"
-                                        android:hint="Email1"
-                                        android:textSize="13sp"
-                                        android:backgroundTint="@color/colorPrimary"/>
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
-                                    android:layout_marginTop="0dp"
-                                    android:gravity="center_vertical"
-                                    android:orientation="horizontal">
-
-                                    <ImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_marginRight="20dp"
-                                        android:src="@drawable/ic_mail_blue" />
-
-                                    <com.circle8.circleOne.Utils.cgEditView
-                                        android:id="@+id/edtEmail2"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:backgroundTint="@color/colorPrimary"
-                                        android:gravity="center_vertical"
-                                        android:hint="Email2"
-                                        android:paddingBottom="10dp"
-                                        android:paddingLeft="10dp"
-                                        android:textSize="13sp" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:id="@+id/llFaxBox1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
-                                    android:gravity="center_vertical">
-
-                                    <ImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_marginRight="20dp"
-                                        android:src="@drawable/ic_fax_blue" />
-
-                                    <com.hbb20.CountryCodePicker
-                                        app:ccp_defaultPhoneCode="65"
-                                        android:visibility="visible"
-                                        app:ccpDialog_searchEditTextTint="@color/colorPrimary"
-                                        app:ccp_textSize="15dp"
-                                        app:ccpDialog_textColor="@color/colorPrimary"
-                                        android:textColor="@color/colorPrimary"
-                                        android:textSize="15dp"
-                                        app:ccp_showNameCode="false"
-                                        app:ccp_showPhoneCode="true"
-                                        app:ccp_showFlag="false"
-                                        app:ccp_contentColor="@color/black"
-                                        android:layout_marginRight="0dp"
-                                        android:id="@+id/ccp5"
-                                        android:layout_gravity="center_vertical"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content" />
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:weightSum="1">
-
-                                        <com.circle8.circleOne.Utils.cgEditView
-                                            android:id="@+id/edtFax1"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:gravity="center_vertical"
-                                            android:paddingBottom="10dp"
-                                            android:paddingLeft="10dp"
-                                            android:hint="Fax 1"
-                                            android:inputType="number"
-                                            android:textSize="13sp"
-                                            android:layout_weight="0.8"
-                                            android:layout_marginRight="10dp"
-                                            android:backgroundTint="@color/colorPrimary"/>
-
-                                        <ImageView
-                                            android:id="@+id/ivFaxAdd"
-                                            android:layout_width="20dp"
-                                            android:layout_height="20dp"
-                                            android:src="@drawable/ic_plus_blue"
-                                            android:layout_weight="0.2"
-                                            android:visibility="visible"/>
-
-                                    </LinearLayout>
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:id="@+id/llFaxBox2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
-                                    android:gravity="center_vertical"
-                                    android:visibility="gone">
-
-                                    <ImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_marginRight="20dp"
-                                        android:src="@drawable/ic_fax_blue" />
-
-                                    <com.hbb20.CountryCodePicker
-                                        app:ccp_defaultPhoneCode="65"
-                                        android:visibility="visible"
-                                        app:ccpDialog_searchEditTextTint="@color/colorPrimary"
-                                        app:ccp_textSize="15dp"
-                                        app:ccpDialog_textColor="@color/colorPrimary"
-                                        android:textColor="@color/colorPrimary"
-                                        android:textSize="15dp"
-                                        app:ccp_showNameCode="false"
-                                        app:ccp_showPhoneCode="true"
-                                        app:ccp_showFlag="false"
-                                        app:ccp_contentColor="@color/black"
-                                        android:layout_marginRight="0dp"
-                                        android:id="@+id/ccp6"
-                                        android:layout_gravity="center_vertical"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content" />
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:weightSum="1">
-
-                                        <com.circle8.circleOne.Utils.cgEditView
-                                            android:id="@+id/edtFax2"
-                                            android:inputType="number"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:gravity="center_vertical"
-                                            android:paddingBottom="10dp"
-                                            android:paddingLeft="10dp"
-                                            android:hint="Fax 2"
-                                            android:textSize="13sp"
-                                            android:layout_weight="0.8"
-                                            android:layout_marginRight="10dp"
-                                            android:backgroundTint="@color/colorPrimary"/>
-
-                                        <ImageView
-                                            android:layout_width="20dp"
-                                            android:layout_height="20dp"
-                                            android:layout_weight="0.2"/>
-
-                                    </LinearLayout>
-
-                                </LinearLayout>
-
-                                <!--
-                                                        <LinearLayout
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="wrap_content"
-                                                            android:layout_marginLeft="20dp"
-                                                            android:layout_marginRight="15dp"
-                                                            android:gravity="center_vertical"
-                                                            android:orientation="horizontal"
-                                                            android:weightSum="1">
-
-                                                            <LinearLayout
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content"
-                                                                android:layout_marginTop="0dp"
-                                                                android:layout_weight="0.5"
-                                                                android:gravity="center_vertical"
-                                                                android:orientation="horizontal">
-
-                                                                <ImageView
-                                                                    android:layout_width="20dp"
-                                                                    android:layout_height="20dp"
-                                                                    android:layout_marginRight="20dp"
-                                                                    android:src="@drawable/ic_fax_blue" />
-
-                                                                <com.circle8.circleOne.Utils.cgEditView
-                                                                    android:id="@+id/edtFax1"
-                                                                    android:layout_width="match_parent"
-                                                                    android:layout_height="wrap_content"
-                                                                    android:gravity="center_vertical"
-                                                                    android:paddingBottom="10dp"
-                                                                    android:paddingLeft="10dp"
-                                                                    android:hint="fax1"
-                                                                    android:textSize="13sp" />
-                                                            </LinearLayout>
-
-                                                            <LinearLayout
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content"
-                                                                android:layout_marginTop="0dp"
-                                                                android:layout_weight="0.5"
-                                                                android:gravity="center_vertical"
-                                                                android:orientation="horizontal">
-
-                                                                <ImageView
-                                                                    android:layout_width="20dp"
-                                                                    android:layout_height="20dp"
-                                                                    android:layout_marginRight="20dp"
-                                                                    android:src="@drawable/ic_fax_blue" />
-
-                                                                <com.circle8.circleOne.Utils.cgEditView
-                                                                    android:id="@+id/edtFax2"
-                                                                    android:layout_width="match_parent"
-                                                                    android:layout_height="wrap_content"
-                                                                    android:gravity="center_vertical"
-                                                                    android:paddingBottom="10dp"
-                                                                    android:paddingLeft="10dp"
-                                                                    android:hint="fax2"
-                                                                    android:textSize="13sp" />
-                                                            </LinearLayout>
-
-                                                        </LinearLayout>
-                                -->
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
-                                    android:layout_marginTop="0dp"
-                                    android:gravity="center_vertical"
-                                    android:orientation="horizontal">
-
-                                    <ImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_marginRight="20dp"
-                                        android:src="@drawable/ic_location_blue" />
-
-                                    <com.circle8.circleOne.Utils.cgEditView
-                                        android:id="@+id/edtAddress1"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center_vertical"
-                                        android:paddingBottom="10dp"
-                                        android:paddingLeft="10dp"
-                                        android:hint="Address"
-                                        android:textSize="13sp"
-                                        android:backgroundTint="@color/colorPrimary"/>
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
-                                    android:layout_marginTop="0dp"
-                                    android:gravity="center_vertical"
-                                    android:orientation="horizontal">
-
-                                    <ImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_marginRight="20dp" />
-
-                                    <com.circle8.circleOne.Utils.cgEditView
-                                        android:id="@+id/edtAddress2"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center_vertical"
-                                        android:paddingBottom="10dp"
-                                        android:paddingLeft="10dp"
-                                        android:text=""
-                                        android:textSize="13sp"
-                                        android:backgroundTint="@color/colorPrimary"/>
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
-                                    android:gravity="center_vertical"
-                                    android:orientation="horizontal"
-                                    android:weightSum="1">
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="15dp"
                                         android:layout_marginTop="0dp"
-                                        android:layout_weight="0.5"
                                         android:gravity="center_vertical"
                                         android:orientation="horizontal">
 
                                         <ImageView
                                             android:layout_width="20dp"
                                             android:layout_height="20dp"
-                                            android:layout_marginRight="20dp" />
+                                            android:layout_marginRight="20dp"
+                                            android:src="@drawable/ic_acc_blue" />
 
+                                        <LinearLayout
+                                            android:layout_marginTop="0dp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal"
+                                            android:weightSum="1">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="*"
+                                                android:textColor="@color/colorPrimary"/>
+
+                                            <com.circle8.circleOne.Utils.cgEditView
+                                                android:id="@+id/edtFirstName"
+                                                android:layout_weight="0.5"
+                                                android:textSize="13sp"
+                                                android:backgroundTint="@color/colorPrimary"
+                                                android:hint="First Name"
+                                                android:paddingLeft="10dp"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:inputType="textPersonName|text"/>
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="*"
+                                                android:textColor="@color/colorPrimary"/>
+
+                                            <com.circle8.circleOne.Utils.cgEditView
+                                                android:id="@+id/edtLastName"
+                                                android:layout_weight="0.5"
+                                                android:textSize="13sp"
+                                                android:backgroundTint="@color/colorPrimary"
+                                                android:hint="Last Name"
+                                                android:paddingLeft="10dp"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:inputType="textPersonName|text"/>
+                                        </LinearLayout>
+
+                                        <!--
+                                                                    <com.circle8.circleOne.Utils.cgEditView
+                                                                        android:id="@+id/edtUserName"
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:gravity="center_vertical"
+                                                                        android:paddingBottom="10dp"
+                                                                        android:paddingLeft="10dp"
+                                                                        android:hint="Full Name"
+                                                                        android:textSize="13sp"
+                                                                        android:backgroundTint="@color/colorPrimary"/>
+                                        -->
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="15dp"
+                                        android:layout_marginTop="0dp"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:layout_marginRight="20dp"
+                                            android:src="@drawable/ic_ceo" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/colorPrimary"/>
+
+                                        <AutoCompleteTextView
+                                            android:id="@+id/autoCompleteDesignation"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:ems="10"
+                                            android:gravity="center_vertical"
+                                            android:hint="Title"
+                                            android:paddingBottom="10dp"
+                                            android:paddingLeft="10dp"
+                                            android:textSize="13sp"
+                                            android:backgroundTint="@color/colorPrimary"/>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="15dp"
+                                        android:layout_marginTop="0dp"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:layout_marginRight="20dp"
+                                            android:src="@drawable/ic_group_blue" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/colorPrimary"/>
+
+                                        <AutoCompleteTextView
+                                            android:id="@+id/autoCompleteCompany"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:ems="10"
+                                            android:gravity="center_vertical"
+                                            android:paddingBottom="10dp"
+                                            android:paddingLeft="10dp"
+                                            android:hint="Company Name"
+                                            android:textSize="13sp"
+                                            android:backgroundTint="@color/colorPrimary"/>
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="15dp"
+                                        android:layout_marginTop="0dp"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:layout_marginRight="20dp"
+                                            android:src="@drawable/ic_branding" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/colorPrimary"/>
+
+                                        <AutoCompleteTextView
+                                            android:id="@+id/autoCompleteIndustry"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:ems="10"
+                                            android:gravity="center_vertical"
+                                            android:hint="Industry"
+                                            android:paddingBottom="10dp"
+                                            android:paddingLeft="10dp"
+                                            android:textSize="13sp"
+                                            android:backgroundTint="@color/colorPrimary"/>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/llMobileBox1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="15dp"
+                                        android:gravity="center_vertical">
+
+                                        <ImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:layout_marginRight="20dp"
+                                            android:src="@drawable/ic_mob_blue" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/colorPrimary"/>
 
                                         <com.hbb20.CountryCodePicker
+                                            app:ccp_defaultNameCode="SG"
+                                            app:ccp_defaultPhoneCode="65"
                                             android:visibility="visible"
-                                            app:ccp_textSize="12dp"
+                                            app:ccpDialog_searchEditTextTint="@color/colorPrimary"
+                                            app:ccp_textSize="15dp"
                                             app:ccpDialog_textColor="@color/colorPrimary"
                                             android:textColor="@color/colorPrimary"
                                             android:textSize="15dp"
-                                            app:ccp_showFullName="true"
                                             app:ccp_showNameCode="false"
-                                            app:ccp_showPhoneCode="false"
+                                            app:ccp_showPhoneCode="true"
                                             app:ccp_showFlag="false"
-                                            android:layout_marginRight="10dp"
-                                            android:id="@+id/ccpAddress5"
+                                            app:ccp_contentColor="@color/black"
+                                            android:layout_marginRight="0dp"
+                                            android:id="@+id/ccp3"
                                             android:layout_gravity="center_vertical"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content" />
 
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal"
+                                            android:weightSum="1">
+
+                                            <com.circle8.circleOne.Utils.cgEditView
+                                                android:id="@+id/edtPrimary"
+                                                android:inputType="number"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingBottom="10dp"
+                                                android:paddingLeft="10dp"
+                                                android:hint="Mobile 1"
+                                                android:textSize="13sp"
+                                                android:layout_weight="0.8"
+                                                android:layout_marginRight="10dp"
+                                                android:backgroundTint="@color/colorPrimary"/>
+
+                                            <ImageView
+                                                android:id="@+id/ivMobAdd"
+                                                android:layout_width="20dp"
+                                                android:layout_height="match_parent"
+                                                android:src="@drawable/ic_plus_blue"
+                                                android:layout_weight="0.2"/>
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/llMobileBox2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="15dp"
+                                        android:gravity="center_vertical"
+                                        android:visibility="gone">
+
+                                        <ImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:layout_marginRight="20dp"
+                                            android:src="@drawable/ic_mob_blue" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/colorPrimary"/>
+
+                                        <com.hbb20.CountryCodePicker
+                                            android:inputType="number"
+                                            app:ccp_defaultPhoneCode="65"
+                                            android:visibility="visible"
+                                            app:ccpDialog_searchEditTextTint="@color/colorPrimary"
+                                            app:ccp_textSize="15dp"
+                                            app:ccpDialog_textColor="@color/colorPrimary"
+                                            android:textColor="@color/colorPrimary"
+                                            android:textSize="15dp"
+                                            app:ccp_showNameCode="false"
+                                            app:ccp_showPhoneCode="true"
+                                            app:ccp_showFlag="false"
+                                            app:ccp_contentColor="@color/black"
+                                            android:layout_marginRight="0dp"
+                                            android:id="@+id/ccp4"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal"
+                                            android:weightSum="1">
+
+                                            <com.circle8.circleOne.Utils.cgEditView
+                                                android:id="@+id/edtPrimary2"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingBottom="10dp"
+                                                android:paddingLeft="10dp"
+                                                android:hint="Mobile 2"
+                                                android:textSize="13sp"
+                                                android:inputType="number"
+                                                android:layout_weight="0.8"
+                                                android:layout_marginRight="10dp"
+                                                android:backgroundTint="@color/colorPrimary"/>
+
+                                            <ImageView
+                                                android:layout_width="20dp"
+                                                android:layout_height="match_parent"
+                                                android:layout_weight="0.2"/>
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/llTelephoneBox1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="15dp"
+                                        android:gravity="center_vertical">
+
+                                        <ImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:layout_marginRight="20dp"
+                                            android:src="@drawable/ic_phone_blue" />
+
+                                        <com.hbb20.CountryCodePicker
+                                            app:ccp_defaultPhoneCode="65"
+                                            android:visibility="visible"
+                                            app:ccpDialog_searchEditTextTint="@color/colorPrimary"
+                                            app:ccp_textSize="15dp"
+                                            app:ccpDialog_textColor="@color/colorPrimary"
+                                            android:textColor="@color/colorPrimary"
+                                            android:textSize="15dp"
+                                            app:ccp_showNameCode="false"
+                                            app:ccp_showPhoneCode="true"
+                                            app:ccp_showFlag="false"
+                                            app:ccp_contentColor="@color/black"
+                                            android:layout_marginRight="0dp"
+                                            android:id="@+id/ccp1"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal"
+                                            android:weightSum="1">
+
+                                            <com.circle8.circleOne.Utils.cgEditView
+                                                android:id="@+id/edtWork"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingBottom="10dp"
+                                                android:paddingLeft="10dp"
+                                                android:hint="Phone 1"
+                                                android:inputType="number"
+                                                android:textSize="13sp"
+                                                android:layout_weight="0.8"
+                                                android:layout_marginRight="10dp"
+                                                android:backgroundTint="@color/colorPrimary"/>
+
+                                            <ImageView
+                                                android:id="@+id/ivTeleAdd"
+                                                android:layout_width="20dp"
+                                                android:layout_height="match_parent"
+                                                android:src="@drawable/ic_plus_blue"
+                                                android:layout_weight="0.2"/>
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/llTelephoneBox2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="15dp"
+                                        android:gravity="center_vertical"
+                                        android:visibility="gone">
+
+                                        <ImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:layout_marginRight="20dp"
+                                            android:src="@drawable/ic_phone_blue" />
+
+                                        <com.hbb20.CountryCodePicker
+                                            app:ccp_defaultPhoneCode="65"
+                                            android:visibility="visible"
+                                            app:ccpDialog_searchEditTextTint="@color/colorPrimary"
+                                            app:ccp_textSize="15dp"
+                                            app:ccpDialog_textColor="@color/colorPrimary"
+                                            android:textColor="@color/colorPrimary"
+                                            android:textSize="15dp"
+                                            app:ccp_showNameCode="false"
+                                            app:ccp_showPhoneCode="true"
+                                            app:ccp_showFlag="false"
+                                            app:ccp_contentColor="@color/black"
+                                            android:layout_marginRight="0dp"
+                                            android:id="@+id/ccp2"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal"
+                                            android:weightSum="1">
+
+                                            <com.circle8.circleOne.Utils.cgEditView
+                                                android:id="@+id/edtWork2"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingBottom="10dp"
+                                                android:inputType="number"
+                                                android:paddingLeft="10dp"
+                                                android:hint="Phone 2"
+                                                android:textSize="13sp"
+                                                android:layout_weight="0.8"
+                                                android:layout_marginRight="10dp"
+                                                android:backgroundTint="@color/colorPrimary"/>
+
+                                            <ImageView
+                                                android:layout_width="20dp"
+                                                android:layout_height="match_parent"
+                                                android:layout_weight="0.2"/>
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <!--
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_marginLeft="20dp"
+                                                                android:layout_marginRight="15dp"
+                                                                android:gravity="center_vertical"
+                                                                android:orientation="horizontal"
+                                                                android:weightSum="1">
+
+                                                                <LinearLayout
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginTop="0dp"
+                                                                    android:layout_weight="0.5"
+                                                                    android:gravity="center_vertical"
+                                                                    android:orientation="horizontal">
+
+                                                                    <ImageView
+                                                                        android:layout_width="20dp"
+                                                                        android:layout_height="20dp"
+                                                                        android:layout_marginRight="20dp"
+                                                                        android:src="@drawable/ic_phone_blue" />
+
+                                                                    <com.circle8.circleOne.Utils.cgEditView
+                                                                        android:id="@+id/edtWork"
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:gravity="center_vertical"
+                                                                        android:paddingBottom="10dp"
+                                                                        android:paddingLeft="10dp"
+                                                                        android:hint="phone1"
+                                                                        android:textSize="13sp" />
+                                                                </LinearLayout>
+
+                                                                <LinearLayout
+
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginTop="0dp"
+                                                                    android:layout_weight="0.5"
+                                                                    android:gravity="center_vertical"
+                                                                    android:orientation="horizontal">
+
+                                                                    <ImageView
+                                                                        android:layout_width="20dp"
+                                                                        android:layout_height="20dp"
+                                                                        android:layout_marginRight="20dp"
+                                                                        android:src="@drawable/ic_phone_blue" />
+
+                                                                    <com.circle8.circleOne.Utils.cgEditView
+                                                                        android:id="@+id/edtWork2"
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:gravity="center_vertical"
+                                                                        android:paddingBottom="10dp"
+                                                                        android:paddingLeft="10dp"
+                                                                        android:hint="phone2"
+                                                                        android:textSize="13sp" />
+                                                                </LinearLayout>
+
+                                                            </LinearLayout>
+                                    -->
+
+                                    <!--
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_marginLeft="20dp"
+                                                                android:layout_marginRight="15dp"
+                                                                android:gravity="center_vertical"
+                                                                android:orientation="horizontal"
+                                                                android:weightSum="1">
+
+                                                                <LinearLayout
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginTop="0dp"
+                                                                    android:layout_weight="0.5"
+                                                                    android:gravity="center_vertical"
+                                                                    android:orientation="horizontal">
+
+                                                                    <ImageView
+                                                                        android:layout_width="20dp"
+                                                                        android:layout_height="20dp"
+                                                                        android:layout_marginRight="20dp"
+                                                                        android:src="@drawable/ic_mob_blue" />
+
+                                                                    <com.circle8.circleOne.Utils.cgEditView
+                                                                        android:id="@+id/edtPrimary"
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:gravity="center_vertical"
+                                                                        android:paddingBottom="10dp"
+                                                                        android:paddingLeft="10dp"
+                                                                        android:hint="mobile1"
+                                                                        android:textSize="13sp" />
+                                                                </LinearLayout>
+
+                                                                <LinearLayout
+
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginTop="0dp"
+                                                                    android:layout_weight="0.5"
+                                                                    android:gravity="center_vertical"
+                                                                    android:orientation="horizontal">
+
+                                                                    <ImageView
+                                                                        android:layout_width="20dp"
+                                                                        android:layout_height="20dp"
+                                                                        android:layout_marginRight="20dp"
+                                                                        android:src="@drawable/ic_mob_blue" />
+
+                                                                    <com.circle8.circleOne.Utils.cgEditView
+                                                                        android:id="@+id/edtPrimary2"
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:gravity="center_vertical"
+                                                                        android:paddingBottom="10dp"
+                                                                        android:paddingLeft="10dp"
+                                                                        android:hint="mobile2"
+                                                                        android:textSize="13sp" />
+                                                                </LinearLayout>
+
+                                                            </LinearLayout>
+                                    -->
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="15dp"
+                                        android:layout_marginTop="0dp"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:layout_marginRight="20dp"
+                                            android:src="@drawable/ic_mail_blue" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/colorPrimary"/>
+
+                                        <com.circle8.circleOne.Utils.cgEditView
+                                            android:id="@+id/edtEmail"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center_vertical"
+                                            android:paddingBottom="10dp"
+                                            android:paddingLeft="10dp"
+                                            android:hint="Email1"
+                                            android:textSize="13sp"
+                                            android:backgroundTint="@color/colorPrimary"/>
                                     </LinearLayout>
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="15dp"
                                         android:layout_marginTop="0dp"
-                                        android:layout_weight="0.5"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:layout_marginRight="20dp"
+                                            android:src="@drawable/ic_mail_blue" />
+
+                                        <com.circle8.circleOne.Utils.cgEditView
+                                            android:id="@+id/edtEmail2"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:backgroundTint="@color/colorPrimary"
+                                            android:gravity="center_vertical"
+                                            android:hint="Email2"
+                                            android:paddingBottom="10dp"
+                                            android:paddingLeft="10dp"
+                                            android:textSize="13sp" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/llFaxBox1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="15dp"
+                                        android:gravity="center_vertical">
+
+                                        <ImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:layout_marginRight="20dp"
+                                            android:src="@drawable/ic_fax_blue" />
+
+                                        <com.hbb20.CountryCodePicker
+                                            app:ccp_defaultPhoneCode="65"
+                                            android:visibility="visible"
+                                            app:ccpDialog_searchEditTextTint="@color/colorPrimary"
+                                            app:ccp_textSize="15dp"
+                                            app:ccpDialog_textColor="@color/colorPrimary"
+                                            android:textColor="@color/colorPrimary"
+                                            android:textSize="15dp"
+                                            app:ccp_showNameCode="false"
+                                            app:ccp_showPhoneCode="true"
+                                            app:ccp_showFlag="false"
+                                            app:ccp_contentColor="@color/black"
+                                            android:layout_marginRight="0dp"
+                                            android:id="@+id/ccp5"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal"
+                                            android:weightSum="1">
+
+                                            <com.circle8.circleOne.Utils.cgEditView
+                                                android:id="@+id/edtFax1"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingBottom="10dp"
+                                                android:paddingLeft="10dp"
+                                                android:hint="Fax 1"
+                                                android:inputType="number"
+                                                android:textSize="13sp"
+                                                android:layout_weight="0.8"
+                                                android:layout_marginRight="10dp"
+                                                android:backgroundTint="@color/colorPrimary"/>
+
+                                            <ImageView
+                                                android:id="@+id/ivFaxAdd"
+                                                android:layout_width="20dp"
+                                                android:layout_height="20dp"
+                                                android:src="@drawable/ic_plus_blue"
+                                                android:layout_weight="0.2"
+                                                android:visibility="visible"/>
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/llFaxBox2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="15dp"
+                                        android:gravity="center_vertical"
+                                        android:visibility="gone">
+
+                                        <ImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:layout_marginRight="20dp"
+                                            android:src="@drawable/ic_fax_blue" />
+
+                                        <com.hbb20.CountryCodePicker
+                                            app:ccp_defaultPhoneCode="65"
+                                            android:visibility="visible"
+                                            app:ccpDialog_searchEditTextTint="@color/colorPrimary"
+                                            app:ccp_textSize="15dp"
+                                            app:ccpDialog_textColor="@color/colorPrimary"
+                                            android:textColor="@color/colorPrimary"
+                                            android:textSize="15dp"
+                                            app:ccp_showNameCode="false"
+                                            app:ccp_showPhoneCode="true"
+                                            app:ccp_showFlag="false"
+                                            app:ccp_contentColor="@color/black"
+                                            android:layout_marginRight="0dp"
+                                            android:id="@+id/ccp6"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal"
+                                            android:weightSum="1">
+
+                                            <com.circle8.circleOne.Utils.cgEditView
+                                                android:id="@+id/edtFax2"
+                                                android:inputType="number"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingBottom="10dp"
+                                                android:paddingLeft="10dp"
+                                                android:hint="Fax 2"
+                                                android:textSize="13sp"
+                                                android:layout_weight="0.8"
+                                                android:layout_marginRight="10dp"
+                                                android:backgroundTint="@color/colorPrimary"/>
+
+                                            <ImageView
+                                                android:layout_width="20dp"
+                                                android:layout_height="20dp"
+                                                android:layout_weight="0.2"/>
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <!--
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_marginLeft="20dp"
+                                                                android:layout_marginRight="15dp"
+                                                                android:gravity="center_vertical"
+                                                                android:orientation="horizontal"
+                                                                android:weightSum="1">
+
+                                                                <LinearLayout
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginTop="0dp"
+                                                                    android:layout_weight="0.5"
+                                                                    android:gravity="center_vertical"
+                                                                    android:orientation="horizontal">
+
+                                                                    <ImageView
+                                                                        android:layout_width="20dp"
+                                                                        android:layout_height="20dp"
+                                                                        android:layout_marginRight="20dp"
+                                                                        android:src="@drawable/ic_fax_blue" />
+
+                                                                    <com.circle8.circleOne.Utils.cgEditView
+                                                                        android:id="@+id/edtFax1"
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:gravity="center_vertical"
+                                                                        android:paddingBottom="10dp"
+                                                                        android:paddingLeft="10dp"
+                                                                        android:hint="fax1"
+                                                                        android:textSize="13sp" />
+                                                                </LinearLayout>
+
+                                                                <LinearLayout
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginTop="0dp"
+                                                                    android:layout_weight="0.5"
+                                                                    android:gravity="center_vertical"
+                                                                    android:orientation="horizontal">
+
+                                                                    <ImageView
+                                                                        android:layout_width="20dp"
+                                                                        android:layout_height="20dp"
+                                                                        android:layout_marginRight="20dp"
+                                                                        android:src="@drawable/ic_fax_blue" />
+
+                                                                    <com.circle8.circleOne.Utils.cgEditView
+                                                                        android:id="@+id/edtFax2"
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:gravity="center_vertical"
+                                                                        android:paddingBottom="10dp"
+                                                                        android:paddingLeft="10dp"
+                                                                        android:hint="fax2"
+                                                                        android:textSize="13sp" />
+                                                                </LinearLayout>
+
+                                                            </LinearLayout>
+                                    -->
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="15dp"
+                                        android:layout_marginTop="0dp"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:layout_marginRight="20dp"
+                                            android:src="@drawable/ic_location_blue" />
+
+                                        <com.circle8.circleOne.Utils.cgEditView
+                                            android:id="@+id/edtAddress1"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center_vertical"
+                                            android:paddingBottom="10dp"
+                                            android:paddingLeft="10dp"
+                                            android:hint="Address"
+                                            android:textSize="13sp"
+                                            android:backgroundTint="@color/colorPrimary"/>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="15dp"
+                                        android:layout_marginTop="0dp"
                                         android:gravity="center_vertical"
                                         android:orientation="horizontal">
 
@@ -1268,214 +1211,293 @@
                                             android:layout_marginRight="20dp" />
 
                                         <com.circle8.circleOne.Utils.cgEditView
-                                            android:id="@+id/edtAddress4"
+                                            android:id="@+id/edtAddress2"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:gravity="center_vertical"
                                             android:paddingBottom="10dp"
                                             android:paddingLeft="10dp"
-                                            android:hint="State"
+                                            android:text=""
                                             android:textSize="13sp"
                                             android:backgroundTint="@color/colorPrimary"/>
                                     </LinearLayout>
 
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="15dp"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal"
+                                        android:weightSum="1">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="0dp"
+                                            android:layout_weight="0.5"
+                                            android:gravity="center_vertical"
+                                            android:orientation="horizontal">
+
+                                            <ImageView
+                                                android:layout_width="20dp"
+                                                android:layout_height="20dp"
+                                                android:layout_marginRight="20dp" />
+
+
+                                            <com.hbb20.CountryCodePicker
+                                                android:visibility="visible"
+                                                app:ccp_textSize="12dp"
+                                                app:ccpDialog_textColor="@color/colorPrimary"
+                                                android:textColor="@color/colorPrimary"
+                                                android:textSize="15dp"
+                                                app:ccp_showFullName="true"
+                                                app:ccp_showNameCode="false"
+                                                app:ccp_showPhoneCode="false"
+                                                app:ccp_showFlag="false"
+                                                android:layout_marginRight="10dp"
+                                                android:id="@+id/ccpAddress5"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content" />
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="0dp"
+                                            android:layout_weight="0.5"
+                                            android:gravity="center_vertical"
+                                            android:orientation="horizontal">
+
+                                            <ImageView
+                                                android:layout_width="20dp"
+                                                android:layout_height="20dp"
+                                                android:layout_marginRight="20dp" />
+
+                                            <com.circle8.circleOne.Utils.cgEditView
+                                                android:id="@+id/edtAddress4"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingBottom="10dp"
+                                                android:paddingLeft="10dp"
+                                                android:hint="State"
+                                                android:textSize="13sp"
+                                                android:backgroundTint="@color/colorPrimary"/>
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="15dp"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal"
+                                        android:weightSum="1">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="0dp"
+                                            android:layout_weight="0.5"
+                                            android:gravity="center_vertical"
+                                            android:orientation="horizontal">
+
+                                            <ImageView
+                                                android:layout_width="20dp"
+                                                android:layout_height="20dp"
+                                                android:layout_marginRight="20dp" />
+
+                                            <com.circle8.circleOne.Utils.cgEditView
+                                                android:id="@+id/edtAddress3"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingBottom="10dp"
+                                                android:paddingLeft="10dp"
+                                                android:hint="City"
+                                                android:textSize="13sp"
+                                                android:backgroundTint="@color/colorPrimary"/>
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="0dp"
+                                            android:layout_weight="0.5"
+                                            android:gravity="center_vertical"
+                                            android:orientation="horizontal">
+
+                                            <ImageView
+                                                android:layout_width="20dp"
+                                                android:layout_height="20dp"
+                                                android:layout_marginRight="20dp" />
+
+                                            <com.circle8.circleOne.Utils.cgEditView
+                                                android:id="@+id/edtAddress6"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingBottom="10dp"
+                                                android:paddingLeft="10dp"
+                                                android:hint="Postcode"
+                                                android:textSize="13sp"
+                                                android:backgroundTint="@color/colorPrimary"/>
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="15dp"
+                                        android:layout_marginTop="0dp"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:layout_marginRight="20dp"
+                                            android:src="@drawable/ic_web_blue" />
+
+                                        <com.circle8.circleOne.Utils.cgEditView
+                                            android:id="@+id/edtWebsite"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center_vertical"
+                                            android:paddingBottom="10dp"
+                                            android:paddingLeft="10dp"
+                                            android:hint="Website"
+                                            android:textSize="13sp"
+                                            android:backgroundTint="@color/colorPrimary"/>
+                                    </LinearLayout>
                                 </LinearLayout>
 
-                                <LinearLayout
+                                <View
+                                    android:layout_marginTop="8dp"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
-                                    android:gravity="center_vertical"
-                                    android:orientation="horizontal"
-                                    android:weightSum="1">
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="0dp"
-                                        android:layout_weight="0.5"
-                                        android:gravity="center_vertical"
-                                        android:orientation="horizontal">
-
-                                        <ImageView
-                                            android:layout_width="20dp"
-                                            android:layout_height="20dp"
-                                            android:layout_marginRight="20dp" />
-
-                                        <com.circle8.circleOne.Utils.cgEditView
-                                            android:id="@+id/edtAddress3"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:gravity="center_vertical"
-                                            android:paddingBottom="10dp"
-                                            android:paddingLeft="10dp"
-                                            android:hint="City"
-                                            android:textSize="13sp"
-                                            android:backgroundTint="@color/colorPrimary"/>
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="0dp"
-                                        android:layout_weight="0.5"
-                                        android:gravity="center_vertical"
-                                        android:orientation="horizontal">
-
-                                        <ImageView
-                                            android:layout_width="20dp"
-                                            android:layout_height="20dp"
-                                            android:layout_marginRight="20dp" />
-
-                                        <com.circle8.circleOne.Utils.cgEditView
-                                            android:id="@+id/edtAddress6"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:gravity="center_vertical"
-                                            android:paddingBottom="10dp"
-                                            android:paddingLeft="10dp"
-                                            android:hint="Postcode"
-                                            android:textSize="13sp"
-                                            android:backgroundTint="@color/colorPrimary"/>
-                                    </LinearLayout>
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
-                                    android:layout_marginTop="0dp"
-                                    android:gravity="center_vertical"
-                                    android:orientation="horizontal">
-
-                                    <ImageView
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_marginRight="20dp"
-                                        android:src="@drawable/ic_web_blue" />
-
-                                    <com.circle8.circleOne.Utils.cgEditView
-                                        android:id="@+id/edtWebsite"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center_vertical"
-                                        android:paddingBottom="10dp"
-                                        android:paddingLeft="10dp"
-                                        android:hint="Website"
-                                        android:textSize="13sp"
-                                        android:backgroundTint="@color/colorPrimary"/>
-                                </LinearLayout>
-
-                                </LinearLayout>
-
+                                    android:layout_height="1dp"
+                                    android:background="@color/colorPrimary"></View>
 
                                 <LinearLayout
                                     android:id="@+id/lnrBusinessImages"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
                                     android:layout_marginTop="10dp"
                                     android:gravity="center_vertical"
                                     android:orientation="horizontal"
                                     android:weightSum="3">
 
+                                    <ImageView
+                                        android:layout_marginRight="10dp"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_marginLeft="0dp"
+                                        android:layout_gravity="center_vertical"
+                                        android:src="@drawable/ic_card_sv" />
+
                                     <com.circle8.circleOne.Utils.cgTextView
                                         android:textColor="@color/colorPrimary"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="Business Cards Image"
-                                        android:layout_weight="2"/>
+                                        android:text="Card Images"
+                                        android:layout_weight="2"
+                                        />
 
                                     <ImageView
+                                        android:layout_weight="1"
                                         android:id="@+id/ivArrowImgCards"
                                         android:layout_width="wrap_content"
                                         android:layout_height="15dp"
-                                        android:layout_marginLeft="0dp"
-                                        android:layout_weight="0.1"
                                         android:layout_gravity="center_vertical"
-                                        android:src="@drawable/ic_right_arrow_blue" />
+                                        android:src="@drawable/ic_left_arrow_blue" />
 
                                 </LinearLayout>
+
                                 <LinearLayout
                                     android:visibility="gone"
                                     android:id="@+id/lnrCardsDetail"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical">
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
-                                    android:layout_marginTop="10dp"
-                                    android:orientation="vertical">
-
-                                    <com.circle8.circleOne.Utils.orkebyTextView
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:fontFamily="monospace"
-                                        android:text="Front Card"
-                                        android:textColor="@color/colorPrimary"
-                                        android:textSize="13sp"
-                                        android:textStyle="normal" />
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="15dp"
+                                        android:layout_marginTop="10dp"
+                                        android:orientation="vertical">
 
-                                    <RelativeLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="10dp">
-
-                                        <com.circle8.circleOne.Utils.cgTextView
-                                            android:id="@+id/txtCardFront"
-                                            android:layout_width="200dp"
+                                        <com.circle8.circleOne.Utils.orkebyTextView
+                                            android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_alignParentLeft="true"
-                                            android:background="@drawable/txt_box_blue"
-                                            android:gravity="start"
-                                            android:padding="10dp"
-                                            android:hint="Add Image"
-                                            android:textSize="12sp" />
-
-                                        <com.circle8.circleOne.Utils.orkebyBoldTextView
-                                            android:id="@+id/txtfrontDelete"
-                                            android:layout_width="wrap_content"
-                                            android:gravity="left|center_vertical"
-                                            android:padding="2dp"
-                                            android:layout_alignParentBottom="true"
-                                            android:layout_height="match_parent"
                                             android:fontFamily="monospace"
-                                            android:layout_marginLeft="5dp"
-                                            android:layout_marginRight="5dp"
-                                            android:layout_toRightOf="@+id/txtCardFront"
-                                            android:text="X"
+                                            android:text="Front Card"
                                             android:textColor="@color/colorPrimary"
-                                            android:textSize="18sp"
-                                            android:textStyle="bold" />
+                                            android:textSize="13sp"
+                                            android:textStyle="normal" />
 
-                                        <com.circle8.circleOne.Utils.cgTextView
-                                            android:layout_width="wrap_content"
+                                        <RelativeLayout
+                                            android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_gravity="bottom"
-                                            android:text="            "
-                                            android:layout_marginRight="5dp"
-                                            android:layout_toLeftOf="@+id/ivAttachFrontImage"
-                                            android:layout_alignParentBottom="true"/>
+                                            android:layout_marginTop="10dp">
+
+                                            <com.circle8.circleOne.Utils.cgTextView
+                                                android:id="@+id/txtCardFront"
+                                                android:layout_width="200dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_alignParentLeft="true"
+                                                android:background="@drawable/txt_box_blue"
+                                                android:gravity="start"
+                                                android:padding="10dp"
+                                                android:hint="Add Image"
+                                                android:textSize="12sp" />
+
+                                            <com.circle8.circleOne.Utils.orkebyBoldTextView
+                                                android:id="@+id/txtfrontDelete"
+                                                android:layout_width="wrap_content"
+                                                android:gravity="left|center_vertical"
+                                                android:padding="2dp"
+                                                android:layout_alignParentBottom="true"
+                                                android:layout_height="match_parent"
+                                                android:fontFamily="monospace"
+                                                android:layout_marginLeft="5dp"
+                                                android:layout_marginRight="5dp"
+                                                android:layout_toRightOf="@+id/txtCardFront"
+                                                android:text="X"
+                                                android:textColor="@color/colorPrimary"
+                                                android:textSize="18sp"
+                                                android:textStyle="bold" />
+
+                                            <com.circle8.circleOne.Utils.cgTextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="bottom"
+                                                android:text="            "
+                                                android:layout_marginRight="5dp"
+                                                android:layout_toLeftOf="@+id/ivAttachFrontImage"
+                                                android:layout_alignParentBottom="true"/>
 
 
-                                        <ImageView
-                                            android:id="@+id/ivAttachFrontImage"
-                                            android:layout_width="20dp"
-                                            android:layout_height="30dp"
-                                            android:src="@drawable/ic_attach_blue"
-                                            android:layout_alignParentRight="true"
-                                            android:layout_alignParentBottom="true"/>
+                                            <ImageView
+                                                android:id="@+id/ivAttachFrontImage"
+                                                android:layout_width="20dp"
+                                                android:layout_height="30dp"
+                                                android:src="@drawable/ic_attach_blue"
+                                                android:layout_alignParentRight="true"
+                                                android:layout_alignParentBottom="true"/>
 
-                                    </RelativeLayout>
+                                        </RelativeLayout>
 
-                                </LinearLayout>
+                                    </LinearLayout>
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -1547,32 +1569,47 @@
                                     </LinearLayout>
                                 </LinearLayout>
 
+                                <View
+                                    android:layout_marginTop="8dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/colorPrimary"></View>
+
+
                                 <LinearLayout
                                     android:id="@+id/lnrProfile"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
                                     android:layout_marginTop="10dp"
                                     android:gravity="center_vertical"
                                     android:orientation="horizontal"
                                     android:weightSum="3">
 
+                                    <ImageView
+                                        android:layout_marginRight="10dp"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_marginLeft="0dp"
+                                        android:layout_gravity="center_vertical"
+                                        android:src="@drawable/ic_attachment_sv" />
+
                                     <com.circle8.circleOne.Utils.cgTextView
                                         android:textColor="@color/colorPrimary"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="Profile"
-                                        android:layout_weight="2"/>
+                                        android:text="More Info"
+                                        android:layout_weight="2"
+                                        />
 
                                     <ImageView
+                                        android:layout_weight="1"
                                         android:id="@+id/ivArrowImgProfile"
                                         android:layout_width="wrap_content"
                                         android:layout_height="15dp"
-                                        android:layout_marginLeft="0dp"
-                                        android:layout_weight="0"
                                         android:layout_gravity="center_vertical"
-                                        android:src="@drawable/ic_right_arrow_blue" />
+                                        android:src="@drawable/ic_left_arrow_blue" />
 
                                 </LinearLayout>
 
@@ -1619,6 +1656,7 @@
                                             android:orientation="horizontal">
 
                                             <com.circle8.circleOne.Utils.cgEditView
+                                                android:id="@+id/edtPLinkname"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="35dp"
                                                 android:layout_toLeftOf="@+id/ivLink"
@@ -1638,6 +1676,7 @@
                                                 android:src="@drawable/ic_link_blue" />
 
                                             <com.circle8.circleOne.Utils.cgEditView
+                                                android:id="@+id/edtPlinkurl"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="35dp"
                                                 android:layout_toRightOf="@+id/ivLink"
@@ -1685,6 +1724,7 @@
                                             android:orientation="horizontal">
 
                                             <com.circle8.circleOne.Utils.cgEditView
+                                                android:id="@+id/edtcompanylinkname"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="35dp"
                                                 android:layout_toLeftOf="@+id/ivLink1"
@@ -1704,6 +1744,7 @@
                                                 android:src="@drawable/ic_link_blue" />
 
                                             <com.circle8.circleOne.Utils.cgEditView
+                                                android:id="@+id/edtCompanylinkUrl"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="35dp"
                                                 android:layout_toRightOf="@+id/ivLink1"
@@ -1795,6 +1836,11 @@
 
                                 </LinearLayout>
 
+                                <View
+                                    android:layout_marginTop="8dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/colorPrimary"></View>
 
 
                                 <RelativeLayout
@@ -1802,10 +1848,21 @@
                                     android:layout_marginTop="10dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content">
+
+                                    <ImageView
+                                        android:id="@+id/img"
+                                        android:layout_marginRight="10dp"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_gravity="center_vertical"
+                                        android:src="@drawable/ic_testimonial_sv" />
+
+
                                     <com.circle8.circleOne.Utils.orkebyTextView
+                                        android:layout_toRightOf="@+id/img"
                                         android:id="@+id/txtTestLbl"
-                                        android:layout_marginTop="10dp"
-                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginLeft="0dp"
                                         android:layout_centerVertical="true"
                                         android:fontFamily="monospace"
                                         android:text="Testimonial"
@@ -1840,15 +1897,15 @@
                                         android:textColor="@color/colorPrimary"/>
 
                                     <ImageView
+                                        android:layout_marginRight="12dp"
                                         android:layout_alignParentRight="true"
                                         android:layout_centerVertical="true"
                                         android:id="@+id/ivArrowImgTestimonial"
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="20dp"
                                         android:layout_height="15dp"
                                         android:layout_marginLeft="0dp"
-                                        android:layout_weight="0"
                                         android:layout_gravity="center_vertical"
-                                        android:src="@drawable/ic_right_arrow_blue" />
+                                        android:src="@drawable/ic_left_arrow_blue" />
                                 </RelativeLayout>
 
 
@@ -1857,72 +1914,72 @@
                                     android:id="@+id/rltTestimonialDetail"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content">
-                                <com.circle8.circleOne.Utils.cgTextView
-                                    android:visibility="gone"
-                                    android:id="@+id/txtTestimonial"
-                                    android:layout_marginTop="5dp"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="20dp"
-                                    android:layout_centerVertical="true"
-                                    android:textSize="12sp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent" />
+                                    <com.circle8.circleOne.Utils.cgTextView
+                                        android:visibility="gone"
+                                        android:id="@+id/txtTestimonial"
+                                        android:layout_marginTop="5dp"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="20dp"
+                                        android:layout_centerVertical="true"
+                                        android:textSize="12sp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent" />
 
-                                <com.circle8.circleOne.Utils.ExpandableHeightListView
-                                    android:id="@+id/lstTestimonial"
-                                    android:visibility="visible"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="20dp"
-                                    android:layout_marginTop="5dp"
-                                    android:nestedScrollingEnabled="true"
-                                    tools:listitem="@layout/testimonial_row">
+                                    <com.circle8.circleOne.Utils.ExpandableHeightListView
+                                        android:id="@+id/lstTestimonial"
+                                        android:visibility="visible"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="20dp"
+                                        android:layout_marginTop="5dp"
+                                        android:nestedScrollingEnabled="true"
+                                        tools:listitem="@layout/testimonial_row">
 
-                                </com.circle8.circleOne.Utils.ExpandableHeightListView>
+                                    </com.circle8.circleOne.Utils.ExpandableHeightListView>
                                 </RelativeLayout>
 
+                                <View
+                                    android:layout_marginTop="8dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/colorPrimary"></View>
+
                                 <LinearLayout
+                                    android:id="@+id/lnrAsso"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
-                                    android:layout_marginTop="8dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_marginTop="10dp"
                                     android:gravity="center_vertical"
                                     android:orientation="horizontal"
                                     android:weightSum="3">
 
                                     <ImageView
-                                        android:visibility="gone"
+                                        android:layout_marginRight="10dp"
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
-                                        android:layout_marginRight="20dp"
-                                        android:layout_weight="0.0"
+                                        android:layout_marginLeft="0dp"
+                                        android:layout_gravity="center_vertical"
                                         android:src="@drawable/ic_association" />
-
-                                    <Spinner
-                                        android:visibility="gone"
-                                        android:textSize="13sp"
-                                        android:id="@+id/spnAssociation"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content" />
 
                                     <com.circle8.circleOne.Utils.cgTextView
                                         android:textColor="@color/colorPrimary"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:text="Association"
-                                        android:layout_weight="2"/>
+                                        android:layout_weight="2"
+                                        />
 
                                     <ImageView
+                                        android:layout_weight="1"
                                         android:id="@+id/ivArrowImg1"
                                         android:layout_width="wrap_content"
                                         android:layout_height="15dp"
-                                        android:layout_marginLeft="0dp"
-                                        android:layout_weight="0.1"
                                         android:layout_gravity="center_vertical"
-                                        android:src="@drawable/ic_right_arrow_blue" />
+                                        android:src="@drawable/ic_left_arrow_blue" />
 
                                 </LinearLayout>
 
@@ -1940,34 +1997,50 @@
                                     android:layout_marginLeft="20dp"
                                     android:visibility="gone"/>
 
-                                <RelativeLayout
+                                <View
+                                    android:layout_marginTop="8dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/colorPrimary"></View>
+
+
+                                <LinearLayout
+                                    android:id="@+id/lnrPreEvent"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
                                     android:layout_marginTop="10dp"
-                                    android:layout_marginBottom="10dp"
                                     android:gravity="center_vertical"
                                     android:orientation="horizontal"
-                                    >
-
-                                    <com.circle8.circleOne.Utils.orkebyTextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Preferred Event Industries"
-                                        android:textColor="@color/colorPrimary"
-                                        android:textSize="15sp"
-                                        android:textStyle="normal" />
+                                    android:weightSum="3">
 
                                     <ImageView
-                                        android:foregroundGravity="right"
-                                        android:layout_alignParentRight="true"
-                                        android:id="@+id/ivArrowImg"
+                                        android:layout_marginRight="10dp"
                                         android:layout_width="20dp"
-                                        android:layout_height="15dp"
-                                        android:src="@drawable/ic_right_arrow_blue" />
+                                        android:layout_height="20dp"
+                                        android:layout_marginLeft="0dp"
+                                        android:layout_gravity="center_vertical"
+                                        android:src="@drawable/ic_event_sv" />
 
-                                </RelativeLayout>
+                                    <com.circle8.circleOne.Utils.cgTextView
+                                        android:textColor="@color/colorPrimary"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="Preferred Event Industries"
+                                        android:layout_weight="2"
+                                        />
+
+                                    <ImageView
+                                        android:layout_weight="1"
+                                        android:id="@+id/ivArrowImg"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="15dp"
+                                        android:layout_gravity="center_vertical"
+                                        android:src="@drawable/ic_left_arrow_blue" />
+
+                                </LinearLayout>
+
                                 <!--
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
@@ -2160,11 +2233,16 @@
                                     </com.circle8.circleOne.Utils.ExpandableHeightGridView>
 
                                 </LinearLayout>
+                                <View
+                                    android:layout_marginTop="8dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/colorPrimary"></View>
 
                             </LinearLayout>
 
                             <com.circle8.circleOne.Utils.cgBoldTextView
-                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="20dp"
                                 android:id="@+id/tvSave"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -2172,6 +2250,8 @@
                                 android:layout_marginBottom="10dp"
                                 android:layout_centerHorizontal="true"
                                 android:text="Save"
+                                android:gravity="center"
+                                android:layout_gravity="center"
                                 android:textColor="@color/white"
                                 android:background="@drawable/shape_chat"
                                 android:paddingTop="10dp"

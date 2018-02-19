@@ -59,6 +59,9 @@ import java.util.Locale;
 import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
+/**
+ * A simple {@link Fragment} subclass.
+ */
 public class ConnectListFragment extends Fragment
 {
     private ListView listView;
@@ -122,10 +125,6 @@ public class ConnectListFragment extends Fragment
         nfcModel = new ArrayList<>();
         nfcModel1 = new ArrayList<>();
 
-//        new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-       // gridAdapter = new List4Adapter(getContext(), R.layout.grid_list4_layout, imgf, desc, name, designation);
-        //listView.setAdapter(gridAdapter);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -183,11 +182,6 @@ public class ConnectListFragment extends Fragment
         return view;
     }
 
-    @Override
-    public void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
 
     private void connectWithHttpPost(final String FindBy, String Search,
                                      String numofrecords, String pageno )
@@ -223,13 +217,14 @@ public class ConnectListFragment extends Fragment
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(Utility.BASE_URL+"SearchConnect");
                 httpPost.setHeader(HTTP.CONTENT_TYPE, "application/json");
-
+                //Post Data
                 List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(4);
                 nameValuePair.add(new BasicNameValuePair("FindBy", findBy));
                 nameValuePair.add(new BasicNameValuePair("Search", search));
                 nameValuePair.add(new BasicNameValuePair("numofrecords", records));
                 nameValuePair.add(new BasicNameValuePair("pageno", pages));
 
+                //Encoding POST data
                 try
                 {
                     httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
@@ -304,8 +299,14 @@ public class ConnectListFragment extends Fragment
                     {
                         JSONObject jsonObject = new JSONObject(result);
 
+//                        JSONObject response = jsonObject.getJSONObject("response");
+//                        JSONObject post = response.getJSONObject("Post");
+
                         JSONArray connect = jsonObject.getJSONArray("connect");
-                 if (connect.equals(""))
+
+                        // String message = jsonObject.getString("User");
+                        //  Toast.makeText(getApplicationContext(), res, Toast.LENGTH_LONG).show();
+                        if (connect.equals(""))
                         {
                             // Toast.makeText(getApplicationContext(), "User does not exists..", Toast.LENGTH_LONG).show();
                         }
@@ -374,7 +375,6 @@ public class ConnectListFragment extends Fragment
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             return POST2(urls[0],jsonObject);
         }
         // onPostExecute displays the results of the AsyncTask.
@@ -414,21 +414,7 @@ public class ConnectListFragment extends Fragment
                         for(int i = 0 ; i <= connect.length() ; i++ )
                         {
                             JSONObject iCon = connect.getJSONObject(i);
-                       /* String firstName = iCon.getString("FirstName");
-                        String lastName = iCon.getString("LastName");
-                        String userName = iCon.getString("UserName");
-                        String userPhoto = iCon.getString("UserPhoto");
-                        String card_front = iCon.getString("Card_Front");
-                        String card_back = iCon.getString("Card_Back");
-                        String profileId = iCon.getString("ProfileId");
-                        String phone = iCon.getString("Phone");
-                        String companyName = iCon.getString("CompanyName");
-                        String designation = iCon.getString("Designation");
-                        String facebook = iCon.getString("Facebook");
-                        String twitter = iCon.getString("Twitter");
-                        String google = iCon.getString("Google");
-                        String linkedIn = iCon.getString("LinkedIn");
-                        String website = iCon.getString("Website");  */
+
                             ConnectList connectModel = new ConnectList();
                             connectModel.setFirstname(iCon.getString("FirstName"));
                             connectModel.setLastname(iCon.getString("LastName"));
@@ -472,34 +458,6 @@ public class ConnectListFragment extends Fragment
 //        nfcModel.clear();
         nfcModel1.clear();
         connectLists.clear();
-        /*for(NFCModel reTag : allTags)
-        {
-            NFCModel nfcModelTag = new NFCModel();
-            nfcModelTag.setId(reTag.getId());
-            nfcModelTag.setName(reTag.getName());
-            nfcModelTag.setCompany(reTag.getCompany());
-            nfcModelTag.setEmail(reTag.getEmail());
-            nfcModelTag.setWebsite(reTag.getWebsite());
-            nfcModelTag.setMob_no(reTag.getMob_no());
-            nfcModelTag.setDesignation(reTag.getDesignation());
-            nfcModelTag.setUser_image(reTag.getUser_image());
-            nfcModelTag.setNfc_tag(reTag.getNfc_tag());
-            nfcModel.add(nfcModelTag);
-        }*/
-      /*  for(FriendConnection reTag : allTaggs)
-        {
-            FriendConnection nfcModelTag = new FriendConnection();
-//            nfcModelTag.setId(reTag.getId());
-            nfcModelTag.setName(reTag.getName());
-            nfcModelTag.setCompany(reTag.getCompany());
-            nfcModelTag.setEmail(reTag.getEmail());
-            nfcModelTag.setWebsite(reTag.getWebsite());
-            nfcModelTag.setMob_no(reTag.getMob_no());
-            nfcModelTag.setDesignation(reTag.getDesignation());
-            nfcModelTag.setUser_image(reTag.getUser_image());
-            nfcModelTag.setNfc_tag(reTag.getNfc_tag());
-            nfcModel1.add(nfcModelTag);
-        }*/
 
        for(ConnectList reTag : connectTags)
        {

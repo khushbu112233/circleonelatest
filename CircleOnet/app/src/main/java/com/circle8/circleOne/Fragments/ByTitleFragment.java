@@ -177,6 +177,15 @@ public class ByTitleFragment extends Fragment
     }
 
 
+   /* @Override
+    public void onResume()
+    {
+        super.onResume();
+//        connectLists.clear();
+        connectTags.clear();
+        GetData(getContext());
+    }*/
+
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -184,8 +193,17 @@ public class ByTitleFragment extends Fragment
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           if (progressStatus.equalsIgnoreCase("LOAD MORE"))
+            /*dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Searching Records...");
+            //dialog.setTitle("Saving Reminder");
+           // dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+
+            if (progressStatus.equalsIgnoreCase("LOAD MORE"))
             {
+
             }
             else
             {
@@ -193,6 +211,7 @@ public class ByTitleFragment extends Fragment
                 CustomProgressDialog(loading,getActivity());
             }
         }
+
         @Override
         protected String doInBackground(String... urls)
         {
@@ -208,7 +227,6 @@ public class ByTitleFragment extends Fragment
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             return POST2(urls[0],jsonObject);
         }
         // onPostExecute displays the results of the AsyncTask.
@@ -282,6 +300,9 @@ public class ByTitleFragment extends Fragment
                             connectModel.setWebsite(iCon.getString("Website"));
                             connectTags.add(connectModel);
 
+                           /* connectListAdapter = new ConnectListAdapter(getContext(),R.layout.grid_list5_layout, connectTags);
+                            listView.setAdapter(connectListAdapter);
+                            connectListAdapter.notifyDataSetChanged();*/
                         }
 
                         GetData(getContext());
@@ -368,5 +389,13 @@ public class ByTitleFragment extends Fragment
             listView.setAdapter(connectListAdapter);
             connectListAdapter.notifyDataSetChanged();
         }
+
+     /*   gridAdapter = new List4Adapter(getContext(), R.layout.grid_list4_layout, nfcModel1);
+        listView.setAdapter(gridAdapter);
+        gridAdapter.notifyDataSetChanged();*/
+
+      /*  list5Adapter = new List5Adapter(getContext(), R.layout.grid_list4_layout, connectLists);
+        listView.setAdapter(list5Adapter);
+        list5Adapter.notifyDataSetChanged();*/
     }
 }

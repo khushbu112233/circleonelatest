@@ -2,6 +2,7 @@ package com.circle8.circleOne.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,9 @@ import android.widget.BaseAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Model.TestimonialModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
@@ -79,6 +83,7 @@ public class PopupMenuAdapter extends BaseAdapter
         {
             holder = (ViewHolder)row.getTag();
         }
+        holder.progress.setVisibility(View.VISIBLE);
 
         if (image.get(position).equals("") || image.get(position).equals("null") || image.get(position).equals(null))
         {
@@ -92,9 +97,21 @@ public class PopupMenuAdapter extends BaseAdapter
         }
         else
         {
-            holder.progress.setVisibility(View.GONE);
+           /* holder.progress.setVisibility(View.GONE);
             Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + image.get(position))
                     .resize(300,300).onlyScaleDown().into(holder.circleImageView);
+*/
+            final ViewHolder finalHolder = holder;
+            Glide.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/"+image.get(position))
+                    .asBitmap()
+                    .into(new BitmapImageViewTarget(finalHolder.circleImageView) {
+                        @Override
+                        public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                            super.onResourceReady(drawable, anim);
+                            finalHolder.progress.setVisibility(View.GONE);
+                            finalHolder.circleImageView.setImageBitmap(drawable);
+                        }
+                    });
         }
 
         holder.txtName.setText(name.get(position).toString());

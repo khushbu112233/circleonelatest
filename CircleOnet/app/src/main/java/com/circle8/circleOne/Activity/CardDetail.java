@@ -51,7 +51,6 @@ import com.circle8.circleOne.Helper.ReferralCodeSession;
 import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.Model.TestimonialModel;
 import com.circle8.circleOne.R;
-import com.circle8.circleOne.Utils.GeocodingLocation;
 import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.chat.ChatActivity;
@@ -105,6 +104,7 @@ import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.POST2;
+import static com.circle8.circleOne.Utils.Utility.callSubPAge;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class CardDetail extends Fragment implements DialogsManager.ManagingDialogsCallbacks, View.OnClickListener, OnMapReadyCallback {
@@ -115,7 +115,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
     NfcReadUtility mNfcReadUtility = new NfcReadUtilityImpl();
     DatabaseHelper db;
     String user_id = "",  currentUser_ProfileId = "";
-    String recycle_image1, recycle_image2,userImg, frontCardImg, backCardImg, personName, personAddress;
+    String recycle_image1, recycle_image2,userImg, frontCardImg, backCardImg, personName, personAddress,PersonalProfile_LinkName,PersonalProfile_URL,CompanyProfile_LinkName,CompanyProfile_URL;
     public static JSONArray selectedStrings = new JSONArray();
     List<CharSequence> list;
     ArrayList<String> listGroupId;
@@ -160,6 +160,9 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
         activityCardDetailBinding = DataBindingUtil.inflate(
                 inflater, R.layout.activity_card_detail, container, false);
         view = activityCardDetailBinding.getRoot();
+        Utility.freeMemory();
+        Utility.deleteCache(getActivity());
+        Log.e("act","click");
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         referralCodeSession = new ReferralCodeSession(getActivity());
         loginSession = new LoginSession(getActivity());
@@ -211,11 +214,16 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
             e.printStackTrace();
         }
 
+//        Toast.makeText(getApplicationContext(), DateInitiated.toString(),Toast.LENGTH_SHORT).show();
+
+
         activityCardDetailBinding.includeLayoutDetails.tvDateInitiated.setText(DateInitiated);
 
         allTaggs = new ArrayList<>();
 
         if (netCheck == false) {
+            Utility.freeMemory();
+            Utility.deleteCache(getActivity());
             Toast.makeText(getActivity(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
         } else {
 
@@ -314,8 +322,6 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
 
         return view;
     }
-
-
 
     @Override
     public void onClick(View v)
@@ -520,7 +526,11 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                                         Intent it = new Intent(Intent.ACTION_SENDTO, uri);
                                         it.putExtra("sms_body", "");
                                         startActivity(it);
-
+                       /* Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                        smsIntent.setType("vnd.android-dir/mms-sms");
+                        smsIntent.putExtra("address", txtMob.getText().toString());
+                        smsIntent.putExtra("sms_body", "");
+                        startActivity(smsIntent);*/
                                     }
                                 }
                             }
@@ -845,13 +855,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-        Utility.deleteCache(getActivity());
 
-    }
 
 
     public void openWebPage(View v)
@@ -1045,7 +1049,6 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
             }
         }
         else {
-            //  activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
 
         }
     }
@@ -1097,7 +1100,6 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
 
             return POST2(urls[0],jsonObject);
         }
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
@@ -1207,7 +1209,6 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
@@ -1289,7 +1290,6 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
             // dialog.dismiss();
@@ -1321,7 +1321,15 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-                    String loading = "Fetching profile" ;
+           /* dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Fetching Cards...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+
+            String loading = "Fetching profile" ;
             CustomProgressDialog(loading,getActivity());
         }
 
@@ -1338,7 +1346,6 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
@@ -1377,7 +1384,41 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                     frontCardImg = jsonObject.getString("Card_Front");
                     backCardImg = jsonObject.getString("Card_Back");
                     Q_ID = jsonObject.getString("Q_ID");
+                    PersonalProfile_LinkName= jsonObject.getString("PersonalProfile_LinkName");
+                    PersonalProfile_URL= jsonObject.getString("PersonalProfile_URL");
+                    CompanyProfile_LinkName= jsonObject.getString("CompanyProfile_LinkName");
+                    CompanyProfile_URL= jsonObject.getString("CompanyProfile_URL");
 
+                    if(PersonalProfile_LinkName.equalsIgnoreCase(""))
+                    {
+                        activityCardDetailBinding.includeLayoutDetails.txtPersonalProfileLinkname.setVisibility(View.GONE);
+                    }else
+                    {
+                        activityCardDetailBinding.includeLayoutDetails.txtPersonalProfileLinkname.setText(PersonalProfile_LinkName);
+                    }
+                    if(PersonalProfile_URL.equalsIgnoreCase(""))
+                    {
+                        activityCardDetailBinding.includeLayoutDetails.txtPersonalProfileLinkUrl.setVisibility(View.GONE);
+                    }else
+                    {
+                        activityCardDetailBinding.includeLayoutDetails.txtPersonalProfileLinkUrl.setText(PersonalProfile_URL);
+                    }
+
+                    if(CompanyProfile_LinkName.equalsIgnoreCase(""))
+                    {
+                        activityCardDetailBinding.includeLayoutDetails.txtCompanyProfileLinkname.setVisibility(View.GONE);
+                    }else
+                    {
+                        activityCardDetailBinding.includeLayoutDetails.txtCompanyProfileLinkname.setText(CompanyProfile_LinkName);
+                    }
+
+                    if(CompanyProfile_URL.equalsIgnoreCase(""))
+                    {
+                        activityCardDetailBinding.includeLayoutDetails.txtCompanyProfileLinkUrl.setVisibility(View.GONE);
+                    }else
+                    {
+                        activityCardDetailBinding.includeLayoutDetails.txtCompanyProfileLinkUrl.setText(CompanyProfile_URL);
+                    }
 
                     if(CompanyProfile.equalsIgnoreCase("")||CompanyProfile==null)
                     {
@@ -1423,7 +1464,14 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
 
                             @Override
                             public void onError(QBResponseException e) {
-
+                      /*  showErrorSnackbar(R.string.select_users_get_users_error, e,
+                                new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        loadUsersFromQb();
+                                    }
+                                });
+                        progressBar.setVisibility(View.GONE);*/
                             }
                         });
 
@@ -1502,6 +1550,19 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                         activityCardDetailBinding.includeLayoutSocial.linkedInUrl.setImageResource(R.drawable.icon_linkedin);
                         activityCardDetailBinding.includeLayoutSocial.linkedInUrl.setEnabled(true);
                     }
+
+
+//                        txtName.setText(jsonObject.getString("FirstName")+" "+jsonObject.getString("LastName"));
+//                        txtDesi.setText(jsonObject.getString("Designation"));
+//                        txtCompany.setText(jsonObject.getString("CompanyName"));
+//                        txtEmail.setText(jsonObject.getString("Emailid"));
+//                        txtMob.setText(jsonObject.getString("PrimaryPhone"));
+//                        txtPH.setText(jsonObject.getString("OfficePhone"));
+                        /*txtAddress.setText(jsonObject.getString("Address1") + " " + jsonObject.getString("Address2")
+                            + " " + jsonObject.getString("Address3") + " " + jsonObject.getString("Address4")
+                            + " " + jsonObject.getString("City")  + " " + jsonObject.getString("State")
+                            + " " + jsonObject.getString("Country") + " " + jsonObject.getString("Postalcode"));*/
+//                    txtWebsite.setText(jsonObject.getString("Website"));
 
                     personName = jsonObject.getString("FirstName") + " " + jsonObject.getString("LastName");
 
@@ -1629,13 +1690,11 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                     activityCardDetailBinding.viewPager.setClipChildren(false);
                     activityCardDetailBinding.viewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                     activityCardDetailBinding.viewPager.setOffscreenPageLimit(1);
-                    //  mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
                     activityCardDetailBinding.viewPager.setAdapter(myPager);
 
                     activityCardDetailBinding.viewPager1.setClipChildren(false);
                     activityCardDetailBinding.viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                     activityCardDetailBinding.viewPager1.setOffscreenPageLimit(1);
-                    //   viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
                     activityCardDetailBinding.viewPager1.setAdapter(myPager);
 
                     String fullAddress =
@@ -1672,12 +1731,28 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                     else
                     {
                         activityCardDetailBinding.includeLayoutDetails.txtAddress.setText(personAddress);
-//                       createMarker1(personAddress,(add1+add2));
-
+                        //createMarker1(personAddress);
                         activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
-                        GeocodingLocation locationAddress1 = new GeocodingLocation();
-                        locationAddress1.getAddressFromLocation(personAddress, getActivity(), new GeocoderHandler());
+                        // GeocodingLocation locationAddress1 = new GeocodingLocation();
+                        // locationAddress1.getAddressFromLocation(personAddress, getActivity(), new GeocoderHandler());
                     }
+
+                        /*FriendConnection nfcModelTag = new FriendConnection();
+                        nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));
+                        nfcModelTag.setCompany(object.getString("CompanyName"));
+                        nfcModelTag.setEmail(object.getString("UserName"));
+                        nfcModelTag.setWebsite("");
+                        nfcModelTag.setMob_no(object.getString("Phone"));
+                        nfcModelTag.setDesignation(object.getString("Designation"));
+                        nfcModelTag.setCard_front(object.getString("Card_Front"));
+                        nfcModelTag.setCard_back(object.getString("Card_Back"));
+                        nfcModelTag.setUser_image(object.getString("UserPhoto"));
+                        nfcModelTag.setProfile_id(object.getString("ProfileId"));
+
+                        nfcModelTag.setNfc_tag("en000000001");
+                        allTags.add(nfcModelTag);*/
+//                        GetData(getContext());
+
                 } else {
                     Toast.makeText(getActivity(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
@@ -1712,7 +1787,8 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                         createMarker(Latitude,Longitude);
                         //   activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
                     }
-                    else {
+                    else
+                    {
 //                        Toast.makeText(getActivity(),msg,Toast.LENGTH_LONG).show();
                         if (locationAddress.contains(",")) {
                             createMarker1(locationAddress.split(",")[1]);
@@ -1727,13 +1803,15 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                     locationAddress = null;
                     latLang = null ;
             }
+//            tvLatLang.setText(latLang+" of "+locationAddress);
         }
     }
+
 
     @Override
     public void onResume() {
         super.onResume();
-
+        callSubPAge("ViewedCardDetail","Card");
     }
 
     private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
@@ -1755,7 +1833,11 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
+          /*  dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Fetching My Account...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
         }
 
         @Override
@@ -1775,7 +1857,6 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
 
             return POST2(urls[0],jsonObject);
         }
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
@@ -1830,6 +1911,10 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                         {
                             activityCardDetailBinding.includeLayoutDetails.tvAddedGroupInfo.setVisibility(View.GONE);
                         }
+                            /*GroupsInCardDetailAdapter groupsInCardDetailAdapter = new GroupsInCardDetailAdapter(getActivity(), img,name,desc);
+                            groupListView.setAdapter(groupsInCardDetailAdapter);
+                            groupsInCardDetailAdapter.notifyDataSetChanged();*/
+
                         GroupsRecyclerAdapter groupsRecyclerAdapter = new GroupsRecyclerAdapter(getActivity(), img, name, desc);
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                         activityCardDetailBinding.includeLayoutDetails.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true));
@@ -1846,6 +1931,8 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         }
     }
+
 }

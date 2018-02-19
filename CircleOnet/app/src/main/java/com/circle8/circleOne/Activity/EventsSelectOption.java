@@ -13,17 +13,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.ActivityEventsSelectOptionBinding;
 
 public class EventsSelectOption extends AppCompatActivity
 {
+
     private TextView actionText;
     private ImageView imgDrawer, imgLogo;
     LinearLayout lnrDate;
     AutoCompleteTextView searchText ;
-    public static String searchKeyWord = "",searchKeyWord1 = "",searchBy = "", searchOpt = "AllEvents";
+    public static String searchKeyWord = "";
+    public static String searchKeyWord1 = "";
+    public static String searchBy = "";
+    public static String searchOpt = "AllEvents";
+    public static String eventOpt = "AllEvents";
     ActivityEventsSelectOptionBinding activityEventsSelectOptionBinding;
     static Activity activity;
 
@@ -32,6 +38,7 @@ public class EventsSelectOption extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         activityEventsSelectOptionBinding = DataBindingUtil.setContentView(this,R.layout.activity_events_select_option);
+        Utility.freeMemory();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -45,7 +52,9 @@ public class EventsSelectOption extends AppCompatActivity
 
         lnrDate = (LinearLayout) findViewById(R.id.lnrDate);
         searchText = (AutoCompleteTextView)findViewById(R.id.searchView);
+
         actionText.setText("Events");
+
         lnrDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -54,6 +63,10 @@ public class EventsSelectOption extends AppCompatActivity
                 searchBy = "Date" ;
 
                 Intent go = new Intent(getApplicationContext(),CustomDate.class);
+                // you pass the position you want the viewpager to show in the extra,
+                // please don't forget to define and initialize the position variable
+                // properly
+
                 startActivity(go);
                 Utility.freeMemory();
             }
@@ -69,6 +82,15 @@ public class EventsSelectOption extends AppCompatActivity
         imgDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+              /*  Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+
+                // you pass the position you want the viewpager to show in the extra,
+                // please don't forget to define and initialize the position variable
+                // properly
+                go.putExtra("viewpager_position", 2);
+
+                startActivity(go);
+                finish();*/
 
                 finish();
                 overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
@@ -83,12 +105,16 @@ public class EventsSelectOption extends AppCompatActivity
         activity.finish();
     }
 
+
     public void allEvents(View v)
     {
+       // CardsActivity.setActionBarTitle("Events");
         searchOpt = "AllEvents";
         searchKeyWord = "";
+//        EventsActivity.callSecond();
         EventsActivity.callFirst();
         finish();
+//        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
     }
 
@@ -100,12 +126,21 @@ public class EventsSelectOption extends AppCompatActivity
         }
         else
         {
-                 searchOpt = "CompanyAssociation";
+           // CardsActivity.setActionBarTitle("Events");
+
+            searchOpt = "CompanyAssociation";
+
             searchKeyWord = searchText.getText().toString() ;
             searchBy = "Company";
+
+//            EventsActivity.searchEvent();
+
             new EventsActivity.HttpAsyncTaskSearchEvent().execute(Utility.BASE_URL+"Events/Search");
+
             finish();
+//            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
         }
+
     }
 
     public void byIndustry(View v)
@@ -116,11 +151,22 @@ public class EventsSelectOption extends AppCompatActivity
         }
         else
         {
+          //  CardsActivity.setActionBarTitle("Events");
+
             searchOpt = "Industry";
+
             searchKeyWord = searchText.getText().toString() ;
             searchBy = "Industry";
+
+//            EventsActivity.searchEvent();
+
             new EventsActivity.HttpAsyncTaskSearchEvent().execute(Utility.BASE_URL+"Events/Search");
+
             finish();
+//            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+
+
         }
     }
+
 }

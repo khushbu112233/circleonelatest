@@ -56,9 +56,4 @@ public class EditProfileFragment extends Fragment
         return view;
     }
 
-    @Override
-    public void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
-}
+   }

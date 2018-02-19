@@ -39,11 +39,6 @@ import com.circle8.circleOne.Utils.CustomViewPager;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.ActivitySearchGroupMembersBinding;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -170,6 +165,8 @@ public class SearchGroupMembers extends AppCompatActivity
 
     }
 
+
+
     private class HttpAsyncTaskTestimonialRequest extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -197,14 +194,12 @@ public class SearchGroupMembers extends AppCompatActivity
             try {
                 jsonObject.accumulate("friendprofileID",  selectedStrings);
                 jsonObject.accumulate("myprofileID", ProfileId );
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             return POST2(urls[0],jsonObject);
         }
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
@@ -272,10 +267,8 @@ public class SearchGroupMembers extends AppCompatActivity
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             return POST2(urls[0],jsonObject);
         }
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
@@ -436,7 +429,6 @@ public class SearchGroupMembers extends AppCompatActivity
                 jsonObject.accumulate("GroupID", GroupId);
                 jsonObject.accumulate("UserID", user_id);
                 jsonObject.accumulate("myFriendProfileIds", selectedStrings);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -444,7 +436,6 @@ public class SearchGroupMembers extends AppCompatActivity
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
@@ -458,13 +449,7 @@ public class SearchGroupMembers extends AppCompatActivity
                     JSONObject jsonObject = new JSONObject(result);
                     String Success = jsonObject.getString("Success");
                     String Message = jsonObject.getString("Message");
-                    if (Success.equals("1"))
-                    {
-                        Toast.makeText(getApplicationContext(), "Member(s) added successfully", Toast.LENGTH_LONG).show();
-                    }
-                    else {
-                        Toast.makeText(getApplicationContext(), "Member(s) added successfully", Toast.LENGTH_LONG).show();
-                    }
+
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
                 } else {
                     Toast.makeText(getApplicationContext(), "Not able to Add Friend in circle", Toast.LENGTH_LONG).show();

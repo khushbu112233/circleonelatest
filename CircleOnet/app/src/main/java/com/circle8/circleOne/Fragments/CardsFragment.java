@@ -18,7 +18,12 @@ import android.view.inputmethod.InputMethodManager;
 import com.circle8.circleOne.Activity.DashboardActivity;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Pref;
+import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.FragmentCardsBinding;
+import com.flurry.android.FlurryAgent;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.circle8.circleOne.Activity.CardsActivity.Connection_Limit;
 import static com.circle8.circleOne.Activity.DashboardActivity.setActionBarTitle;
@@ -29,6 +34,7 @@ public class CardsFragment extends Fragment
     public static FragmentCardsBinding fragmentCardsBinding;
     View view;
     SectionsPagerAdapter mSectionsPagerAdapter;
+    Context context;
     public CardsFragment() {
         // Required empty public constructor
     }
@@ -40,6 +46,7 @@ public class CardsFragment extends Fragment
         // Inflate the layout for this fragment
         fragmentCardsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_cards, container, false);
         view = fragmentCardsBinding.getRoot();
+        context=getActivity();
 
         return view;
     }
@@ -47,8 +54,16 @@ public class CardsFragment extends Fragment
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+
+
+        if(Pref.getValue(getActivity(), "AddQr", "").equalsIgnoreCase("1")) {
+            Pref.setValue(getActivity(), "AddQr", "0");
+        }else
+        {
+            ((AppCompatActivity) context).getSupportActionBar().show();
+            ((AppCompatActivity) context).getSupportActionBar().setShowHideAnimationEnabled(false);
+
+        }
 
         if (Pref.getValue(getContext(), "current_frag", "").equalsIgnoreCase("1")) {
             try {
@@ -133,6 +148,13 @@ public class CardsFragment extends Fragment
         DashboardActivity.setDrawerVisibility(true);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Utility.callMainPage("Card");
+
+    }
+
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -149,6 +171,7 @@ public class CardsFragment extends Fragment
         {
             if (position == 0)
             {
+
                 InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(), 0);
                 return List1Fragment.newInstance();

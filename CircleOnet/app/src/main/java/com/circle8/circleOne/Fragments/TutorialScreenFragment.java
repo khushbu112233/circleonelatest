@@ -1,5 +1,6 @@
 package com.circle8.circleOne.Fragments;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,6 +22,11 @@ public class TutorialScreenFragment extends Fragment
 {
     private static String IMG_ID = "imgId";
     private static String TIT_ID = "titId";
+
+    /* Each fragment has got an R reference to the image it will display
+     * an R reference to the title it will display, and an R reference to the
+     * string content.
+     */
     private ImageView image;
     private int imageResId;
 
@@ -59,11 +65,6 @@ public class TutorialScreenFragment extends Fragment
         return rootView;
     }
 
-    @Override
-    public void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

@@ -113,11 +113,6 @@ import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -138,7 +133,6 @@ import io.fabric.sdk.android.Fabric;
 
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.POST2;
-import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 import static com.circle8.circleOne.Utils.Validation.validateLogin;
 
@@ -328,6 +322,33 @@ public class LoginActivity extends AppCompatActivity implements
             activityLoginBinding.imgFinger.setVisibility(View.GONE);
         }
 
+        /*etLoginPass.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (etLoginPass.getRight() - etLoginPass.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        // your action here
+                        startActivity(new Intent(LoginActivity.this, ForgotActivity.class));
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });*/
+
+       /* tvPasswordInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(new Intent(LoginActivity.this, ForgotActivity.class));
+                finish();
+            }
+        });*/
 
 
         activityLoginBinding.btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -380,7 +401,19 @@ public class LoginActivity extends AppCompatActivity implements
         activityLoginBinding.btnLoginTwitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               /* mLoginButton.setCallback(new Callback<TwitterSession>() {
+                    @Override
+                    public void success(Result<TwitterSession> result) {
+                        Log.d(TAG, "twitterLogin:success" + result);
+                        handleTwitterSession(result.data);
+                    }
 
+                    @Override
+                    public void failure(TwitterException exception) {
+                        Log.w(TAG, "twitterLogin:failure", exception);
+                        //updateUI(null);
+                    }
+                });*/
 
                 client.authorize(LoginActivity.this, new Callback<TwitterSession>() {
                     @Override
@@ -474,6 +507,14 @@ public class LoginActivity extends AppCompatActivity implements
             }
         });
 
+        /*if(PrefUtils.getCurrentUser(LoginActivity.this) != null){
+
+            Intent homeIntent = new Intent(LoginActivity.this, CardsActivity.class);
+            homeIntent.putExtra("viewpager_position", 0);
+            startActivity(homeIntent);
+
+            finish();
+        }*/
 
         int screenSize = getResources().getConfiguration().screenLayout &
                 Configuration.SCREENLAYOUT_SIZE_MASK;
@@ -501,20 +542,8 @@ public class LoginActivity extends AppCompatActivity implements
 
     }
 
-    @Override
-    protected void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-    }
-
-
-    @Override
+        @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         managePrefs();
     }
@@ -712,7 +741,6 @@ public class LoginActivity extends AppCompatActivity implements
         }
     }
 
-
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 
@@ -726,15 +754,20 @@ public class LoginActivity extends AppCompatActivity implements
         mGoogleApiClient.connect();
     }
 
-
-
     private class HttpAsyncTaskUpdateQ_ID extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+           /* dialog = new ProgressDialog(RegisterActivity.this);
+            dialog.setMessage("Uploading...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
 
+            String loading = "Uploading" ;
+            // CustomProgressDialog(loading);
         }
 
         @Override
@@ -750,7 +783,6 @@ public class LoginActivity extends AppCompatActivity implements
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
@@ -786,6 +818,11 @@ public class LoginActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+           /* dialog = new ProgressDialog(LoginActivity.this);
+            dialog.setMessage("Logging In...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
 
             String loading = "Logging in";
             CustomProgressDialog(loading, LoginActivity.this);
@@ -807,7 +844,6 @@ public class LoginActivity extends AppCompatActivity implements
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
 //            dialog.dismiss();
@@ -838,6 +874,11 @@ public class LoginActivity extends AppCompatActivity implements
                         String Connection_Limit = jsonArray.getString("Connection_Limit");
                         String Connection_Left = jsonArray.getString("Connection_Left");
                         Q_ID = jsonArray.getString("Q_ID");
+                        Pref.setValue(LoginActivity.this,"UserFirstName",FirstName);
+                        Pref.setValue(LoginActivity.this,"ReferrenceCode",jsonArray.getString("ReferrenceCode"));
+                        Pref.setValue(LoginActivity.this,"UserLastName",LastName);
+                        Pref.setValue(LoginActivity.this,"UserPhone",Phone);
+                        Pref.setValue(LoginActivity.this,"UserEmail",UserName);
 
 
                         try {
@@ -887,7 +928,12 @@ public class LoginActivity extends AppCompatActivity implements
                                                         @Override
                                                         public void onSuccess(Void result, Bundle bundle) {
                                                             SharedPrefsHelper.getInstance().saveQbUser(qbUser);
-                                                    }
+                                                            //  Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
+                                                            // DialogsActivity.start(LoginActivity.this);
+                                                            // finish();
+
+                                                            //ProgressDialogFragment.hide(getSupportFragmentManager());
+                                                        }
 
                                                         @Override
                                                         public void onError(QBResponseException e) {
@@ -924,7 +970,12 @@ public class LoginActivity extends AppCompatActivity implements
                                             @Override
                                             public void onSuccess(Void result, Bundle bundle) {
                                                 SharedPrefsHelper.getInstance().saveQbUser(qbUser);
-                                    }
+                                                // Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
+                                                // DialogsActivity.start(LoginActivity.this);
+                                                // finish();
+
+                                                //ProgressDialogFragment.hide(getSupportFragmentManager());
+                                            }
 
                                             @Override
                                             public void onError(QBResponseException e) {
@@ -975,6 +1026,11 @@ public class LoginActivity extends AppCompatActivity implements
                                     profileSession.createProfileSession("0");
                                 }
                                 if (prefs.getBoolean("firstrun", true)) {
+                                    // Do first run stuff here then set 'firstrun' as false
+                                    // using the following line to edit/commit prefs
+                                   /* Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                    startActivity(intent);*/
+
 
                                     if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
                                         new MultiContactPicker.Builder(LoginActivity.this) //Activity/fragment context
@@ -998,7 +1054,57 @@ public class LoginActivity extends AppCompatActivity implements
                                     finish();
                                 }
 
+                                // imgFinger.setVisibility(View.VISIBLE);
+                               /* if (imgFinger.getVisibility() == View.VISIBLE)
+                                {
+                                    Gson gson = ((MyApplication) getApplication()).getGsonObject();
+                                    UserObject userData = new UserObject(profileid, FirstName + " " + LastName, userName, userPassword, UserID, "", UserPhoto, false);
+                                    String userDataString = gson.toJson(userData);
+                                    CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                    pref.setUserData(userDataString);
 
+                                    Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
+                                    //intent.putExtra("viewpager_position", 0);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else
+                                {
+                                    // Either gone or invisible
+                                    loginSession.createLoginSession(profileid, UserID, "", userName, "", "",userPassword);
+                                    if (prefs.getBoolean("firstrun", true))
+                                    {
+                                        // Do first run stuff here then set 'firstrun' as false
+                                        // using the following line to edit/commit prefs
+                                        Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                        startActivity(intent);
+                                        prefs.edit().putBoolean("firstrun", false).commit();
+                                    }
+                                    else
+                                    {
+                                        Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                        userIntent.putExtra("viewpager_position", 0);
+                                        startActivity(userIntent);
+                                        finish();
+                                    }
+                                }*/
+
+                              /*  loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, userName, UserPhoto, "");
+                                // Toast.makeText(getApplicationContext(), getString(R.string.auth_successful), Toast.LENGTH_LONG).show();
+
+                                // login with only fingerprint
+                                if (prefs.getBoolean("firstrun", true)) {
+                                    // Do first run stuff here then set 'firstrun' as false
+                                    // using the following line to edit/commit prefs
+                                    Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                    startActivity(intent);
+                                    prefs.edit().putBoolean("firstrun", false).commit();
+                                } else {
+                                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                    userIntent.putExtra("viewpager_position", 0);
+                                    startActivity(userIntent);
+                                    finish();
+                                }*/
                             } else {
                                 // imgFinger.setVisibility(View.GONE);
 //                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, final_email, UserPhoto, "");
@@ -1288,6 +1394,47 @@ public class LoginActivity extends AppCompatActivity implements
                 new HttpAsyncTaskSocialMedia().execute(Utility.BASE_URL+"SocialMediaLogin");
 
 
+                //  loginSession.createLoginSession("", personName, email, personPhotoUrl, "");
+
+             /*   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    // imgFinger.setVisibility(View.VISIBLE);
+                    Gson gson = ((MyApplication) getApplication()).getGsonObject();
+                    UserObject userData = new UserObject("", personName, email, "", "", "", personPhotoUrl, false);
+                    String userDataString = gson.toJson(userData);
+                    CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                    pref.setUserData(userDataString);
+
+                    Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
+                    //intent.putExtra("viewpager_position", 0);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    // imgFinger.setVisibility(View.GONE);
+                    loginSession.createLoginSession("", "", personName, email, personPhotoUrl, "");
+                    if (prefs.getBoolean("firstrun", true)) {
+                        // Do first run stuff here then set 'firstrun' as false
+                        // using the following line to edit/commit prefs
+                        Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                        startActivity(intent);
+                        prefs.edit().putBoolean("firstrun", false).commit();
+                    } else {
+                        Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                        userIntent.putExtra("viewpager_position", 0);
+                        startActivity(userIntent);
+                        finish();
+                    }
+                }
+*/
+                // Toast.makeText(getApplicationContext(), "Name: " + personName + ", email: " + email, Toast.LENGTH_LONG).show();
+
+           /* txtName.setText(personName);
+            txtEmail.setText(email);
+            Glide.with(getApplicationContext()).load(personPhotoUrl)
+                    .thumbnail(0.5f)
+                    .crossFade()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imgProfilePic);*/
+
                 updateUI(true);
             }
         } else {
@@ -1356,7 +1503,13 @@ public class LoginActivity extends AppCompatActivity implements
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            /*loginSession.createLoginSession("", user.getDisplayName(), user.getEmail(), String.valueOf(user.getPhotoUrl()), "");
+                            Intent homeIntent = new Intent(LoginActivity.this, CardsActivity.class);
+                            homeIntent.putExtra("viewpager_position", 0);
+                            startActivity(homeIntent);
 
+                            finish();
+*/
 
                             Facebook = "";
                             Google = "";
@@ -1371,6 +1524,38 @@ public class LoginActivity extends AppCompatActivity implements
                             UserName = user.getEmail();
 
                             new HttpAsyncTaskSocialMedia().execute(Utility.BASE_URL+"SocialMediaLogin");
+
+
+
+                            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                // imgFinger.setVisibility(View.VISIBLE);
+                                Gson gson = ((MyApplication) getApplication()).getGsonObject();
+                                UserObject userData = new UserObject("", user.getDisplayName(), user.getEmail(), "", "", "", String.valueOf(user.getPhotoUrl()), false);
+                                String userDataString = gson.toJson(userData);
+                                CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                pref.setUserData(userDataString);
+
+                                Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
+                                //intent.putExtra("viewpager_position", 0);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                // imgFinger.setVisibility(View.GONE);
+                                loginSession.createLoginSession("", "", user.getDisplayName(), user.getEmail(), String.valueOf(user.getPhotoUrl()), "");
+                                if (prefs.getBoolean("firstrun", true)) {
+                                    // Do first run stuff here then set 'firstrun' as false
+                                    // using the following line to edit/commit prefs
+                                    Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                    startActivity(intent);
+                                    prefs.edit().putBoolean("firstrun", false).commit();
+                                } else {
+                                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                    userIntent.putExtra("viewpager_position", 0);
+                                    startActivity(userIntent);
+                                    finish();
+                                }
+                            }*/
+
 
                             //updateUI(user);
                         } else {
@@ -1388,7 +1573,14 @@ public class LoginActivity extends AppCompatActivity implements
                     }
                 });
     }
+    // [END auth_with_twitter]
 
+    /*private void signOut() {
+        mAuth.signOut();
+        Twitter.logOut();
+
+       // updateUI(null);
+    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -1467,6 +1659,37 @@ public class LoginActivity extends AppCompatActivity implements
 
 
 
+            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                // imgFinger.setVisibility(View.VISIBLE);
+                Gson gson = ((MyApplication) getApplication()).getGsonObject();
+                UserObject userData = new UserObject("", response.get("formattedName").toString(), response.get("emailAddress").toString(), "", "", "", response.get("publicProfileUrl").toString(), false);
+                String userDataString = gson.toJson(userData);
+                CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                pref.setUserData(userDataString);
+
+                Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
+                //intent.putExtra("viewpager_position", 0);
+                startActivity(intent);
+                finish();
+            } else {
+                // imgFinger.setVisibility(View.GONE);
+                loginSession.createLoginSession("", "", response.get("formattedName").toString(), response.get("emailAddress").toString(), response.get("publicProfileUrl").toString(), "");
+
+                if (prefs.getBoolean("firstrun", true)) {
+                    // Do first run stuff here then set 'firstrun' as false
+                    // using the following line to edit/commit prefs
+                    Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                    startActivity(intent);
+                    prefs.edit().putBoolean("firstrun", false).commit();
+                } else {
+                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                    userIntent.putExtra("viewpager_position", 0);
+                    startActivity(userIntent);
+                    finish();
+                }
+            }*/
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1489,7 +1712,7 @@ public class LoginActivity extends AppCompatActivity implements
                 md.update(signature.toByteArray());
 
                 // ((TextView) findViewById(R.id.package_name)).setText(info.packageName);
-                Log.d("KeyHash ", Base64.encodeToString(md.digest(), Base64.NO_WRAP));
+                Log.e("KeyHashlog ", Base64.encodeToString(md.digest(), Base64.NO_WRAP));
             }
         } catch (PackageManager.NameNotFoundException e) {
             Log.d(TAG, e.getMessage(), e);
@@ -1507,11 +1730,16 @@ public class LoginActivity extends AppCompatActivity implements
 
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
         if (opr.isDone()) {
+            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
+            // and the GoogleSignInResult will be available instantly.
             Log.d(TAG, "Got cached sign-in");
             GoogleSignInResult result = opr.get();
             handleSignInResult(result);
         } else {
-             showProgressDialog();
+            // If the user has not previously signed in on this device or the sign-in has expired,
+            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
+            // single sign-on will occur in this branch.
+            showProgressDialog();
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override
                 public void onResult(GoogleSignInResult googleSignInResult) {
@@ -1523,7 +1751,13 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
     private void showProgressDialog() {
-
+        /*if (mProgressDialog == null)
+        {
+            mProgressDialog = new ProgressDialog(LoginActivity.this);
+            mProgressDialog.setMessage("Google Login..");
+            mProgressDialog.setIndeterminate(true);
+        }
+        mProgressDialog.show();*/
         String loading = "Google login";
        // CustomProgressDialog(loading, LoginActivity.this);
     }
@@ -1538,10 +1772,19 @@ public class LoginActivity extends AppCompatActivity implements
     private void updateUI(boolean isSignedIn) {
         if (isSignedIn) {
             activityLoginBinding.btnSignIn.setVisibility(View.GONE);
-
+            //loginSession.createLoginSession(user.getDisplayName(), user.getEmail(), String.valueOf(user.getPhotoUrl()), "");
+          /*  Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
+            intent.putExtra("viewpager_position", 0);
+            startActivity(intent);
+            finish();*/
+            // btnSignOut.setVisibility(View.VISIBLE);
+            //  btnRevokeAccess.setVisibility(View.VISIBLE);
+            // llProfileLayout.setVisibility(View.VISIBLE);
         } else {
             activityLoginBinding.btnSignIn.setVisibility(View.VISIBLE);
-
+            //  btnSignOut.setVisibility(View.GONE);
+            //  btnRevokeAccess.setVisibility(View.GONE);
+            // llProfileLayout.setVisibility(View.GONE);
         }
     }
 
@@ -1571,7 +1814,13 @@ public class LoginActivity extends AppCompatActivity implements
                                 user.gender = object.getString("gender").toString();
                                 String personPhotoUrl = "https://graph.facebook.com/" + user.facebookID + "/picture?type=large";
                                 PrefUtils.setCurrentUser(user, LoginActivity.this);
-                              Facebook = user.facebookID;
+                               /* loginSession.createLoginSession("", object.getString("name").toString(), object.getString("email").toString(), personPhotoUrl, object.getString("gender").toString());
+                                Intent intent = new Intent(LoginActivity.this, CardsActivity.class);
+                                intent.putExtra("viewpager_position", 0);
+                                startActivity(intent);
+                                finish();
+*/
+                                Facebook = user.facebookID;
                                 Google = "";
                                 Linkedin = "";
                                 Twitter = "";
@@ -1584,6 +1833,43 @@ public class LoginActivity extends AppCompatActivity implements
                                 UserName = user.email;
 
                                 new HttpAsyncTaskSocialMedia().execute(Utility.BASE_URL+"SocialMediaLogin");
+
+                               /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                    // imgFinger.setVisibility(View.VISIBLE);
+                                    Gson gson = ((MyApplication) getApplication()).getGsonObject();
+                                    UserObject userData = new UserObject("", object.getString("name").toString(), object.getString("email").toString(), "", "", object.getString("gender").toString(), personPhotoUrl, false);
+                                    String userDataString = gson.toJson(userData);
+                                    CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                    pref.setUserData(userDataString);
+
+                                    Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
+                                    //intent.putExtra("viewpager_position", 0);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    // imgFinger.setVisibility(View.GONE);
+                                    loginSession.createLoginSession("", "", object.getString("name").toString(), object.getString("email").toString(), personPhotoUrl, object.getString("gender").toString());
+
+                                    if (prefs.getBoolean("firstrun", true)) {
+                                        // Do first run stuff here then set 'firstrun' as false
+                                        // using the following line to edit/commit prefs
+                                        Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                        startActivity(intent);
+                                        prefs.edit().putBoolean("firstrun", false).commit();
+                                    } else {
+                                        Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                        userIntent.putExtra("viewpager_position", 0);
+                                        startActivity(userIntent);
+                                        finish();
+                                    }
+                                }*/
+
+
+                                //new UploadFacebook("IMG_" + timestamp1).execute();
+                               /* JSONObject object1 = object.getJSONObject("location");
+                                Toast.makeText(getApplicationContext(), object1.toString(), Toast.LENGTH_LONG).show();
+*/
+                                //  session.createUserLoginSession(user.name, user.email, "", "", "");
 
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -1613,6 +1899,12 @@ public class LoginActivity extends AppCompatActivity implements
         }
     };
 
+
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -1630,6 +1922,11 @@ public class LoginActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            /*dialog = new ProgressDialog(LoginActivity.this);
+            dialog.setMessage("Logging In...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
             String loading = "Logging in";
             CustomProgressDialog(loading, LoginActivity.this);
         }
@@ -1644,14 +1941,13 @@ public class LoginActivity extends AppCompatActivity implements
                 jsonObject.accumulate("Token", pushToken);
                 jsonObject.accumulate("UserName", UserName);
 
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
 //            dialog.dismiss();
@@ -1725,29 +2021,52 @@ public class LoginActivity extends AppCompatActivity implements
                                                         @Override
                                                         public void onSuccess(Void result, Bundle bundle) {
                                                             SharedPrefsHelper.getInstance().saveQbUser(qbUser);
-                                                                      }
+                                                            // Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
+                                                            // DialogsActivity.start(LoginActivity.this);
+                                                            // finish();
+
+                                                            //ProgressDialogFragment.hide(getSupportFragmentManager());
+                                                        }
 
                                                         @Override
                                                         public void onError(QBResponseException e) {
                                                             ProgressDialogFragment.hide(getSupportFragmentManager());
                                                             //  Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
 
-
+                                    /*ErrorUtils.showSnackbar(userListView, R.string.login_chat_login_error, e,
+                                            R.string.dlg_retry, new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    login(user);
+                                                }
+                                            });*/
                                                         }
                                                     });
 
+                                                    // DataHolder.getInstance().setSignInQbUser(qbUser);
+                                                    // Toaster.longToast(R.string.user_successfully_sign_in);
 
+                                                    //finish();
                                                 }
 
                                                 @Override
                                                 public void onError(QBResponseException errors) {
-//
+//                                    progressDialog.dismiss();
+                                                    //  Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                    /*showSnackbarError(rootLayout, R.string.errors, errors, new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            signIn();
+                                        }
+                                    });*/
                                                 }
                                             });
                                         }
                                     });
                                 }catch (Exception e) {
-            }
+
+                                    //Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                                }
 
 
 
@@ -1757,7 +2076,12 @@ public class LoginActivity extends AppCompatActivity implements
                                 QBUsers.signIn(qbUser).performAsync(new QBEntityCallback<QBUser>() {
                                     @Override
                                     public void onSuccess(final QBUser qbUser, Bundle bundle) {
-                                  qbUser.setPassword("circle@123");
+                                        // progressDialog.dismiss();
+                                        //Toaster.longToast("success");
+                                        // setResult(RESULT_OK);
+                                        // SharedPrefsHelper.getInstance().saveQbUser(qbUser);
+                                        //  Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
+                                        qbUser.setPassword("circle@123");
                                         ChatHelper.getInstance().login(qbUser, new QBEntityCallback<Void>() {
                                             @Override
                                             public void onSuccess(Void result, Bundle bundle) {
@@ -1772,7 +2096,15 @@ public class LoginActivity extends AppCompatActivity implements
                                             @Override
                                             public void onError(QBResponseException e) {
                                                 ProgressDialogFragment.hide(getSupportFragmentManager());
+                                                // Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
 
+                                    /*ErrorUtils.showSnackbar(userListView, R.string.login_chat_login_error, e,
+                                            R.string.dlg_retry, new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    login(user);
+                                                }
+                                            });*/
                                             }
                                         });
 
@@ -1784,7 +2116,14 @@ public class LoginActivity extends AppCompatActivity implements
 
                                     @Override
                                     public void onError(QBResponseException errors) {
-//
+//                                    progressDialog.dismiss();
+                                        // Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                    /*showSnackbarError(rootLayout, R.string.errors, errors, new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            signIn();
+                                        }
+                                    });*/
                                     }
                                 });
                             }
@@ -1828,7 +2167,14 @@ public class LoginActivity extends AppCompatActivity implements
                                     profileSession.createProfileSession("0");
                                 }
 
-                            if (prefs.getBoolean("firstrun", true)) {
+                              /*  UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, "", UserID, Gender, UserPhoto, dob, Phone, false);
+                                String userDataString = gson.toJson(userData);
+                                CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                pref.setUserData(userDataString);
+
+                               // Toast.makeText(getApplicationContext(), userName + " " + userPassword, Toast.LENGTH_LONG).show();
+                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone);
+                              */  if (prefs.getBoolean("firstrun", true)) {
                                     // Do first run stuff here then set 'firstrun' as false
                                     // using the following line to edit/commit prefs
                                    /* Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
@@ -1856,6 +2202,54 @@ public class LoginActivity extends AppCompatActivity implements
                                     finish();
                                 }
 
+                               /* if (imgFinger.getVisibility() == View.VISIBLE) {
+                                    Gson gson = ((MyApplication) getApplication()).getGsonObject();
+                                    UserObject userData = new UserObject(profileid, FirstName + " " + LastName, userName, userPassword, UserID, "", UserPhoto, false);
+                                    String userDataString = gson.toJson(userData);
+                                    CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                    pref.setUserData(userDataString);
+
+                                    Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
+                                    //intent.putExtra("viewpager_position", 0);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    // Either gone or invisible
+                                    loginSession.createLoginSession(profileid, UserID, "", userName, "", "",userPassword);
+                                    if (prefs.getBoolean("firstrun", true)) {
+                                        // Do first run stuff here then set 'firstrun' as false
+                                        // using the following line to edit/commit prefs
+                                        Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                        startActivity(intent);
+                                        prefs.edit().putBoolean("firstrun", false).commit();
+                                    } else {
+                                        Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                        userIntent.putExtra("viewpager_position", 0);
+                                        startActivity(userIntent);
+                                        finish();
+                                    }
+                                }*/
+
+
+                                // imgFinger.setVisibility(View.VISIBLE);
+
+
+                               /* loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, userName, UserPhoto, "");
+                                // Toast.makeText(getApplicationContext(), getString(R.string.auth_successful), Toast.LENGTH_LONG).show();
+
+                                // login with only fingerprint
+                                if (prefs.getBoolean("firstrun", true)) {
+                                    // Do first run stuff here then set 'firstrun' as false
+                                    // using the following line to edit/commit prefs
+                                    Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                    startActivity(intent);
+                                    prefs.edit().putBoolean("firstrun", false).commit();
+                                } else {
+                                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                    userIntent.putExtra("viewpager_position", 0);
+                                    startActivity(userIntent);
+                                    finish();
+                                }*/
                             } else {
                                 // imgFinger.setVisibility(View.GONE);
 
@@ -1883,6 +2277,10 @@ public class LoginActivity extends AppCompatActivity implements
 
                                 //loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone);
                                 if (prefs.getBoolean("firstrun", true)) {
+                                    // Do first run stuff here then set 'firstrun' as false
+                                    // using the following line to edit/commit prefs
+                                  /*  Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                    startActivity(intent);*/
 
                                     if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
                                         new MultiContactPicker.Builder(LoginActivity.this) //Activity/fragment context
@@ -1970,6 +2368,8 @@ public class LoginActivity extends AppCompatActivity implements
                 } else {
                     Toast.makeText(getBaseContext(), "Not able to login..", Toast.LENGTH_LONG).show();
                 }
+
+
             } catch (JSONException e) {
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                 intent.putExtra("Facebook", Facebook);
@@ -1981,8 +2381,10 @@ public class LoginActivity extends AppCompatActivity implements
                 intent.putExtra("Image", final_image);
                 startActivity(intent);
             }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         }
     }
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -1992,7 +2394,10 @@ public class LoginActivity extends AppCompatActivity implements
         android.os.Process.killProcess(android.os.Process.myPid());
         finish();
     }
+
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
+
 }

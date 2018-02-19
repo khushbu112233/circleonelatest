@@ -96,6 +96,13 @@ public class RewardsPointsActivity extends Fragment implements View.OnClickListe
         activityRewardsPointsBinding.llMerchantBox.setOnClickListener(this);
         activityRewardsPointsBinding.tvHistory.setOnClickListener(this);
         imgBack.setOnClickListener(this);
+        activityRewardsPointsBinding.imgLuckyDraw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i =new Intent(getActivity(),LuckyDrawActivity.class);
+                startActivity(i);
+            }
+        });
 
         new HttpAsyncGetAll().execute(Utility.BASE_URL+"Merchant/GetAll");
         return view;

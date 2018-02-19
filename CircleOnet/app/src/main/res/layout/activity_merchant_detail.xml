@@ -3,328 +3,328 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.circle8.circleOne.Activity.MerchantDetailActivity">
-
     <RelativeLayout
-        android:id="@+id/rlProgressDialog"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/colorPrimary"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        android:layout_marginRight="50dp"
-        android:layout_marginLeft="50dp"
-        android:elevation="20dp">
+        android:layout_height="match_parent"
+        tools:context="com.circle8.circleOne.Activity.MerchantDetailActivity">
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/rlProgressDialog"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_centerVertical="true"
-            android:weightSum="1">
-
-            <RelativeLayout
-                android:layout_centerInParent="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="0.7"
-                android:gravity="right"
-                android:layout_marginRight="15dp">
-
-                <ImageView
-                    android:layout_centerInParent="true"
-                    android:id="@+id/imgConnecting1"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/round1" />
-                <ImageView
-                    android:layout_centerInParent="true"
-                    android:id="@+id/imgConnecting2"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/round2" />
-                <ImageView
-                    android:layout_centerInParent="true"
-                    android:id="@+id/imgConnecting3"
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:src="@drawable/round3" />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/txtProgressing"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="0dp"
-                android:textSize="15dp"
-                android:layout_below="@+id/imgConnecting"
-                android:textColor="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Connecting."
-                android:layout_gravity="center_vertical"
-                android:layout_weight="0.3"/>
-        </LinearLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:elevation="15dp"
-        android:id="@+id/rlTabBar"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/colorAccent" >
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-        <com.circle8.circleOne.Utils.cgTextView
-            android:id="@+id/txtTitle"
-            android:textSize="17dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Merchant Details"
-            android:textColor="@color/white"/>
-        <ImageView
-            android:id="@+id/imgProfileMenu"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_width="22dp"
-            android:layout_height="30dp"
+            android:layout_height="70dp"
+            android:background="@color/colorPrimary"
+            android:layout_centerInParent="true"
             android:visibility="gone"
-            android:src="@drawable/ic_dehaze_black_24dp"/>
-    </RelativeLayout>
-
-    <ScrollView
-        android:layout_below="@+id/rlTabBar"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:fillViewport="true"
-        android:layout_marginBottom="5dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:background="@color/white"
-            android:layout_marginBottom="0dp">
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:elevation="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:weightSum="1"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="15dp">
+                android:layout_centerVertical="true"
+                android:weightSum="1">
 
-                <com.circle8.circleOne.Utils.cgBoldTextView
-                    android:id="@+id/tvMerchantName"
+                <RelativeLayout
+                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.7"
+                    android:gravity="right"
+                    android:layout_marginRight="15dp">
+
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:id="@+id/imgConnecting1"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/round1" />
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:id="@+id/imgConnecting2"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/round2" />
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:id="@+id/imgConnecting3"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:src="@drawable/round3" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txtProgressing"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="0dp"
+                    android:textSize="15dp"
+                    android:layout_below="@+id/imgConnecting"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Connecting."
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.3"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:elevation="15dp"
+            android:id="@+id/rlTabBar"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/colorAccent" >
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+            <com.circle8.circleOne.Utils.cgTextView
+                android:id="@+id/txtTitle"
+                android:textSize="17dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Merchant Details"
+                android:textColor="@color/white"/>
+            <ImageView
+                android:id="@+id/imgProfileMenu"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="22dp"
+                android:layout_height="30dp"
+                android:visibility="gone"
+                android:src="@drawable/ic_dehaze_black_24dp"/>
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_below="@+id/rlTabBar"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:fillViewport="true"
+            android:layout_marginBottom="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:layout_marginBottom="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:weightSum="1"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp">
+
+                    <com.circle8.circleOne.Utils.cgBoldTextView
+                        android:id="@+id/tvMerchantName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Product Title"
+                        android:textColor="@color/gray_text"
+                        android:layout_centerVertical="true"
+                        android:textSize="17dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="0dp"
+                        android:layout_weight="0.9"/>
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        app:civ_border_width="1dp"
+                        app:civ_border_color="@color/white"
+                        android:src="@drawable/usr"
+                        android:id="@+id/tvMerchantImg"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="right"
+                        android:layout_weight="0.1"/>
+                </LinearLayout>
+
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:id="@+id/tvMerchantDesc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Product Title"
                     android:textColor="@color/gray_text"
-                    android:layout_centerVertical="true"
-                    android:textSize="17dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="0dp"
-                    android:layout_weight="0.9"/>
+                    android:textSize="12dp"
+                    android:hint="Product Description"
+                    android:textAlignment="gravity"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="10dp"/>
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    app:civ_border_width="1dp"
-                    app:civ_border_color="@color/white"
-                    android:src="@drawable/usr"
-                    android:id="@+id/tvMerchantImg"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:id="@+id/tvMoreInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="More info"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14dp"
+                    android:textAlignment="gravity"
                     android:layout_gravity="right"
-                    android:layout_weight="0.1"/>
-            </LinearLayout>
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="20dp"/>
 
-            <com.circle8.circleOne.Utils.cgTextView
-                android:id="@+id/tvMerchantDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/gray_text"
-                android:textSize="12dp"
-                android:hint="Product Description"
-                android:textAlignment="gravity"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="10dp"/>
-
-            <com.circle8.circleOne.Utils.cgTextView
-                android:id="@+id/tvMoreInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="More info"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14dp"
-                android:textAlignment="gravity"
-                android:layout_gravity="right"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="20dp"/>
-
-            <com.circle8.circleOne.Utils.ExpandableHeightListView
-                android:id="@+id/listView1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none"
-                android:fadingEdge="none"
-                android:orientation="vertical" />
-
-            <com.circle8.circleOne.Utils.cgTextView
-                android:id="@+id/tvProductListInfo"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:text="No products are available."
-                android:gravity="center"
-                android:visibility="gone"/>
-
-<!--
-            <com.circle8.circleOne.Utils.ExpandableHeightListView
-                android:visibility="visible"
-                android:id="@+id/listView1"
-                android:layout_width="match_parent"
-                android:layout_height="320dp"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="0dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="10dp"
-                android:divider="@android:color/transparent"
-                android:dividerHeight="0dp">
-
-            </com.circle8.circleOne.Utils.ExpandableHeightListView>
--->
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorPrimary"/>
-
-            <RelativeLayout
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:id="@+id/lnrSearch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <AutoCompleteTextView
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/txt_back"
-                    android:paddingRight="10dp"
-                    android:layout_toLeftOf="@+id/imgSearch"
-                    android:paddingLeft="10dp"
-                    android:hint="Type your preferred location"
-                    android:id="@+id/searchView"
-                    android:textSize="12sp"
+                <com.circle8.circleOne.Utils.ExpandableHeightListView
+                    android:id="@+id/listView1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:focusableInTouchMode="true"
-                    android:imeOptions="actionSearch"
-                    android:inputType="textAutoComplete|textAutoCorrect"
-                    android:textColor="@android:color/black" />
+                    android:scrollbars="none"
+                    android:fadingEdge="none"
+                    android:orientation="vertical" />
+
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:id="@+id/tvProductListInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:text="No products are available."
+                    android:gravity="center"
+                    android:visibility="gone"/>
+
+                <!--
+                            <com.circle8.circleOne.Utils.ExpandableHeightListView
+                                android:visibility="visible"
+                                android:id="@+id/listView1"
+                                android:layout_width="match_parent"
+                                android:layout_height="320dp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginRight="0dp"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginBottom="10dp"
+                                android:divider="@android:color/transparent"
+                                android:dividerHeight="0dp">
+
+                            </com.circle8.circleOne.Utils.ExpandableHeightListView>
+                -->
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPrimary"/>
+
+                <RelativeLayout
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/lnrSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <AutoCompleteTextView
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/txt_back"
+                        android:paddingRight="10dp"
+                        android:layout_toLeftOf="@+id/imgSearch"
+                        android:paddingLeft="10dp"
+                        android:hint="Type your preferred location"
+                        android:id="@+id/searchView"
+                        android:textSize="12sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:focusableInTouchMode="true"
+                        android:imeOptions="actionSearch"
+                        android:inputType="textAutoComplete|textAutoCorrect"
+                        android:textColor="@android:color/black" />
+
+                    <ImageView
+                        android:layout_marginRight="10dp"
+                        android:layout_centerVertical="true"
+                        android:backgroundTint="@color/colorAccent"
+                        android:src="@drawable/search"
+                        android:id="@+id/imgSearch"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPrimary"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp">
+
+                    <fragment
+                        android:id="@+id/map"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                </RelativeLayout>
+
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Participating Stores"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="17dp"
+                    android:textAlignment="gravity"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"/>
 
                 <ImageView
-                    android:layout_marginRight="10dp"
-                    android:layout_centerVertical="true"
-                    android:backgroundTint="@color/colorAccent"
-                    android:src="@drawable/search"
-                    android:id="@+id/imgSearch"
-                    android:layout_alignParentRight="true"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorPrimary"/>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="150dp">
-
-                <fragment
-                    android:id="@+id/map"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="150dp"
+                    android:scaleType="fitXY"
+                    android:visibility="gone"
+                    android:src="@drawable/store_map"/>
 
-            </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPrimary"/>
 
-            <com.circle8.circleOne.Utils.cgTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Participating Stores"
-                android:textColor="@color/colorPrimary"
-                android:textSize="17dp"
-                android:textAlignment="gravity"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="5dp"/>
+                <com.circle8.circleOne.Utils.ExpandableHeightListView
+                    android:id="@+id/listView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:layout_marginBottom="5dp"/>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:scaleType="fitXY"
-                android:visibility="gone"
-                android:src="@drawable/store_map"/>
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:id="@+id/tvLocationListInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:text="No Locations are available."
+                    android:gravity="center"
+                    android:visibility="gone"/>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorPrimary"/>
+                <!--
+                            <com.circle8.circleOne.Utils.ExpandableHeightListView
+                                android:visibility="visible"
+                                android:id="@+id/listView2"
+                                android:layout_width="match_parent"
+                                android:layout_height="350dp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginRight="0dp"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginBottom="10dp"
+                                android:divider="@android:color/transparent"
+                                android:dividerHeight="0dp">
 
-            <com.circle8.circleOne.Utils.ExpandableHeightListView
-                android:id="@+id/listView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none"
-                android:layout_marginBottom="5dp"/>
-
-            <com.circle8.circleOne.Utils.cgTextView
-                android:id="@+id/tvLocationListInfo"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:text="No Locations are available."
-                android:gravity="center"
-                android:visibility="gone"/>
-
-            <!--
-                        <com.circle8.circleOne.Utils.ExpandableHeightListView
-                            android:visibility="visible"
-                            android:id="@+id/listView2"
-                            android:layout_width="match_parent"
-                            android:layout_height="350dp"
-                            android:layout_marginLeft="0dp"
-                            android:layout_marginRight="0dp"
-                            android:layout_marginTop="0dp"
-                            android:layout_marginBottom="10dp"
-                            android:divider="@android:color/transparent"
-                            android:dividerHeight="0dp">
-
-                        </com.circle8.circleOne.Utils.ExpandableHeightListView>
-            -->
+                            </com.circle8.circleOne.Utils.ExpandableHeightListView>
+                -->
 
 
-        </LinearLayout>
+            </LinearLayout>
 
-    </ScrollView>
+        </ScrollView>
 
-</RelativeLayout>
+    </RelativeLayout>
 </layout>

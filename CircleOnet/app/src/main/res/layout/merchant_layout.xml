@@ -35,7 +35,7 @@
         android:id="@+id/tvProductListInfo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="There is no products available."
+        android:text="No products available."
         android:visibility="gone"
         android:gravity="center" />
 

@@ -1,7 +1,6 @@
 package com.circle8.circleOne.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.EmbossMaskFilter;
@@ -98,6 +97,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
 
     private static TextView tvPersonName, tvPersonProfile, tvPersonWebsite, tvPersonAddress, tvPersonContact,
             tvPersonNameLast, tvPersonMobile;
+    ImageView imageDefault;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
@@ -106,6 +106,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
         {
             super(itemView);
             imageView = (ImageView)itemView.findViewById(R.id.image1);
+            imageDefault = (ImageView)itemView.findViewById(R.id.imageDefault);
             defaultCard = (RelativeLayout) itemView.findViewById(R.id.rltDefaultCard);
             tvPersonName = (TextView)itemView.findViewById(R.id.tvPersonName);
             tvPersonProfile = (TextView)itemView.findViewById(R.id.tvPersonProfile);
@@ -232,11 +233,43 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             catch (Exception e){
                 e.printStackTrace();
             }
+            if(nfcModelList.get(position).getEmail().equalsIgnoreCase("")) {
+                if (nfcModelList.get(position).getEmail().contains("circle8")) {
+                    defaultCard.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimary));
+                    tvPersonName.setTextColor(mContext.getResources().getColor(R.color.white));
+                    tvPersonProfile.setTextColor(mContext.getResources().getColor(R.color.white));
+                    tvPersonAddress.setTextColor(mContext.getResources().getColor(R.color.white));
+                    tvPersonNameLast.setTextColor(mContext.getResources().getColor(R.color.white));
+                    tvPersonMobile.setTextColor(mContext.getResources().getColor(R.color.white));
+                    tvPersonWebsite.setTextColor(mContext.getResources().getColor(R.color.white));
+                    imageDefault.setColorFilter(mContext.getResources().getColor(R.color.white));
+                } else {
+                    defaultCard.setBackgroundColor(mContext.getResources().getColor(R.color.other_circle));
+                    tvPersonName.setTextColor(mContext.getResources().getColor(R.color.other_circle_font));
+                    tvPersonProfile.setTextColor(mContext.getResources().getColor(R.color.other_circle_font));
+                    tvPersonAddress.setTextColor(mContext.getResources().getColor(R.color.other_circle_font));
+                    tvPersonNameLast.setTextColor(mContext.getResources().getColor(R.color.other_circle_font));
+                    tvPersonMobile.setTextColor(mContext.getResources().getColor(R.color.other_circle_font));
+                    tvPersonWebsite.setTextColor(mContext.getResources().getColor(R.color.other_circle_font));
+                    imageDefault.setColorFilter(mContext.getResources().getColor(R.color.other_circle_font));
 
+                }
+            }else
+            {
+                defaultCard.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimary));
+                tvPersonName.setTextColor(mContext.getResources().getColor(R.color.white));
+                tvPersonProfile.setTextColor(mContext.getResources().getColor(R.color.white));
+                tvPersonAddress.setTextColor(mContext.getResources().getColor(R.color.white));
+                tvPersonNameLast.setTextColor(mContext.getResources().getColor(R.color.white));
+                tvPersonMobile.setTextColor(mContext.getResources().getColor(R.color.white));
+                tvPersonWebsite.setTextColor(mContext.getResources().getColor(R.color.white));
+                imageDefault.setColorFilter(mContext.getResources().getColor(R.color.white));
+            }
 
             String name = nfcModelList.get(position).getName();
             kept = name.substring(0, name.indexOf(" "));
             remainder = name.substring(name.indexOf(" ") + 1, name.length());
+
             tvPersonName.setText(kept);
             tvPersonNameLast.setText(remainder);
             tvPersonProfile.setText(nfcModelList.get(position).getDesignation());
@@ -256,7 +289,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             defaultCard.setVisibility(View.GONE);
             //imageView.setImageResource(nfcModelList.get(position).getCard_front());
             ImageLoader.getInstance().displayImage(Utility.BASE_IMAGE_URL+"Cards/"+nfcModelList.get(position).getCard_front(), imageView, options, animateFirstListener);
-           // Picasso.with(mContext).load(Utility.BASE_IMAGE_URL+"Cards/"+nfcModelList.get(position).getCard_front()).skipMemoryCache().into(imageView);
+           // Picasso.with(mmContext).load(Utility.BASE_IMAGE_URL+"Cards/"+nfcModelList.get(position).getCard_front()).skipMemoryCache().into(imageView);
         }
 
         pos = holder.getAdapterPosition();

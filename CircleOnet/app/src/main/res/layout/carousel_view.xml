@@ -5,71 +5,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-   <!-- <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <!-- <android.support.v7.widget.CardView
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:layout_marginBottom="10dp"
+         android:layout_marginLeft="25dp"
+         android:layout_marginRight="25dp"
+         android:layout_marginTop="10dp"
+         android:visibility="visible">-->
+
+    <com.dd.ShadowLayout
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="10dp"
-        android:visibility="visible">-->
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:sl_cornerRadius="6dp"
+        app:sl_dx="0dp"
+        app:sl_dy="0dp"
+        app:sl_shadowColor="#AA000000"
+        app:sl_shadowRadius="4dp">
 
-        <com.dd.ShadowLayout
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="10dp"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:sl_cornerRadius="6dp"
-            app:sl_dx="0dp"
-            app:sl_dy="0dp"
-            app:sl_shadowColor="#AA000000"
-            app:sl_shadowRadius="4dp">
+            android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <ProgressBar
+                android:id="@+id/progressBar1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:visibility="visible"
+                android:layout_centerInParent="true"
+                />
 
-                <ProgressBar
-                    android:id="@+id/progressBar1"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:visibility="visible"
-                    android:layout_centerInParent="true"
-                    />
-
-                <ImageView
+            <ImageView
                 android:id="@+id/image1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="200dp"
                 android:scaleType="fitXY" />
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/rltDefaultCard"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/colorPrimary"
-                android:visibility="gone">
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rltDefaultCard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:visibility="gone">
 
-                <ImageView
-                    android:tint="@color/white"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_margin="10dp"
-                    android:src="@drawable/login_logo" />
+            <ImageView
+                android:id="@+id/imageDefault"
+                android:tint="@color/white"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:src="@drawable/login_logo" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                    android:orientation="horizontal">
                     <com.circle8.circleOne.Utils.cgTextView
                         android:id="@+id/tvPersonName"
                         android:layout_width="wrap_content"
@@ -81,218 +82,218 @@
                         android:textSize="13dp"
                         android:textStyle="bold" />
 
-                        <com.circle8.circleOne.Utils.cgBoldTextView
-                            android:id="@+id/tvPersonNameLast"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginLeft="5dp"
-                            android:text="Desai"
-                            android:textColor="@color/white"
-                            android:textSize="13dp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                    <com.circle8.circleOne.Utils.cgTextView
-                        android:id="@+id/tvPersonProfile"
+                    <com.circle8.circleOne.Utils.cgBoldTextView
+                        android:id="@+id/tvPersonNameLast"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="20dp"
-                        android:text="CEO"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="Desai"
                         android:textColor="@color/white"
-                        android:textSize="10dp"
+                        android:textSize="13dp"
                         android:textStyle="bold" />
-
-                    <View
-                        android:layout_width="20dp"
-                        android:layout_height="0.5dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="20dp"
-                        android:background="@color/white" />
-
-                    <com.circle8.circleOne.Utils.cgTextView
-                        android:id="@+id/tvPersonAddress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginLeft="20dp"
-                        android:text="A : 65 Ubi Road | #03-90 Oxley Bizhub"
-                        android:textColor="@color/white"
-                        android:textSize="10dp" />
-
-                    <com.circle8.circleOne.Utils.cgTextView
-                        android:id="@+id/tvPersonWebsite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginLeft="20dp"
-                        android:text="E : chris.liao@circle8.asia"
-                        android:textColor="@color/white"
-                        android:textSize="10dp" />
-
-                    <com.circle8.circleOne.Utils.cgTextView
-                        android:visibility="gone"
-                        android:id="@+id/tvPersonContact"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginLeft="20dp"
-                        android:text="T : +65 6816 7888"
-                        android:textColor="@color/white"
-                        android:textSize="10dp" />
-
-                    <com.circle8.circleOne.Utils.cgTextView
-                        android:id="@+id/tvPersonMobile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:text="T : +65 6816 7888"
-                        android:textColor="@color/white"
-                        android:textSize="10dp" />
-
                 </LinearLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rltDefaultCard1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:visibility="gone">
-
-                <ImageView
-                    android:visibility="gone"
-                    android:id="@+id/carousel_logo"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                   android:layout_centerInParent="true"
-                    android:layout_margin="10dp"
-                    android:src="@drawable/login_logo" />
-
-                <ImageView
-                    android:id="@+id/imgTopLogo"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_margin="10dp"
-                    android:src="@drawable/login_logo" />
-
-                <LinearLayout
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:id="@+id/tvPersonProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:orientation="vertical">
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="CEO"
+                    android:textColor="@color/white"
+                    android:textSize="10dp"
+                    android:textStyle="bold" />
 
-                        <com.circle8.circleOne.Utils.cgBoldTextView
-                            android:layout_gravity="center"
-                            android:id="@+id/tvComName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:text="Unico Creative ptl lte"
-                            android:textColor="#4c4d4b"
-                            android:textSize="13dp"
-                            android:textStyle="bold" />
+                <View
+                    android:layout_width="20dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@color/white" />
 
-                        <com.circle8.circleOne.Utils.cgTextView
-                            android:layout_gravity="center"
-                            android:id="@+id/tvweb"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:text="www.unicocreative.com"
-                            android:textColor="#4c4d4b"
-                            android:textSize="11dp"
-                            android:textStyle="bold" />
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:id="@+id/tvPersonAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="A : 65 Ubi Road | #03-90 Oxley Bizhub"
+                    android:textColor="@color/white"
+                    android:textSize="10dp" />
 
-                </LinearLayout>
-            </RelativeLayout>
-        </com.dd.ShadowLayout>
-   <!-- </android.support.v7.widget.CardView>-->
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:id="@+id/tvPersonWebsite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="E : chris.liao@circle8.asia"
+                    android:textColor="@color/white"
+                    android:textSize="10dp" />
 
-   <!-- <android.support.v7.widget.CardView
-        android:id="@+id/cardDefault"
-        android:layout_width="300dp"
-        android:layout_height="194dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="10dp"
-        android:visibility="invisible"
-        app:cardCornerRadius="3dp"
-        app:cardPreventCornerOverlap="false">
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:visibility="gone"
+                    android:id="@+id/tvPersonContact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="T : +65 6816 7888"
+                    android:textColor="@color/white"
+                    android:textSize="10dp" />
 
-        <com.dd.ShadowLayout
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:id="@+id/tvPersonMobile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="T : +65 6816 7888"
+                    android:textColor="@color/white"
+                    android:textSize="10dp" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rltDefaultCard1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:sl_cornerRadius="6dp"
-            app:sl_dx="0dp"
-            app:sl_dy="0dp"
-            app:sl_shadowColor="#AA000000"
-            app:sl_shadowRadius="4dp">
+            android:background="@color/white"
+            android:visibility="gone">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/default_card">
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/carousel_logo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:layout_margin="10dp"
+                android:src="@drawable/login_logo" />
 
-                <LinearLayout
-                    android:layout_alignParentBottom="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                <TextView
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginBottom="8dp"
-                    android:textSize="15dp"
-                    android:textStyle="bold"
+            <ImageView
+                android:id="@+id/imgTopLogo"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:src="@drawable/login_logo" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <com.circle8.circleOne.Utils.cgBoldTextView
+                    android:layout_gravity="center"
+                    android:id="@+id/tvComName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:text="CHRIS LIAO"/>
+                    android:layout_marginBottom="5dp"
+                    android:text="Unico Creative ptl lte"
+                    android:textColor="#4c4d4b"
+                    android:textSize="13dp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginBottom="20dp"
-                        android:textSize="13dp"
-                        android:textStyle="bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:text="CEO"/>
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:layout_gravity="center"
+                    android:id="@+id/tvweb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="www.unicocreative.com"
+                    android:textColor="#4c4d4b"
+                    android:textSize="11dp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginBottom="5dp"
-                        android:textSize="13dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:text="www.circlesone.com  chris.liao@circle8.asia"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </com.dd.ShadowLayout>
+    <!-- </android.support.v7.widget.CardView>-->
 
-                    <TextView
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginBottom="5dp"
-                        android:textSize="13dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:text="65 Ubi Road | #03-90 Oxley Bizhub"/>
+    <!-- <android.support.v7.widget.CardView
+         android:id="@+id/cardDefault"
+         android:layout_width="300dp"
+         android:layout_height="194dp"
+         android:layout_marginBottom="10dp"
+         android:layout_marginLeft="25dp"
+         android:layout_marginRight="25dp"
+         android:layout_marginTop="10dp"
+         android:visibility="invisible"
+         app:cardCornerRadius="3dp"
+         app:cardPreventCornerOverlap="false">
 
-                    <TextView
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginBottom="20dp"
-                        android:textSize="13dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:text="+65 6816 7888   +65 9821 9235"/>
+         <com.dd.ShadowLayout
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             app:sl_cornerRadius="6dp"
+             app:sl_dx="0dp"
+             app:sl_dy="0dp"
+             app:sl_shadowColor="#AA000000"
+             app:sl_shadowRadius="4dp">
+
+             <RelativeLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:background="@drawable/default_card">
+
+                 <LinearLayout
+                     android:layout_alignParentBottom="true"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:orientation="vertical">
+                 <TextView
+                     android:layout_marginLeft="20dp"
+                     android:layout_marginBottom="8dp"
+                     android:textSize="15dp"
+                     android:textStyle="bold"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:textColor="@color/white"
+                     android:text="CHRIS LIAO"/>
+
+                     <TextView
+                         android:layout_marginLeft="20dp"
+                         android:layout_marginBottom="20dp"
+                         android:textSize="13dp"
+                         android:textStyle="bold"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:textColor="@color/white"
+                         android:text="CEO"/>
+
+                     <TextView
+                         android:layout_marginLeft="20dp"
+                         android:layout_marginBottom="5dp"
+                         android:textSize="13dp"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:textColor="@color/white"
+                         android:text="www.circlesone.com  chris.liao@circle8.asia"/>
+
+                     <TextView
+                         android:layout_marginLeft="20dp"
+                         android:layout_marginBottom="5dp"
+                         android:textSize="13dp"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:textColor="@color/white"
+                         android:text="65 Ubi Road | #03-90 Oxley Bizhub"/>
+
+                     <TextView
+                         android:layout_marginLeft="20dp"
+                         android:layout_marginBottom="20dp"
+                         android:textSize="13dp"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:textColor="@color/white"
+                         android:text="+65 6816 7888   +65 9821 9235"/>
 
 
-                </LinearLayout>
-            </RelativeLayout>
-        </com.dd.ShadowLayout>
-    </android.support.v7.widget.CardView>
--->
+                 </LinearLayout>
+             </RelativeLayout>
+         </com.dd.ShadowLayout>
+     </android.support.v7.widget.CardView>
+ -->
 </RelativeLayout>

@@ -1,65 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <RelativeLayout
+    <LinearLayout
         android:layout_marginBottom="50dp"
         android:background="@color/white"
         android:layout_width="match_parent"
+        android:weightSum="3"
+        android:gravity="center"
         android:layout_height="150dp">
         <RelativeLayout
-            android:id="@+id/rlRewards"
-            android:layout_marginLeft="35dp"
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/rlQrCode"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true">
             <ImageView
                 android:id="@+id/imgRewards"
-                android:src="@drawable/ic_rewards_blue"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:src="@drawable/ic_qr_white"
+                android:tint="@color/colorPrimary"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_centerHorizontal="true"/>
 
             <com.circle8.circleOne.Utils.cgTextView
                 android:id="@+id/tvRewards"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rewards"
+                android:text="My Qr Code"
                 android:layout_centerInParent="true"
                 android:textColor="@color/colorPrimary"
                 android:layout_below="@+id/imgRewards"
                 android:textSize="15sp" />
         </RelativeLayout>
+
         <RelativeLayout
-            android:id="@+id/rlNotification"
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/rlReward"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_centerInParent="true">
+            <ImageView
+                android:id="@+id/imgReward"
+                android:src="@drawable/ic_rewards_blue"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"/>
+
+            <com.circle8.circleOne.Utils.cgTextView
+                android:id="@+id/tvReward"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rewards"
+                android:layout_centerInParent="true"
+                android:textColor="@color/colorPrimary"
+                android:layout_below="@+id/imgReward"
+                android:textSize="15sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_weight="1"
+            android:id="@+id/rlNotification"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentRight="true">
 
             <FrameLayout
                 android:layout_centerHorizontal="true"
                 android:id="@+id/frameNoti"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content">
-            <com.circle8.circleOne.Utils.CircularTextView
-                android:layout_gravity="right"
-                android:visibility="visible"
-                android:id="@+id/txtNotificationCountAction1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1"
-                android:gravity="center"
-                android:padding="1dp"
-                android:textSize="8sp"
-                android:textStyle="bold"
-                android:textColor="@color/white" />
+                <com.circle8.circleOne.Utils.CircularTextView
+                    android:layout_gravity="right"
+                    android:visibility="visible"
+                    android:id="@+id/txtNotificationCountAction1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:gravity="center"
+                    android:padding="1dp"
+                    android:textSize="8sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white" />
 
-            <ImageView
-                android:id="@+id/imgNotification"
-                android:src="@drawable/ic_notification_blue"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_centerHorizontal="true"/>
+                <ImageView
+                    android:id="@+id/imgNotification"
+                    android:src="@drawable/ic_notification_blue"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerHorizontal="true"/>
             </FrameLayout>
 
             <com.circle8.circleOne.Utils.cgTextView
@@ -72,29 +101,5 @@
                 android:layout_below="@+id/frameNoti"
                 android:textSize="15sp" />
         </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/rlShare"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="35dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true">
-            <ImageView
-                android:id="@+id/imgShare"
-                android:src="@drawable/ic_share_blue"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_centerHorizontal="true"/>
-
-            <com.circle8.circleOne.Utils.cgTextView
-                android:id="@+id/tvShare"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Invite"
-                android:layout_centerInParent="true"
-                android:textColor="@color/colorPrimary"
-                android:layout_below="@+id/imgShare"
-                android:textSize="15sp" />
-        </RelativeLayout>
-    </RelativeLayout>
+    </LinearLayout>
 </layout>

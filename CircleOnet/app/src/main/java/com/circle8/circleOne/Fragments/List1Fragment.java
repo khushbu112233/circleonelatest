@@ -6,7 +6,6 @@ import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -44,6 +43,7 @@ import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.FragmentList1Binding;
+import com.flurry.android.FlurryAgent;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -58,9 +58,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.circle8.circleOne.Activity.CardsActivity.Connection_Limit;
 import static com.circle8.circleOne.Utils.Utility.POST2;
+import static com.circle8.circleOne.Utils.Utility.callSubPAge;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class List1Fragment extends Fragment
@@ -99,6 +101,7 @@ public class List1Fragment extends Fragment
         // Inflate the layout for this fragment
         fragmentList1Binding = DataBindingUtil.inflate(inflater, R.layout.fragment_list1, container, false);
         view = fragmentList1Binding.getRoot();
+
         ViewTreeObserver vto = fragmentList1Binding.lnrList.getViewTreeObserver();
 
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -129,6 +132,7 @@ public class List1Fragment extends Fragment
     @Override
     public void onViewCreated(View view,Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         mContext = getContext();
@@ -710,34 +714,7 @@ public class List1Fragment extends Fragment
 
                     recycleSize = allTags.size();
 
-                    // Load More in recycler view
-                    /*final CarouselLayoutManager linearLayoutManager1 = (CarouselLayoutManager) fragmentList1Binding.includeCarousel1.listHorizontal1.getLayoutManager();
-                    fragmentList1Binding.includeCarousel1.listHorizontal1.setOnScrollListener(new RecyclerView.OnScrollListener() {
-                        @Override
-                        public void onScrollStateChanged(RecyclerView recyclerView, int scrollState) {
-                            super.onScrollStateChanged(recyclerView, scrollState);
-                            int threshold = 1;
-                            int count = linearLayoutManager1.getItemCount();
-                            int lastVisibleItem, totalItemCount;
 
-                            totalItemCount = linearLayoutManager1.getItemCount();
-                            lastVisibleItem = linearLayoutManager1.getMaxVisibleItems();
-
-                            if (scrollState == SCROLL_STATE_IDLE) {
-                                if (recycleSize <= numberCount) {
-                                    if (lastVisibleItem >= (count - threshold)) {
-                                        rlLoadMore1.setVisibility(View.VISIBLE);
-                                        rlLoadMore2.setVisibility(View.VISIBLE);
-                                        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
-                                    }
-                                }
-                            }
-                        }
-                        @Override
-                        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                            super.onScrolled(recyclerView, dx, dy);
-                        }
-                    });*/
                 }
                 else
                 {
@@ -813,6 +790,12 @@ public class List1Fragment extends Fragment
         }
     };
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        callSubPAge("CarouselDetail","Card");
+    }
+
     public static void CustomProgressDialog(final String loading)
     {
         fragmentList1Binding.rlProgressDialog.setVisibility(View.VISIBLE);
@@ -836,25 +819,7 @@ public class List1Fragment extends Fragment
 
         @Override
         protected String doInBackground(String... urls) {
-            JSONObject jsonObject = new JSONObject();
-            try {
-                jsonObject.accumulate("FindBy", "NAME");
-                if (!SearchFromDashboard.equals("")){
-                    jsonObject.accumulate("Search", SearchFromDashboard);
-                }
-                else {
-                    jsonObject.accumulate("Search", fragmentList1Binding.searchView.getText().toString());
-                }
-                jsonObject.accumulate("SearchType", "Local" );
-                jsonObject.accumulate("UserID", UserId);
-                jsonObject.accumulate("numofrecords", "30");
-                jsonObject.accumulate("pageno", "1");
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            return POST2(urls[0],jsonObject);
+            return POSTSearch(urls[0]);
         }
 
         // onPostExecute displays the results of the AsyncTask.
@@ -909,7 +874,7 @@ public class List1Fragment extends Fragment
                     {
                         fragmentList1Binding.tvFriendInfo.setVisibility(View.GONE);
 
-                        for (int i = 0; i <= connect.length(); i++)
+                        for (int i = 0; i < connect.length(); i++)
                         {
                             JSONObject iCon = connect.getJSONObject(i);
                             FriendConnection connectModel = new FriendConnection();
@@ -918,6 +883,7 @@ public class List1Fragment extends Fragment
                             connectModel.setLastName(iCon.getString("LastName"));
                             connectModel.setName(iCon.getString("FirstName") + " " + iCon.getString("LastName"));
                             connectModel.setUser_image(iCon.getString("UserPhoto"));
+                            connectModel.setEmail(iCon.getString("UserName"));
                             connectModel.setCard_front(iCon.getString("Card_Front"));
                             connectModel.setCard_back(iCon.getString("Card_Back"));
                             connectModel.setProfile_id(iCon.getString("ProfileId"));
@@ -949,6 +915,65 @@ public class List1Fragment extends Fragment
                 e.printStackTrace();
             }
         }
+    }
+
+    public static String POSTSearch(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("FindBy", "NAME");
+            if (!SearchFromDashboard.equals("")){
+                jsonObject.accumulate("Search", SearchFromDashboard);
+            }
+            else {
+                jsonObject.accumulate("Search", fragmentList1Binding.searchView.getText().toString());
+            }
+            jsonObject.accumulate("SearchType", "Local" );
+            jsonObject.accumulate("UserID", UserId);
+            jsonObject.accumulate("numofrecords", "30");
+            jsonObject.accumulate("pageno", "1");
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
     }
 
     public static void GetData(Context context)

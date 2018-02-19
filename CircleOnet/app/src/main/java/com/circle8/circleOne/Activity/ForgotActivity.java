@@ -55,6 +55,9 @@ public class ForgotActivity extends AppCompatActivity
 
     }
 
+
+
+
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
@@ -80,7 +83,6 @@ public class ForgotActivity extends AppCompatActivity
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {

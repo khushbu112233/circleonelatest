@@ -27,6 +27,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -59,7 +63,7 @@ public class Notification extends Fragment
 
         mContext = getContext() ;
         pageno = 1;
-
+        activityNotificationBinding.appbarnew.setVisibility(View.GONE);
         DashboardActivity.setActionBarTitle("Notifications - 0", false);
         DashboardActivity.setDrawerVisibility(false);
 
@@ -85,17 +89,6 @@ public class Notification extends Fragment
         return view;
     }
 
-    @Override
-    public void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-    }
 
     private void callFirst()
     {
@@ -111,6 +104,17 @@ public class Notification extends Fragment
         new HttpAsyncTask().execute(Utility.BASE_URL+"Notification");
     }
 
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException
+    {
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
+    }
 
     private static class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
@@ -145,14 +149,12 @@ public class Notification extends Fragment
                 jsonObject.accumulate("numofrecords", "10" );
                 jsonObject.accumulate("pageno", pageno );
                 jsonObject.accumulate("userid", UserId );
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             return POST2(urls[0],jsonObject);
         }
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {

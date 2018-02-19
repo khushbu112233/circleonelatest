@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -55,6 +56,7 @@ import com.circle8.circleOne.Fragments.List1Fragment;
 import com.circle8.circleOne.Fragments.List2Fragment;
 import com.circle8.circleOne.Fragments.List4Fragment;
 import com.circle8.circleOne.Fragments.ProfileFragment;
+import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Helper.ProfileSession;
 import com.circle8.circleOne.Helper.ReferralCodeSession;
@@ -66,10 +68,13 @@ import com.circle8.circleOne.Utils.CustomViewPager;
 import com.circle8.circleOne.Utils.PrefUtils;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.chat.ChatHelper;
+import com.circle8.circleOne.chat.DialogsAdapter;
+import com.circle8.circleOne.chat.DialogsManager;
 import com.circle8.circleOne.chat.qb.QbDialogHolder;
 import com.circle8.circleOne.databinding.ActivityCardsBinding;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
@@ -88,10 +93,14 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.plus.Plus;
 import com.google.firebase.auth.FirebaseAuth;
 import com.linkedin.platform.LISessionManager;
+import com.quickblox.chat.QBIncomingMessagesManager;
+import com.quickblox.chat.QBSystemMessagesManager;
+import com.quickblox.chat.listeners.QBChatDialogMessageListener;
 import com.quickblox.chat.model.QBChatDialog;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.messages.services.SubscribeService;
+import com.quickblox.sample.core.gcm.GooglePlayServicesHelper;
 import com.quickblox.sample.core.utils.SharedPrefsHelper;
 import com.quickblox.users.model.QBUser;
 import com.twitter.sdk.android.Twitter;
@@ -120,19 +129,29 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
+import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
+
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.POST2;
+
 public class CardsActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
         ActivityCompat.OnRequestPermissionsResultCallback,
         PermissionUtils.PermissionResultCallback
 {
     public static CustomViewPager mViewPager;
+    TabLayout tabLayout;
     ImageView imgDrawer;
     ImageView imgLogo;
     private int actionBarHeight;
     static TextView textView, txtNotificationCountAction;
     public static int position = 0, nested_position = 0;
+    DatabaseHelper db;
+    NfcReadUtility mNfcReadUtility = new NfcReadUtilityImpl();
     private Date location;
+    private int currentPage;
+    int cardCount = 0;
+    Tag tag;
     boolean done = false;
     public static GoogleApiClient mGoogleApiClient;
     LoginSession session;
@@ -149,9 +168,11 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     private final static int REQUEST_CHECK_SETTINGS = 2000;
     public static Location mLastLocation;
     GoogleSignInOptions gso;
+    // Google client to interact with Google API
     public double latitude;
     public double longitude;
     String lat = "", lng = "";
+    // list of permissions
     ArrayList<String> permissions=new ArrayList<>();
     PermissionUtils permissionUtils;
     public static boolean isPermissionGranted;
@@ -159,8 +180,17 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     ReferralCodeSession referralCodeSession;
     private String refer;
     String User_name;
+    private QBSystemMessagesManager systemMessagesManager;
     ArrayList<QBUser> selectedUsers = new ArrayList<QBUser>();
+    private BroadcastReceiver pushBroadcastReceiver;
+    private GooglePlayServicesHelper googlePlayServicesHelper;
+    private DialogsAdapter dialogsAdapter;
+    private QBChatDialogMessageListener allDialogsMessagesListener;
+    private QBIncomingMessagesManager incomingMessagesManager;
+    private DialogsManager dialogsManager;
+    private QBUser currentUser;
     private NfcAdapter mNfcAdapter;
+    private IntentFilter[] mIntentFilters;
     ArrayList<String> arrayNFC  = new ArrayList<>();
     String CardCode = "";
     Boolean netCheck= false;
@@ -181,22 +211,39 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         textView = (TextView) findViewById(R.id.mytext);
         txtNotificationCountAction = (TextView) findViewById(R.id.txtNotificationCountAction);
         txtNotificationCountAction.setVisibility(View.GONE);
+        mViewPager = (CustomViewPager) findViewById(R.id.container);
         imgDrawer = (ImageView) findViewById(R.id.drawer);
         imgLogo = (ImageView) findViewById(R.id.imgLogo);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        activityCardsBinding.container.setOffscreenPageLimit(2);
-        activityCardsBinding.container.setAdapter(mSectionsPagerAdapter);
-        activityCardsBinding.container.setPagingEnabled(false);
+        // textView.setText("Cards 256");
+        // Set up the ViewPager with the sections adapter.
+        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setPagingEnabled(false);
 
-        activityCardsBinding.tabs.setupWithViewPager(activityCardsBinding.container);
-        activityCardsBinding.tabs.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
+        tabLayout.setupWithViewPager(mViewPager);
+        tabLayout.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
 
         new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
 
+
+
+
+
     protected synchronized void buildGoogleApiClient() {
+        Utility.freeMemory();
+        Utility.deleteCache(getApplicationContext());
+
+       /* mGoogleApiClient = new GoogleApiClient.Builder(CardsActivity.this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .addApi(Plus.API, Plus.PlusOptions.builder().build())
+                .build();*/
+
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
@@ -282,8 +329,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onStart() {
         super.onStart();
-        Utility.freeMemory();
-
 
         netCheck = Utility.isNetworkAvailable(getApplicationContext());
         referralCodeSession = new ReferralCodeSession(getApplicationContext());
@@ -313,13 +358,13 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 //        new HttpAsyncTaskNotification().execute(Utility.BASE_URL+"CountNewNotification");
         // tags.add(App.getSampleConfigs().getUsersTag());
 
-        activityCardsBinding.tabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 Utility.freeMemory();
                 Utility.deleteCache(getApplicationContext());
 
-                activityCardsBinding.container.setCurrentItem(tab.getPosition(), false);
+                mViewPager.setCurrentItem(tab.getPosition(), false);
                 getSupportActionBar().setShowHideAnimationEnabled(false);
                 if (tab.getPosition() == 3) {
                     getSupportActionBar().hide();
@@ -404,8 +449,14 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 Utility.freeMemory();
             }
         });
+        /*List1Fragment.callFirst();
+        List2Fragment.callFirst();
+        List3Fragment.callFirst();
+        List4Fragment.callFirst();*/
 
-        activityCardsBinding.container.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+        // createTabIcons();
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 Utility.freeMemory();
@@ -464,9 +515,11 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 Utility.freeMemory();
                 Utility.deleteCache(getApplicationContext());
 
-                int pos = activityCardsBinding.container.getCurrentItem();
+                int pos = mViewPager.getCurrentItem();
                 if (pos == 0) {
-
+                    /*Intent intent = new Intent(getApplicationContext(), SortAndFilterOption.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);*/
                 } else if (pos == 2) {
                     Intent intent = new Intent(getApplicationContext(), EventsSelectOption.class);
                     startActivity(intent);
@@ -478,11 +531,16 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
         if (opr.isDone()) {
-
+            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
+            // and the GoogleSignInResult will be available instantly.
+            // Log.d(TAG, "Got cached sign-in");
             GoogleSignInResult result = opr.get();
             handleSignInResult(result);
         } else {
-
+            // If the user has not previously signed in on this device or the sign-in has expired,
+            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
+            // single sign-on will occur in this branch.
+            //  showProgressDialog();
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override
                 public void onResult(GoogleSignInResult googleSignInResult) {
@@ -498,8 +556,21 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         //   Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
             Utility.freeMemory();
+            // Signed in successfully, show authenticated UI.
+            GoogleSignInAccount acct = result.getSignInAccount();
 
+            //  Log.e(TAG, "display name: " + acct.getDisplayName());
+
+            //  String personName = acct.getDisplayName();
+            //    String personPhotoUrl = acct.getPhotoUrl().toString();
+            // String email = acct.getEmail();
+
+            //  Log.e(TAG, "Name: " + personName + ", email: " + email + ", Image: " + personPhotoUrl);
+
+            //updateUI(true);
         } else {
+            // Signed out, show unauthenticated UI.
+            //  updateUI(false);
         }
     }
     public static void getLocation() {
@@ -555,9 +626,9 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                     .build();
 
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-            // cardCount = db.getActiveNFCCount();
+             // cardCount = db.getActiveNFCCount();
 
-            //  activityCardsBinding.container.setPageTransformer(false, new ZoomOutPageTransformer());
+            //  mViewPager.setPageTransformer(false, new ZoomOutPageTransformer());
             HashMap<String, String> user = session.getUserDetails();
 
 
@@ -611,12 +682,31 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             } else if (position == 3) {
                 // getSupportActionBar().hide();
             }
-            activityCardsBinding.container.setCurrentItem(position, false);
+            mViewPager.setCurrentItem(position, false);
             if (nested_position != 0) {
                 CardsFragment.fragmentCardsBinding.container1.setCurrentItem(nested_position);
             }
         }
     }
+
+   /* private void createTabIcons() {
+
+        TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.tab_view, null);
+        tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.tab1, 0, 0);
+        tabLayout.getTabAt(0).setCustomView(tabOne);
+
+        TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.tab_view, null);
+        tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.tab2, 0, 0);
+        tabLayout.getTabAt(1).setCustomView(tabTwo);
+
+        TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.tab_view, null);
+        tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.tab3, 0, 0);
+        tabLayout.getTabAt(2).setCustomView(tabThree);
+
+        TextView tabThree1 = (TextView) LayoutInflater.from(this).inflate(R.layout.tab_view, null);
+        tabThree1.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.tab4, 0, 0);
+        tabLayout.getTabAt(3).setCustomView(tabThree1);
+    }*/
 
     public void showDialog(Context context, int x, int y)
     {
@@ -661,6 +751,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         catch (Exception e){}
 
         txtNotificationCount.setText(NotificationCount);
+        dialogsManager = new DialogsManager();
         lnrVPA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -673,7 +764,10 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                         new QBEntityCallback<QBChatDialog>() {
                             @Override
                             public void onSuccess(QBChatDialog dialog, Bundle args) {
-                                        }
+                                // dialogsManager.sendSystemMessageAboutCreatingDialog(systemMessagesManager, dialog);
+                                //   ChatActivity.startForResult(CardsActivity.this, 165, dialog);
+                                //ProgressDialogFragment.hide(getSupportFragmentManager());
+                            }
 
                             @Override
                             public void onError(QBResponseException e) {
@@ -874,7 +968,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                             new ResultCallback<Status>() {
                                 @Override
                                 public void onResult(Status status) {
-                                    //  session.logoutUser();
+                                  //  session.logoutUser();
                                     // dialog.dismiss();
                                 }
                             });
@@ -892,7 +986,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                     PrefUtils.clearCurrentUser(CardsActivity.this);
                     // We can logout from facebook by calling following method
                     LoginManager.getInstance().logOut();
-                    // session.logoutUser();
+                   // session.logoutUser();
                 } catch (Exception e) {
                 }
 
@@ -1080,7 +1174,12 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
         @Override
         public CharSequence getPageTitle(int position) {
-
+            /*switch (position) {
+                case 0:
+                    return getString(R.string.app_name);
+                case 1:
+                    return getString(R.string.hello_blank_fragment);
+            }*/
             return null;
         }
     }
@@ -1093,6 +1192,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         TextView textView = (TextView) view1.findViewById(R.id.txtTab);
         textView.setText("Cards");
         textView.setTextColor(getResources().getColor(R.color.colorPrimary));
+        // tabLayout.addTab(tabLayout.newTab().setCustomView(view1));
 
         View view2 = getLayoutInflater().inflate(R.layout.tab_view, null);
         //view2.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_icon2);
@@ -1100,6 +1200,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         imageView1.setImageResource(R.drawable.ic_icon2);
         TextView textView1 = (TextView) view2.findViewById(R.id.txtTab);
         textView1.setText("Connect");
+        //tabLayout.addTab(tabLayout.newTab().setCustomView(view2));
 
 
         View view3 = getLayoutInflater().inflate(R.layout.tab_view, null);
@@ -1108,6 +1209,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         imageView2.setImageResource(R.drawable.ic_icon3);
         TextView textView2 = (TextView) view3.findViewById(R.id.txtTab);
         textView2.setText("Events");
+        // tabLayout.addTab(tabLayout.newTab().setCustomView(view3));
 
         View view4 = getLayoutInflater().inflate(R.layout.tab_view, null);
         //  view4.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_icon4);
@@ -1115,10 +1217,11 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         imageView3.setImageResource(R.drawable.ic_icon4);
         TextView textView3 = (TextView) view4.findViewById(R.id.txtTab);
         textView3.setText("Profile");
-        activityCardsBinding.tabs.getTabAt(0).setCustomView(view1);
-        activityCardsBinding.tabs.getTabAt(1).setCustomView(view2);
-        activityCardsBinding.tabs.getTabAt(2).setCustomView(view3);
-        activityCardsBinding.tabs.getTabAt(3).setCustomView(view4);
+        // tabLayout.addTab(tabLayout.newTab().setCustomView(view4));
+        tabLayout.getTabAt(0).setCustomView(view1);
+        tabLayout.getTabAt(1).setCustomView(view2);
+        tabLayout.getTabAt(2).setCustomView(view3);
+        tabLayout.getTabAt(3).setCustomView(view4);
     }
 
     private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
@@ -1179,11 +1282,11 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
         checkPlayServices();
 
-        if (activityCardsBinding.container.getCurrentItem() == 2) {
+        if (mViewPager.getCurrentItem() == 2) {
             setActionBarTitle("Events");
         }
 
-        if (activityCardsBinding.container.getCurrentItem() == 3) {
+        if (mViewPager.getCurrentItem() == 3) {
             HashMap<String, String> user = session.getUserDetails();
             ProfileFragment.UserID = user.get(LoginSession.KEY_USERID);
 
@@ -1323,6 +1426,70 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                     }
                 }
 
+                // Toast.makeText(getApplicationContext(), String.valueOf(latitude + " " + longitude), Toast.LENGTH_LONG).show();
+              /*  try {
+
+                    nfcProfileId = decrypt(ProfileId, secretKey);
+                    if (!card_code.equals("")){
+                        CardCode = decrypt(card_code, secretKey);
+                    }
+                    //  Toast.makeText(getApplicationContext(), nfcProfileId, Toast.LENGTH_LONG).show();
+                    try {
+                        new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (GeneralSecurityException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+
+                if (rawMsgs != null) {
+                    msgs = new NdefMessage[rawMsgs.length];
+                    for (int i = 0; i < rawMsgs.length; i++) {
+                        msgs[i] = (NdefMessage) rawMsgs[i];
+                    }
+
+                    byte[] payload = msgs[0].getRecords()[0].getPayload();
+
+                    String message = new String(payload);
+                 把tag的資訊放到textview裡面
+                    // mEtMessage.setText(new String(payload));
+                    done = true;
+//                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    message = message.substring(1, message.length());
+                  // Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+
+                    if (mLastLocation != null) {
+                        latitude = mLastLocation.getLatitude();
+                        longitude = mLastLocation.getLongitude();
+                    } else {
+                        lat = "";
+                        lng = "";
+                        getLocation();
+                        Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
+                    }
+                        // Toast.makeText(getApplicationContext(), String.valueOf(latitude + " " + longitude), Toast.LENGTH_LONG).show();
+                        try {
+
+                            nfcProfileId = decrypt(message, secretKey);
+                            //  Toast.makeText(getApplicationContext(), nfcProfileId, Toast.LENGTH_LONG).show();
+                            try {
+                                new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
+                            } catch (Exception e) {
+                                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                            }
+                        } catch (GeneralSecurityException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+
+                }*/
             }
 
             IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
@@ -1336,12 +1503,12 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 mNfcAdapter.enableForegroundDispatch(this, pendingIntent, nfcIntentFilter, null);
 
 
-            if (activityCardsBinding.tabs.getSelectedTabPosition() == 3) {
+            if (tabLayout.getSelectedTabPosition() == 3) {
                 CardsActivity.setActionBarTitle("Profile");
                 //ProfileFragment.callMyProfile();
-            } else if (activityCardsBinding.tabs.getSelectedTabPosition() == 2) {
+            } else if (tabLayout.getSelectedTabPosition() == 2) {
                 CardsActivity.setActionBarTitle("Events");
-            } else if (activityCardsBinding.tabs.getSelectedTabPosition() == 1) {
+            } else if (tabLayout.getSelectedTabPosition() == 1) {
                 CardsActivity.setActionBarTitle("Connect");
             }
         }
@@ -1357,6 +1524,11 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             mNfcAdapter.disableForegroundDispatch(this);
     }
 
+    /**
+     * Launched when in foreground dispatch mode
+     *
+     * @param paramIntent containing found data
+     */
     @Override
     public void onNewIntent(final Intent paramIntent) {
         super.onNewIntent(paramIntent);
@@ -1368,6 +1540,8 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         Tag tag = paramIntent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
         String s = "";
+
+        // parse through all NDEF messages and their records and pick text type only
         Parcelable[] data = paramIntent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
 
         if (data != null) {
@@ -1468,6 +1642,10 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                 }
+
+
+                //  txtNoGroup.setText("Your Card is already verified..");
+                //  ivAddCard.setVisibility(View.GONE);
             } else if (arrayNFC.size() == 2) {
                 nfcProfileId = arrayNFC.get(0).toString();
                 CardCode = arrayNFC.get(1).toString();
@@ -1498,6 +1676,77 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 //ivAddCard.setVisibility(View.GONE);
             }
         }
+       /* try {
+            nfcProfileId = decrypt(ProfileId, secretKey);
+            if (!CardCode.equals("")){
+                CardCode = decrypt(card_code, secretKey);
+            }
+            //  Toast.makeText(getApplicationContext(), nfcProfileId, Toast.LENGTH_LONG).show();
+            try {
+                new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+            }
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
+
+
+
+
+
+
+
+
+
+
+        /*Tag tag = paramIntent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        if (tag == null) {
+//            Toast.makeText(getApplicationContext(), "tag == null", Toast.LENGTH_LONG).show();
+            //textViewInfo.setText("tag == null");
+        } else {
+            String tagInfo = tag.toString() + "\n";
+            String id = "";
+            tagInfo += "\nTag Id: \n";
+            byte[] tagId = tag.getId();
+            tagInfo += "length = " + tagId.length + "\n";
+            for (int i = 0; i < tagId.length; i++) {
+                tagInfo += Integer.toHexString(tagId[i] & 0xFF) + " ";
+                // id += Integer.toHexString(tagId[i] & 0xFF) + " ";
+            }
+            id = bytesToHex(tagId);
+            for (String data : mNfcReadUtility.readFromTagWithMap(paramIntent).values()) {
+
+
+                if (mLastLocation != null) {
+                    latitude = mLastLocation.getLatitude();
+                    longitude = mLastLocation.getLongitude();
+                } else {
+                    lat = "";
+                    lng = "";
+                    getLocation();
+                    Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
+                }
+                  //  Toast.makeText(getApplicationContext(), String.valueOf(latitude + " " + longitude), Toast.LENGTH_LONG).show();
+                    try {
+                        nfcProfileId = decrypt(data, secretKey);
+                        //  Toast.makeText(getApplicationContext(), nfcProfileId, Toast.LENGTH_LONG).show();
+                        try {
+                            new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (GeneralSecurityException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+            }
+        }*/
     }
     public static String decrypt(String value, String key)
             throws GeneralSecurityException, IOException {
@@ -1618,7 +1867,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             Calendar c = Calendar.getInstance();
             System.out.println("Current time =&gt; "+c.getTime());
 
-            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+            SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
             String formattedDate = df.format(c.getTime());
             // Toast.makeText(getApplicationContext(), formattedDate, Toast.LENGTH_LONG).show();
             // 3. build jsonObject
@@ -1635,14 +1884,14 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 if (!CardCode.equals("")){
                     jsonObject.accumulate("card_code", CardCode);
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
             return POST2(urls[0],jsonObject);
         }
 
+        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();
@@ -1658,13 +1907,61 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
                     if (success.equals("1")) {
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.successful_request_sent), Toast.LENGTH_LONG).show();
+                       /* Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
+                        intent.putExtra("viewpager_position", CardsActivity.mViewPager.getCurrentItem());
+                        intent.putExtra("nested_viewpager_position", CardsFragment.mViewPager.getCurrentItem());
+                        startActivity(intent);
+                        finish();*/
 
+                        // onStart();
                         List1Fragment.webCall();
                         List2Fragment.webCall();
-                                                List4Fragment.webCall();
+                       // List3Fragment.webCall();
+                        List4Fragment.webCall();
                     } else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
+
+                 /*   try
+                    {
+//                    List2Fragment.allTaggs.clear();
+                        List2Fragment.nfcModel.clear();
+                        List2Fragment.gridAdapter.notifyDataSetChanged();
+                        List2Fragment.GetData(context);
+                    }
+                    catch(Exception e) {    }
+
+                    try
+                    {
+
+//                    List3Fragment.allTaggs.clear();
+                        List3Fragment.nfcModel1.clear();
+                        List3Fragment.gridAdapter.notifyDataSetChanged();
+                        List3Fragment.GetData(context);
+                    }
+                    catch(Exception e) {    }
+
+                    try
+                    {
+
+//                    List4Fragment.allTaggs.clear();
+                        List4Fragment.nfcModel1.clear();
+                        List4Fragment.gridAdapter.notifyDataSetChanged();
+                        List4Fragment.GetData(context);
+                    }
+                    catch(Exception e) {    }
+
+                    try
+                    {
+
+//                    List1Fragment.allTags.clear();
+                        List1Fragment.nfcModel.clear();
+                        List1Fragment.mAdapter.notifyDataSetChanged();
+                        List1Fragment.mAdapter1.notifyDataSetChanged();
+                        List1Fragment.GetData(context);
+                    }
+                    catch(Exception e) {    }*/
+
                 }
 
             } catch (JSONException e) {
@@ -1683,7 +1980,9 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             moveTaskToBack(true);
             android.os.Process.killProcess(android.os.Process.myPid());
             finish();
+
         }
+
         this.doubleBackToExitPressedOnce = true;
         Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
 
@@ -1694,5 +1993,8 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 doubleBackToExitPressedOnce=false;
             }
         }, 2000);
+
     }
+
+
 }

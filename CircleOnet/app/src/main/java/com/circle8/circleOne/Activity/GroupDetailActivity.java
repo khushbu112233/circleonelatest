@@ -43,12 +43,6 @@ import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.ActivityGroupDetailBinding;
 import com.squareup.picasso.Picasso;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -140,7 +134,6 @@ public class GroupDetailActivity extends AppCompatActivity
         activityGroupDetailBinding.imgProfileMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utility.freeMemory();
                 PopupMenu popup = new PopupMenu(GroupDetailActivity.this, activityGroupDetailBinding.imgProfileMenu);
                 //Inflating the Popup using xml file
                 popup.getMenu().add("Edit Circle");
@@ -479,7 +472,7 @@ public class GroupDetailActivity extends AppCompatActivity
             }
         });
 
-        activityGroupDetailBinding.imgProfileMenu.setOnClickListener(new View.OnClickListener() {
+        activityGroupDetailBinding.imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -538,17 +531,6 @@ public class GroupDetailActivity extends AppCompatActivity
         });
     }
 
-    @Override
-    protected void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-    }
 
 
     public void callFirst()
@@ -571,7 +553,6 @@ public class GroupDetailActivity extends AppCompatActivity
 
         new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/FetchConnection");
     }
-
 
     @Override
     protected void onResume() {
@@ -655,7 +636,11 @@ public class GroupDetailActivity extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
+           /* dialog = new ProgressDialog(GroupDetailActivity.this);
+            dialog.setMessage("Uploading...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
 
             String loading = "Uploading" ;
             CustomProgressDialog(loading, GroupDetailActivity.this);
@@ -668,7 +653,6 @@ public class GroupDetailActivity extends AppCompatActivity
             try {
                 jsonObject.accumulate("ImgBase64", final_ImgBase64 );
                 jsonObject.accumulate("classification", "group" );
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -716,7 +700,6 @@ public class GroupDetailActivity extends AppCompatActivity
         }
     }
 
-
     private class HttpAsyncTaskGroupUpdate extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -749,7 +732,6 @@ public class GroupDetailActivity extends AppCompatActivity
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             return POST2(urls[0],jsonObject);
         }
 
@@ -807,6 +789,11 @@ public class GroupDetailActivity extends AppCompatActivity
         protected void onPreExecute()
         {
             super.onPreExecute();
+           /* dialog = new ProgressDialog(GroupDetailActivity.this);
+            dialog.setMessage("Fetching Connections...");
+            dialog.show();
+            dialog.setCancelable(false);*/
+
 
             CustomProgressDialog(loading, mContext);
         }
@@ -1155,7 +1142,6 @@ public class GroupDetailActivity extends AppCompatActivity
             try {
                 jsonObject.accumulate("GroupID", group_id);
                 jsonObject.accumulate("ProfileIDs", selectArray1);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -1199,5 +1185,4 @@ public class GroupDetailActivity extends AppCompatActivity
             }
         }
     }
-
 }

@@ -24,10 +24,10 @@ android {
 
     defaultConfig {
         applicationId "com.circle8.circleOne"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 26
-        versionCode 9
-        versionName "1.0.8"
+        versionCode 10
+        versionName "1.0.9"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [onesignal_app_id               : "8cc4b927-da5f-4152-805d-bf3b40e53773",
@@ -141,8 +141,10 @@ dependencies {
 
     implementation "com.quickblox:quickblox-android-sdk-extensions:$rootProject.qbSdkVersion"
     implementation 'io.reactivex:rxandroid:1.1.0'
+    implementation 'com.wajahatkarim3.EasyFlipView:EasyFlipView:2.0.5'
 
     implementation project(':imgLoaderlibrary')
+    implementation 'com.flurry.android:analytics:6.3.1'
     implementation 'com.squareup.okhttp:okhttp:2.4.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

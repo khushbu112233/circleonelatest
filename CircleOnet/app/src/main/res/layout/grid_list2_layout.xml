@@ -1,44 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <com.daimajia.swipe.SwipeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/swipe"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:id="@+id/swipe"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-        <LinearLayout
-            android:tag="Bottom2"
-            android:background="@color/colorPrimary"
-            android:layout_width="40dp"
-            android:gravity="center"
-            android:layout_height="120dp">
+    <LinearLayout
+        android:tag="Bottom2"
+        android:background="@color/colorPrimary"
+        android:layout_width="40dp"
+        android:gravity="center"
+        android:layout_height="120dp">
 
-            <ImageView
-                android:id="@+id/trash"
-                android:src="@drawable/trash"
-                android:layout_width="22dp"
-                android:layout_height="22dp" />
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/trash"
+            android:src="@drawable/trash"
+            android:layout_width="22dp"
+            android:layout_height="22dp" />
+    </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <com.dd.ShadowLayout
+            android:id="@+id/fm_img"
+            android:layout_width="190dp"
+            android:layout_height="120dp"
+            app:sl_cornerRadius="4dp"
+            app:sl_dx="0dp"
+            app:sl_dy="0dp"
+            app:sl_shadowColor="#cccc"
+            app:sl_shadowRadius="4dp">
             <FrameLayout
-                android:id="@+id/fm_img"
-                android:layout_width="190dp"
-                android:layout_height="120dp">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
                 <ImageView
                     android:id="@+id/image"
-                    android:layout_width="180dp"
-                    android:layout_height="120dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:padding="0dp"
                     android:scaleType="fitXY"
                     android:layout_marginRight="2dp"
                     android:layout_marginLeft="2dp"
                     android:layout_gravity="center"
                     android:src="@drawable/default_card"/>
-
                 <ProgressBar
                     android:id="@+id/progressBar1"
                     android:layout_width="20dp"
@@ -47,15 +56,25 @@
                     android:layout_gravity="center" />
 
             </FrameLayout>
-
+        </com.dd.ShadowLayout>
+        <com.dd.ShadowLayout
+            android:visibility="gone"
+            android:id="@+id/rltDefaultCard"
+            android:layout_width="190dp"
+            android:layout_height="120dp"
+            app:sl_cornerRadius="6dp"
+            app:sl_dx="0dp"
+            app:sl_dy="0dp"
+            app:sl_shadowColor="#cccc"
+            app:sl_shadowRadius="4dp">
             <RelativeLayout
-                android:visibility="gone"
-                android:id="@+id/rltDefaultCard"
-                android:layout_width="190dp"
-                android:layout_height="120dp"
+                android:id="@+id/rldfl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@color/colorPrimary">
 
                 <ImageView
+                    android:id="@+id/imgDefault"
                     android:tint="@color/white"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
@@ -107,6 +126,7 @@
                         android:textStyle="bold" />
 
                     <View
+                        android:id="@+id/v1"
                         android:layout_width="20dp"
                         android:layout_height="0.5dp"
                         android:layout_marginBottom="5dp"
@@ -156,13 +176,13 @@
 
                 </LinearLayout>
             </RelativeLayout>
+        </com.dd.ShadowLayout>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp" />
+    </RelativeLayout>
 
-            <TextView
-                android:visibility="gone"
-                android:id="@+id/text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp" />
-        </RelativeLayout>
-
-    </com.daimajia.swipe.SwipeLayout>
+</com.daimajia.swipe.SwipeLayout>

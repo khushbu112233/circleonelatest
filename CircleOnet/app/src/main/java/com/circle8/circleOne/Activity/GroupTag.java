@@ -261,17 +261,7 @@ public class GroupTag extends AppCompatActivity
         });
     }
 
-    @Override
-    protected void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-    }
 
 
     private class HttpAsyncTaskGroupCreate extends AsyncTask<String, Void, String> {
@@ -290,7 +280,9 @@ public class GroupTag extends AppCompatActivity
         }
 
         @Override
-        protected String doInBackground(String... urls) {
+        protected String doInBackground(String... urls)
+
+        {
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.accumulate("GroupDesc", GroupDesc);
@@ -303,7 +295,6 @@ public class GroupTag extends AppCompatActivity
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();
@@ -351,13 +342,13 @@ public class GroupTag extends AppCompatActivity
                 jsonObject.accumulate("ProfileId", profile_id);
                 jsonObject.accumulate("numofrecords", "10");
                 jsonObject.accumulate("pageno", "1");
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();

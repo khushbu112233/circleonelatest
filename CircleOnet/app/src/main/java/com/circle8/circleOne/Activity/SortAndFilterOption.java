@@ -767,43 +767,7 @@ public class SortAndFilterOption extends AppCompatActivity
                 //Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_LONG).show();
 
                 */
-/*TypedValue tv = new TypedValue();
-                if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-                    actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
-                }
 
-                showDialog(SortAndFilterOption.this, 0, actionBarHeight);*//*
-
-                finish();
-            }
-        });
-
-        actionText.setText("Sort & Filter");
-    }
-
-    @Override
-    protected void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-    }
-
-    public void showDialog(Context context, int x, int y){
-        // x -->  X-Cordinate
-        // y -->  Y-Cordinate
-        final Dialog dialog  = new Dialog(context, R.style.PauseDialog);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.setContentView(R.layout.listview_with_text_image);
-        dialog.setCanceledOnTouchOutside(true);
-
-        LinearLayout lnrMyAcc = (LinearLayout) dialog.findViewById(R.id.lnrMyAcc);
-       */
 /* lnrMyAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

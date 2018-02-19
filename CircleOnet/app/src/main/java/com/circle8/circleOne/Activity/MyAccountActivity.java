@@ -65,6 +65,7 @@ import java.util.HashMap;
 import static com.circle8.circleOne.Activity.RegisterActivity.BitMapToString;
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.POST2;
+import static com.circle8.circleOne.Utils.Utility.callSubPAge;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 import static com.circle8.circleOne.Utils.Validation.updateRegisterValidate;
 
@@ -79,7 +80,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     private String image;
     private ProgressDialog pDialog;
     private String  first_name, last_name, phone_no, password, c_password ;
-    private LoginSession session;
+      private LoginSession session;
     private String user_id, email_id, user_img, user_pass, user_Gender, user_Photo ;
     private String encodedImageData, register_img;
 
@@ -137,14 +138,14 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         myAccountBinding.etYYYY.setVisibility(View.VISIBLE);
         myAccountBinding.tvYear.setVisibility(View.GONE);
 
-        // new HttpAsyncTaskFetchLoginData().execute("http://circle8.asia:8999/Onet.svc/UserLogin");
+       // new HttpAsyncTaskFetchLoginData().execute("http://circle8.asia:8999/Onet.svc/UserLogin");
 
         myAccountBinding.etUserName.setText(user.get(LoginSession.KEY_EMAIL));
         referralCodeSession = new ReferralCodeSession(getApplicationContext());
         HashMap<String, String> referral = referralCodeSession.getReferralDetails();
         tvReferral.setText(referral.get(ReferralCodeSession.KEY_REFERRAL));
         try {
-            String str[] = user.get(LoginSession.KEY_DOB).split("/");
+            String str[] = user.get(LoginSession.KEY_DOB).split("-");
             String day = str[0];
             String month = str[1];
             String year = str[2];
@@ -215,7 +216,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             else
             {
                 myAccountBinding.progressBar1.setVisibility(View.VISIBLE);
-                // Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+user_Photo).resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(imgProfile);
+               // Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+user_Photo).resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(imgProfile);
 
                 Glide.with(this).load(Utility.BASE_IMAGE_URL+"UserProfile/"+user_Photo)
                         .asBitmap()
@@ -406,23 +407,13 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         myAccountBinding.rlMale.setEnabled(false);
     }
 
-    @Override
-    protected void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-    }
 
 
     @Override
     protected void onResume()
     {
         super.onResume();
+        callSubPAge("MyAccount","LeftMenu");
         myAccountBinding.txtedit.setVisibility(View.VISIBLE);
     }
 
@@ -527,7 +518,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         }
         if ( v == myAccountBinding.ivEditImg)
         {
-            // Toast.makeText(getApplicationContext(), "Now you can edit your information", Toast.LENGTH_LONG).show();
+           // Toast.makeText(getApplicationContext(), "Now you can edit your information", Toast.LENGTH_LONG).show();
             myAccountBinding.etFirstName.setEnabled(true);
             myAccountBinding.etFirstName.requestFocus();
             myAccountBinding.etLastName.setEnabled(true);
@@ -631,7 +622,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             {
                 if (final_ImgBase64.equals(""))
                 {
-                    // Toast.makeText(getApplicationContext(), "Upload Image", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getApplicationContext(), "Upload Image", Toast.LENGTH_SHORT).show();
                     register_img = user_img;
                     new HttpAsyncTaskUpdateRegister().execute(Utility.BASE_URL+"UpdateRegistration");
                 }
@@ -647,26 +638,6 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         }
         if( v == myAccountBinding.rlMale)
         {
-           /* TranslateAnimation slide1 = new TranslateAnimation(0, -190, 0, 0);
-            slide1.setDuration(1000);
-            myAccountBinding.ivConnectImg.startAnimation(slide1);
-
-            //first things
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run()
-                {
-                    myAccountBinding.vwDrag2.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
-                    ivFemaleImg.setImageResource(R.drawable.ic_female_gray);
-                    ivFemaleround.setImageResource(R.drawable.round_gray);
-                }
-            }, 1100);
-            //second things
-            myAccountBinding.vwDrag1.setBackground(getResources().getDrawable(R.drawable.dotted));
-            ivMaleImg.setImageResource(R.drawable.ic_male);
-            ivMaleRound.setImageResource(R.drawable.round_blue);
-            gender = "M";
-            txtGender.setText(R.string.male);*/
 
             TranslateAnimation slide1 = new TranslateAnimation(0, -(motionLength-15), 0, 0);
             slide1.setDuration(1000);
@@ -698,26 +669,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         }
         if( v == myAccountBinding.rlFemale)
         {
-           /* TranslateAnimation slide = new TranslateAnimation(0, 190, 0, 0);
-            slide.setDuration(1000);
-            myAccountBinding.ivConnectImg.startAnimation(slide);
-
-            //first things
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    myAccountBinding.vwDrag1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
-                    ivMaleImg.setImageResource(R.drawable.ic_male_gray);
-                    ivMaleRound.setImageResource(R.drawable.round_gray);
-                }
-            }, 1100);
-            //second things
-            myAccountBinding.vwDrag2.setBackground(getResources().getDrawable(R.drawable.dotted));
-            ivFemaleImg.setImageResource(R.drawable.ic_female);
-            ivFemaleround.setImageResource(R.drawable.round_blue);
-            gender = "F";
-            txtGender.setText(R.string.female);*/
-            TranslateAnimation slide = new TranslateAnimation(0, motionLength-15, 0, 0);
+                TranslateAnimation slide = new TranslateAnimation(0, motionLength-15, 0, 0);
             slide.setDuration(1000);
             myAccountBinding.ivConnectImg.startAnimation(slide);
 
@@ -854,7 +806,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                     else {
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
                     }
-                    //   bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
+                 //   bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
 
                     File destination = new File(Environment.getExternalStorageDirectory(),
                             System.currentTimeMillis() + ".jpg");
@@ -952,7 +904,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                     // final_ImgBase64 = resizeBase64Image(s);
                     Log.d("base64string ", final_ImgBase64);
 //                  Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
-                    //    Upload();
+                //    Upload();
                     myAccountBinding.imgProfile.setImageBitmap(resizedBitmap);
                 }
                 catch (FileNotFoundException e)
@@ -1171,12 +1123,11 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
             return POST2(urls[0],jsonObject);
         }
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            Utility.rlProgressDialog.setVisibility(View.GONE);
+           Utility.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -1213,7 +1164,6 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-
     private class HttpAsyncTaskUpdateRegister extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -1239,7 +1189,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                 date_DOB = "";
             }
             else {
-                date_DOB = myAccountBinding.etDD.getText().toString() + "/" + myAccountBinding.etMM.getText().toString() + "/" + myAccountBinding.etYYYY.getText().toString();
+                date_DOB = myAccountBinding.etDD.getText().toString() + "-" + myAccountBinding.etMM.getText().toString() + "-" + myAccountBinding.etYYYY.getText().toString();
             }
 
             // 3. build jsonObject
@@ -1260,7 +1210,6 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             }
             return POST2(urls[0],jsonObject);
         }
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
@@ -1281,7 +1230,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                         date_DOB = "";
                     }
                     else {
-                        date_DOB = myAccountBinding.etDD.getText().toString() + "/" + myAccountBinding.etMM.getText().toString() + "/" + myAccountBinding.etYYYY.getText().toString();
+                        date_DOB = myAccountBinding.etDD.getText().toString() + "-" + myAccountBinding.etMM.getText().toString() + "-" + myAccountBinding.etYYYY.getText().toString();
                     }
 
                     if (success.equals("1"))
@@ -1351,7 +1300,6 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
             return POST2(urls[0],jsonObject);
         }
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
@@ -1417,13 +1365,13 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                 jsonObject.accumulate("numofrecords", "10" );
                 jsonObject.accumulate("pageno", "1" );
                 jsonObject.accumulate("userid", user_id);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             return POST2(urls[0],jsonObject);
         }
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {

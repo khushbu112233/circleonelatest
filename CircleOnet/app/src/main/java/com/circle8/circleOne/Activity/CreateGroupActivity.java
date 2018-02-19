@@ -1,9 +1,10 @@
 package com.circle8.circleOne.Activity;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 
 public class CreateGroupActivity extends AppCompatActivity
 {

@@ -56,8 +56,9 @@ import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class ConnectActivity extends AppCompatActivity
 {
+    private static final int PERMISSION_REQUEST_CODE = 200;
     View tvConnectLine2, tvConnectLine1;
-    private String tag_id, profile_id, friendProfile_id;
+    String tag_id, profile_id, friendProfile_id;
     List<CharSequence> list = new ArrayList<CharSequence>();
     ArrayList<GroupModel> groupModelArrayList = new ArrayList<>();
     ArrayList<String> groupName = new ArrayList<>();
@@ -70,7 +71,8 @@ public class ConnectActivity extends AppCompatActivity
     int motionLength = 0;
     int lineWidth = 0 , roundWidth = 0;
     private ArrayList<ConnectProfileModel> connectingTags = new ArrayList<>();
-    private String Mobile1 = "", Mobile2 = "",displayProfile;
+    String Mobile1 = "", Mobile2 = "";
+    String displayProfile;
     ActivityConnect2Binding activityConnect2Binding;
     ListView listView1;
     static Activity activity;
@@ -79,6 +81,7 @@ public class ConnectActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         activityConnect2Binding = DataBindingUtil.setContentView(this,R.layout.activity_connect2);
         Utility.freeMemory();
         db = new DatabaseHelper(getApplicationContext());
@@ -166,6 +169,69 @@ public class ConnectActivity extends AppCompatActivity
             new HttpAsyncTask().execute(Utility.BASE_URL+"ConnectProfile");
         }
 
+       /* new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
+        new HttpAsyncTaskGroupsFetch().execute(Utility.BASE_URL+"Group/MyGroupsTaggedWithFriendProfile");
+*/
+
+//        Toast.makeText(getApplicationContext(),"ProfileID & FriendID "+profile_id+" "+friendProfile_id,Toast.LENGTH_LONG).show();
+
+/*
+        if (tag_id.equals("en100000001")){
+            level = "2";
+        }
+        else if (tag_id.equals("en100000002")){
+            level = "3";
+        }
+        else if (tag_id.equals("en100000003")){
+            level = "4";
+        }
+        else if (tag_id.equals("en100000004")){
+            level = "5";
+        }
+        else if (tag_id.equals("en100000005")){
+            level = "6";
+        }
+        else if (tag_id.equals("en100000006")){
+            level = "1";
+        }
+        else if (tag_id.equals("en100000007")){
+            level = "4";
+        }
+        else {
+            level = "6";
+        }*/
+      /*  final List<NFCModel> modelList = db.getNFCbyTag(tag_id);
+        try
+        {
+            if (modelList != null)
+            {
+                for (NFCModel tag1 : modelList)
+                {
+                    // Toast.makeText(getApplicationContext(), tag1.getName(), Toast.LENGTH_LONG).show();
+
+                    //Bitmap bmp = BitmapFactory.decodeByteArray(tag1.getCard_front(), 0, tag1.getCard_front().length);
+                   // imgCard.setImageResource(tag1.getCard_front());
+
+                    //  Bitmap bmp1 = BitmapFactory.decodeByteArray(tag1.getUser_image(), 0, tag1.getUser_image().length);
+//                    ivProfileImage.setImageResource(tag1.getUser_image());
+//                    profile = tag1.getUser_image();
+                    tvPersonName.setText(tag1.getName());
+                    tvCompanyName.setText(tag1.getCompany());
+                    txtWeb.setText(tag1.getWebsite());
+                    txtMail.setText(tag1.getEmail());
+                    txtNum.setText(tag1.getPh_no());
+                   // txtWork.setText(tag1.getWork_no());
+                    txtMob.setText(tag1.getMob_no());
+                    tvPersonDesignation.setText(tag1.getDesignation());
+                }
+            }
+
+        }
+        catch (Exception e){  }*/
+
+//        int x_left = rlConnect.getLeft();
+//        Toast.makeText(getApplicationContext(),"From Left: "+x_left, Toast.LENGTH_SHORT).show();
+
         activityConnect2Binding.ivConnectImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,7 +268,9 @@ public class ConnectActivity extends AppCompatActivity
                     }
                 });
 
-
+               /* WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
+                wmlp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
+                wmlp.y = 300;*/   //y position
                 dialog.show();
             }
         });
@@ -211,7 +279,6 @@ public class ConnectActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Utility.freeMemory();
 
                 activityConnect2Binding.view2.setVisibility(View.VISIBLE);
                 boolean result = Utility.checkContactPermission(ConnectActivity.this);
@@ -243,7 +310,12 @@ public class ConnectActivity extends AppCompatActivity
             }
         });
 
-
+      /*  boolean result = Utility.checkContactPermission(ConnectActivity.this);
+        if (result)
+        {
+            contactExists(getApplicationContext(), "+91 ");
+        }
+*/
         activityConnect2Binding.rlConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -321,11 +393,29 @@ public class ConnectActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
-
+               /* Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                // you pass the position you want the viewpager to show in the extra,
+                // please don't forget to define and initialize the position variable
+                // properly
+                go.putExtra("viewpager_position", 1);
+                startActivity(go);*/
                 finish();
             }
         });
 
+//        imgConnecting.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent go = new Intent(getApplicationContext(),Connect3Activity.class);
+//
+//                // you pass the position you want the viewpager to show in the extra,
+//                // please don't forget to define and initialize the position variable
+//                // properly
+//
+//                startActivity(go);
+//                finish();
+//            }
+//        });
 
         activityConnect2Binding.imgAddGroupFriend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -385,20 +475,8 @@ public class ConnectActivity extends AppCompatActivity
 
     }
 
-    @Override
-    protected void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
-
     public static void kill(){
         activity.finish();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
     }
 
 
@@ -427,6 +505,13 @@ public class ConnectActivity extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+           /* dialog = new ProgressDialog(ConnectActivity.this);
+            dialog.setMessage("Requesting Friend...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
 
             String loading = "Requesting friend" ;
             CustomProgressDialog(loading, ConnectActivity.this);
@@ -482,6 +567,8 @@ public class ConnectActivity extends AppCompatActivity
             }
         }
     }
+
+
     public boolean contactExists(Context context, String number) {
         Utility.freeMemory();
 /// number is the phone number
@@ -515,7 +602,9 @@ public class ConnectActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
+
         activityConnect2Binding.ivConnectImg.setVisibility(View.VISIBLE);
+        //new HttpAsyncTask().execute(Utility.BASE_URL+"ConnectProfile");
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
@@ -525,6 +614,13 @@ public class ConnectActivity extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+           /* dialog = new ProgressDialog(ConnectActivity.this);
+            dialog.setMessage("Displaying Records...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
 
             String loading = "Displaying records" ;
             CustomProgressDialog(loading, ConnectActivity.this);
@@ -540,6 +636,7 @@ public class ConnectActivity extends AppCompatActivity
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
             return POST2(urls[0],jsonObject);
         }
         // onPostExecute displays the results of the AsyncTask.
@@ -771,12 +868,22 @@ public class ConnectActivity extends AppCompatActivity
         }
     }
 
+
+
     private class HttpAsyncTaskGroupAddFriend extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            /*dialog = new ProgressDialog(ConnectActivity.this);
+            dialog.setMessage("Adding Friend...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+
             String loading = "Adding friend" ;
             CustomProgressDialog(loading, ConnectActivity.this);
         }
@@ -832,6 +939,10 @@ public class ConnectActivity extends AppCompatActivity
         protected void onPreExecute()
         {
             super.onPreExecute();
+           /* dialog = new ProgressDialog(ConnectActivity.this);
+            dialog.setMessage("Fetching Circles...");
+            dialog.show();
+            dialog.setCancelable(false);*/
 
             String loading = "Fetching data" ;
             CustomProgressDialog(loading, ConnectActivity.this);
@@ -844,6 +955,7 @@ public class ConnectActivity extends AppCompatActivity
                 jsonObject.accumulate("UserId", user_id);
                 jsonObject.accumulate("numofrecords", "10");
                 jsonObject.accumulate("pageno", "1");
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -896,6 +1008,8 @@ public class ConnectActivity extends AppCompatActivity
             }
         }
     }
+
+
     private class HttpAsyncTaskGroupsFetch extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -903,7 +1017,11 @@ public class ConnectActivity extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
+          /*  dialog = new ProgressDialog(CardDetail.this);
+            dialog.setMessage("Fetching My Account...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
         }
 
         @Override
@@ -919,7 +1037,6 @@ public class ConnectActivity extends AppCompatActivity
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             return POST2(urls[0],jsonObject);
         }
         // onPostExecute displays the results of the AsyncTask.
@@ -978,6 +1095,9 @@ public class ConnectActivity extends AppCompatActivity
                         {
                             activityConnect2Binding.tvAddedGroupInfo.setVisibility(View.GONE);
                         }
+                            /*GroupsInCardDetailAdapter groupsInCardDetailAdapter = new GroupsInCardDetailAdapter(CardDetail.this, img,name,desc);
+                            groupListView.setAdapter(groupsInCardDetailAdapter);
+                            groupsInCardDetailAdapter.notifyDataSetChanged();*/
 
                         GroupsRecyclerAdapter groupsRecyclerAdapter = new GroupsRecyclerAdapter(ConnectActivity.this, img, name, desc);
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -991,9 +1111,11 @@ public class ConnectActivity extends AppCompatActivity
                 {
                     Toast.makeText(getBaseContext(), "Not able to fetch circles..", Toast.LENGTH_LONG).show();
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         }
     }
 }

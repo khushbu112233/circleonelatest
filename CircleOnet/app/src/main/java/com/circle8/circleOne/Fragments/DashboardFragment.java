@@ -6,11 +6,12 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 
 import com.circle8.circleOne.Activity.AddQRActivity;
 import com.circle8.circleOne.Activity.DashboardActivity;
+import com.circle8.circleOne.Activity.ManuallyActivity;
 import com.circle8.circleOne.Activity.Notification;
 import com.circle8.circleOne.Activity.RewardsPointsActivity;
 import com.circle8.circleOne.Helper.LoginSession;
@@ -57,8 +59,13 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
 import static android.graphics.Color.WHITE;
-import static com.circle8.circleOne.Fragments.ProfileFragment.encrypt;
-import static com.circle8.circleOne.Utils.Utility.mergeBitmaps;
+import static com.circle8.circleOne.Utils.Utility.callMainPage;
+import static com.circle8.circleOne.Utils.Utility.callSubPAge;
+import static com.circle8.circleOne.Utils.Utility.encrypt;
+
+/**
+ * Created by Ample-Arch on 06-01-2018.
+ */
 
 public class DashboardFragment extends Fragment {
     public static FragmentDashboardLayoutBinding fragmentDashboardLayoutBinding;
@@ -208,19 +215,49 @@ public class DashboardFragment extends Fragment {
                         DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
 
                     }
-
-                    /*fragment = new CardsFragment();
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
-                            .addToBackStack(null)
-                            .commit();*/
-
                 }
             }
         });
 
 
+        try
+        {
+            barName = encrypt(profileId, secretKey);
+            //bitmap = TextToImageEncode(barName);
+        }
+        catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        }
 
-        final Handler handler = new Handler();
+        try {
+            //setting size of qr code
+            int width =600;
+            int height = 600;
+            int smallestDimension = width < height ? width : height;
+
+            String qrCodeData = barName;
+            //setting parameters for qr code
+            String charset = "UTF-8";
+            Map<EncodeHintType, ErrorCorrectionLevel> hintMap =new HashMap<EncodeHintType, ErrorCorrectionLevel>();
+            hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+            CreateQRCode(qrCodeData, charset, hintMap, smallestDimension, smallestDimension);
+
+        } catch (Exception ex) {
+            Log.e("QrGenerate",ex.getMessage());
+        }
+      /*  final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -264,7 +301,7 @@ public class DashboardFragment extends Fragment {
                     Log.e("QrGenerate",ex.getMessage());
                 }
             }
-        }, 5000);
+        }, 5000);*/
 
 
     }
@@ -308,31 +345,11 @@ public class DashboardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         fetchData();
     }
-/* @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                    if (keyCode == KeyEvent.KEYCODE_BACK) {
-
-                        getActivity().finish();
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
-    }*/
 
     @Override
     public void onResume() {
         super.onResume();
+        callMainPage("Dashboard");
         DashboardActivity.setActionBarTitle("Dashboard", false);
         count++;
         if(Pref.getValue(context,"appopen","").equalsIgnoreCase("1"))
@@ -366,6 +383,7 @@ public class DashboardFragment extends Fragment {
         fragmentDashboardLayoutBinding.includeNotiRewardShare.rlNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                callSubPAge("OnTapNotification","Dashboard");
 
                 fragment = new Notification();
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
@@ -373,30 +391,71 @@ public class DashboardFragment extends Fragment {
                         .commit();
             }
         });
-        fragmentDashboardLayoutBinding.includeNotiRewardShare.rlRewards.setOnClickListener(new View.OnClickListener() {
+        fragmentDashboardLayoutBinding.includeNotiRewardShare.rlQrCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                callSubPAge("OnTapMyQRCode","Dashboard");
+
+
+                if (mergeBitmaps(overlay,bitmap) != null) {
+                    QR_AlertDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme).create();
+                    LayoutInflater inflater = getActivity().getLayoutInflater();
+                    final View dialogView = inflater.inflate(R.layout.person_qrcode, null);
+                    FrameLayout fl_QRFrame = (FrameLayout) dialogView.findViewById(R.id.fl_QrFrame);
+                    TextView tvBarName = (TextView) dialogView.findViewById(R.id.tvBarName);
+                    ivBarImage = (ImageView) dialogView.findViewById(R.id.ivBarImage);
+//                tvBarName.setText(barName);
+                    //  alertDialog.setFeatureDrawableAlpha(R.color.colorPrimary, 8);
+
+                    ColorDrawable dialogColor = new ColorDrawable(getResources().getColor(R.color.colorPrimary));
+                    dialogColor.setAlpha(70);
+                    QR_AlertDialog.getWindow().setBackgroundDrawable(dialogColor);
+                    QR_AlertDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+                    // alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
+                    tvBarName.setText(User_name);
+//                    bitmap = TextToImageEncode(barName);
+                    ivBarImage.setImageBitmap(mergeBitmaps(overlay, bitmap));
+
+                    fl_QRFrame.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            QR_AlertDialog.dismiss();
+                        }
+                    });
+
+                    QR_AlertDialog.setView(dialogView);
+                    QR_AlertDialog.show();
+                }
+            }
+        });
+        fragmentDashboardLayoutBinding.includeNotiRewardShare.rlReward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*String shareBody = "I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional networks a step further. Use the code '" + refer +
+                        "' for a quick and simple registration! https://circle8.asia/mobileApp.html";
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, User_name);
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));*/
+                callSubPAge("OnTapRewards","Dashboard");
+
                 fragment = new RewardsPointsActivity();
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
                         .addToBackStack(null)
                         .commit();
             }
         });
-        fragmentDashboardLayoutBinding.includeNotiRewardShare.rlShare.setOnClickListener(new View.OnClickListener() {
+        fragmentDashboardLayoutBinding.includeTapQr.rlScanCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String shareBody = "I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional networks a step further. Use the code '" + refer +
-                        "' for a quick and simple registration! https://circle8.asia/mobileApp.html";
-                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, User_name);
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
+                callSubPAge("OnTapScanCard","Dashboard");
             }
         });
         fragmentDashboardLayoutBinding.includeTapQr.rlTapCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                callSubPAge("OnTapCard","Dashboard");
                 NfcManager manager = (NfcManager) getContext().getSystemService(Context.NFC_SERVICE);
                 NfcAdapter adapter = manager.getDefaultAdapter();
                 if (adapter != null && adapter.isEnabled()) {
@@ -438,39 +497,12 @@ public class DashboardFragment extends Fragment {
                 }
             }
         });
-        fragmentDashboardLayoutBinding.includeTapQr.rlMyQrCode.setOnClickListener(new View.OnClickListener() {
+        fragmentDashboardLayoutBinding.includeTapQr.rlManually.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (mergeBitmaps(overlay,bitmap) != null) {
-                    QR_AlertDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme).create();
-                    LayoutInflater inflater = getActivity().getLayoutInflater();
-                    final View dialogView = inflater.inflate(R.layout.person_qrcode, null);
-                    FrameLayout fl_QRFrame = (FrameLayout) dialogView.findViewById(R.id.fl_QrFrame);
-                    TextView tvBarName = (TextView) dialogView.findViewById(R.id.tvBarName);
-                    ivBarImage = (ImageView) dialogView.findViewById(R.id.ivBarImage);
-//                tvBarName.setText(barName);
-                    //  alertDialog.setFeatureDrawableAlpha(R.color.colorPrimary, 8);
-
-                    ColorDrawable dialogColor = new ColorDrawable(getResources().getColor(R.color.colorPrimary));
-                    dialogColor.setAlpha(70);
-                    QR_AlertDialog.getWindow().setBackgroundDrawable(dialogColor);
-                    QR_AlertDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-                    // alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
-                    tvBarName.setText(User_name);
-//                    bitmap = TextToImageEncode(barName);
-                    ivBarImage.setImageBitmap(mergeBitmaps(overlay, bitmap));
-
-                    fl_QRFrame.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            QR_AlertDialog.dismiss();
-                        }
-                    });
-
-                    QR_AlertDialog.setView(dialogView);
-                    QR_AlertDialog.show();
-                }
+                Intent intent = new Intent(context, ManuallyActivity.class);
+                startActivity(intent);
             }
         });
         fragmentDashboardLayoutBinding.includeTapQr.rlScanQrCode.setOnClickListener(new View.OnClickListener() {
@@ -481,5 +513,17 @@ public class DashboardFragment extends Fragment {
             }
         });
     }
-
+    public static Bitmap mergeBitmaps(Bitmap overlay, Bitmap bitmap) {
+        int height = bitmap.getHeight();
+        int width = bitmap.getWidth();
+        Bitmap combined = Bitmap.createBitmap(width, height, bitmap.getConfig());
+        Canvas canvas = new Canvas(combined);
+        int canvasWidth = canvas.getWidth();
+        int canvasHeight = canvas.getHeight();
+        canvas.drawBitmap(bitmap, new Matrix(), null);
+        int centreX = (canvasWidth  - overlay.getWidth()) /2;
+        int centreY = (canvasHeight - overlay.getHeight()) /2 ;
+        canvas.drawBitmap(overlay, centreX, centreY, null);
+        return combined;
+    }
 }

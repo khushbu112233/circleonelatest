@@ -3,357 +3,374 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     >
-<RelativeLayout
-   android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white"
-    tools:context="com.circle8.circleOne.Activity.EventDetail">
-
-    <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/android_custom_gridview_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <FrameLayout
-                android:id="@+id/fm_img"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
-                <ImageView
-                    android:id="@+id/imgEvent"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_event_default"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp" />
-                <ProgressBar
-                    android:id="@+id/progressBar1"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:visibility="gone"
-                    android:layout_gravity="center"
-                    />
-
-            </FrameLayout>
-
-            <LinearLayout
-                android:gravity="center_vertical"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"
-                android:layout_gravity="bottom"
-                android:background="@color/colorAccent"
-                android:alpha="0.9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <com.circle8.circleOne.Utils.cgBoldTextView
-                    android:layout_marginLeft="10dp"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/white"
-                    android:text="HSBC Singapore Rugby Sevens"
-                    android:visibility="visible"
-                    android:id="@+id/tvEventTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp" />
-                <com.circle8.circleOne.Utils.cgTextView
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@android:color/white"
-                    android:text="HSBC Singapore Rugby Sevens"
-                    android:visibility="visible"
-                    android:id="@+id/tvEventDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="10sp" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </FrameLayout>
-
-    <ScrollView
-        android:layout_below="@+id/android_custom_gridview_layout"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="0dp"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:orientation="vertical"
+        android:background="@color/white"
+        tools:context="com.circle8.circleOne.Activity.EventDetail">
 
+        <FrameLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/android_custom_gridview_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:id="@+id/fm_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+                    <ImageView
+                        android:id="@+id/imgEvent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_event_default"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp" />
+                    <ProgressBar
+                        android:id="@+id/progressBar1"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:visibility="gone"
+                        android:layout_gravity="center"
+                        />
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorAccent"
+                    android:alpha="0.9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <com.circle8.circleOne.Utils.cgBoldTextView
+                        android:layout_marginLeft="10dp"
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/white"
+                        android:text="HSBC Singapore Rugby Sevens"
+                        android:visibility="visible"
+                        android:id="@+id/tvEventTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp" />
+                    <com.circle8.circleOne.Utils.cgTextView
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@android:color/white"
+                        android:text="HSBC Singapore Rugby Sevens"
+                        android:visibility="visible"
+                        android:id="@+id/tvEventDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <ScrollView
+            android:layout_below="@+id/android_custom_gridview_layout"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+                    <com.circle8.circleOne.Utils.cgTextView
+                        android:id="@+id/tvCompanyName"
+                        android:textSize="20dp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorAccent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Company Name"
+                        android:layout_centerVertical="true"
+                        android:visibility="gone"/>
+                    <com.circle8.circleOne.Utils.cgTextView
+                        android:visibility="gone"
+                        android:id="@+id/tvIndustryName"
+                        android:textSize="20dp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(Industry Name)"
+                        android:layout_marginLeft="10dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/tvCompanyName"/>
+                </RelativeLayout>
+
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:visibility="gone"
+                    android:id="@+id/tvEventType"
+                    android:textAllCaps="true"
+                    android:textSize="18dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/colorAccent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Event Type"/>
+
+                <com.circle8.circleOne.Utils.cgBoldTextView
+                    android:visibility="visible"
+                    android:id="@+id/tvEventTitle1"
+                    android:textAllCaps="true"
+                    android:textSize="18dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/colorAccent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Event Name"/>
+
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:id="@+id/tvEventDesc"
+                    android:layout_marginTop="10dp"
+                    android:textSize="12dp"
+                    android:textColor="#979799"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Join over 3000 laboratory professionals from more than 25 countries to meet and do business under one roof. \nsee more at:"/>
+
+                <LinearLayout
+                    android:id="@+id/llShowTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <com.circle8.circleOne.Utils.cgTextView
+                        android:layout_marginTop="15dp"
+                        android:textAllCaps="true"
+                        android:textSize="13dp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Event Date &amp; Time"/>
+                    <ListView
+                        android:id="@+id/listViewTimeShow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </ListView>
+                </LinearLayout>
+
+                <!--<TextView
+                    android:layout_marginTop="5dp"
+                    android:textSize="13dp"
+                    android:textColor="#979799"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Monday - April 3, 2017 - 9:30am - 5:00pm
+    Monday - April 3, 2017 - 9:30am - 5:00pm
+    Monday - April 3, 2017 - 9:30am - 5:00pm"/>
+    -->
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:id="@+id/cgBoldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Location:"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="13dp"
+                    android:textStyle="bold" />
+
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:id="@+id/tvEventAddress"
+                    android:layout_marginTop="5dp"
+                    android:textSize="12dp"
+                    android:textColor="#979799"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="At Level 4, Suntech singapore"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_old"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.circle8.circleOne.Utils.cgBoldTextView
+                        android:textStyle="bold"
+                        android:textSize="13dp"
+                        android:id="@+id/txtRegister"
+                        android:padding="15dp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Visitor Registration"/>
+
+                    <com.circle8.circleOne.Utils.cgBoldTextView
+                        android:textStyle="bold"
+                        android:id="@+id/txtBook"
+                        android:padding="15dp"
+                        android:layout_marginLeft="20dp"
+                        android:textSize="13dp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Book a stand"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/lnreventReg"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <com.circle8.circleOne.Utils.cgBoldTextView
+                        android:textStyle="bold"
+                        android:id="@+id/txtEventRegistration"
+                        android:layout_marginLeft="20dp"
+                        android:textSize="13dp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Register Event"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </ScrollView>
         <LinearLayout
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:id="@+id/lnrBottomTab"
+            android:layout_gravity="bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <RelativeLayout
+            <View
+                android:layout_above="@+id/lnrBottomTab"
+                android:id="@+id/view1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
-                <com.circle8.circleOne.Utils.cgTextView
-                    android:id="@+id/tvCompanyName"
-                    android:textSize="20dp"
-                    android:textAllCaps="true"
-                    android:textColor="@color/colorAccent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Company Name"
-                    android:layout_centerVertical="true"
-                    android:visibility="gone"/>
-                <com.circle8.circleOne.Utils.cgTextView
-                    android:visibility="gone"
-                    android:id="@+id/tvIndustryName"
-                    android:textSize="20dp"
-                    android:textColor="@color/colorAccent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="(Industry Name)"
-                    android:layout_marginLeft="10dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/tvCompanyName"/>
-            </RelativeLayout>
-
-            <com.circle8.circleOne.Utils.cgTextView
-                android:visibility="gone"
-                android:id="@+id/tvEventType"
-                android:textAllCaps="true"
-                android:textSize="18dp"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/colorAccent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Event Type"/>
-
-            <com.circle8.circleOne.Utils.cgBoldTextView
-                android:visibility="visible"
-                android:id="@+id/tvEventTitle1"
-                android:textAllCaps="true"
-                android:textSize="18dp"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/colorAccent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Event Name"/>
-
-            <com.circle8.circleOne.Utils.cgTextView
-                android:id="@+id/tvEventDesc"
-                android:layout_marginTop="10dp"
-                android:textSize="12dp"
-                android:textColor="#979799"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Join over 3000 laboratory professionals from more than 25 countries to meet and do business under one roof. \nsee more at:"/>
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary"></View>
 
             <LinearLayout
-                android:id="@+id/llShowTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <com.circle8.circleOne.Utils.cgTextView
-                    android:layout_marginTop="15dp"
-                    android:textAllCaps="true"
-                    android:textSize="13dp"
-                    android:textColor="@color/colorAccent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Event Date &amp; Time"/>
-                <ListView
-                    android:id="@+id/listViewTimeShow"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                </ListView>
-            </LinearLayout>
+                android:orientation="horizontal"
+                android:paddingTop="4dp">
 
-            <!--<TextView
-                android:layout_marginTop="5dp"
-                android:textSize="13dp"
-                android:textColor="#979799"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Monday - April 3, 2017 - 9:30am - 5:00pm
-Monday - April 3, 2017 - 9:30am - 5:00pm
-Monday - April 3, 2017 - 9:30am - 5:00pm"/>
--->
-            <com.circle8.circleOne.Utils.cgTextView
-                android:id="@+id/cgBoldTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Location:"
-                android:textAllCaps="true"
-                android:textColor="@color/colorAccent"
-                android:textSize="13dp"
-                android:textStyle="bold" />
-
-            <com.circle8.circleOne.Utils.cgTextView
-                android:id="@+id/tvEventAddress"
-                android:layout_marginTop="5dp"
-                android:textSize="12dp"
-                android:textColor="#979799"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="At Level 4, Suntech singapore"/>
-
-            <LinearLayout
-                android:layout_marginBottom="30dp"
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.circle8.circleOne.Utils.cgBoldTextView
-                    android:textStyle="bold"
-                    android:textSize="13dp"
-                    android:id="@+id/txtRegister"
-                    android:padding="15dp"
-                    android:textColor="@color/colorAccent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Visitor Registration"/>
-
-                <com.circle8.circleOne.Utils.cgBoldTextView
-                    android:textStyle="bold"
-                    android:id="@+id/txtBook"
-                    android:padding="15dp"
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
                     android:layout_marginLeft="20dp"
-                    android:textSize="13dp"
-                    android:textColor="@color/colorAccent"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Book a stand"/>
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/imgCards"
+                        android:layout_width="55dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_icon1" />
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_marginTop="-2dp"
+                        android:textColor="@color/unselected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cards"
+                        android:textSize="9sp"/>
+                </LinearLayout>
 
-        </LinearLayout>
-
-    </ScrollView>
-    <LinearLayout
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:id="@+id/lnrBottomTab"
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <View
-            android:layout_above="@+id/lnrBottomTab"
-            android:id="@+id/view1"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorPrimary"></View>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="4dp">
-
-            <LinearLayout
-                android:gravity="center"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:id="@+id/imgCards"
-                    android:layout_width="55dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_icon1" />
-
-                <TextView
-                    android:layout_marginTop="-2dp"
-                    android:textColor="@color/unselected"
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cards"
-                    android:textSize="9sp"/>
-            </LinearLayout>
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/imgConnect"
+                        android:layout_width="55dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_icon2" />
 
-            <LinearLayout
-                android:gravity="center"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:id="@+id/imgConnect"
-                    android:layout_width="55dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_icon2" />
-
-                <TextView
-                    android:layout_marginTop="-2dp"
-                    android:textColor="@color/unselected"
+                    <TextView
+                        android:layout_marginTop="-2dp"
+                        android:textColor="@color/unselected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Connect"
+                        android:textSize="9sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Connect"
-                    android:textSize="9sp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:gravity="center"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:id="@+id/imgEvents"
-                    android:layout_width="55dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_icon3b" />
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/imgEvents"
+                        android:layout_width="55dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_icon3b" />
 
-                <TextView
-                    android:layout_marginTop="-2dp"
-                    android:textColor="@color/colorPrimary"
+                    <TextView
+                        android:layout_marginTop="-2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Events"
+                        android:textSize="9sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Events"
-                    android:textSize="9sp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:gravity="center"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:id="@+id/imgProfile"
-                    android:layout_width="55dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_icon4" />
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/imgProfile"
+                        android:layout_width="55dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_icon4" />
 
-                <TextView
-                    android:layout_marginTop="-2dp"
-                    android:textColor="@color/unselected"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Profile"
-                    android:textSize="9sp"/>
+                    <TextView
+                        android:layout_marginTop="-2dp"
+                        android:textColor="@color/unselected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Profile"
+                        android:textSize="9sp"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-</RelativeLayout>
+    </RelativeLayout>
 </layout>

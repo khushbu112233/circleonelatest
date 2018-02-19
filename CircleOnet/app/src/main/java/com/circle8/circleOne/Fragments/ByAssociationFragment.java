@@ -20,7 +20,6 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -34,7 +33,6 @@ import com.circle8.circleOne.Model.ConnectList;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.FragmentConnectListBinding;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -43,21 +41,15 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
-
-/**
- * Created by ample-arch on 8/28/2017.
- */
 
 public class ByAssociationFragment  extends Fragment implements View.OnClickListener,AdapterView.OnItemClickListener
 {
@@ -74,7 +66,6 @@ public class ByAssociationFragment  extends Fragment implements View.OnClickList
     public static String progressStatus = "FIRST";
     Context context;
     View view;
-
     public ByAssociationFragment() {    }
     public static FragmentConnectListBinding fragmentConnectListBinding;
     @Override
@@ -156,12 +147,6 @@ public class ByAssociationFragment  extends Fragment implements View.OnClickList
     }
 
     @Override
-    public void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
-
-    @Override
     public void onClick(View v) {
         int id = v.getId();
 
@@ -185,7 +170,7 @@ public class ByAssociationFragment  extends Fragment implements View.OnClickList
                 }
                 else {
                     makeJsonObjectRequest();
-                   // new HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
+
                 }
                 break;
         }
@@ -278,9 +263,6 @@ public class ByAssociationFragment  extends Fragment implements View.OnClickList
                             connectModel.setWebsite(iCon.getString("Website"));
                             connectTags.add(connectModel);
 
-                            /*connectListAdapter = new ConnectListAdapter(getContext(),R.layout.grid_list5_layout, connectTags);
-                            listView.setAdapter(connectListAdapter);
-                            connectListAdapter.notifyDataSetChanged();*/
                         }
 
                         GetData(getContext());
@@ -311,7 +293,7 @@ public class ByAssociationFragment  extends Fragment implements View.OnClickList
                                         {
                                             // rlLoadMore.setVisibility(View.VISIBLE);
                                             // Execute LoadMoreDataTask AsyncTask
-                                           // new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
+                                            // new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
                                             makeJsonObjectRequest();
                                         }
                                     }
@@ -386,7 +368,6 @@ public class ByAssociationFragment  extends Fragment implements View.OnClickList
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             return POST2(urls[0],jsonObject);
         }
         // onPostExecute displays the results of the AsyncTask.
@@ -453,7 +434,11 @@ public class ByAssociationFragment  extends Fragment implements View.OnClickList
                             connectModel.setLinkedin(iCon.getString("LinkedIn"));
                             connectModel.setWebsite(iCon.getString("Website"));
                             connectTags.add(connectModel);
-               }
+
+                            /*connectListAdapter = new ConnectListAdapter(getContext(),R.layout.grid_list5_layout, connectTags);
+                            listView.setAdapter(connectListAdapter);
+                            connectListAdapter.notifyDataSetChanged();*/
+                        }
 
                         GetData(getContext());
                         listSize = connectTags.size();
@@ -483,8 +468,8 @@ public class ByAssociationFragment  extends Fragment implements View.OnClickList
                                         {
                                             // rlLoadMore.setVisibility(View.VISIBLE);
                                             // Execute LoadMoreDataTask AsyncTask
-                                           // new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
-                                        makeJsonObjectRequest();
+                                            // new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
+                                            makeJsonObjectRequest();
                                         }
                                     }
                                     else {  }
@@ -541,6 +526,12 @@ public class ByAssociationFragment  extends Fragment implements View.OnClickList
             connectListAdapter.notifyDataSetChanged();
         }
 
-    }
+     /*   gridAdapter = new List4Adapter(getContext(), R.layout.grid_list4_layout, nfcModel1);
+        listView.setAdapter(gridAdapter);
+        gridAdapter.notifyDataSetChanged();*/
 
+        /*list5Adapter = new List5Adapter(getContext(), R.layout.grid_list4_layout, connectLists);
+        listView.setAdapter(list5Adapter);
+        list5Adapter.notifyDataSetChanged();*/
+    }
 }

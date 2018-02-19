@@ -52,13 +52,7 @@ public class ByNameGroupFragment extends Fragment {
         // Required empty public constructor
     }
 
-    @Override
-    public void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
-
-    @Override
+      @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -87,7 +81,6 @@ public class ByNameGroupFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-
                 listView.setVisibility(View.VISIBLE);
                 connectTags.clear();
                 new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");

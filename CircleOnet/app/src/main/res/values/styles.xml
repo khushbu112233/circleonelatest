@@ -99,7 +99,8 @@
     </style>
 
     <style name="PopupMenu" parent="ThemeOverlay.AppCompat.Dark">
-        <item name="android:popupBackground">@color/colorPrimary</item>
+        <item name="android:popupBackground">@color/white</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
     <style name="Blue_AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">

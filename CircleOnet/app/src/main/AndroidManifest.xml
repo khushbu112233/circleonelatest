@@ -44,6 +44,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:theme,android:allowBackup">
+        <meta-data android:name="com.onesignal.NotificationOpened.DEFAULT" android:value="DISABLE" />
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -101,27 +103,7 @@
             android:name=".Activity.CardsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="application/com.amplearch.circleonet" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="application/com.circle8.circleOne" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="application/com.circle8.circleone" />
-            </intent-filter>
 
             <!--
             <intent-filter>
@@ -297,7 +279,19 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
-            android:name=".Activity.RewardsPointsActivity"
+            android:name=".Activity.LuckyDrawActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionbar"/>
+        <activity
+            android:name=".Activity.RewardsPointsActivity1"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionbar" />
+        <activity
+            android:name=".Activity.NotificationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionbar" />
+        <activity
+            android:name=".Activity.ManuallyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
@@ -326,10 +320,10 @@
             android:name=".Activity.CreateGroupActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
-        <activity
+<!--        <activity
             android:name=".Activity.MerchantDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar" />
+            android:theme="@style/NoActionbar" />-->
         <activity
             android:name=".Activity.AttachmentDisplay"
             android:theme="@style/NoActionbarSplash" />
@@ -368,6 +362,27 @@
 
         <activity android:name=".Activity.DashboardActivity"
             android:theme="@style/NoActionbar">
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="application/com.amplearch.circleonet" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="application/com.circle8.circleOne" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="application/com.circle8.circleone" />
+            </intent-filter>
         </activity>
     </application>
 

@@ -29,8 +29,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -72,7 +70,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntity;
@@ -111,7 +108,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import static com.circle8.circleOne.Activity.LoginActivity.pushToken;
 import static com.circle8.circleOne.Utils.Utility.POST2;
@@ -131,10 +127,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private File file;
     String refferelCode = "";
     private String company_name, first_name, last_name, phone_no, password, c_password, user_name, gender = "", email;
-    private int mYear, mMonth, mDay, mHour, mMinute;
     private Calendar calendar;
     private DatePickerDialog datePickerDialog;
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
     String image;
     ProgressDialog pDialog;
     String encodedImageData, register_img = "";
@@ -149,6 +144,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private static final int CONTACT_PICKER_REQUEST = 991;
     private static final int PERMISSION_REQUEST_CONTACT = 111;
     ProfileSession profileSession;
+    private String arrowCards = "RIGHT";
     SharedPreferences prefs = null;
 
     @Override
@@ -216,35 +212,88 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 // Toast.makeText(getApplicationContext(), "Updated " + ccp.getSelectedCountryCode(), Toast.LENGTH_SHORT).show();
             }
         });
-       /* Thread thread = new Thread(new Runnable(){
-            @Override
-            public void run() {
-                try {
-                    activityRegisterBinding.imgProfileCard.setImageBitmap(getBitmapFromURL(Image));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        thread.start();*/
-
-
-       /* URL imageURL = null;
-        try {
-            imageURL = new URL(Image);
-            activityRegisterBinding.imgProfileCard.setImageBitmap(downloadImage(Image));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        */
 
         activityRegisterBinding.ivMale.setOnClickListener(this);
         activityRegisterBinding.ivFemale.setOnClickListener(this);
         activityRegisterBinding.ivConnectImg.setOnClickListener(this);
         activityRegisterBinding.lnrBottomReg.setOnClickListener(this);
         activityRegisterBinding.imgProfileCard.setOnClickListener(this);
+        activityRegisterBinding.lnrPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (arrowCards.equalsIgnoreCase("RIGHT"))
+                {
+                    activityRegisterBinding.ivArrowImgCards.setImageResource(R.drawable.ic_down_arrow_blue);
+                    activityRegisterBinding.llPhone.setVisibility(View.VISIBLE);
+                    activityRegisterBinding.lnrdate.setVisibility(View.VISIBLE);
+                    activityRegisterBinding.llcode.setVisibility(View.VISIBLE);
+                    activityRegisterBinding.llgender.setVisibility(View.VISIBLE);
 
+                    arrowCards = "DOWN";
+                }
+                else if (arrowCards.equalsIgnoreCase("DOWN"))
+                {
+                    activityRegisterBinding.ivArrowImgCards.setImageResource(R.drawable.ic_left_arrow_blue);
+                    activityRegisterBinding.llPhone.setVisibility(View.GONE);
+                    activityRegisterBinding.lnrdate.setVisibility(View.GONE);
+                    activityRegisterBinding.llcode.setVisibility(View.GONE);
+                    activityRegisterBinding.llgender.setVisibility(View.GONE);
+
+                    arrowCards = "RIGHT";
+                }
+            }
+        });
+       /* activityRegisterBinding.lnrdb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (arrowCards.equalsIgnoreCase("RIGHT"))
+                {
+                    activityRegisterBinding.ivArrowImgdb.setImageResource(R.drawable.ic_down_arrow_blue);
+                    activityRegisterBinding.lnrdate.setVisibility(View.VISIBLE);
+                    arrowCards = "DOWN";
+                }
+                else if (arrowCards.equalsIgnoreCase("DOWN"))
+                {
+                    activityRegisterBinding.ivArrowImgdb.setImageResource(R.drawable.ic_left_arrow_blue);
+                    activityRegisterBinding.lnrdate.setVisibility(View.GONE);
+                    arrowCards = "RIGHT";
+                }
+            }
+        });
+        activityRegisterBinding.lnrcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (arrowCards.equalsIgnoreCase("RIGHT"))
+                {
+                    activityRegisterBinding.ivArrowImgcode.setImageResource(R.drawable.ic_down_arrow_blue);
+                    activityRegisterBinding.llcode.setVisibility(View.VISIBLE);
+                    arrowCards = "DOWN";
+                }
+                else if (arrowCards.equalsIgnoreCase("DOWN"))
+                {
+                    activityRegisterBinding.ivArrowImgcode.setImageResource(R.drawable.ic_left_arrow_blue);
+                    activityRegisterBinding.llcode.setVisibility(View.GONE);
+                    arrowCards = "RIGHT";
+                }
+            }
+        });
+        activityRegisterBinding.lnrgender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (arrowCards.equalsIgnoreCase("RIGHT"))
+                {
+                    activityRegisterBinding.ivArrowImggender.setImageResource(R.drawable.ic_down_arrow_blue);
+                    activityRegisterBinding.llgender.setVisibility(View.VISIBLE);
+                    arrowCards = "DOWN";
+                }
+                else if (arrowCards.equalsIgnoreCase("DOWN"))
+                {
+                    activityRegisterBinding.ivArrowImggender.setImageResource(R.drawable.ic_left_arrow_blue);
+                    activityRegisterBinding.llgender.setVisibility(View.GONE);
+                    arrowCards = "RIGHT";
+                }
+            }
+        });*/
         activityRegisterBinding.ivConnectImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -270,7 +319,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-        activityRegisterBinding.etConfirmPass.addTextChangedListener(new TextWatcher() {
+      /*  activityRegisterBinding.etConfirmPass.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 String strPass1 = activityRegisterBinding.etPassword.getText().toString();
                 String strPass2 = activityRegisterBinding.etConfirmPass.getText().toString();
@@ -285,7 +334,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
-        });
+        });*/
 
         activityRegisterBinding.ivMaleRound.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
@@ -296,8 +345,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 int R = activityRegisterBinding.ivMaleRound.getRight();
                 int B = activityRegisterBinding.ivMaleRound.getBottom();
 
-                System.out.print("ivMale" + height + " " + width + " " + L + " " + R + " " + T + " " + B);
-//                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
+                //   System.out.print("ivMale" + height + " " + width + " " + L + " " + R + " " + T + " " + B);
+                // Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
                 //don't forget to remove the listener to prevent being called again by future layout events:
                 activityRegisterBinding.ivMaleRound.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
@@ -315,13 +364,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 lineWidth = width;
                 motionLength = motionLength + lineWidth;
                 System.out.print("ivConnect" + height + " " + width + " " + L + " " + R + " " + T + " " + B);
-//                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
-                //don't forget to remove the listener to prevent being called again by future layout events:
-                activityRegisterBinding.ivConnectImg.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+          activityRegisterBinding.ivConnectImg.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
-        // motionLength = lineWidth+roundWidth;
-
     }
 
     @Override
@@ -338,34 +383,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         .bubbleColor(ContextCompat.getColor(RegisterActivity.this, R.color.colorPrimary)) //Optional - default: Azure Blue
                         .bubbleTextColor(Color.WHITE) //Optional - default: White
                         .showPickerForResult(CONTACT_PICKER_REQUEST);
-                // permission was granted, yay! Do the
-                // contacts-related task you need to do.
+
             }
             else
             {
                 Toast.makeText(getApplicationContext(), "No permission for contacts", Toast.LENGTH_LONG).show();
-                // permission denied, boo! Disable the
-                // functionality that depends on this permission.
             }
             return;
         }
         else {
-          //  activityLoginBinding.imgFinger.setVisibility(View.GONE);
-            //  Toast.makeText(this, getString(R.string.Unknown_permission_request), Toast.LENGTH_LONG).show();
-        }
-    }
-
-
-    @Override
-    protected void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
+                 }
     }
 
     private Bitmap downloadImage(String stringUrl) {
@@ -558,7 +585,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         try {
             // If you already have date objects then skip 1
             // Create 2 dates starts
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             Date date1 = sdf.parse(d1);
             Date date2 = sdf.parse(d2);
 
@@ -1029,8 +1056,55 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         //  Upload();
         activityRegisterBinding.imgProfileCard.setImageBitmap(thumbnail);
 
-    }
+/*
+        try
+        {
+            ei = new ExifInterface(String.valueOf(targetUri));
+            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
 
+            switch (orientation)
+            {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    rotatedBitmap = rotateImage(thumbnail, 90);
+                    activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+                    break;
+
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    rotatedBitmap = rotateImage(thumbnail, 180);
+                    activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+                    break;
+
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    rotatedBitmap = rotateImage(thumbnail, 270);
+                    activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+                    break;
+
+                case ExifInterface.ORIENTATION_NORMAL:
+                    rotatedBitmap = thumbnail;
+                    activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+                    break;
+
+                default:
+                    rotatedBitmap = thumbnail;
+                    activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+                    break;
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+*/
+    }
 
     private class HttpAsyncLoginTask extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
@@ -1050,7 +1124,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         protected String doInBackground(String... urls) {
-
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.accumulate("Password", password);
@@ -1064,7 +1137,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
 //            dialog.dismiss();
@@ -1096,6 +1168,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         String Connection_Left = jsonArray.getString("Connection_Left");
                         Q_ID = jsonArray.getString("Q_ID");
 
+                        Pref.setValue(RegisterActivity.this,"UserFirstName",FirstName);
+                        Pref.setValue(RegisterActivity.this,"ReferrenceCode",jsonArray.getString("ReferrenceCode"));
+                        Pref.setValue(RegisterActivity.this,"UserLastName",LastName);
+                        Pref.setValue(RegisterActivity.this,"UserPhone",Phone);
+                        Pref.setValue(RegisterActivity.this,"UserEmail",UserName);
 
                         try {
                             referralCodeSession.createReferral(jsonArray.getString("ReferrenceCode"));
@@ -1489,9 +1566,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 date_DOB = "";
             }
             else {
-                date_DOB = activityRegisterBinding.etDD.getText().toString() + "/" + activityRegisterBinding.etMM.getText().toString() + "/" + activityRegisterBinding.etYYYY.getText().toString();
+                date_DOB = activityRegisterBinding.etDD.getText().toString() + "-" + activityRegisterBinding.etMM.getText().toString() + "-" + activityRegisterBinding.etYYYY.getText().toString();
             }
-            // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.accumulate("Facebook", Facebook);
@@ -1513,11 +1589,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
@@ -1560,8 +1634,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 @Override
                                 public void onError(QBResponseException errors) {
                                     Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
-                                  //  Q_ID = String.valueOf(user.getId());
-                                   // new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
+                                    //  Q_ID = String.valueOf(user.getId());
+                                    // new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
                                     if (Status.equalsIgnoreCase("Verified")) {
                                         new HttpAsyncLoginTask().execute(Utility.BASE_URL + "UserLogin");
 
@@ -1573,7 +1647,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         }catch (Exception e) {
 
                             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-                           // Q_ID = String.valueOf(user.getId());
+                            // Q_ID = String.valueOf(user.getId());
                             //new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
                             if (Status.equalsIgnoreCase("Verified")) {
                                 new HttpAsyncLoginTask().execute(Utility.BASE_URL + "UserLogin");
@@ -1616,7 +1690,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return POSTGET(urls[0]);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
             //  dialog.dismiss();
@@ -1635,11 +1708,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         try {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
+
             HttpGet httpPost = new HttpGet(url);
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-type", "application/json");
+
             HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
             if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
@@ -1687,7 +1767,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             try {
                 jsonObject.accumulate("ImgBase64", final_ImgBase64);
                 jsonObject.accumulate("classification", "userphoto");
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -1695,7 +1774,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
@@ -1753,7 +1831,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             try {
                 jsonObject.accumulate("Q_ID", Q_ID);
                 jsonObject.accumulate("UserId", UserID);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -1761,7 +1838,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
@@ -1852,114 +1928,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 //        Toast.makeText(getApplicationContext(),"Bitmap: "+bitmap_image,Toast.LENGTH_LONG).show();
 //        Toast.makeText(getApplicationContext(),"Image: "+string_image,Toast.LENGTH_LONG).show();
-    }
-
-    private void connectWithHttpPost(String company_name, String user_name, String first_name, String last_name,
-                                     String phone_no, String password) {
-        class HttpGetAsyncTask extends AsyncTask<String, Void, String> {
-            @Override
-            protected String doInBackground(String... params) {
-                String company_name = params[0];
-                String user_name = params[1];
-                String first_name = params[2];
-                String last_name = params[3];
-                String phone_no = params[4];
-                String password = params[5];
-
-
-                HttpClient httpClient = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost(Utility.BASE_URL+"Registration");
-                httpPost.setHeader("Accept", "application/json");
-                httpPost.setHeader("Content-type", "application/json");
-//                httpPost.setHeader(HTTP.CONTENT_TYPE, "application/json");
-
-                List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(5);
-                nameValuePair.add(new BasicNameValuePair("CompanyName", company_name));
-                nameValuePair.add(new BasicNameValuePair("FName", first_name));
-                nameValuePair.add(new BasicNameValuePair("LName", last_name));
-                nameValuePair.add(new BasicNameValuePair("Phone", phone_no));
-                nameValuePair.add(new BasicNameValuePair("Pwd", password));
-                nameValuePair.add(new BasicNameValuePair("UserName", user_name));
-
-                try {
-                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
-                } catch (UnsupportedEncodingException e) {
-                    // log exception
-                    e.printStackTrace();
-                }
-
-                // Sending a GET request to the web page that we want
-                // Because of we are sending a GET request, we have to pass the values through the URL
-                try {
-                    // execute(); executes a request using the default context.
-                    // Then we assign the execution result to HttpResponse
-                    HttpResponse httpResponse = httpClient.execute(httpPost);
-                    System.out.println("httpResponse");
-
-                    InputStream inputStream = httpResponse.getEntity().getContent();
-
-                    // We have a byte stream. Next step is to convert it to a Character stream
-                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-
-                    // Then we have to wraps the existing reader (InputStreamReader) and buffer the input
-                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-                    // We have to use a class that can handle modifiable sequence of characters for use in creating String
-                    StringBuilder stringBuilder = new StringBuilder();
-
-                    String bufferedStrChunk = null;
-
-                    //and append that value one by one to the stringBuilder
-                    while ((bufferedStrChunk = bufferedReader.readLine()) != null) {
-                        stringBuilder.append(bufferedStrChunk);
-                    }
-                    //We return that value then the onPostExecute() can handle the content
-                    System.out.println("Returning value of doInBackground :" + stringBuilder.toString());
-
-                    // If the Username or Password wrong, it will return "invalid" as response
-                    return stringBuilder.toString();
-
-                } catch (ClientProtocolException cpe) {
-                    System.out.println("Exception generates caz of httpResponse :" + cpe);
-                    cpe.printStackTrace();
-                } catch (IOException ioe) {
-                    System.out.println("Second exception generates caz of httpResponse :" + ioe);
-                    ioe.printStackTrace();
-                }
-                return null;
-            }
-
-            //it is the third generic type of the AsyncTask
-            @Override
-            protected void onPostExecute(String result) {
-                super.onPostExecute(result);
-
-//                Toast.makeText(getApplicationContext(), result , Toast.LENGTH_LONG).show();
-
-                if (result.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Check data connection..", Toast.LENGTH_LONG).show();
-                } else {
-                    //   Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-                    try {
-                        JSONObject jsonObject = new JSONObject(result);
-                        String res = jsonObject.getString("user");
-                        if (res.equals("")) {
-                            Toast.makeText(getApplicationContext(), "User does not exists..", Toast.LENGTH_LONG).show();
-                        } else {
-                            JSONArray jsonArrayChanged = jsonObject.getJSONArray("user");
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
-        // Initialize the AsyncTask class
-        HttpGetAsyncTask httpGetAsyncTask = new HttpGetAsyncTask();
-        // Parameter we pass in the execute() method is relate to the first generic type of the AsyncTask
-        // We are passing the connectWithHttpGet() method arguments to that
-        httpGetAsyncTask.execute(company_name, user_name, first_name, last_name, phone_no, password);
     }
 
     private ArrayList<NameValuePair> getParams() {

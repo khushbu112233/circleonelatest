@@ -27,10 +27,5 @@ public class Connect extends AppCompatActivity {
         actionText.setText("Connect");
     }
 
-    @Override
-    protected void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
 
 }

@@ -54,6 +54,7 @@ import static com.circle8.circleOne.Activity.RegisterActivity.ConvertBitmapToStr
 import static com.circle8.circleOne.Activity.RegisterActivity.rotateImage;
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.POST2;
+import static com.circle8.circleOne.Utils.Utility.callSubPAge;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class GroupsActivity extends AppCompatActivity {
@@ -182,6 +183,172 @@ public class GroupsActivity extends AppCompatActivity {
                 rlLayTwo.setVisibility(View.VISIBLE);
                 listView.setEnabled(false);
 
+//                Intent in = new Intent(GroupsActivity.this, CreateGroupActivity.class);
+//                startActivity(in);
+
+                /*LayoutInflater factory = LayoutInflater.from(GroupsActivity.this);
+                LinearLayout layout = new LinearLayout(GroupsActivity.this);
+                layout.setOrientation(LinearLayout.VERTICAL);
+
+                ivGroupImage = new CircleImageView(GroupsActivity.this);
+                ivGroupImage.setBorderColor(getResources().getColor(R.color.colorPrimary));
+                ivGroupImage.setBorderWidth(1);
+                ivGroupImage.setImageResource(R.drawable.usr_1);
+                int width=200;
+                int height=200;
+                LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(width,height);
+                parms.gravity = Gravity.CENTER;
+                ivGroupImage.setLayoutParams(parms);
+                layout.addView(ivGroupImage);
+
+                final EditText titleBox = new EditText(GroupsActivity.this);
+                titleBox.setHint("Circle Name");
+                layout.addView(titleBox);
+
+                final EditText descriptionBox = new EditText(GroupsActivity.this);
+                descriptionBox.setHint("Description");
+                layout.addView(descriptionBox);
+
+
+                ivGroupImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selectImage();
+                    }
+                });
+                //   dialog.setView(layout);
+
+                //text_entry is an Layout XML file containing two text field to display in alert dialog
+                final AlertDialog.Builder alert = new AlertDialog.Builder(GroupsActivity.this);
+                alert.setCancelable(false);
+                alert.setTitle("Create Circle").setView(layout).setPositiveButton("Create",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                GroupName = titleBox.getText().toString();
+                                GroupDesc = descriptionBox.getText().toString();
+
+                                if (GroupName.equals("")){
+                                    Toast.makeText(getApplicationContext(), "Enter Circle Name", Toast.LENGTH_LONG).show();
+                                }
+                                else if (GroupDesc.equals("")){
+                                    Toast.makeText(getApplicationContext(), "Enter Circle Description", Toast.LENGTH_LONG).show();
+                                }
+                                else if (final_ImgBase64.equals("")){
+                                    Toast.makeText(getApplicationContext(), "Upload Circle Image", Toast.LENGTH_LONG).show();
+                                }
+                                else {
+                                    new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                                   // new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8999/Onet.svc/Group/Create");
+                                }
+                            }
+                        }).setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int whichButton) {
+                                 *//*
+                                 * User clicked cancel so do some stuff
+                                 *//*
+                                dialog.dismiss();
+
+                            }
+                        });
+                alert.show();*/
+
+//                final Dialog dialog = new Dialog(GroupsActivity.this);
+//                dialog.setContentView(R.layout.create_or_update_popup);
+
+            /*final AlertDialog dialog = new AlertDialog.Builder(GroupsActivity.this).create();
+            LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            final View dialogView = inflater.inflate(R.layout.create_or_update_popup, null);
+            dialog.setCancelable(false);
+
+            ivGroupImage = (CircleImageView)dialogView.findViewById(R.id.imgProfile);
+            ImageView ivMiniCamera = (ImageView)dialogView.findViewById(R.id.imgCamera);
+            final EditText etCircleName = (EditText)dialogView.findViewById(R.id.etCircleName);
+            final EditText etCircleDesc = (EditText)dialogView.findViewById(R.id.etCircleDesc);
+            TextView tvCreateOrUpdate = (TextView)dialogView.findViewById(R.id.tvCreateOrUpdate);
+            TextView tvCancel = (TextView)dialogView.findViewById(R.id.tvCancel);
+            final TextView tvCircleNameInfo = (TextView)dialogView.findViewById(R.id.tvCircleNameInfo);
+            final TextView tvCircleDescInfo = (TextView)dialogView.findViewById(R.id.tvCircleDescInfo);
+            final TextView tvProfileInfo = (TextView)dialogView.findViewById(R.id.tvProfileInfo);
+            tvCreateOrUpdate.setText("Create");
+
+            ivGroupImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CropImage.activity(null)
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .setCropMenuCropButtonTitle("Save")
+                            .start(GroupsActivity.this);
+                }
+            });
+
+            ivMiniCamera.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    //selectImage();
+                    CropImage.activity(null)
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .start(GroupsActivity.this);
+                }
+            });
+
+            tvCreateOrUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    GroupName = etCircleName.getText().toString();
+                    GroupDesc = etCircleDesc.getText().toString();
+
+                    if (GroupName.equals(""))
+                    {
+                        Toast.makeText(getApplicationContext(), "Enter Circle Name", Toast.LENGTH_LONG).show();
+//                            tvCircleNameInfo.setVisibility(View.VISIBLE);
+                    }
+                    else if (GroupDesc.equals(""))
+                    {
+                        Toast.makeText(getApplicationContext(), "Enter Circle Description", Toast.LENGTH_LONG).show();
+//                            tvCircleDescInfo.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        dialog.dismiss();
+                        ivAlphaImg.setVisibility(View.GONE);
+
+                            if (final_ImgBase64.equals(""))
+                            {
+                                new HttpAsyncTaskGroupCreate().execute(Utility.BASE_URL+"Group/Create");
+                                //Toast.makeText(getApplicationContext(), "Upload Circle Image", Toast.LENGTH_LONG).show();
+//                            tvProfileInfo.setVisibility(View.VISIBLE);
+                        }
+                        else
+                        {
+//                            new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+
+                                new HttpAsyncTaskPhotoUpload().execute(Utility.BASE_URL+"ImgUpload");
+                            }
+                            // new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8999/Onet.svc/Group/Create");
+                        }
+                        // new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8999/Onet.svc/Group/Create");
+                    }
+                }
+            });
+
+            tvCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    dialog.dismiss();
+                    ivAlphaImg.setVisibility(View.GONE);
+                }
+            });
+
+            dialog.setView(dialogView);
+//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorAccent)));
+            dialog.show();
+            Window window = dialog.getWindow();
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);*/
             }
         });
 
@@ -278,17 +445,6 @@ public class GroupsActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-    }
 
 
 
@@ -314,15 +470,18 @@ public class GroupsActivity extends AppCompatActivity {
             try {
                 jsonObject.accumulate("ImgBase64", final_ImgBase64);
                 jsonObject.accumulate("classification", "group");
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             return POST2(urls[0],jsonObject);
         }
+
         @Override
         protected void onPostExecute(String result) {
-
+            Utility.freeMemory();
+//            dialog.dismiss();
             dismissProgress();
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
@@ -561,15 +720,88 @@ public class GroupsActivity extends AppCompatActivity {
                 }
             }
 
-        }
-    }
+           /* try
+            {
+                ei = new ExifInterface(photoPath);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }*/
 
+//            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+
+//            Bitmap bitmap = null;
+//            Bitmap rotatedBitmap = null;
+
+           /* try
+            {
+                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
+//                image = ConvertBitmapToString(resizedBitmap);
+//                final_ImgBase64 = BitMapToString(resizedBitmap);
+               // final_ImgBase64 = resizeBase64Image(s);
+                Log.d("base64string ", final_ImgBase64);
+//                Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+//                Upload();
+//                civProfilePic.setImageBitmap(resizedBitmap);
+            }
+            catch (FileNotFoundException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }*/
+
+/*
+            switch (orientation)
+            {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    rotatedBitmap = rotateImage(bitmap, 90);
+                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+                    break;
+
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    rotatedBitmap = rotateImage(bitmap, 180);
+                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+                    break;
+
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    rotatedBitmap = rotateImage(bitmap, 270);
+                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+                    break;
+
+                case ExifInterface.ORIENTATION_NORMAL:
+                default:
+                    rotatedBitmap = bitmap;
+                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+            }
+*/
+
+        }
+//        BmToString(bm);
+    }
     private class HttpAsyncTaskGroupCreate extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+           /* dialog = new ProgressDialog(GroupsActivity.this);
+            dialog.setMessage("Creating Circle...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
 
             String loading = "Creating circle";
             CustomProgressDialog(loading, GroupsActivity.this);
@@ -591,7 +823,6 @@ public class GroupsActivity extends AppCompatActivity {
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
 //            dialog.dismiss();
@@ -628,6 +859,13 @@ public class GroupsActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            /*dialog = new ProgressDialog(UpdateGroupActivity.this);
+            dialog.setMessage("Updating Circle...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
 
             String loading = "Updating circle";
             CustomProgressDialog(loading, GroupsActivity.this);
@@ -646,7 +884,6 @@ public class GroupsActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             return POST2(urls[0],jsonObject);
         }
 
@@ -669,7 +906,33 @@ public class GroupsActivity extends AppCompatActivity {
                         ivAlphaImg.setVisibility(View.GONE);
                         listView.setEnabled(true);
                         rlLayTwo.setVisibility(View.GONE);
+                        /*if (type.equalsIgnoreCase("group"))
+                        {
+                            GroupsActivity.backStatus = "UpdateGroup";
+                            finish();
+                            GroupsActivity.ivAlphaImg.setVisibility(View.GONE);
+                        }
+                        else if (type.equals("group_detail"))
+                        {
+                            Intent intent = new Intent(getApplicationContext(), GroupDetailActivity.class);
+                            intent.putExtra("group_id", group_id);
+                            intent.putExtra("groupName", GroupName);
+                            intent.putExtra("groupDesc", GroupDesc);
+                            intent.putExtra("groupImg", GroupImage);
+                            startActivity(intent);
+                            finish();
+                        }*/
+                       /* tvGroupName.setText(GroupName);
+                        tvGroupDesc.setText(GroupDesc);
 
+                        if (GroupImage.equals(""))
+                        {
+                            imgProfile.setImageResource(R.drawable.usr_1);
+                        }
+                        else
+                        {
+                            Picasso.with(context).load("http://circle8.asia/App_ImgLib/Group/"+GroupImage).placeholder(R.drawable.usr_1).into(imgProfile);
+                        }*/
                     } else {
                         Toast.makeText(getApplicationContext(), Message, Toast.LENGTH_LONG).show();
                     }
@@ -686,6 +949,7 @@ public class GroupsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Utility.freeMemory();
+        callSubPAge("Circle","LeftMenu");
         if (backStatus.equals("UpdateBack")) {
 
         } else if (backStatus.equals("UpdateGroup")) {
@@ -708,6 +972,13 @@ public class GroupsActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+           /* dialog = new ProgressDialog(GroupsActivity.this);
+            dialog.setMessage("Fetching Circles...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
 
             String loading = "Fetching circles";
             CustomProgressDialog(loading, GroupsActivity.this);
@@ -728,7 +999,6 @@ public class GroupsActivity extends AppCompatActivity {
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
             Utility.freeMemory();
@@ -829,11 +1099,21 @@ public class GroupsActivity extends AppCompatActivity {
                         } else {
 
                         }
+
                         groupModelArrayList.add(nfcModelTag);
                     }
+
+                    // for displaying groups with members
+                  /*  groupsItemsAdapter = new GroupsItemsAdapter(getApplicationContext(), groupModelArrayList);
+                    listView.setAdapter(groupsItemsAdapter);
+                    groupsItemsAdapter.notifyDataSetChanged();*/
+
+                    // for displaying only groups
                     GroupDisplayAdapter groupDisplayAdapter = new GroupDisplayAdapter(GroupsActivity.this, groupModelArrayList);
                     listView.setAdapter(groupDisplayAdapter);
                     groupDisplayAdapter.notifyDataSetChanged();
+
+                    // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
                 } else {
                     Toast.makeText(getApplicationContext(), "Not able to load circles..", Toast.LENGTH_LONG).show();
                 }

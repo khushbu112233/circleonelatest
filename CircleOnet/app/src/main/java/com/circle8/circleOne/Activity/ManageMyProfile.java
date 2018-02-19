@@ -33,6 +33,7 @@ import java.util.HashMap;
 
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.POST2;
+import static com.circle8.circleOne.Utils.Utility.callSubPAge;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class ManageMyProfile extends AppCompatActivity
@@ -47,6 +48,7 @@ public class ManageMyProfile extends AppCompatActivity
     String profile_id;
     RelativeLayout llBottomAdd;
     String ProfileID = "";
+
     ItemClickProfile itemClickProfile;
     ItemLongClickProfile itemLongClickProfile;
     @Override
@@ -113,7 +115,7 @@ public class ManageMyProfile extends AppCompatActivity
 
         listView.setLayoutManager(mLayoutManager);
         listView.setItemAnimator(new DefaultItemAnimator());
-        // new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
+       // new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,17 +179,8 @@ public class ManageMyProfile extends AppCompatActivity
 */
     }
 
-    @Override
-    protected void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-    }
+
 
     private class HttpAsyncTaskProfiles extends AsyncTask<String, Void, String>
     {
@@ -216,19 +209,17 @@ public class ManageMyProfile extends AppCompatActivity
                 jsonObject.accumulate("numofrecords", "100" );
                 jsonObject.accumulate("pageno", "1" );
                 jsonObject.accumulate("userid", UserID);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             return POST2(urls[0],jsonObject);
         }
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            dismissProgress();
+           dismissProgress();
 
             try
             {
@@ -310,6 +301,8 @@ public class ManageMyProfile extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        callSubPAge("ManageMyProfile","LeftMenu");
+
         new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
     }
 
@@ -320,6 +313,13 @@ public class ManageMyProfile extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+           /* dialog = new ProgressDialog(ManageMyProfile.this);
+            dialog.setMessage("Deleting Profile...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
             String loading = "Deleting profile" ;
             CustomProgressDialog(loading,getApplicationContext());
         }
@@ -336,12 +336,11 @@ public class ManageMyProfile extends AppCompatActivity
 
             return POST2(urls[0],jsonObject);
         }
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            dismissProgress();
+           dismissProgress();
 
             try
             {

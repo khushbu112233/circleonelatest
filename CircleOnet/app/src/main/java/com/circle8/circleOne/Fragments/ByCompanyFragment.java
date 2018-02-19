@@ -181,12 +181,30 @@ public class ByCompanyFragment  extends Fragment {
 
         return view;
     }
+
+  /*  @Override
+    public void onResume()
+    {
+        super.onResume();
+//        connectLists.clear();
+        connectTags.clear();
+        GetData(getContext());
+    }*/
+
+
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+           /* dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Searching Records...");
+            //dialog.setTitle("Saving Reminder");
+          //  dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
 
             if (progressStatus.equalsIgnoreCase("LOAD MORE")) {
 
@@ -207,10 +225,10 @@ public class ByCompanyFragment  extends Fragment {
                 jsonObject.accumulate("numofrecords", "10");
                 jsonObject.accumulate("pageno", pageno);
 
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             return POST2(urls[0],jsonObject);
         }
 
@@ -276,6 +294,9 @@ public class ByCompanyFragment  extends Fragment {
                             connectModel.setWebsite(iCon.getString("Website"));
                             connectTags.add(connectModel);
 
+                           /* connectListAdapter = new ConnectListAdapter(getContext(),R.layout.grid_list5_layout, connectTags);
+                            listView.setAdapter(connectListAdapter);
+                            connectListAdapter.notifyDataSetChanged();*/
                         }
 
                         GetData(getContext());
@@ -298,6 +319,8 @@ public class ByCompanyFragment  extends Fragment {
                                 if (scrollState == SCROLL_STATE_IDLE) {
                                     if (listSize <= numberCount) {
                                         if (listView.getLastVisiblePosition() >= count - threshold) {
+                                            //  rlLoadMore.setVisibility(View.VISIBLE);
+                                            // Execute LoadMoreDataTask AsyncTask
                                             new HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
                                         }
                                     } else {
@@ -311,6 +334,7 @@ public class ByCompanyFragment  extends Fragment {
                                 // TODO Auto-generated method stub
                             }
                         });
+
                     }
                 }
             } catch (JSONException e) {
@@ -348,6 +372,14 @@ public class ByCompanyFragment  extends Fragment {
             listView.setAdapter(connectListAdapter);
             connectListAdapter.notifyDataSetChanged();
         }
+
+     /*   gridAdapter = new List4Adapter(getContext(), R.layout.grid_list4_layout, nfcModel1);
+        listView.setAdapter(gridAdapter);
+        gridAdapter.notifyDataSetChanged();*/
+
+       /* list5Adapter = new List5Adapter(getContext(), R.layout.grid_list4_layout, connectLists);
+        listView.setAdapter(list5Adapter);
+        list5Adapter.notifyDataSetChanged();*/
     }
 
 }

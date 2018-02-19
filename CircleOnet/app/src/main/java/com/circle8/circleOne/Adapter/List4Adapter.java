@@ -19,7 +19,6 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Fragments.List1Fragment;
 import com.circle8.circleOne.Fragments.List2Fragment;
-import com.circle8.circleOne.Fragments.List3Fragment;
 import com.circle8.circleOne.Fragments.List4Fragment;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
@@ -450,7 +449,7 @@ public class List4Adapter extends BaseSwipeAdapter
                       //  List3Fragment.progressStatus = "DELETE";
                         List4Fragment.progressStatus = "DELETE";
 
-                        Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Connection removed successfully", Toast.LENGTH_LONG).show();
                         List1Fragment.webCall();
                         List2Fragment.webCall();
                       //  List3Fragment.webCall();

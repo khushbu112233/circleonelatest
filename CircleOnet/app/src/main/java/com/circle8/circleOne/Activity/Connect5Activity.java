@@ -2,10 +2,14 @@ package com.circle8.circleOne.Activity;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.ActivityConnect5Binding;
@@ -80,6 +84,15 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             {
                 Utility.freeMemory();
 
+               /* Intent go = new Intent(getApplicationContext(),Connect4Activity.class);
+                go.putExtra("level", level);
+                go.putExtra("profile", profile);
+                startActivity(go);
+                finish();*/
+               /* Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                go.putExtra("viewpager_position", 1);
+                startActivity(go);*/
+
                 Intent go = new Intent(getApplicationContext(), Connect4Activity.class);
                 go.putExtra("level", level);
                 go.putExtra("profile", profile);
@@ -116,6 +129,13 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             Utility.freeMemory();
             //  txtCongratulations.setVisibility(View.GONE);
             activityConnect5Binding.txtLink.setText("You have no established connections");
+            /*rltLevel1.setVisibility(View.INVISIBLE);
+            rltLevel2.setVisibility(View.INVISIBLE);
+            rltLevel3.setVisibility(View.INVISIBLE);
+            rltLevel4.setVisibility(View.INVISIBLE);
+            rltLevel5.setVisibility(View.INVISIBLE);
+            rltLevel6.setVisibility(View.INVISIBLE);
+            rltLevel7.setVisibility(View.INVISIBLE);*/
 
             activityConnect5Binding.txtName1.setVisibility(View.INVISIBLE);
             activityConnect5Binding.txtName2.setVisibility(View.INVISIBLE);
@@ -145,6 +165,13 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         {
             //  txtCongratulations.setVisibility(View.VISIBLE);
             activityConnect5Binding.txtLink.setText("you are now 1 connection away");
+           /* rltLevel1.setVisibility(View.VISIBLE);
+            rltLevel2.setVisibility(View.INVISIBLE);
+            rltLevel3.setVisibility(View.INVISIBLE);
+            rltLevel4.setVisibility(View.INVISIBLE);
+            rltLevel5.setVisibility(View.INVISIBLE);
+            rltLevel6.setVisibility(View.INVISIBLE);
+            rltLevel7.setVisibility(View.INVISIBLE);*/
 
             activityConnect5Binding.txtName1.setVisibility(View.VISIBLE);
             activityConnect5Binding.txtName2.setVisibility(View.INVISIBLE);
@@ -183,6 +210,13 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         {
             //  txtCongratulations.setVisibility(View.VISIBLE);
             activityConnect5Binding.txtLink.setText("you are now 2 connections away");
+            /*rltLevel1.setVisibility(View.VISIBLE);
+            rltLevel2.setVisibility(View.VISIBLE);
+            rltLevel3.setVisibility(View.INVISIBLE);
+            rltLevel4.setVisibility(View.INVISIBLE);
+            rltLevel5.setVisibility(View.INVISIBLE);
+            rltLevel6.setVisibility(View.INVISIBLE);
+            rltLevel7.setVisibility(View.INVISIBLE);*/
 
             activityConnect5Binding.txtName1.setVisibility(View.VISIBLE);
             activityConnect5Binding.txtName2.setVisibility(View.VISIBLE);
@@ -234,6 +268,13 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             Utility.freeMemory();
             //txtCongratulations.setVisibility(View.VISIBLE);
             activityConnect5Binding.txtLink.setText("you are now 3 connections away");
+           /* rltLevel1.setVisibility(View.VISIBLE);
+            rltLevel2.setVisibility(View.VISIBLE);
+            rltLevel3.setVisibility(View.VISIBLE);
+            rltLevel4.setVisibility(View.INVISIBLE);
+            rltLevel5.setVisibility(View.INVISIBLE);
+            rltLevel6.setVisibility(View.INVISIBLE);
+            rltLevel7.setVisibility(View.INVISIBLE);*/
 
             activityConnect5Binding.txtName1.setVisibility(View.VISIBLE);
             activityConnect5Binding.txtName2.setVisibility(View.VISIBLE);
@@ -295,6 +336,13 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         {
             // txtCongratulations.setVisibility(View.VISIBLE);
             activityConnect5Binding.txtLink.setText("you are now 4 connections away");
+            /*rltLevel1.setVisibility(View.VISIBLE);
+            rltLevel2.setVisibility(View.VISIBLE);
+            rltLevel3.setVisibility(View.VISIBLE);
+            rltLevel4.setVisibility(View.VISIBLE);
+            rltLevel5.setVisibility(View.INVISIBLE);
+            rltLevel6.setVisibility(View.INVISIBLE);
+            rltLevel7.setVisibility(View.INVISIBLE);*/
 
             activityConnect5Binding.txtName1.setVisibility(View.VISIBLE);
             activityConnect5Binding.txtName2.setVisibility(View.VISIBLE);
@@ -367,6 +415,13 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         {
             //  txtCongratulations.setVisibility(View.VISIBLE);
             activityConnect5Binding.txtLink.setText("you are now 5 connections away");
+            /*rltLevel1.setVisibility(View.VISIBLE);
+            rltLevel2.setVisibility(View.VISIBLE);
+            rltLevel3.setVisibility(View.VISIBLE);
+            rltLevel4.setVisibility(View.VISIBLE);
+            rltLevel5.setVisibility(View.VISIBLE);
+            rltLevel6.setVisibility(View.INVISIBLE);
+            rltLevel7.setVisibility(View.INVISIBLE);*/
 
             activityConnect5Binding.txtName1.setVisibility(View.VISIBLE);
             activityConnect5Binding.txtName2.setVisibility(View.VISIBLE);
@@ -450,6 +505,13 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         {
             //  txtCongratulations.setVisibility(View.VISIBLE);
             activityConnect5Binding.txtLink.setText("you are now 6 connections away");
+            /*rltLevel1.setVisibility(View.VISIBLE);
+            rltLevel2.setVisibility(View.VISIBLE);
+            rltLevel3.setVisibility(View.VISIBLE);
+            rltLevel4.setVisibility(View.VISIBLE);
+            rltLevel5.setVisibility(View.VISIBLE);
+            rltLevel6.setVisibility(View.VISIBLE);
+            rltLevel7.setVisibility(View.INVISIBLE);*/
 
             activityConnect5Binding.txtName1.setVisibility(View.VISIBLE);
             activityConnect5Binding.txtName2.setVisibility(View.VISIBLE);
@@ -544,6 +606,13 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         {
             //  txtCongratulations.setVisibility(View.VISIBLE);
             activityConnect5Binding.txtLink.setText("you are now 7 connections away");
+            /*rltLevel1.setVisibility(View.VISIBLE);
+            rltLevel2.setVisibility(View.VISIBLE);
+            rltLevel3.setVisibility(View.VISIBLE);
+            rltLevel4.setVisibility(View.VISIBLE);
+            rltLevel5.setVisibility(View.VISIBLE);
+            rltLevel6.setVisibility(View.VISIBLE);
+            rltLevel7.setVisibility(View.VISIBLE);*/
 
             activityConnect5Binding.txtName1.setVisibility(View.VISIBLE);
             activityConnect5Binding.txtName2.setVisibility(View.VISIBLE);
@@ -639,7 +708,17 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
             else
             {
-                   Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto7)
+           /*     Glide.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto7)
+                        .asBitmap()
+                        .placeholder(R.drawable.usr2)
+                        .into(new BitmapImageViewTarget(activityConnect5Binding.ivProfile7) {
+                            @Override
+                            public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                                super.onResourceReady(drawable, anim);
+                                activityConnect5Binding.ivProfile7.setImageBitmap(drawable);
+                            }
+                        });*/
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto7)
                         .resize(300,300).onlyScaleDown().skipMemoryCache()
                         .into(activityConnect5Binding.ivProfile7);
             }
@@ -662,17 +741,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         activityConnect5Binding.txtName7.setOnClickListener(this);
     }
 
-    @Override
-    protected void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-    }
 
     @Override
     public void onBackPressed()

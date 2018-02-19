@@ -200,11 +200,6 @@ public class ByNameFragment extends Fragment
         return view;
     }
 
-    @Override
-    public void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
 
   /*  @Override
     public void onResume()
@@ -254,7 +249,6 @@ public class ByNameFragment extends Fragment
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             return POST2(urls[0],jsonObject);
         }
         // onPostExecute displays the results of the AsyncTask.

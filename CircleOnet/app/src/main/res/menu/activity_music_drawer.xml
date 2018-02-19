@@ -52,33 +52,40 @@
 
     <group android:id="@+id/eight" android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_invite"
+            android:icon="@drawable/ic_share_blue"
+            android:iconTint="@color/white"
+            android:title="Invite" />
+    </group>
+    <group android:id="@+id/nine" android:checkableBehavior="single">
+        <item
             android:id="@+id/nav_history"
             android:icon="@drawable/ic_history"
             android:title="History" />
     </group>
 
-    <group android:id="@+id/nine" android:checkableBehavior="single">
+    <group android:id="@+id/ten" android:checkableBehavior="single">
         <item
             android:id="@+id/nav_subscription"
             android:icon="@drawable/ic_subscribe"
             android:title="Subscription" />
     </group>
 
-    <group android:id="@+id/ten" android:checkableBehavior="single">
+    <group android:id="@+id/eleven" android:checkableBehavior="single">
         <item
             android:id="@+id/nav_help"
             android:icon="@drawable/ic_help"
             android:title="Help" />
     </group>
 
-    <group android:id="@+id/eleven" android:checkableBehavior="single">
+    <group android:id="@+id/twelve" android:checkableBehavior="single">
         <item
             android:id="@+id/nav_contact_us"
             android:icon="@drawable/ic_contact"
             android:title="Contact Us" />
     </group>
 
-    <group android:id="@+id/twelve" android:checkableBehavior="single">
+    <group android:id="@+id/thirteen" android:checkableBehavior="single">
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout"

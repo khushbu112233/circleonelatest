@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.circle8.circleOne.Activity.LoginActivity;
+import com.circle8.circleOne.Activity.ManuallyActivity;
 import com.circle8.circleOne.Activity.MyAccountActivity;
 import com.circle8.circleOne.Activity.RegisterActivity;
 
@@ -103,7 +104,7 @@ public class Validation
             ((RegisterActivity)context).activityRegisterBinding.tvPasswordInfo.setVisibility(View.GONE);
         }
 
-        if(rePassword.isEmpty())
+    /*    if(rePassword.isEmpty())
         {
             ((RegisterActivity)context).activityRegisterBinding.tvAgainPasswordInfo.setText("Repeat password");
             ((RegisterActivity)context).activityRegisterBinding.tvAgainPasswordInfo.setVisibility(View.VISIBLE);
@@ -120,7 +121,76 @@ public class Validation
             ((RegisterActivity)context).activityRegisterBinding.tvAgainPasswordInfo.setText("Password does not match");
             ((RegisterActivity)context).activityRegisterBinding.tvAgainPasswordInfo.setVisibility(View.VISIBLE);
             valid = false;
+        }*/
+
+        return valid;
+    }
+    public static boolean validateManually(Context context, String firstName, String lastName, String contactNo, String emailAddress)
+    {
+        boolean valid = true ;
+
+
+
+        if(firstName.isEmpty() || firstName.length() < 1 )
+        {
+//            RegisterActivity.etFirstName.setError("Minimum 3 Characters.");
+            ((ManuallyActivity)context).manualLayoutBinding.tvFirstNameInfo.setText("Mini 1 Characters");
+            ((ManuallyActivity)context).manualLayoutBinding.tvFirstNameInfo.setVisibility(View.VISIBLE);
+            valid = false ;
         }
+        else
+        {
+//            RegisterActivity.etFirstName.setError(null);
+            ((ManuallyActivity)context).manualLayoutBinding.tvFirstNameInfo.setVisibility(View.GONE);
+        }
+
+        if(lastName.isEmpty() || lastName.length() < 1 )
+        {
+//            RegisterActivity.etLastName.setError("Minimum 3 Characters.");
+            ((ManuallyActivity)context).manualLayoutBinding.tvLastNameInfo.setText("Mini 1 Characters");
+            ((ManuallyActivity)context).manualLayoutBinding.tvLastNameInfo.setVisibility(View.VISIBLE);
+            valid = false ;
+        }
+        else
+        {
+//            RegisterActivity.etLastName.setError(null);
+            ((ManuallyActivity)context).manualLayoutBinding.tvLastNameInfo.setVisibility(View.GONE);
+        }
+
+        if (emailAddress.isEmpty())
+        {
+//            RegisterActivity.etEmail.setError("Not a valid Email Address");
+            ((ManuallyActivity)context).manualLayoutBinding.tvEmailInfo.setVisibility(View.VISIBLE);
+            valid = false;
+        }
+        else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches())
+        {
+            ((ManuallyActivity)context).manualLayoutBinding.tvEmailInfo.setText("Not a valid Email Address");
+            ((ManuallyActivity)context).manualLayoutBinding.tvEmailInfo.setVisibility(View.VISIBLE);
+            valid = false;
+        }
+        else
+        {
+//            RegisterActivity.etEmail.setError(null);
+            ((ManuallyActivity)context).manualLayoutBinding.tvEmailInfo.setVisibility(View.GONE);
+        }
+
+        if(contactNo.isEmpty()  )
+        {
+//            RegisterActivity.etPhone.setError("10 Characters Required");
+            ((ManuallyActivity)context).manualLayoutBinding.tvPhoneInfo.setText("Enter Contact Number");
+            ((ManuallyActivity)context).manualLayoutBinding.tvPhoneInfo.setVisibility(View.VISIBLE);
+            valid = false ;
+
+           // ((ManuallyActivity)context).manualLayoutBinding.tvPhoneInfo.setVisibility(View.GONE);
+
+        }
+        else
+        {
+//            RegisterActivity.etPhone.setError(null);
+            ((ManuallyActivity)context).manualLayoutBinding.tvPhoneInfo.setVisibility(View.GONE);
+        }
+
 
         return valid;
     }

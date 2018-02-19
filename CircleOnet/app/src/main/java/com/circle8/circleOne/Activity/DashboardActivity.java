@@ -5,7 +5,6 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -18,7 +17,6 @@ import android.location.Location;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
-import android.nfc.NfcManager;
 import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -27,7 +25,6 @@ import android.os.Handler;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -49,17 +46,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.circle8.circleOne.Fragments.CardsFragment;
 import com.circle8.circleOne.Fragments.ConnectFragment;
 import com.circle8.circleOne.Fragments.DashboardFragment;
-import com.circle8.circleOne.Fragments.EventsFragment;
 import com.circle8.circleOne.Fragments.List1Fragment;
-import com.circle8.circleOne.Fragments.List2Fragment;
-import com.circle8.circleOne.Fragments.List4Fragment;
 import com.circle8.circleOne.Fragments.ProfileFragment;
 import com.circle8.circleOne.Fragments.SortFragment;
 import com.circle8.circleOne.Helper.LoginSession;
+import com.circle8.circleOne.Helper.ReferralCodeSession;
 import com.circle8.circleOne.LocationUtil.PermissionUtils;
 import com.circle8.circleOne.MultiContactPicker;
 import com.circle8.circleOne.R;
@@ -93,44 +87,34 @@ import com.linkedin.platform.LISessionManager;
 import com.quickblox.messages.services.SubscribeService;
 import com.quickblox.sample.core.utils.SharedPrefsHelper;
 import com.twitter.sdk.android.Twitter;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
-import java.io.InputStream;
 import java.security.GeneralSecurityException;
-import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
-
 import static com.circle8.circleOne.Activity.CardsActivity.Connection_Limit;
 import static com.circle8.circleOne.Activity.CardsActivity.MIME_TEXT;
 import static com.circle8.circleOne.Activity.CardsActivity.decrypt;
 import static com.circle8.circleOne.Fragments.DashboardFragment.secretKey;
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.POST2;
-import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.callMainPage;
+import static com.circle8.circleOne.Utils.Utility.callSubPAge;
 
 public class DashboardActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
         ActivityCompat.OnRequestPermissionsResultCallback,
         PermissionUtils.PermissionResultCallback{
 
     private static final String TAG = DashboardActivity.class.getSimpleName();
+    private FragmentManager fragmentManager;
     private Fragment fragment = null;
     private static final int CONTACT_PICKER_REQUEST = 991;
     private static final int PERMISSION_REQUEST_CONTACT = 111;
-
     public static ActivityDashboardBinding activityDashboardBinding;
-
     public static GoogleApiClient mGoogleApiClient;
     LoginSession session;
     private FirebaseAuth mAuth;
@@ -149,13 +133,14 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
     public static final byte[] MIME_TEXT1 = "application/com.amplearch.circleone".getBytes();
     boolean done = false;
     ArrayList<String> arrayNFC  = new ArrayList<>();
-    String profileId = "", nfcProfileId = "";
+    String profileId = "", nfcProfileId = "",User_name="";
     public double latitude;
     public double longitude;
     String lat = "", lng = "";
     String CardCode = "";
+    private String refer;
     boolean doubleBackToExitPressedOnce = false;
-
+    ReferralCodeSession referralCodeSession;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -169,6 +154,11 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_actionbar);
         getSupportActionBar().setShowHideAnimationEnabled(false);
+
+       /* getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+*/
         textView = (TextView) toolbar.findViewById(R.id.toolbar_title);
         imgDrawer = (ImageView) findViewById(R.id.drawer);
         imgLogo = (ImageView) findViewById(R.id.imgLogo);
@@ -190,7 +180,10 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                 .addToBackStack(null).commit();
         netCheck = Utility.isNetworkAvailable(getApplicationContext());
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        /*View header = navigationView.inflateHeaderView(R.layout.nav_header_music);
+        TextView profileName = (TextView) header.findViewById(R.id.profile_name);
+        profileName.setText("Adele");*/
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         session = new LoginSession(getApplicationContext());
@@ -200,7 +193,11 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
 
         CardsActivity.Connection_Limit = user.get(LoginSession.KEY_CONNECTION_LIMIT);
         profileId = user.get(LoginSession.KEY_PROFILEID);
+        User_name = user.get(LoginSession.KEY_NAME);
 
+        referralCodeSession = new ReferralCodeSession(DashboardActivity.this);
+        HashMap<String, String> referral = referralCodeSession.getReferralDetails();
+        refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
         try {
             if (CardsActivity.Connection_Limit.equalsIgnoreCase("100000")) {
                 //CardsActivity.Connection_Limit = DecimalFormatSymbols.getInstance().getInfinity();
@@ -214,6 +211,7 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
         imgLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                callMainPage("LeftMenu");
                 drawer.openDrawer(Gravity.START);
             }
         });
@@ -222,11 +220,16 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 int id = item.getItemId();
-
                 if (id == R.id.nav_my_acc) {
+                    navigationView.getMenu().getItem(0).setCheckable(true);
                     Intent intent = new Intent(DashboardActivity.this, MyAccountActivity.class);
                     startActivity(intent);
+
+                    navigationView.getMenu().getItem(0).setCheckable(false);
                 } else if (id == R.id.nav_sync_contact) {
+                    navigationView.getMenu().getItem(1).setCheckable(true);
+                    callSubPAge("SyncContacts","LeftMenu");
+
                     if (ContextCompat.checkSelfPermission(DashboardActivity.this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
                         new MultiContactPicker.Builder(DashboardActivity.this) //Activity/fragment context
                                 .theme(R.style.MyCustomPickerTheme) //Optional - default: MultiContactPicker.Azure
@@ -240,41 +243,78 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                     }else{
                         askForContactPermission();
                     }
+                    navigationView.getMenu().getItem(1).setCheckable(false);
                 } else if (id == R.id.nav_manage_profile) {
+                    navigationView.getMenu().getItem(2).setCheckable(true);
                     Intent intent = new Intent(DashboardActivity.this, ManageMyProfile.class);
                     startActivity(intent);
+                    navigationView.getMenu().getItem(2).setCheckable(false);
                 } else if (id == R.id.nav_card_request) {
+                    navigationView.getMenu().getItem(3).setCheckable(true);
                     Intent intent = new Intent(DashboardActivity.this, NewCardRequestActivity.class);
                     startActivity(intent);
+                    navigationView.getMenu().getItem(3).setCheckable(false);
                 }else if (id == R.id.nav_connect) {
+                    navigationView.getMenu().getItem(4).setCheckable(true);
                     Intent intent = new Intent(DashboardActivity.this, ConnectFragment.class);
                     startActivity(intent);
+                    navigationView.getMenu().getItem(4).setCheckable(false);
                 }else if(id == R.id.nav_events)
                 {
+                    navigationView.getMenu().getItem(5).setCheckable(true);
                     Intent intent = new Intent(DashboardActivity.this, EventsActivity.class);
                     startActivity(intent);
+                    navigationView.getMenu().getItem(5).setCheckable(false);
                 }else if(id == R.id.nav_circle)
                 {
+                    navigationView.getMenu().getItem(6).setCheckable(true);
                     Intent intent = new Intent(DashboardActivity.this, GroupsActivity.class);
                     startActivity(intent);
+                    navigationView.getMenu().getItem(6).setCheckable(false);
+                }else if(id == R.id.nav_invite)
+                {
+                    callSubPAge("Invite","LeftMenu");
+                    navigationView.getMenu().getItem(7).setCheckable(true);
+                    String shareBody = "I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional networks a step further. Use the code '" + refer +
+                            "' for a quick and simple registration! https://circle8.asia/mobileApp.html";
+                    Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                    sharingIntent.setType("text/plain");
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, User_name);
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                    startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
+                 /*    Intent intent = new Intent(DashboardActivity.this, RewardsPointsActivity.class);
+                    startActivity(intent);*/
+                    navigationView.getMenu().getItem(7).setCheckable(false);
                 }else if(id == R.id.nav_history)
                 {
+
+                    navigationView.getMenu().getItem(8).setCheckable(true);
                     Intent intent = new Intent(DashboardActivity.this, HistoryActivity.class);
                     startActivity(intent);
+                    navigationView.getMenu().getItem(8).setCheckable(false);
                 }else if(id == R.id.nav_subscription)
                 {
+                    navigationView.getMenu().getItem(9).setCheckable(true);
                     Intent intent = new Intent(DashboardActivity.this, SubscriptionActivity.class);
                     startActivity(intent);
+                    navigationView.getMenu().getItem(9).setCheckable(false);
                 }else if(id == R.id.nav_help)
                 {
+                    navigationView.getMenu().getItem(10).setCheckable(true);
                     Intent intent = new Intent(DashboardActivity.this, Help2Activity.class);
                     startActivity(intent);
+                    navigationView.getMenu().getItem(10).setCheckable(false);
                 }else if(id == R.id.nav_contact_us)
                 {
+                    navigationView.getMenu().getItem(11).setCheckable(true);
+
                     Intent intent = new Intent(DashboardActivity.this, ContactUsActivity.class);
                     startActivity(intent);
+                    navigationView.getMenu().getItem(11).setCheckable(false);
                 }else if(id == R.id.nav_logout)
                 {
+                    navigationView.getMenu().getItem(12).setCheckable(true);
+
                     CustomProgressDialog("Logout",DashboardActivity.this);
 
                     try
@@ -323,8 +363,11 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                     }
 
                     LISessionManager.getInstance(getApplicationContext()).clearSession();
-
+                    navigationView.getMenu().getItem(12).setCheckable(false);
                 }
+
+
+
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 assert drawer != null;
                 drawer.closeDrawer(GravityCompat.START);
@@ -374,7 +417,11 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.setCustomAnimations(R.anim.slide_out_down, R.anim.slide_out_down);
                     transaction.replace(R.id.main_container_wrapper, fragment).addToBackStack(null).commit();
-
+                    /*getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                            .addToBackStack(null)
+                            .commit();
+                    overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);*/
+                    //setActionBarTitle("Sort & Filter", false);
 
                 }
             }
@@ -389,6 +436,15 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
         {
             new HttpAsyncTaskNotification().execute(Utility.BASE_URL + "CountNewNotification");
         }
+
+       /* if (getCurrentFragment() instanceof SortAndFilterOption){
+                    *//*Intent intent = new Intent(getApplicationContext(), SortAndFilterOption.class);
+                    startActivity(intent);*//*
+
+            setActionBarTitle("Sort & Filter");
+
+        }*/
+
         if (getCurrentFragment() instanceof Notification){
             setActionBarTitle("Notification - 0", false);
 
@@ -445,6 +501,29 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
             }
 
         }
+        if(Pref.getValue(DashboardActivity.this,"manualdone","").equalsIgnoreCase("1"))
+        {
+            fragment = new CardsFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                    .addToBackStack(null)
+                    .commit();
+
+            activityDashboardBinding.includefooter.imgCard.setImageResource(R.drawable.ic_icon1b);
+            activityDashboardBinding.includefooter.imgDashboard.setImageResource(R.drawable.ic_dashboard_gray);
+            activityDashboardBinding.includefooter.imgProfile.setImageResource(R.drawable.ic_icon4);
+            activityDashboardBinding.includefooter.tvCards.setTextColor(getResources().getColor(R.color.colorPrimary));
+            activityDashboardBinding.includefooter.tvDashboard.setTextColor(getResources().getColor(R.color.unselected));
+            activityDashboardBinding.includefooter.tvProfile.setTextColor(getResources().getColor(R.color.unselected));
+            if (activityDashboardBinding.includefooter.txtNotificationCountAction.getText().toString().equals("0")){
+                activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
+            }else {
+                activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
+
+            }
+            Pref.setValue(DashboardActivity.this,"manualdone","0");
+        }
     }
 
     public static void setActionBarTitle(String title, Boolean infinity) {
@@ -460,6 +539,7 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
     }
 
     public static void setDrawerVisibility(Boolean visibility) {
+
         if (visibility == true){
             imgDrawer.setVisibility(View.VISIBLE);
         }else {
@@ -647,7 +727,7 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
             // Start IntentService to register this application with GCM.
             OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
             if (opr.isDone()) {
-                // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
+
                 // and the GoogleSignInResult will be available instantly.
                 // Log.d(TAG, "Got cached sign-in");
                 GoogleSignInResult result = opr.get();
@@ -829,6 +909,12 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
         super.onResume();
 
         if (!done) {
+            HashMap<String, String> user = session.getUserDetails();
+
+            CardsActivity.Connection_Limit = user.get(LoginSession.KEY_CONNECTION_LIMIT);
+            profileId = user.get(LoginSession.KEY_PROFILEID);
+            User_name = user.get(LoginSession.KEY_NAME);
+
             NdefMessage[] msgs = null;
 
             if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
@@ -921,7 +1007,6 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                             //  Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
                         }
 
-
                         try {
                             new HttpAsyncTask().execute(Utility.BASE_URL + "FriendConnection_Operation");
                         } catch (Exception e) {
@@ -956,6 +1041,8 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                         //ivAddCard.setVisibility(View.GONE);
                     }
                 }
+
+                done = true;
             }
 
             IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
@@ -967,6 +1054,29 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                     this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
             if (mNfcAdapter != null)
                 mNfcAdapter.enableForegroundDispatch(this, pendingIntent, nfcIntentFilter, null);
+        }
+        if( Pref.getValue(DashboardActivity.this, "AddQr", "").equalsIgnoreCase("1"))
+        {
+            fragment = new CardsFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                    .addToBackStack(null)
+                    .commit();
+
+            activityDashboardBinding.includefooter.imgCard.setImageResource(R.drawable.ic_icon1b);
+            activityDashboardBinding.includefooter.imgDashboard.setImageResource(R.drawable.ic_dashboard_gray);
+            activityDashboardBinding.includefooter.imgProfile.setImageResource(R.drawable.ic_icon4);
+            activityDashboardBinding.includefooter.tvCards.setTextColor(getResources().getColor(R.color.colorPrimary));
+            activityDashboardBinding.includefooter.tvDashboard.setTextColor(getResources().getColor(R.color.unselected));
+            activityDashboardBinding.includefooter.tvProfile.setTextColor(getResources().getColor(R.color.unselected));
+            if (activityDashboardBinding.includefooter.txtNotificationCountAction.getText().toString().equals("0")){
+                activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
+            }else {
+                activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
+
+            }
+
         }
     }
 
@@ -988,8 +1098,12 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
         @Override
         protected String doInBackground(String... urls) {
             Calendar c = Calendar.getInstance();
+            System.out.println("Current time =&gt; "+c.getTime());
+
             SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
             String formattedDate = df.format(c.getTime());
+            // Toast.makeText(getApplicationContext(), formattedDate, Toast.LENGTH_LONG).show();
+            // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.accumulate("Latitude", lat);
@@ -999,20 +1113,24 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                 jsonObject.accumulate("RequestType", "NFC");
                 jsonObject.accumulate("connection_date", formattedDate);
                 jsonObject.accumulate("friendProfileId", nfcProfileId);
-                jsonObject.accumulate("myProfileId", profileId);
+                Log.e("Dash_ProfileId",""+profileId);
+                jsonObject.accumulate("myProfileId",profileId);
                 if (!CardCode.equals("")){
                     jsonObject.accumulate("card_code", CardCode);
                 }
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+
             return POST2(urls[0],jsonObject);
         }
 
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();
+            Utility.freeMemory();
+            //  Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result == "") {
                     Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
@@ -1021,13 +1139,17 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                     String message = response.getString("message");
                     String success = response.getString("success");
 
+                    Pref.setValue(DashboardActivity.this, "current_frag", "1");
+
                     if (success.equals("1")) {
-                        Pref.setValue(DashboardActivity.this, "current_frag", "1");
-                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.successful_request_sent), Toast.LENGTH_LONG).show();
+
+                        //     Toast.makeText(getApplicationContext(), getResources().getString(R.string.successful_request_sent), Toast.LENGTH_LONG).show();
+
                         fragment = new CardsFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
                                 .addToBackStack(null)
                                 .commit();
+
 
                         activityDashboardBinding.includefooter.imgCard.setImageResource(R.drawable.ic_icon1b);
                         activityDashboardBinding.includefooter.imgDashboard.setImageResource(R.drawable.ic_dashboard_gray);
@@ -1043,7 +1165,9 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                             DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
 
                         }
-                    } else {
+                    }
+                    else
+                    {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
                 }
@@ -1096,10 +1220,6 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                     DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
 
                 }
-
-
-
-
 
                 fragment = new CardsFragment();
                 Pref.setValue(DashboardActivity.this, "current_frag", "1");
@@ -1171,7 +1291,11 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
             super.onPreExecute();
             dialog = new ProgressDialog(DashboardActivity.this);
             dialog.setMessage("Adding records...");
+            //dialog.setTitle("Saving Reminder");
+            //   dialog.show();
             dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
         }
 
         @Override
@@ -1186,7 +1310,6 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
             //  dialog.dismiss();
@@ -1279,6 +1402,10 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.main_container_wrapper, fragment).addToBackStack(null).commit();
+                    /*getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                            .addToBackStack(null)
+                            .commit();
+                    overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);*/
             setActionBarTitle("Dashboard", false);
 
             activityDashboardBinding.includefooter.imgCard.setImageResource(R.drawable.ic_icon1);
@@ -1306,6 +1433,8 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.main_container_wrapper, fragment).addToBackStack(null).commit();
+
+
             activityDashboardBinding.includefooter.imgCard.setImageResource(R.drawable.ic_icon1b);
             activityDashboardBinding.includefooter.imgDashboard.setImageResource(R.drawable.ic_dashboard_gray);
             activityDashboardBinding.includefooter.imgProfile.setImageResource(R.drawable.ic_icon4);
@@ -1321,6 +1450,12 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
 
             }
 
+                    /*getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                            .addToBackStack(null)
+                            .commit();
+                    overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);*/
+            //  setActionBarTitle("Dashboard", false);
+
         }
         else if (getCurrentFragment() instanceof ProfileFragment){
             Pref.setValue(DashboardActivity.this, "current_frag", "2");
@@ -1329,6 +1464,10 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.main_container_wrapper, fragment).addToBackStack(null).commit();
+                    /*getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                            .addToBackStack(null)
+                            .commit();
+                    overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);*/
             setActionBarTitle("Dashboard", false);
 
             activityDashboardBinding.includefooter.imgCard.setImageResource(R.drawable.ic_icon1);
@@ -1361,7 +1500,16 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
+        //noinspection SimplifiableIfStatement
+        /*if (id == R.id.action_settings) {
+            return true;
+        }
+*/
         return super.onOptionsItemSelected(item);
     }
     public void askForContactPermission()
@@ -1390,6 +1538,9 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                         }
                     });
                     builder.show();
+                    // Show an expanation to the user *asynchronously* -- don't block
+                    // this thread waiting for the user's response! After the user
+                    // sees the explanation, try again to request the permission.
 
                 }
                 else
@@ -1398,6 +1549,9 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                     ActivityCompat.requestPermissions(DashboardActivity.this,
                             new String[]{Manifest.permission.READ_CONTACTS}, PERMISSION_REQUEST_CONTACT);
 
+                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                    // app-defined int constant. The callback method gets the
+                    // result of the request.
                 }
             }
             else
@@ -1431,12 +1585,15 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
     public void onConnected(@Nullable Bundle bundle) {
 
     }
+
     @Override
     public void onConnectionSuspended(int i) {
 
     }
+
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
 }

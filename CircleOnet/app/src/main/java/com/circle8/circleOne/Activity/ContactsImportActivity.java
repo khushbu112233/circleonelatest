@@ -2,6 +2,7 @@ package com.circle8.circleOne.Activity;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -20,23 +22,34 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.POST2;
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class ContactsImportActivity extends AppCompatActivity
@@ -49,6 +62,7 @@ public class ContactsImportActivity extends AppCompatActivity
     private TextView textView;
     ImageView imgLogo;
     ArrayList<String> arrayList;
+
     public static JSONArray selectedStrings = new JSONArray();
     private LoginSession session;
     private String user_id, profile_id ;
@@ -67,6 +81,7 @@ public class ContactsImportActivity extends AppCompatActivity
         txtSend = (TextView) findViewById(R.id.txtSend);
         txtCancel = (TextView) findViewById(R.id.txtCancel);
         arrayList = new ArrayList<>();
+
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_actionbar);
@@ -79,6 +94,10 @@ public class ContactsImportActivity extends AppCompatActivity
         drawer.setVisibility(View.GONE);
         imgLogo.setVisibility(View.GONE);
         askForContactPermission();
+        /*boolean result = Utility.checkContactPermission(ContactsImportActivity.this);
+        if (result) {*/
+       // }
+
         View.OnClickListener clickListener = new View.OnClickListener() {
 
             @Override
@@ -145,7 +164,10 @@ public class ContactsImportActivity extends AppCompatActivity
                         num = num.replaceAll(" ", "");
                     }
                     selectedStrings.put(num);
+                  //  Toast.makeText(getApplicationContext(), num, Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getApplicationContext(), listView.getAdapter().getItem((int)listView.getCheckItemIds()[i]).toString(), Toast.LENGTH_LONG).show();
                 }
+               // Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
 
                 new HttpAsyncTaskImportContacts().execute(Utility.BASE_URL+"ImportContacts");
                 Utility.freeMemory();
@@ -153,8 +175,7 @@ public class ContactsImportActivity extends AppCompatActivity
         });
     }
 
-
-    private int getCheckedItemCount()
+      private int getCheckedItemCount()
     {
         Utility.freeMemory();
         int cnt = 0;
@@ -195,6 +216,10 @@ public class ContactsImportActivity extends AppCompatActivity
                         }
                     });
                     builder.show();
+                    // Show an expanation to the user *asynchronously* -- don't block
+                    // this thread waiting for the user's response! After the user
+                    // sees the explanation, try again to request the permission.
+
                 }
                 else
                 {
@@ -202,6 +227,9 @@ public class ContactsImportActivity extends AppCompatActivity
                     ActivityCompat.requestPermissions(ContactsImportActivity.this,
                             new String[]{Manifest.permission.READ_CONTACTS}, PERMISSION_REQUEST_CONTACT);
 
+                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                    // app-defined int constant. The callback method gets the
+                    // result of the request.
                 }
             }
             else
@@ -233,13 +261,19 @@ public class ContactsImportActivity extends AppCompatActivity
                     ReadPhoneContacts(ContactsImportActivity.this);
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, arrayListPhoneName);
                     listView.setAdapter(adapter);
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
                 }
                 else
                 {
                     Toast.makeText(getApplicationContext(), "No permission for contacts", Toast.LENGTH_LONG).show();
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
                 }
                 return;
             }
+            // other 'case' lines to check for other
+            // permissions this app might request
         }
     }
 
@@ -258,6 +292,11 @@ public class ContactsImportActivity extends AppCompatActivity
 
         if (contactsCount > 0)
         {
+           /* progressDialog = new ProgressDialog(ContactsImportActivity.this);
+            progressDialog.setMessage("Loading Contacts..");
+            progressDialog.setCancelable(false);
+            progressDialog.setIndeterminate(true);
+            progressDialog.show();*/
 
             while(cursor.moveToNext())
             {
@@ -265,12 +304,17 @@ public class ContactsImportActivity extends AppCompatActivity
                 String contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
                 if (Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0)
                 {
+                    //the below cursor will give you details for multiple contacts
                     Cursor pCursor = cntx.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
                             ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?", new String[]{id}, null);
+                    // continue till this cursor reaches to all phone numbers which are associated with a contact in the contact list
                     while (pCursor.moveToNext())
                     {
                         int phoneType = pCursor.getInt(pCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
+                        //String isStarred 		= pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.STARRED));
                         String phoneNo = pCursor.getString(pCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        //you will get all phone numbers according to it's type as below switch case.
+                        //Logs.e will print the phone number along with the name in DDMS. you can use these details where ever you want.
                         switch (phoneType)
                         {
                             case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
@@ -282,7 +326,7 @@ public class ContactsImportActivity extends AppCompatActivity
                                 if (number.startsWith("+65") || number.startsWith("065") || number.startsWith("65") || number.length() == 8 )
                                 {
                                     if (number.contains("\\+") || number.contains("-") || number.contains(" ")) {
-                                        number = number.replaceAll("\\+", "");
+                                       number = number.replaceAll("\\+", "");
                                     }
                                     if (number.contains("-"))
                                     {
@@ -300,7 +344,18 @@ public class ContactsImportActivity extends AppCompatActivity
                                     arrayListPhoneNumber.add(number);
                                 }
                                 break;
-
+                           /* case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
+                                Log.e(contactName + ": TYPE_HOME", " " + phoneNo);
+                                break;
+                            case ContactsContract.CommonDataKinds.Phone.TYPE_WORK:
+                                Log.e(contactName + ": TYPE_WORK", " " + phoneNo);
+                                break;
+                            case ContactsContract.CommonDataKinds.Phone.TYPE_WORK_MOBILE:
+                                Log.e(contactName + ": TYPE_WORK_MOBILE", " " + phoneNo);
+                                break;
+                            case ContactsContract.CommonDataKinds.Phone.TYPE_OTHER:
+                                Log.e(contactName + ": TYPE_OTHER", " " + phoneNo);
+                                break;*/
                             default:
                                 break;
                         }
@@ -309,9 +364,11 @@ public class ContactsImportActivity extends AppCompatActivity
                 }
             }
             cursor.close();
+//            progressDialog.dismiss();
             dismissProgress();        }
         else
         {
+
         }
     }
 
@@ -323,6 +380,11 @@ public class ContactsImportActivity extends AppCompatActivity
         protected void onPreExecute()
         {
             super.onPreExecute();
+          /*  dialog = new ProgressDialog(ContactsImportActivity.this);
+            dialog.setMessage("Sending Request...");
+            dialog.show();
+            dialog.setCancelable(false);*/
+
             String loading = "Sending request" ;
             CustomProgressDialog(loading, ContactsImportActivity.this);
         }
@@ -339,6 +401,7 @@ public class ContactsImportActivity extends AppCompatActivity
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
             return POST2(urls[0],jsonObject);
         }
         // onPostExecute displays the results of the AsyncTask.
@@ -375,6 +438,7 @@ public class ContactsImportActivity extends AppCompatActivity
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -116,6 +116,7 @@
                 android:textStyle="bold" />
 
             <ImageView
+                android:id="@+id/img_lucky_draw"
                 android:layout_width="90dp"
                 android:layout_height="50dp"
                 android:layout_alignParentLeft="true"

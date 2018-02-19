@@ -23,8 +23,53 @@ public class ProfileModel {
     String Industry = "";
     String Profile = "";
     String ProfileName = "";
+    String ProfileDesc = "";
+    String PersonalProfile_LinkName="";
+    String PersonalProfile_URL="";
+    String CompanyProfile_LinkName="";
+    String CompanyProfile_URL="";
 
     public ProfileModel() {
+    }
+
+    public String getPersonalProfile_LinkName() {
+        return PersonalProfile_LinkName;
+    }
+
+    public void setPersonalProfile_LinkName(String personalProfile_LinkName) {
+        PersonalProfile_LinkName = personalProfile_LinkName;
+    }
+
+    public String getPersonalProfile_URL() {
+        return PersonalProfile_URL;
+    }
+
+    public void setPersonalProfile_URL(String personalProfile_URL) {
+        PersonalProfile_URL = personalProfile_URL;
+    }
+
+    public String getCompanyProfile_LinkName() {
+        return CompanyProfile_LinkName;
+    }
+
+    public void setCompanyProfile_LinkName(String companyProfile_LinkName) {
+        CompanyProfile_LinkName = companyProfile_LinkName;
+    }
+
+    public String getCompanyProfile_URL() {
+        return CompanyProfile_URL;
+    }
+
+    public void setCompanyProfile_URL(String companyProfile_URL) {
+        CompanyProfile_URL = companyProfile_URL;
+    }
+
+    public String getProfileDesc() {
+        return ProfileDesc;
+    }
+
+    public void setProfileDesc(String profileDesc) {
+        ProfileDesc = profileDesc;
     }
 
     public String getProfile() {

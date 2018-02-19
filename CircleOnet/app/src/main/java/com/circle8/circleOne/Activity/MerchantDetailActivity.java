@@ -197,10 +197,10 @@ public class MerchantDetailActivity extends Fragment implements OnMapReadyCallba
                     {
                         Double Latitude = bundle.getDouble("latitude");
                         Double Longitude = bundle.getDouble("longitude");
-                        boolean result = Utility.checkLocationPermission(getActivity());
-                        if(result) {
+                      //  boolean  = Utility.checkLocationPermission(getActivity());
+                        //if(result) {
                             createMarker(Latitude, Longitude);
-                        }
+                       // }
                     }
                     else
                     {
@@ -227,7 +227,7 @@ public class MerchantDetailActivity extends Fragment implements OnMapReadyCallba
                 .strokeColor(Color.RED)
                 .fillColor(Color.BLUE));*/
 
-        CameraUpdate zoom = CameraUpdateFactory.zoomTo(20);
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(14);
         boolean result = Utility.checkLocationPermission(getActivity());
         if(result) {
             googleMaps.setMyLocationEnabled(true);
@@ -279,7 +279,7 @@ public class MerchantDetailActivity extends Fragment implements OnMapReadyCallba
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
 
         googleMaps.addMarker(new MarkerOptions().position(location).title(storeAddress));
-        googleMaps.moveCamera(CameraUpdateFactory.newLatLng(location));
+        googleMaps.moveCamera(CameraUpdateFactory.newLatLngZoom(location,12));
 
 //        googleMaps.animateCamera(zoom);
     }
@@ -515,10 +515,10 @@ public class MerchantDetailActivity extends Fragment implements OnMapReadyCallba
                                 {
                                     lat = Double.valueOf(Latitude);
                                     lang = Double.valueOf(Longitude);
-                                    boolean result1 = Utility.checkLocationPermission(getActivity());
-                                    if(result1) {
+                                 //   boolean result1 = Utility.checkLocationPermission(getActivity());
+                                  //  if(result1) {
                                         createMarker(lat, lang);
-                                    }
+                                   // }
                                 }
 
 //                                GeocodingLocation locationAddress = new GeocodingLocation();

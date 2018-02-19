@@ -57,7 +57,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
@@ -342,11 +341,6 @@ public class EventsFragment extends Fragment
         }
     }
 
-    @Override
-    public void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
 
     public static void CustomProgressDialog(final String loading)
     {
@@ -484,26 +478,7 @@ public class EventsFragment extends Fragment
         @Override
         protected String doInBackground(String... urls)
         {
-            JSONObject jsonObject = new JSONObject();
-            try {
-                if (EventsSelectOption.searchOpt.equals("AllEvents"))
-                {
-
-                    jsonObject.accumulate("my_userid", "" );
-
-                    jsonObject.accumulate("numofrecords", "10");
-                    jsonObject.accumulate("pageno", "1" );
-                }
-                if (EventsSelectOption.searchOpt.equals("ClearSearch"))
-                {
-                    jsonObject.accumulate("my_userid", "" );
-                    jsonObject.accumulate("numofrecords", "10");
-                    jsonObject.accumulate("pageno", "1" );
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return POST2(urls[0],jsonObject);
+            return POST(urls[0]);
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
@@ -605,7 +580,76 @@ public class EventsFragment extends Fragment
 
         }
     }
- public static class HttpAsyncTaskSearchEvent extends AsyncTask<String, Void, String>
+
+    public static String POST(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            if (EventsSelectOption.searchOpt.equals("AllEvents"))
+            {
+                jsonObject.accumulate("my_userid", "" );
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1" );
+            }
+            if (EventsSelectOption.searchOpt.equals("ClearSearch"))
+            {
+                jsonObject.accumulate("my_userid", "" );
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1" );
+            }
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+
+
+    public static class HttpAsyncTaskSearchEvent extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
 
@@ -624,46 +668,7 @@ public class EventsFragment extends Fragment
         @Override
         protected String doInBackground(String... urls)
         {
-            JSONObject jsonObject = new JSONObject();
-            try {
-                if (EventsSelectOption.searchOpt.equals("Industry"))
-                {
-                    searchText.setText(EventsSelectOption.searchKeyWord);
-                    jsonObject.accumulate("SearchBy", EventsSelectOption.searchBy );
-                    jsonObject.accumulate("SearchValue", EventsSelectOption.searchKeyWord );
-                    jsonObject.accumulate("numofrecords", "10");
-                    jsonObject.accumulate("pageno", "1" );
-                }
-                else if (EventsSelectOption.searchOpt.equals("CompanyAssociation"))
-                {
-                    searchText.setText(EventsSelectOption.searchKeyWord);
-
-                    jsonObject.accumulate("SearchBy", EventsSelectOption.searchBy );
-                    jsonObject.accumulate("SearchValue", EventsSelectOption.searchKeyWord );
-                    jsonObject.accumulate("numofrecords", "10");
-                    jsonObject.accumulate("pageno", "1" );
-                }
-                else if (EventsSelectOption.searchOpt.equals("Date"))
-                {
-                    searchText.setText(EventsSelectOption.searchKeyWord+" - "+EventsSelectOption.searchKeyWord1);
-
-                    jsonObject.accumulate("SearchBy", EventsSelectOption.searchBy );
-                    jsonObject.accumulate("SearchValue", EventsSelectOption.searchKeyWord );
-                    jsonObject.accumulate("SearchValue1", EventsSelectOption.searchKeyWord1 );
-                    jsonObject.accumulate("numofrecords", "10");
-                    jsonObject.accumulate("pageno", "1" );
-                }
-                else
-                {
-                    jsonObject.accumulate("SearchBy", eventSearchBy );
-                    jsonObject.accumulate("SearchValue", eventSearchKey );
-                    jsonObject.accumulate("numofrecords", "10");
-                    jsonObject.accumulate("pageno", "1" );
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return POST2(urls[0],jsonObject);
+            return PostSearchEvent(urls[0]);
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
@@ -751,4 +756,93 @@ public class EventsFragment extends Fragment
         }
     }
 
+    public static String PostSearchEvent(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+
+            if (EventsSelectOption.searchOpt.equals("Industry"))
+            {
+                searchText.setText(EventsSelectOption.searchKeyWord);
+
+                jsonObject.accumulate("SearchBy", EventsSelectOption.searchBy );
+                jsonObject.accumulate("SearchValue", EventsSelectOption.searchKeyWord );
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1" );
+            }
+            else if (EventsSelectOption.searchOpt.equals("CompanyAssociation"))
+            {
+                searchText.setText(EventsSelectOption.searchKeyWord);
+
+                jsonObject.accumulate("SearchBy", EventsSelectOption.searchBy );
+                jsonObject.accumulate("SearchValue", EventsSelectOption.searchKeyWord );
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1" );
+            }
+            else if (EventsSelectOption.searchOpt.equals("Date"))
+            {
+                searchText.setText(EventsSelectOption.searchKeyWord+" - "+EventsSelectOption.searchKeyWord1);
+
+                jsonObject.accumulate("SearchBy", EventsSelectOption.searchBy );
+                jsonObject.accumulate("SearchValue", EventsSelectOption.searchKeyWord );
+                jsonObject.accumulate("SearchValue1", EventsSelectOption.searchKeyWord1 );
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1" );
+            }
+            else
+            {
+                jsonObject.accumulate("SearchBy", eventSearchBy );
+                jsonObject.accumulate("SearchValue", eventSearchKey );
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1" );
+            }
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
 }

@@ -30,6 +30,7 @@ import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -101,6 +102,7 @@ import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.POST2;
+import static com.circle8.circleOne.Utils.Utility.callSubPAge;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class CardDetailActivity extends AppCompatActivity implements DialogsManager.ManagingDialogsCallbacks, View.OnClickListener, OnMapReadyCallback {
@@ -119,7 +121,7 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
     String strfbUrl = "", strlinkedInUrl = "", strtwitterUrl = "", strgoogleUrl = "", stryoutubeUrl = "";
     String FirstName = "", LastName = "", UserPhoto = "", Phone1 = "", Phone2 = "", Mobile1 = "", Mobile2 = "", Fax1 = "",
             Fax2 = "", Email1 = "", Email2 = "", IndustryName = "", CompanyName = "", CompanyProfile = "", Designation = "",
-            ProfileDesc = "";
+            ProfileDesc = "",PersonalProfile_LinkName,PersonalProfile_URL,CompanyProfile_LinkName,CompanyProfile_URL;
     ArrayList<GroupModel> groupModelArrayList = new ArrayList<>();
     ArrayList<String> groupName = new ArrayList<>();
     ArrayList<String> groupPhoto = new ArrayList<>();
@@ -178,7 +180,6 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(View textView) {
-
             }
 
             @Override
@@ -522,6 +523,11 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
                                         Intent it = new Intent(Intent.ACTION_SENDTO, uri);
                                         it.putExtra("sms_body", "");
                                         startActivity(it);
+                       /* Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                        smsIntent.setType("vnd.android-dir/mms-sms");
+                        smsIntent.putExtra("address", txtMob.getText().toString());
+                        smsIntent.putExtra("sms_body", "");
+                        startActivity(smsIntent);*/
                                     }
                                 }
                             }
@@ -771,10 +777,18 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
                 new QBEntityCallback<QBChatDialog>() {
                     @Override
                     public void onSuccess(QBChatDialog dialog, Bundle args) {
+                        //isProcessingResultInProgress = false;
+                        // dialogsManager.sendSystemMessageAboutCreatingDialog(systemMessagesManager, dialog);
+                        //  ChatActivity.startForResult(cardsActivity, 165, dialog);
+                        // finish();
+                        //   ProgressDialogFragment.hide(getSupportFragmentManager());
                     }
 
                     @Override
                     public void onError(QBResponseException e) {
+                        //isProcessingResultInProgress = false;
+                        //ProgressDialogFragment.hide(getSupportFragmentManager());
+                        //showErrorSnackbar(R.string.dialogs_creation_error, null, null);
                     }
                 }
         );
@@ -838,13 +852,6 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-        Utility.deleteCache(cardsActivity);
-
-    }
 
 
     public void openWebPage(View v)
@@ -1039,9 +1046,12 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
             }
         }
         else {
+           // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
+
         }
 
     }
+
 
 
     @Override
@@ -1157,6 +1167,18 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
         }
     }
 
+    private int getCheckedItemCount(){
+        int cnt = 0;
+        SparseBooleanArray positions = binding.listView.getCheckedItemPositions();
+        int itemCount = binding.listView.getCount();
+
+        for(int i=0;i<itemCount;i++){
+            if(positions.get(i))
+                cnt++;
+        }
+        return cnt;
+    }
+
 
     private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String>
     {
@@ -1170,6 +1192,9 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
             dialog.setMessage("Fetching circles...");
             //dialog.show();
             dialog.setCancelable(false);
+
+            /*String loading = "Fetching Circles" ;
+            CustomProgressDialog(loading);*/
         }
 
         @Override
@@ -1301,6 +1326,13 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+           /* dialog = new ProgressDialog(cardsActivity);
+            dialog.setMessage("Fetching Cards...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
 
             String loading = "Fetching profile" ;
             CustomProgressDialog(loading,cardsActivity);
@@ -1358,7 +1390,41 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
                     frontCardImg = jsonObject.getString("Card_Front");
                     backCardImg = jsonObject.getString("Card_Back");
                     Q_ID = jsonObject.getString("Q_ID");
+                    PersonalProfile_LinkName= jsonObject.getString("PersonalProfile_LinkName");
+                    PersonalProfile_URL= jsonObject.getString("PersonalProfile_URL");
+                    CompanyProfile_LinkName= jsonObject.getString("CompanyProfile_LinkName");
+                    CompanyProfile_URL= jsonObject.getString("CompanyProfile_URL");
 
+                    if(PersonalProfile_LinkName.equalsIgnoreCase(""))
+                    {
+                        activityCardDetailBinding.includeLayoutDetails.txtPersonalProfileLinkname.setVisibility(View.GONE);
+                    }else
+                    {
+                        activityCardDetailBinding.includeLayoutDetails.txtPersonalProfileLinkname.setText(PersonalProfile_LinkName);
+                    }
+                    if(PersonalProfile_URL.equalsIgnoreCase(""))
+                    {
+                        activityCardDetailBinding.includeLayoutDetails.txtPersonalProfileLinkUrl.setVisibility(View.GONE);
+                    }else
+                    {
+                        activityCardDetailBinding.includeLayoutDetails.txtPersonalProfileLinkUrl.setText(PersonalProfile_URL);
+                    }
+
+                    if(CompanyProfile_LinkName.equalsIgnoreCase(""))
+                    {
+                        activityCardDetailBinding.includeLayoutDetails.txtCompanyProfileLinkname.setVisibility(View.GONE);
+                    }else
+                    {
+                        activityCardDetailBinding.includeLayoutDetails.txtCompanyProfileLinkname.setText(CompanyProfile_LinkName);
+                    }
+
+                    if(CompanyProfile_URL.equalsIgnoreCase(""))
+                    {
+                        activityCardDetailBinding.includeLayoutDetails.txtCompanyProfileLinkUrl.setVisibility(View.GONE);
+                    }else
+                    {
+                        activityCardDetailBinding.includeLayoutDetails.txtCompanyProfileLinkUrl.setText(CompanyProfile_URL);
+                    }
                     if(CompanyProfile.equalsIgnoreCase("")||CompanyProfile==null)
                     {
                         activityCardDetailBinding.includeLayoutDetails.llCompany.setVisibility(View.GONE);
@@ -1403,6 +1469,14 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
 
                             @Override
                             public void onError(QBResponseException e) {
+                      /*  showErrorSnackbar(R.string.select_users_get_users_error, e,
+                                new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        loadUsersFromQb();
+                                    }
+                                });
+                        progressBar.setVisibility(View.GONE);*/
                             }
                         });
 
@@ -1550,7 +1624,10 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
                         //                   Phone1.trim();
 //                        Phone1 = Phone1.trim();
                         Phone1 = Phone1.replaceAll("\\s+", "").trim();
-
+                        /*int number = Integer.parseInt(Phone1);
+//                        Phone1 = Phone1.replaceAll("\\s++$", "");
+                        String number1 = String.valueOf(number);
+                        txtPH.setText(String.valueOf(number));*/
                         activityCardDetailBinding.includeLayoutDetails.txtPH.setText(Phone1);
                     }
 
@@ -1618,13 +1695,11 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
                     activityCardDetailBinding.viewPager.setClipChildren(false);
                     activityCardDetailBinding.viewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                     activityCardDetailBinding.viewPager.setOffscreenPageLimit(1);
-                    //  mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
                     activityCardDetailBinding.viewPager.setAdapter(myPager);
 
                     activityCardDetailBinding.viewPager1.setClipChildren(false);
                     activityCardDetailBinding.viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                     activityCardDetailBinding.viewPager1.setOffscreenPageLimit(1);
-                    //   viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
                     activityCardDetailBinding.viewPager1.setAdapter(myPager);
 
                     String fullAddress =
@@ -1665,7 +1740,25 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
                         GeocodingLocation locationAddress1 = new GeocodingLocation();
                         locationAddress1.getAddressFromLocation(personAddress, getApplicationContext(), new GeocoderHandler());
 
+//                       createMarker1(personAddress,(add1+add2));
+
                     }
+
+                        /*FriendConnection nfcModelTag = new FriendConnection();
+                        nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));
+                        nfcModelTag.setCompany(object.getString("CompanyName"));
+                        nfcModelTag.setEmail(object.getString("UserName"));
+                        nfcModelTag.setWebsite("");
+                        nfcModelTag.setMob_no(object.getString("Phone"));
+                        nfcModelTag.setDesignation(object.getString("Designation"));
+                        nfcModelTag.setCard_front(object.getString("Card_Front"));
+                        nfcModelTag.setCard_back(object.getString("Card_Back"));
+                        nfcModelTag.setUser_image(object.getString("UserPhoto"));
+                        nfcModelTag.setProfile_id(object.getString("ProfileId"));
+
+                        nfcModelTag.setNfc_tag("en000000001");
+                        allTags.add(nfcModelTag);*/
+//                        GetData(getContext());
 
                 } else {
                     Toast.makeText(cardsActivity, "Not able to load Cards..", Toast.LENGTH_LONG).show();
@@ -1699,12 +1792,16 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
                         Double Longitude = bundle.getDouble("longitude");
 
                         createMarker(Latitude,Longitude);
+                       // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
                     }
                     else {
+//                        Toast.makeText(cardsActivity,msg,Toast.LENGTH_LONG).show();
                         if (locationAddress.contains(",")) {
                             createMarker1(locationAddress.split(",")[1]);
+                         //   activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
                         }else
                         {
+                           // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
                         }
                     }
                     break;
@@ -1712,12 +1809,14 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
                     locationAddress = null;
                     latLang = null ;
             }
+//            tvLatLang.setText(latLang+" of "+locationAddress);
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        callSubPAge("ViewedCardDetail","Card");
 
     }
 
@@ -1740,7 +1839,11 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
+          /*  dialog = new ProgressDialog(cardsActivity);
+            dialog.setMessage("Fetching My Account...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
         }
 
         @Override
@@ -1815,6 +1918,9 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
                         {
                             activityCardDetailBinding.includeLayoutDetails.tvAddedGroupInfo.setVisibility(View.GONE);
                         }
+                            /*GroupsInCardDetailAdapter groupsInCardDetailAdapter = new GroupsInCardDetailAdapter(cardsActivity, img,name,desc);
+                            groupListView.setAdapter(groupsInCardDetailAdapter);
+                            groupsInCardDetailAdapter.notifyDataSetChanged();*/
 
                         GroupsRecyclerAdapter groupsRecyclerAdapter = new GroupsRecyclerAdapter(cardsActivity, img, name, desc);
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(cardsActivity);
@@ -1828,9 +1934,11 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
                 {
                     Toast.makeText(cardsActivity, "Not able to fetch circles", Toast.LENGTH_LONG).show();
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -8,19 +8,17 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.circle8.circleOne.Activity.DashboardActivity;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.CustomViewPager;
-import com.circle8.circleOne.Utils.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.circle8.circleOne.Utils.Utility.callSubPAge;
 
 public class ConnectFragment extends AppCompatActivity
 {
@@ -66,9 +64,9 @@ public class ConnectFragment extends AppCompatActivity
     }
 
     @Override
-    public void onPause() {
-        Utility.freeMemory();
-        super.onPause();
+    protected void onResume() {
+        super.onResume();
+        callSubPAge("Connect","LeftMenu");
     }
 
     private void setupViewPager(ViewPager viewPager) {

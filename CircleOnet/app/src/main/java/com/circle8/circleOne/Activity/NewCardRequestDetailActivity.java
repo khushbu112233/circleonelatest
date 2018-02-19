@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
@@ -459,17 +458,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         });
     }
 
-    @Override
-    protected void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-    }
 
 
     private void selectFile() {
@@ -729,7 +718,6 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                 jsonObject.accumulate("FileName", attachDoc);
                 jsonObject.accumulate("ImgBase64", Attach_String);
                 jsonObject.accumulate("classification", "others");
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -737,7 +725,6 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
@@ -1044,14 +1031,13 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             try {
                 jsonObject.accumulate("ImgBase64", final_ImgBase64 );
                 jsonObject.accumulate("classification", "card" );
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
@@ -1108,14 +1094,13 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             try {
                 jsonObject.accumulate("ImgBase64", final_ImgBase64 );
                 jsonObject.accumulate("classification", "card" );
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
             return POST2(urls[0],jsonObject);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
@@ -1159,36 +1144,13 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
     public static void CustomProgressDialog(final String loading)
     {
         rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
+        tvProgressing.setText(loading+"...");
 
         Animation anim = AnimationUtils.loadAnimation(activity,R.anim.anticlockwise);
         ivConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(activity,R.anim.clockwise);
         ivConnecting2.startAnimation(anim1);
 
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        tvProgressing.setText(loading+".");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        tvProgressing.setText(loading+"..");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        tvProgressing.setText(loading+"...");
-                    }
 
-                }
-            }, i);
-        }
     }
 }

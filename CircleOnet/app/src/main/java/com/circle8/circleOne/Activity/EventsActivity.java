@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -32,14 +33,22 @@ import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.RecyclerTouchListener;
 import com.circle8.circleOne.Utils.Utility;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import static com.circle8.circleOne.Utils.Utility.POST2;
+import static com.circle8.circleOne.Utils.Utility.callSubPAge;
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class EventsActivity extends AppCompatActivity
 {
@@ -50,11 +59,15 @@ public class EventsActivity extends AppCompatActivity
     private TextView actionText;
     RelativeLayout lnrSearch;
     View line;
+
     static AutoCompleteTextView searchText ;
     ImageView imgSearch ;
+
     LoginSession session;
     String user_id ;
+
     static TextView tvEventInfo ;
+
     public static ArrayList<EventModel> eventModelArrayList = new ArrayList<>();
     public static String eventSearchBy = "", eventSearchKey = "";
     public static Bitmap bitmapImg ;
@@ -96,6 +109,7 @@ public class EventsActivity extends AppCompatActivity
         imgDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                searchText.setText("");
                 Intent intent = new Intent(getApplicationContext(), EventsSelectOption.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);
@@ -162,12 +176,26 @@ public class EventsActivity extends AppCompatActivity
                     if (s.length() <= 0)
                     {
                         EventsSelectOption.searchOpt = "ClearSearch";
-
+                      /*  eventModelArrayList.clear();
+                        try
+                        {
+                            gridAdapter.notifyDataSetChanged();
+                        }
+                        catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }*/
                         tvEventInfo.setVisibility(View.GONE);
 
                         callFirst();
                     }
 
+                   /* if (s.length() == 0)
+                    {
+                        EventsSelectOption.searchOpt = "ClearSearch";
+                        tvEventInfo.setVisibility(View.GONE);
+
+                    }*/
                 }
                 catch (Exception e)
                 {
@@ -186,6 +214,15 @@ public class EventsActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
+               /* eventModelArrayList.clear();
+                try
+                {
+                    gridAdapter.notifyDataSetChanged();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }*/
                 if (searchText.getText().toString().length() == 0)
                 {
                     EventsSelectOption.searchOpt = "ClearSearch";
@@ -208,6 +245,10 @@ public class EventsActivity extends AppCompatActivity
                     new HttpAsyncTaskSearchEvent().execute(Utility.BASE_URL+"Events/Search");
                 }
 
+               /* eventSearchBy = "Name";
+                eventSearchKey = searchText.getText().toString();
+                new HttpAsyncTaskSearchEvent().execute(Utility.BASE_URL+"Events/Search");*/
+//                searchEvent();
             }
         });
 
@@ -246,10 +287,75 @@ public class EventsActivity extends AppCompatActivity
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        callSubPAge("Events","LeftMenu");
+    }
+
     public static void callFirst()
     {
         new HttpAsyncTask().execute(Utility.BASE_URL+"Events/List");
     }
+
+    public static String POST(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            HttpClient httpclient = new DefaultHttpClient();
+
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            JSONObject jsonObject = new JSONObject();
+            if (EventsSelectOption.searchOpt.equals("AllEvents"))
+            {
+                jsonObject.accumulate("my_userid", "" );
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1" );
+            }
+            if (EventsSelectOption.searchOpt.equals("ClearSearch"))
+            {
+                jsonObject.accumulate("my_userid", "" );
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1" );
+            }
+
+            json = jsonObject.toString();
+
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+
 
     public static class HttpAsyncTaskSearchEvent extends AsyncTask<String, Void, String>
     {
@@ -259,6 +365,10 @@ public class EventsActivity extends AppCompatActivity
         protected void onPreExecute()
         {
             super.onPreExecute();
+           /* dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Finding Events...");
+            dialog.show();*/
+
             String loading = "Searching events" ;
             CustomProgressDialog(loading);
         }
@@ -266,44 +376,7 @@ public class EventsActivity extends AppCompatActivity
         @Override
         protected String doInBackground(String... urls)
         {
-            JSONObject jsonObject = new JSONObject();
-            try {
-                if (EventsSelectOption.searchOpt.equals("Industry"))
-                {
-                    searchText.setText(EventsSelectOption.searchKeyWord);
-                    jsonObject.accumulate("SearchBy", EventsSelectOption.searchBy );
-                    jsonObject.accumulate("SearchValue", EventsSelectOption.searchKeyWord );
-                    jsonObject.accumulate("numofrecords", "10");
-                    jsonObject.accumulate("pageno", "1" );
-                }
-                else if (EventsSelectOption.searchOpt.equals("CompanyAssociation"))
-                {
-                    searchText.setText(EventsSelectOption.searchKeyWord);
-                    jsonObject.accumulate("SearchBy", EventsSelectOption.searchBy );
-                    jsonObject.accumulate("SearchValue", EventsSelectOption.searchKeyWord );
-                    jsonObject.accumulate("numofrecords", "10");
-                    jsonObject.accumulate("pageno", "1" );
-                }
-                else if (EventsSelectOption.searchOpt.equals("Date"))
-                {
-                    searchText.setText(EventsSelectOption.searchKeyWord+" - "+EventsSelectOption.searchKeyWord1);
-                    jsonObject.accumulate("SearchBy", EventsSelectOption.searchBy );
-                    jsonObject.accumulate("SearchValue", EventsSelectOption.searchKeyWord );
-                    jsonObject.accumulate("SearchValue1", EventsSelectOption.searchKeyWord1 );
-                    jsonObject.accumulate("numofrecords", "10");
-                    jsonObject.accumulate("pageno", "1" );
-                }
-                else
-                {
-                    jsonObject.accumulate("SearchBy", eventSearchBy );
-                    jsonObject.accumulate("SearchValue", eventSearchKey );
-                    jsonObject.accumulate("numofrecords", "10");
-                    jsonObject.accumulate("pageno", "1" );
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return POST2(urls[0],jsonObject);
+            return PostSearchEvent(urls[0]);
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
@@ -311,6 +384,9 @@ public class EventsActivity extends AppCompatActivity
         {
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
+//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+
+            // CardsActivity.setActionBarTitle("Events");
 
             eventModelArrayList.clear();
             try
@@ -388,16 +464,133 @@ public class EventsActivity extends AppCompatActivity
         }
     }
 
+    public static String PostSearchEvent(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+
+            if (EventsSelectOption.searchOpt.equals("Industry"))
+            {
+                searchText.setText(EventsSelectOption.searchKeyWord);
+
+                jsonObject.accumulate("SearchBy", EventsSelectOption.searchBy );
+                jsonObject.accumulate("SearchValue", EventsSelectOption.searchKeyWord );
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1" );
+            }
+            else if (EventsSelectOption.searchOpt.equals("CompanyAssociation"))
+            {
+                searchText.setText(EventsSelectOption.searchKeyWord);
+
+                jsonObject.accumulate("SearchBy", EventsSelectOption.searchBy );
+                jsonObject.accumulate("SearchValue", EventsSelectOption.searchKeyWord );
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1" );
+            }
+            else if (EventsSelectOption.searchOpt.equals("Date"))
+            {
+                searchText.setText(EventsSelectOption.searchKeyWord+" - "+EventsSelectOption.searchKeyWord1);
+
+                jsonObject.accumulate("SearchBy", EventsSelectOption.searchBy );
+                jsonObject.accumulate("SearchValue", EventsSelectOption.searchKeyWord );
+                jsonObject.accumulate("SearchValue1", EventsSelectOption.searchKeyWord1 );
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1" );
+            }
+            else
+            {
+                jsonObject.accumulate("SearchBy", eventSearchBy );
+                jsonObject.accumulate("SearchValue", eventSearchKey );
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1" );
+            }
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
     public static void CustomProgressDialog(final String loading)
     {
         rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading+"...");
+        tvProgressing.setText(loading);
 
         Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.anticlockwise);
         ivConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(mContext,R.anim.clockwise);
         ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
     }
+
+
     private static class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -406,6 +599,10 @@ public class EventsActivity extends AppCompatActivity
         protected void onPreExecute()
         {
             super.onPreExecute();
+           /* dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Finding Events...");
+            dialog.show();*/
+
             String loading = "Finding events" ;
             CustomProgressDialog(loading);
         }
@@ -415,13 +612,12 @@ public class EventsActivity extends AppCompatActivity
         {
             JSONObject jsonObject = new JSONObject();
             try {
-
                 if (EventsSelectOption.searchOpt.equals("AllEvents"))
                 {
+
                     jsonObject.accumulate("my_userid", "" );
                     jsonObject.accumulate("numofrecords", "10");
                     jsonObject.accumulate("pageno", "1" );
-
                 }
                 if (EventsSelectOption.searchOpt.equals("ClearSearch"))
                 {
@@ -435,12 +631,15 @@ public class EventsActivity extends AppCompatActivity
 
             return POST2(urls[0],jsonObject);
         }
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
+//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+
+            // CardsActivity.setActionBarTitle("Events");
+
             try
             {
                 if(result == "")
@@ -508,4 +707,6 @@ public class EventsActivity extends AppCompatActivity
             }
         }
     }
+
+
 }

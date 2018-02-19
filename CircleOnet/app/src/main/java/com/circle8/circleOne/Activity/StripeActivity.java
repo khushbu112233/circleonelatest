@@ -18,8 +18,8 @@ import com.stripe.exception.AuthenticationException;
 public class StripeActivity extends AppCompatActivity
 {
     Stripe stripe;
-    /* Integer amount;
-     String name;*/
+   /* Integer amount;
+    String name;*/
     Card card;
     Token tok;
     String level = "";
@@ -36,7 +36,6 @@ public class StripeActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stripe_1);
-
         Intent intent = getIntent();
         level = intent.getStringExtra("level");
         profile = intent.getStringExtra("profile");
@@ -73,6 +72,7 @@ public class StripeActivity extends AppCompatActivity
         }
     }
 
+
     public void submitCard(View view) {
         // TODO: replace with your own test key
         TextView cardNumberField = (TextView) findViewById(R.id.cardNumber);
@@ -90,14 +90,19 @@ public class StripeActivity extends AppCompatActivity
         card.setCurrency("usd");
         card.setName("Theodhor Pandeli");
         card.setAddressZip("1000");
-
+        /*
+        card.setNumber(4242424242424242);
+        card.setExpMonth(12);
+        card.setExpYear(19);
+        card.setCVC("123");
+        */
 
         stripe.createToken(card, "pk_test_6fZCC6Gu2kwYLUQxJhGte65l", new TokenCallback() {
             public void onSuccess(Token token) {
                 // TODO: Send Token information to your backend to initiate a charge
                 Toast.makeText(getApplicationContext(), "Token created: " + token.getId(), Toast.LENGTH_LONG).show();
                 tok = token;
-                //  new StripeCharge(token.getId()).execute();
+              //  new StripeCharge(token.getId()).execute();
 
                 Intent go = new Intent(getApplicationContext(), Connect5Activity.class);
                 go.putExtra("level", level);
@@ -127,6 +132,7 @@ public class StripeActivity extends AppCompatActivity
                 startActivity(go);
                 finish();
             }
+
             public void onError(Exception error) {
                 Log.d("Stripe", error.getLocalizedMessage());
             }

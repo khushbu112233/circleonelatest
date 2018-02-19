@@ -1,10 +1,8 @@
 package com.circle8.circleOne.Adapter;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
@@ -14,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -28,7 +25,6 @@ import com.circle8.circleOne.Activity.CardDetail;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Fragments.List1Fragment;
 import com.circle8.circleOne.Fragments.List2Fragment;
-import com.circle8.circleOne.Fragments.List3Fragment;
 import com.circle8.circleOne.Fragments.List4Fragment;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
@@ -41,6 +37,7 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
+import com.dd.ShadowLayout;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -207,24 +204,6 @@ public class GridViewAdapter extends BaseSwipeAdapter
                 });
                 alert.show();
 
-                /*if (CardsActivity.mViewPager.getCurrentItem() == 0){
-                    Intent go = new Intent(context,CardsActivity.class);
-
-                    // you pass the position you want the viewpager to show in the extra,
-                    // please don't forget to define and initialize the position variable
-                    // properly
-                    go.putExtra("viewpager_position", 0);
-                    go.putExtra("nested_viewpager_position", CardsFragment.mViewPager.getCurrentItem());
-
-                    context.startActivity(go);
-                    ((Activity)context).finish();
-                    //Toast.makeText(getApplicationContext(), String.valueOf(CardsFragment.mViewPager.getCurrentItem()), Toast.LENGTH_LONG).show();
-                }
-                else {
-                    Intent go = new Intent(context,CardsActivity.class);
-                    context.startActivity(go);
-                    ((Activity)context).finish();
-                }*/
 
             }
         });
@@ -245,15 +224,19 @@ public class GridViewAdapter extends BaseSwipeAdapter
         holder = new ViewHolder();
         holder.imageTitle = (TextView) row.findViewById(R.id.text);
         holder.image = (ImageView) row.findViewById(R.id.image);
-        holder.defaultCard = (RelativeLayout) row.findViewById(R.id.rltDefaultCard);
+        holder.defaultCard = (ShadowLayout) row.findViewById(R.id.rltDefaultCard);
         holder.tvPersonName = (TextView) row.findViewById(R.id.tvPersonName);
         holder.tvPersonProfile = (TextView) row.findViewById(R.id.tvPersonProfile);
         holder.tvPersonWebsite = (TextView) row.findViewById(R.id.tvPersonWebsite);
         holder.tvPersonAddress = (TextView) row.findViewById(R.id.tvPersonAddress);
         holder.tvPersonContact = (TextView) row.findViewById(R.id.tvPersonMobile);
         holder.tvPersonNameLast = (TextView) row.findViewById(R.id.tvPersonNameLast);
-        holder.fm_img = (FrameLayout) row.findViewById(R.id.fm_img);
+        holder.fm_img = (ShadowLayout) row.findViewById(R.id.fm_img);
         holder.progressBar1 = (ProgressBar)row.findViewById(R.id.progressBar1);
+        holder.rltDefaultCard = (ShadowLayout) row.findViewById(R.id.rltDefaultCard);
+        holder.rldfl = (RelativeLayout)row.findViewById(R.id.rldfl);
+        holder.imgDefault = (ImageView)row.findViewById(R.id.imgDefault);
+        holder.v1 =(View)row.findViewById(R.id.v1);
 
         row.setTag(holder);
 
@@ -310,6 +293,40 @@ public class GridViewAdapter extends BaseSwipeAdapter
             String remainder = name.substring(name.indexOf(" ") + 1, name.length());
             holder.tvPersonName.setText(kept);
             holder.tvPersonNameLast.setText(remainder);
+            if(nfcModelList1.get(position).getEmail().equalsIgnoreCase("")||nfcModelList1.get(position).getEmail()!=null||nfcModelList1.get(position).getEmail()!="null") {
+                if (nfcModelList1.get(position).getEmail().contains("circle8")) {
+                    holder.rldfl.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+                    holder.tvPersonWebsite.setTextColor(context.getResources().getColor(R.color.white));
+                    holder.tvPersonProfile.setTextColor(context.getResources().getColor(R.color.white));
+                    holder.tvPersonAddress.setTextColor(context.getResources().getColor(R.color.white));
+                    holder.tvPersonContact.setTextColor(context.getResources().getColor(R.color.white));
+                    holder.tvPersonName.setTextColor(context.getResources().getColor(R.color.white));
+                    holder.tvPersonNameLast.setTextColor(context.getResources().getColor(R.color.white));
+                    holder.imgDefault.setColorFilter(context.getResources().getColor(R.color.white));
+                    holder.v1.setBackgroundColor(context.getResources().getColor(R.color.white));
+                } else {
+                    holder.rldfl.setBackgroundColor(context.getResources().getColor(R.color.other_circle));
+                    holder.tvPersonWebsite.setTextColor(context.getResources().getColor(R.color.other_circle_font));
+                    holder.tvPersonProfile.setTextColor(context.getResources().getColor(R.color.other_circle_font));
+                    holder.tvPersonAddress.setTextColor(context.getResources().getColor(R.color.other_circle_font));
+                    holder.tvPersonContact.setTextColor(context.getResources().getColor(R.color.other_circle_font));
+                    holder.imgDefault.setColorFilter(context.getResources().getColor(R.color.other_circle_font));
+                    holder.tvPersonName.setTextColor(context.getResources().getColor(R.color.other_circle_font));
+                    holder.tvPersonNameLast.setTextColor(context.getResources().getColor(R.color.other_circle_font));
+                    holder.v1.setBackgroundColor(context.getResources().getColor(R.color.other_circle_font));
+                }
+            }else
+            {
+                holder.rldfl.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+                holder.tvPersonWebsite.setTextColor(context.getResources().getColor(R.color.white));
+                holder.tvPersonProfile.setTextColor(context.getResources().getColor(R.color.white));
+                holder.tvPersonAddress.setTextColor(context.getResources().getColor(R.color.white));
+                holder.tvPersonContact.setTextColor(context.getResources().getColor(R.color.white));
+                holder.imgDefault.setColorFilter(context.getResources().getColor(R.color.white));
+                holder.tvPersonName.setTextColor(context.getResources().getColor(R.color.white));
+                holder.tvPersonNameLast.setTextColor(context.getResources().getColor(R.color.white));
+                holder.v1.setBackgroundColor(context.getResources().getColor(R.color.white));
+            }
             holder.tvPersonProfile.setText(nfcModelList1.get(position).getDesignation());
             holder.tvPersonWebsite.setText("E : " + nfcModelList1.get(position).getEmail());
             holder.tvPersonAddress.setText("A : " + nfcModelList1.get(position).getAddress());
@@ -324,7 +341,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
             holder.progressBar1.setVisibility(View.VISIBLE);
             holder.defaultCard.setVisibility(View.GONE);
             //imageView.setImageResource(nfcModelList.get(position).getCard_front());
-         //   ImageLoader.getInstance().displayImage(Utility.BASE_IMAGE_URL+"Cards/" + nfcModelList1.get(position).getCard_front(), holder.image, options, animateFirstListener);
+            //   ImageLoader.getInstance().displayImage(Utility.BASE_IMAGE_URL+"Cards/" + nfcModelList1.get(position).getCard_front(), holder.image, options, animateFirstListener);
             final ViewHolder finalHolder = holder;
             Glide.with(context).load(Utility.BASE_IMAGE_URL+"Cards/" + nfcModelList1.get(position).getCard_front())
                     .asBitmap()
@@ -336,7 +353,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
                             finalHolder.image.setImageBitmap(drawable);
                         }
                     });
-          //  Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Cards/" + nfcModelList1.get(position).getCard_front()).resize(400,280).onlyScaleDown().skipMemoryCache().into(holder.image);
+            //  Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Cards/" + nfcModelList1.get(position).getCard_front()).resize(400,280).onlyScaleDown().skipMemoryCache().into(holder.image);
         }
 
         // holder.imageTitle.setText(name);
@@ -357,7 +374,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
                 ((FragmentActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
                         .addToBackStack(null)
                         .commit();
-               // finish();
+                // finish();
             }
         });
 
@@ -373,7 +390,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
                 ((FragmentActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
                         .addToBackStack(null)
                         .commit();
-               // finish();
+                // finish();
             }
         });
     }
@@ -394,10 +411,14 @@ public class GridViewAdapter extends BaseSwipeAdapter
     }
 
     static class ViewHolder {
+        View v1;
+        ImageView imgDefault;
+        ShadowLayout rltDefaultCard;
+        RelativeLayout rldfl;
         TextView imageTitle;
-        FrameLayout fm_img;
+        ShadowLayout fm_img;
         ImageView image;
-        RelativeLayout defaultCard;
+        ShadowLayout defaultCard;
         ProgressBar progressBar1;
         TextView tvPersonName, tvPersonProfile, tvPersonWebsite, tvPersonAddress, tvPersonContact, tvPersonNameLast;
 
@@ -471,13 +492,13 @@ public class GridViewAdapter extends BaseSwipeAdapter
                     {
                         List1Fragment.progressStatus = "DELETE";
                         List2Fragment.progressStatus = "DELETE";
-                      //  List3Fragment.progressStatus = "DELETE";
+                        //  List3Fragment.progressStatus = "DELETE";
                         List4Fragment.progressStatus = "DELETE";
 
-                        Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Connection removed successfully", Toast.LENGTH_LONG).show();
                         List1Fragment.webCall();
                         List2Fragment.webCall();
-                    //    List3Fragment.webCall();
+                        //    List3Fragment.webCall();
                         List4Fragment.webCall();
                     }
                     else

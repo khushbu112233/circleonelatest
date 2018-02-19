@@ -17,6 +17,7 @@ import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -26,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.circle8.circleOne.R;
+import com.flurry.android.FlurryAgent;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
@@ -42,12 +44,24 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 public class Utility
 {
@@ -69,9 +83,9 @@ public class Utility
     /**
      * Uat for 8082
      */
-//    public static final String BASE_IMAGE_URL = "http://circle8.asia:8083/";
+    //  public static final String BASE_IMAGE_URL = "http://circle8.asia:8082/";
     //khushbu last commented
-    public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
+    //// public static final String BASE_URL = "http://circle8.asia:8082/Onet.svc/";
 
     /**
      * Development for 8081
@@ -84,7 +98,7 @@ public class Utility
      *Production  for 8999
      */
     public static final String BASE_IMAGE_URL = "http://circle8.asia/App_imgLib/";
-    // public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
+    public static final String BASE_URL = "http://circle8.asia:8081/Onet.svc/";
 
     // public static final String BASE_URL = "http://circle8.asia:8082/Onet.svc/";
 
@@ -197,8 +211,17 @@ public class Utility
         }
     }
 
+    public static void callMainPage(String str)
+    {
+        FlurryAgent.logEvent(str);
+    }
+    public static void callSubPAge(String subtitle,String mainTitle)
+    {
+        Map<String, String> articleParams = new HashMap<String, String>();
+        articleParams.put(subtitle, "True");
+        FlurryAgent.logEvent(mainTitle, articleParams,true);
 
-
+    }
     public static void CustomProgressDialog(final String loading,Context context)
     {
 
@@ -416,32 +439,18 @@ public class Utility
 
             // 2. make POST request to the given URL
             HttpPost httpPost = new HttpPost(url);
-            String json = "";
+            String json;
 
             json = jsonObject.toString();
 
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
             StringEntity se = new StringEntity(json);
 
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
 
-            // 7. Set some headers to inform server about the type of the content
+            httpPost.setEntity(se);
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
             HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
             if(inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
@@ -450,8 +459,6 @@ public class Utility
         } catch (Exception e) {
             Log.d("InputStream", e.getLocalizedMessage());
         }
-
-        // 11. return result
         return result;
     }
     public static Bitmap mergeBitmaps(Bitmap overlay, Bitmap bitmap) {
@@ -466,6 +473,32 @@ public class Utility
         int centreY = (canvasHeight - overlay.getHeight()) /2 ;
         canvas.drawBitmap(overlay, centreX, centreY, null);
         return combined;
+    }
+    public static String encrypt(String value, String key)
+            throws UnsupportedEncodingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException
+    {
+        byte[] value_bytes = value.getBytes("UTF-8");
+        byte[] key_bytes = getKeyBytes(key);
+        return Base64.encodeToString(encrypt(value_bytes, key_bytes, key_bytes), 0);
+    }
+    private static byte[] getKeyBytes(String paramString)
+            throws UnsupportedEncodingException
+    {
+        byte[] arrayOfByte1 = new byte[16];
+        byte[] arrayOfByte2 = paramString.getBytes("UTF-8");
+        System.arraycopy(arrayOfByte2, 0, arrayOfByte1, 0, Math.min(arrayOfByte2.length, arrayOfByte1.length));
+        return arrayOfByte1;
+    }
+
+    public static byte[] encrypt(byte[] paramArrayOfByte1, byte[] paramArrayOfByte2, byte[] paramArrayOfByte3)
+            throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException
+    {
+        // setup AES cipher in CBC mode with PKCS #5 padding
+        Cipher localCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+
+        // encrypt
+        localCipher.init(1, new SecretKeySpec(paramArrayOfByte2, "AES"), new IvParameterSpec(paramArrayOfByte3));
+        return localCipher.doFinal(paramArrayOfByte1);
     }
 
     /**

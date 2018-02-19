@@ -13,21 +13,28 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.ActivityContactUsBinding;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.POST2;
+import static com.circle8.circleOne.Utils.Utility.callSubPAge;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class ContactUsActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener
 {
+
+
     private String subject, description, email, contactNo, contactType ;
     private LoginSession session;
     ActivityContactUsBinding activityContactUsBinding;
@@ -37,6 +44,9 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
     {
         super.onCreate(savedInstanceState);
         activityContactUsBinding = DataBindingUtil.setContentView(this,R.layout.activity_contact_us);
+
+        Utility.freeMemory();
+
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         email = user.get(LoginSession.KEY_EMAIL);
@@ -62,6 +72,8 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         }
 
         activityContactUsBinding.spContactType.setOnItemSelectedListener(this);
+
+
         activityContactUsBinding.imgBack.setOnClickListener(this);
         activityContactUsBinding.lnrAddress.setOnClickListener(this);
         activityContactUsBinding.ivMessage.setOnClickListener(this);
@@ -89,6 +101,9 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         activityContactUsBinding.spContactType.setAdapter(dataAdapter);
 
     }
+
+
+
 
     @Override
     public void onClick(View v)
@@ -173,10 +188,16 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         if ( v == activityContactUsBinding.googleUrl)
         {
             Utility.freeMemory();
+            /*Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
+            intent.putExtra("url", Utility.BASE_IMAGE_URL+"Other_doc/"+txtAttachment.getText().toString());
+            startActivity(intent);*/
         }
         if ( v == activityContactUsBinding.youtubeUrl)
         {
             Utility.freeMemory();
+           /* Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
+            intent.putExtra("url", Utility.BASE_IMAGE_URL+"Other_doc/"+txtAttachment.getText().toString());
+            startActivity(intent);*/
         }
 
         if ( v == activityContactUsBinding.lnrAddress)
@@ -310,6 +331,11 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
             }
             else
             {
+               /* Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"+"general@circle.asia"));
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+                emailIntent.putExtra(Intent.EXTRA_TEXT, description);
+                startActivity(Intent.createChooser(emailIntent, "Choose mail options..."));*/
+
                 new HttpAsyncTaskSendMessage().execute("http://circle8.asia:8082/Onet.svc/ContactUs");
             }
         }
@@ -330,6 +356,13 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        callSubPAge("ContactUs","LeftMenu");
+
+    }
+
     private class HttpAsyncTaskSendMessage extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -337,6 +370,10 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            /*dialog = new ProgressDialog(ContactUsActivity.this);
+            dialog.setMessage("Sending...");
+            dialog.show();
+            dialog.setCancelable(false);*/
 
             String loading = "Sending" ;
             CustomProgressDialog(loading, ContactUsActivity.this);
@@ -351,14 +388,13 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
                 jsonObject.accumulate("Email", email);
                 jsonObject.accumulate("Mobile", contactNo);
                 jsonObject.accumulate("Subject", subject);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             return POST2(urls[0],jsonObject);
         }
-
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
@@ -394,4 +430,5 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
             }
         }
     }
+
 }

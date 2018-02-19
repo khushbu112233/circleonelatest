@@ -24,12 +24,14 @@ import java.util.HashMap;
 
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.POST2;
+import static com.circle8.circleOne.Utils.Utility.callSubPAge;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class HistoryActivity extends AppCompatActivity
 {
     LoginSession session;
     String user_id ;
+
     ArrayList<HistoryModel> historyModelArrayList = new ArrayList<>();
     HistoryAdapter historyAdapter ;
     ActivityHistoryBinding activityHistoryBinding;
@@ -54,6 +56,13 @@ public class HistoryActivity extends AppCompatActivity
         });
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        callSubPAge("History","LeftMenu");
+    }
+
     @Override
     public void onBackPressed() {
         finish();
@@ -67,6 +76,10 @@ public class HistoryActivity extends AppCompatActivity
         protected void onPreExecute()
         {
             super.onPreExecute();
+           /* dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Finding Events...");
+            dialog.show();*/
+
             String loading = "History" ;
             CustomProgressDialog(loading, HistoryActivity.this);
         }
@@ -86,11 +99,13 @@ public class HistoryActivity extends AppCompatActivity
 
             return POST2(urls[0],jsonObject);
         }
-
         @Override
         protected void onPostExecute(String result)
         {
+            Utility.freeMemory();
+//            dialog.dismiss();
             dismissProgress();
+
             try
             {
                 if(result == "")

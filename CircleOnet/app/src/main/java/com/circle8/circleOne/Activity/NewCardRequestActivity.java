@@ -29,6 +29,7 @@ import java.util.HashMap;
 
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.POST2;
+import static com.circle8.circleOne.Utils.Utility.callSubPAge;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class NewCardRequestActivity extends AppCompatActivity
@@ -95,7 +96,7 @@ public class NewCardRequestActivity extends AppCompatActivity
                         ivAlphaImg.setVisibility(View.GONE);
                         rlLayTwo.setVisibility(View.GONE);
                         listView.setEnabled(true);
-
+                        
                         int count = position + 1;
                         Intent i = new Intent(getApplicationContext(), NewCardRequestDetailActivity.class);
                         i.putExtra("person", allTags.get(position).getFirstName() + " " + allTags.get(position).getLastName());
@@ -142,6 +143,13 @@ public class NewCardRequestActivity extends AppCompatActivity
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        callSubPAge("RequestNewCard","LeftMenu");
+
+    }
+
     private class HttpAsyncTaskProfiles extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -149,6 +157,13 @@ public class NewCardRequestActivity extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            /*dialog = new ProgressDialog(NewCardRequestActivity.this);
+            dialog.setMessage("Fetching Profiles...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
             String loading = "Fetching profiles" ;
             CustomProgressDialog(loading, NewCardRequestActivity.this);
         }
@@ -161,14 +176,12 @@ public class NewCardRequestActivity extends AppCompatActivity
                 jsonObject.accumulate("numofrecords", "100" );
                 jsonObject.accumulate("pageno", "1" );
                 jsonObject.accumulate("userid", UserID);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             return POST2(urls[0],jsonObject);
         }
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {

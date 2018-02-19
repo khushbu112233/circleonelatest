@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Helper.LoginSession;
@@ -28,10 +29,21 @@ import static com.circle8.circleOne.Utils.Utility.POST2;
 
 public class Connect3Activity extends AppCompatActivity
 {
+    TextView txtConnecting;
+    int x = 0;
     String profileImg, profileName;
     LoginSession loginSession ;
+    String UserId = "", friendUserID = "";
     ArrayList<Level7thConnectionModel> allTags;
-    String backStatus = "None",connectLevel = "",level = "",UserId = "", friendUserID = "",userName1 = "", userName2 = "", userName3 = "", userName4 = "", userName5 = "", userName6 = "", userName7 = "",userPhoto1 = "", userPhoto2 = "", userPhoto3 = "", userPhoto4 = "", userPhoto5 = "", userPhoto6 = "", userPhoto7 = "" ,userProfileId1 = "", userProfileId2 = "", userProfileId3 = "", userProfileId4 = "", userProfileId5 = "",userProfileId6 = "", userProfileId7 = "";
+
+    String connectLevel = "";
+    String userName1 = "", userName2 = "", userName3 = "", userName4 = "", userName5 = "", userName6 = "", userName7 = "";
+    String userPhoto1 = "", userPhoto2 = "", userPhoto3 = "", userPhoto4 = "", userPhoto5 = "", userPhoto6 = "", userPhoto7 = "" ;
+    String userProfileId1 = "", userProfileId2 = "", userProfileId3 = "", userProfileId4 = "", userProfileId5 = "",
+            userProfileId6 = "", userProfileId7 = "";
+
+    String backStatus = "None";
+    String level = "";
     ActivityConnect3Binding activityConnect3Binding;
     static Activity activity;
 
@@ -41,14 +53,18 @@ public class Connect3Activity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         activityConnect3Binding  = DataBindingUtil.setContentView(this,R.layout.activity_connect3);
 
+        txtConnecting = (TextView) findViewById(R.id.txtConnecting);
         loginSession = new LoginSession(getApplicationContext());
+        Utility.freeMemory();
         HashMap<String, String> user = loginSession.getUserDetails();
+
         UserId = user.get(LoginSession.KEY_USERID);      // name
         activity = this;
         Intent intent = getIntent();
         profileImg = intent.getStringExtra("profile");
         friendUserID = intent.getStringExtra("friendUserID");
         profileName = intent.getStringExtra("profileName");
+
         allTags = new ArrayList<>();
 
         Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
@@ -62,7 +78,25 @@ public class Connect3Activity extends AppCompatActivity
             public void onClick(View v)
             {
                 Utility.freeMemory();
+               /* Intent go = new Intent(getApplicationContext(),ConnectActivity.class);
+                startActivity(go);
+                finish();*/
+              /*  Intent go = new Intent(getApplicationContext(),ConnectActivity.class);
+                go.putExtra("level", level);
+                go.putExtra("profile", profile);
+                // you pass the position you want the viewpager to show in the extra,
+                // please don't forget to define and initialize the position variable
+                // properly
+                startActivity(go);
+                finish();*/
+
                 backStatus = "Back";
+
+//                new HttpAsyncTask().cancel(true);
+               /* Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                go.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                go.putExtra("viewpager_position", 1);
+                startActivity(go);*/
                 finish();
             }
         });
@@ -75,11 +109,17 @@ public class Connect3Activity extends AppCompatActivity
 
     }
 
+    public static void kill(){
+        activity.finish();
+    }
+
+
     private void startAction()
     {
         Utility.freeMemory();
         if (backStatus.equalsIgnoreCase("Back"))
         {
+
         }
         else
         {
@@ -131,12 +171,78 @@ public class Connect3Activity extends AppCompatActivity
         }
     }
 
+
+
+ /*   public  String POST(String url)
+    {
+        Utility.freeMemory();
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("userId_dest", friendUserID );
+            jsonObject.accumulate("userId_src", UserId );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        }
+        catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }*/
+
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
+        //  ProgressDialog dialog;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
+           /* dialog = new ProgressDialog(Connect3Activity.this);
+            dialog.setMessage("Getting Notifications...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
         }
 
         @Override
@@ -146,9 +252,11 @@ public class Connect3Activity extends AppCompatActivity
             try {
                 jsonObject.accumulate("userId_dest", friendUserID );
                 jsonObject.accumulate("userId_src", UserId );
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
 
             return POST2(urls[0],jsonObject);
         }
@@ -342,7 +450,11 @@ public class Connect3Activity extends AppCompatActivity
                     else if (jsonArray.length() == 1)
                     {
                         connectLevel = "0" ;
-
+                        //for 1st user
+                       /* JSONObject object1 = jsonArray.getJSONObject(0);
+                        userName1 = object1.getString("FirstName")+" "+object1.getString("LastName");
+                        userPhoto1 = object1.getString("UserPhoto");
+                        userProfileId1 = object1.getString("ProfileId") ;*/
                     }
                     else if (jsonArray.length() == 0)
                     {
@@ -354,14 +466,68 @@ public class Connect3Activity extends AppCompatActivity
                     }
 
                     startAction();
+
+                   /* for (int i = 0; i < jsonArray.length(); i++)
+                    {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+
+                        Level7thConnectionModel nfcModelTag = new Level7thConnectionModel();
+                        nfcModelTag.setFirstName(object.getString("FirstName"));
+                        nfcModelTag.setLastName(object.getString("LastName"));
+                        nfcModelTag.setProfileId(object.getString("ProfileId"));
+                        nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
+                        nfcModelTag.setConnection_Status(object.getString("Connection_Status"));
+                        allTags.add(nfcModelTag);
+                    }*/
+
+//                    notificationAdapter = new NotificationAdapter(Notification.this, allTags);
+//                    listNotification.setAdapter(notificationAdapter);
+
+                   /* if (new HttpAsyncTask().isCancelled())
+                    {
+                        return;
+                    }
+                    else {
+
+                        Intent go = new Intent(getApplicationContext(), Connect4Activity.class);
+                        go.putExtra("level", level);
+                        go.putExtra("profile", profile);
+                        go.putExtra("connectLevel", connectLevel);
+                        go.putExtra("userName1", userName1);
+                        go.putExtra("userPhoto1", userPhoto1);
+                        go.putExtra("userProfileId1", userProfileId1);
+                        go.putExtra("userName2", userName2);
+                        go.putExtra("userPhoto2", userPhoto2);
+                        go.putExtra("userProfileId2", userProfileId2);
+                        go.putExtra("userName3", userName3);
+                        go.putExtra("userPhoto3", userPhoto3);
+                        go.putExtra("userProfileId3", userProfileId3);
+                        go.putExtra("userName4", userName4);
+                        go.putExtra("userPhoto4", userPhoto4);
+                        go.putExtra("userProfileId4", userProfileId4);
+                        go.putExtra("userName5", userName5);
+                        go.putExtra("userPhoto5", userPhoto5);
+                        go.putExtra("userProfileId5", userProfileId5);
+                        go.putExtra("userName6", userName6);
+                        go.putExtra("userPhoto6", userPhoto6);
+                        go.putExtra("userProfileId6", userProfileId6);
+                        go.putExtra("userName7", userName7);
+                        go.putExtra("userPhoto7", userPhoto7);
+                        go.putExtra("userProfileId7", userProfileId7);
+                        startActivity(go);
+                        finish();
+                    }*/
                 }
                 else
                 {
                     Toast.makeText(getApplicationContext(), "Not able to load friends..", Toast.LENGTH_LONG).show();
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
+
 }
