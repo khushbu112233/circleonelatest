@@ -351,6 +351,7 @@
             android:name=".chat.SelectUsersActivity"
             android:screenOrientation="portrait" />
 
+
         <receiver android:name=".widget.UILWidgetProvider">
             <meta-data
                 android:name="android.appwidget.provider"
@@ -360,7 +361,9 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
         </receiver>
-
+        <activity
+            android:name=".Activity.PrizeHistoryActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.DashboardActivity"
             android:theme="@style/NoActionbar">

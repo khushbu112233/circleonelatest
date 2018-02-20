@@ -3,6 +3,7 @@ package com.circle8.circleOne.Activity;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -21,7 +22,9 @@ import android.widget.Toast;
 
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.CardPrize;
+import com.circle8.circleOne.Model.PrizeHistory;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.LuckyDrawLayoutBinding;
 import com.wajahatkarim3.easyflipview.EasyFlipView;
@@ -42,6 +45,8 @@ public class LuckyDrawActivity extends AppCompatActivity {
     public static String  UserId= "";
     int[] solutionArray = { 1, 2, 3, 4, 5, 6, 7, 8 };
     ArrayList<CardPrize> allCards = new ArrayList<>();
+    public static ArrayList<PrizeHistory> prizeHistorys = new ArrayList<>();
+    public static ArrayList<PrizeHistory> prizeHistorysAll = new ArrayList<>();
     int id = 0;
     ArrayList<Integer> prizeIdList= new ArrayList<>();
     String[] pointArray = {"CircleOne Points","Apple ipad pro","NFC Name Card","CircleOne Points","CircleOne Points","Amazon Kindle","Earphone","CircleOne Points"};
@@ -56,6 +61,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
         HashMap<String, String> user = session.getUserDetails();
         UserId = user.get(LoginSession.KEY_USERID);
         new HttpAsyncTask().execute(Utility.BASE_URL+"RewardsGame/Refresh");
+
         new HttpAsyncTaskWininingPrize().execute(Utility.BASE_URL+"RewardsGame/WinningPrize");
         stringArrayList.add("test fsdf sdfs dsfsd sdff sdfsdf sdfs sdfsdfs sdfsfs sdfsdfdsf dsfdsfsdf sdfsdfs");
         stringArrayList.add("test1 fsdf sdfs dsfsd sdff sdfsdf sdfs sdfsdfs sdfsfs sdfsdfdsf dsfdsfsdf sdfsdfs");
@@ -65,7 +71,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
         stringArrayList.add("test5 fsdf sdfs dsfsd sdff sdfsdf sdfs sdfsdfs sdfsfs sdfsdfdsf dsfdsfsdf sdfsdfs");
         final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.shuffle);
 
-      //  manageBlinkEffect();
+        //  manageBlinkEffect();
 
         final Animation animation = new AlphaAnimation((float) 0.5, 0);
         animation.setDuration(500);
@@ -119,6 +125,24 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 }
             }
         }.start();
+        luckyDrawLayoutBinding.includePrize.rtlHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Pref.setValue(LuckyDrawActivity.this,"History","2");
+                Intent i = new Intent(LuckyDrawActivity.this,PrizeHistoryActivity.class);
+                startActivity(i);
+
+               }
+        });
+        luckyDrawLayoutBinding.includePrize.rtlprize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Pref.setValue(LuckyDrawActivity.this,"History","1");
+                Intent i = new Intent(LuckyDrawActivity.this,PrizeHistoryActivity.class);
+                startActivity(i);
+
+            }
+        });
         luckyDrawLayoutBinding.includePrize.rtlRefresh.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
@@ -458,6 +482,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
 
             try
             {
+                new HttpAsyncTaskRedeem().execute(Utility.BASE_URL+"RewardsGame/RedeemPointsToToken");
                 JSONObject response = new JSONObject(result);
                 Log.e("response",""+response);
                 String message = response.getString("message");
@@ -465,7 +490,8 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 String userid = response.getString("userid");
                 String No_Of_Tokens = response.getString("No_Of_Tokens");
                 String Rewards_Points_Remain = response.getString("Rewards_Points_Remain");
-                luckyDrawLayoutBinding.includePrize.txtTokenCount.setText(No_Of_Tokens);
+                luckyDrawLayoutBinding.includePrize.txtTokenCount.setText(Rewards_Points_Remain);
+                luckyDrawLayoutBinding.includePrize.txtRefreshCount.setText(No_Of_Tokens);
                 if(success.equalsIgnoreCase("1")) {
                     JSONArray jsonArray = response.getJSONArray("prizes_8");
                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -519,7 +545,71 @@ public class LuckyDrawActivity extends AppCompatActivity {
             Log.e("response",""+result);
             dialog.dismiss();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+            new HttpAsyncTaskprizeHistory().execute(Utility.BASE_URL+"RewardsGame/PrizeHistory_User");
 
+            try
+            {
+                JSONObject response = new JSONObject(result);
+                Log.e("response",""+response);
+                String message = response.getString("message");
+                String success = response.getString("success");
+                String userid = response.getString("userid");
+                String No_Of_Tokens = response.getString("No_Of_Tokens");
+                String Rewards_Points_Remain = response.getString("Rewards_Points_Remain");
+                if(success.equalsIgnoreCase("1")) {
+                    JSONArray jsonArray = response.getJSONArray("prizes_8");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject iCon = jsonArray.getJSONObject(i);
+                        CardPrize cardPrizeModel = new CardPrize();
+                        cardPrizeModel.setPrize_ID(iCon.getString("Prize_ID"));
+                        cardPrizeModel.setPrize_Name(iCon.getString("Prize_Name"));
+                        cardPrizeModel.setPrize_Image(iCon.getString("Prize_Image"));
+                        cardPrizeModel.setPrize_Available_Count(iCon.getString("Prize_Available_Count"));
+                        cardPrizeModel.setPrize_Won_Count(iCon.getString("Prize_Won_Count"));
+                        cardPrizeModel.setTotal_Prize_Count(iCon.getString("Total_Prize_Count"));
+                        allCards.add(cardPrizeModel);
+
+                    }
+                }
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+    private class HttpAsyncTaskRedeem extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            dialog = new ProgressDialog(LuckyDrawActivity.this);
+            dialog.setMessage("Fetching event...");
+            dialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("userid",   UserId);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return Utility.POST2(urls[0],jsonObject );
+        }
+        @Override
+        protected void onPostExecute(String result)
+        {
+            Log.e("response_redeem",""+result);
+            dialog.dismiss();
+//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+
+/*
             try
             {
                 JSONObject response = new JSONObject(result);
@@ -549,8 +639,123 @@ public class LuckyDrawActivity extends AppCompatActivity {
             catch (JSONException e)
             {
                 e.printStackTrace();
+            }*/
+        }
+    }
+    private class HttpAsyncTaskprizeHistory extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            dialog = new ProgressDialog(LuckyDrawActivity.this);
+            dialog.setMessage("Fetching event...");
+            dialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("userid",   UserId);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return Utility.POST2(urls[0],jsonObject);
+        }
+        @Override
+        protected void onPostExecute(String result)
+        {
+            Log.e("response_prize_history",""+result);
+            dialog.dismiss();
+//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+            new HttpAsyncTaskprizeHistoryAll().execute(Utility.BASE_URL+"RewardsGame/PrizeHistory_All");
+            try
+            {
+                JSONObject response = new JSONObject(result);
+                Log.e("response",""+response);
+
+                String message = response.getString("message");
+                String success = response.getString("success");
+                String userid = response.getString("userid");
+                if(success.equalsIgnoreCase("1")) {
+                    JSONArray jsonArray = response.getJSONArray("prize_details");
+                    prizeHistorys.clear();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject iCon = jsonArray.getJSONObject(i);
+                        PrizeHistory prizeHistoryModel = new PrizeHistory();
+                        prizeHistoryModel.setPrize_ID(iCon.getString("Prize_ID"));
+                        prizeHistoryModel.setPrize_Name(iCon.getString("Prize_Name"));
+                        prizeHistoryModel.setPrize_Image(iCon.getString("Prize_Image"));
+                        prizeHistoryModel.setResult(iCon.getString("Result"));
+                        prizeHistoryModel.setPlay_Date(iCon.getString("Play_Date"));
+                        prizeHistorys.add(prizeHistoryModel);
+
+                    }
+
+
+                }
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
             }
         }
     }
+    private class HttpAsyncTaskprizeHistoryAll extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
 
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            dialog = new ProgressDialog(LuckyDrawActivity.this);
+            dialog.setMessage("Fetching event...");
+            dialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            JSONObject jsonObject = new JSONObject();
+
+            return Utility.GET(urls[0]);
+        }
+        @Override
+        protected void onPostExecute(String result)
+        {
+            Log.e("response_prize_All",""+result);
+            dialog.dismiss();
+//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+
+            try
+            {
+                JSONObject response = new JSONObject(result);
+                Log.e("response",""+response);
+                    JSONArray jsonArray = response.getJSONArray("prize_details");
+                    prizeHistorysAll.clear();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject iCon = jsonArray.getJSONObject(i);
+                        PrizeHistory prizeHistoryModel = new PrizeHistory();
+                        prizeHistoryModel.setUserId(iCon.getString("userid"));
+                        prizeHistoryModel.setPrize_ID(iCon.getString("Prize_ID"));
+                        prizeHistoryModel.setPrize_Name(iCon.getString("Prize_Name"));
+                        prizeHistoryModel.setPrize_Image(iCon.getString("Prize_Image"));
+                        prizeHistoryModel.setResult(iCon.getString("Result"));
+                        prizeHistoryModel.setPlay_Date(iCon.getString("Play_Date"));
+                        prizeHistorysAll.add(prizeHistoryModel);
+
+                    }
+
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
 }

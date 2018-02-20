@@ -33,6 +33,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -460,6 +461,30 @@ public class Utility
         } catch (Exception e) {
             Log.d("InputStream", e.getLocalizedMessage());
         }
+        return result;
+    }
+    public static String GET(String url) {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpGet httpPost = new HttpGet(url);
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+            inputStream = httpResponse.getEntity().getContent();
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
         return result;
     }
     public static Bitmap mergeBitmaps(Bitmap overlay, Bitmap bitmap) {
