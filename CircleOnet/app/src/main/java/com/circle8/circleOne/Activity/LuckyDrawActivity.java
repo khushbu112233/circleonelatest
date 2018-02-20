@@ -1,8 +1,11 @@
 package com.circle8.circleOne.Activity;
 
+import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.ProgressDialog;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +14,11 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.widget.Toast;
+
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.CardPrize;
 import com.circle8.circleOne.R;
@@ -55,6 +63,16 @@ public class LuckyDrawActivity extends AppCompatActivity {
         stringArrayList.add("test3 fsdf sdfs dsfsd sdff sdfsdf sdfs sdfsdfs sdfsfs sdfsdfdsf dsfdsfsdf sdfsdfs");
         stringArrayList.add("test4 fsdf sdfs dsfsd sdff sdfsdf sdfs sdfsdfs sdfsfs sdfsdfdsf dsfdsfsdf sdfsdfs");
         stringArrayList.add("test5 fsdf sdfs dsfsd sdff sdfsdf sdfs sdfsdfs sdfsfs sdfsdfdsf dsfdsfsdf sdfsdfs");
+        final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.shuffle);
+
+      //  manageBlinkEffect();
+
+        final Animation animation = new AlphaAnimation((float) 0.5, 0);
+        animation.setDuration(500);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(Animation.INFINITE);
+        animation.setRepeatMode(Animation.REVERSE);
+        luckyDrawLayoutBinding.imglogo.startAnimation(animation);
 
         luckyDrawLayoutBinding.easyFlipView1.setFlipDuration(1500);
         luckyDrawLayoutBinding.easyFlipView2.setFlipDuration(1500);
@@ -113,6 +131,9 @@ public class LuckyDrawActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Collections.shuffle(allCards);
+                mp.start();
+
+                Toast.makeText(getApplicationContext(), String.valueOf(allCards.size()), Toast.LENGTH_LONG).show();
 
                 if(allCards.get(0).getPrize_Name().contains("CircleOne"))
                 {
@@ -214,28 +235,28 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 Log.e("prizeIdList",""+prizeIdList);
 
                 ObjectAnimator flip1 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView1, "rotationY", 180f, 360f);
-                flip1.setDuration(1000);
+                flip1.setDuration(1500);
                 flip1.start();
                 ObjectAnimator flip2 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView2, "rotationY", 180f, 360f);
-                flip2.setDuration(1000);
+                flip2.setDuration(1500);
                 flip2.start();
                 ObjectAnimator flip3 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView3, "rotationY", 180f, 360f);
-                flip3.setDuration(1000);
+                flip3.setDuration(1500);
                 flip3.start();
                 ObjectAnimator flip4 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView4, "rotationY", 180f, 360f);
-                flip4.setDuration(1000);
+                flip4.setDuration(1500);
                 flip4.start();
                 ObjectAnimator flip5 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView5, "rotationY", 180f, 360f);
-                flip5.setDuration(1000);
+                flip5.setDuration(1500);
                 flip5.start();
                 ObjectAnimator flip6 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView6, "rotationY", 180f, 360f);
-                flip6.setDuration(1000);
+                flip6.setDuration(1500);
                 flip6.start();
                 ObjectAnimator flip7 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView7, "rotationY", 180f, 360f);
-                flip7.setDuration(1000);
+                flip7.setDuration(1500);
                 flip7.start();
                 ObjectAnimator flip8 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView8, "rotationY", 180f, 360f);
-                flip8.setDuration(1000);
+                flip8.setDuration(1500);
                 flip8.start();
             }
         });
@@ -369,6 +390,17 @@ public class LuckyDrawActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void manageBlinkEffect() {
+        ObjectAnimator anim = ObjectAnimator.ofInt(luckyDrawLayoutBinding.imglogo, "backgroundColor", Color.WHITE, Color.RED,
+                Color.WHITE);
+        anim.setDuration(1500);
+        anim.setEvaluator(new ArgbEvaluator());
+        anim.setRepeatMode(Animation.REVERSE);
+        anim.setRepeatCount(Animation.INFINITE);
+        anim.start();
+    }
+
 /*
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     static void shuffleArray(ArrayList<CardPrize> ar)

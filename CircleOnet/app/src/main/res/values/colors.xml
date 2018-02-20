@@ -14,6 +14,7 @@
     <color name="QRCodeBlackColor">#000000</color>
     <color name="qrColor">#333333</color>
     <color name="gray_text">#6b6c6e</color>
+    <color name="shadow_color">#979595</color>
     <color name="other_circle">#FAF5F5</color>
     <color name="other_circle_font">#CC000000</color>
     <!-- dots inactive colors -->

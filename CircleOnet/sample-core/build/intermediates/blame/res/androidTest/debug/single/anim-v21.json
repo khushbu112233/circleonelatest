@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim-v21\\design_bottom_sheet_slide_in.xml",
+        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\4c75e924d1251ddc48e54b6cb7f99ebb\\res\\anim-v21\\design_bottom_sheet_slide_in.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim-v21\\design_bottom_sheet_slide_out.xml",
+        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\4c75e924d1251ddc48e54b6cb7f99ebb\\res\\anim-v21\\design_bottom_sheet_slide_out.xml"
+    },
+    {
+        "merged": "D:\\khushbu\\CircleOneLive\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim-v21\\design_bottom_sheet_slide_out.xml",
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\anim-v21\\design_bottom_sheet_slide_out.xml"
+    },
+    {
+        "merged": "D:\\khushbu\\CircleOneLive\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim-v21\\design_bottom_sheet_slide_in.xml",
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\anim-v21\\design_bottom_sheet_slide_in.xml"
+    }
+]

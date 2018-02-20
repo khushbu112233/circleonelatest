@@ -14,6 +14,7 @@
             android:background="@drawable/luckydraw"
             >
             <RelativeLayout
+                android:paddingBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -27,10 +28,11 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="7dp"
                     android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:layout_marginBottom="5dp"
                     android:id="@+id/txtprofile"
                     android:textSize="19dp"
                     android:layout_centerHorizontal="true"
@@ -40,14 +42,25 @@
                     android:text="Lucky Draw"
                     android:textColor="@color/white"/>
             </RelativeLayout>
+
+            <FrameLayout
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/imglogo"
-                android:layout_width="350dp"
-                android:layout_gravity="center"
-                android:layout_height="150dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/luckydraw_logo"/>
+                android:layout_width="370dp"
+                android:layout_height="160dp"
+                android:src="@drawable/back_logo"/>
 
+                <ImageView
+                    android:layout_width="350dp"
+                    android:layout_gravity="center"
+                    android:layout_height="150dp"
+                    android:src="@drawable/luckydraw_logo1"/>
+
+
+            </FrameLayout>
             <LinearLayout
                 android:id="@+id/rl1"
                 android:layout_width="match_parent"
@@ -72,7 +85,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:scaleType="fitXY"
-                            android:visibility="invisible"
+                            android:visibility="visible"
                             android:src="@drawable/ic_gold_bg"/>
                         <LinearLayout
                             android:layout_width="match_parent"

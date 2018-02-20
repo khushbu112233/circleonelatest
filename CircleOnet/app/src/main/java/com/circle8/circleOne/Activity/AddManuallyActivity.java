@@ -2,9 +2,7 @@ package com.circle8.circleOne.Activity;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,7 +22,6 @@ public class AddManuallyActivity extends AppCompatActivity implements View.OnCli
 
     String NAME = "", EMAIL = "", PHONE = "", WEBSITE = "", ADDRESS = "", COMPANY = "";
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -89,8 +86,7 @@ public class AddManuallyActivity extends AppCompatActivity implements View.OnCli
                 StringBuilder builder = new StringBuilder();
                 for (String string : scanTextArray1)
                 {
-                    builder.append(System.lineSeparator());
-                    builder.append(string);
+                    builder.append(string+"\n");
 
                 }
                 activityAddManuallyBinding.etAddress.setText(builder);
