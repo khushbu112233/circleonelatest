@@ -106,16 +106,16 @@ public class LuckyDrawActivity extends AppCompatActivity {
                     }
                     if(pos==0)
                     {
-                        luckyDrawLayoutBinding.imgLeft.setVisibility(View.GONE);
-                        luckyDrawLayoutBinding.imgRight.setVisibility(View.VISIBLE);
+                        luckyDrawLayoutBinding.imgLeft.setClickable(false);
+                        luckyDrawLayoutBinding.imgRight.setClickable(true);
                     }else if(pos==1)
                     {
-                        luckyDrawLayoutBinding.imgLeft.setVisibility(View.VISIBLE);
-                        luckyDrawLayoutBinding.imgRight.setVisibility(View.VISIBLE);
+                        luckyDrawLayoutBinding.imgLeft.setClickable(true);
+                        luckyDrawLayoutBinding.imgRight.setClickable(true);
                     }else if(pos==stringArrayList.size()-1)
                     {
-                        luckyDrawLayoutBinding.imgLeft.setVisibility(View.VISIBLE);
-                        luckyDrawLayoutBinding.imgRight.setVisibility(View.GONE);
+                        luckyDrawLayoutBinding.imgLeft.setClickable(true);
+                        luckyDrawLayoutBinding.imgRight.setClickable(false);
                     }
 
                     luckyDrawLayoutBinding.txtDesc.setText(stringArrayList.get(pos));
@@ -275,14 +275,14 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 pos--;
                 if(pos==0)
                 {
-                    luckyDrawLayoutBinding.imgLeft.setVisibility(View.INVISIBLE);
+                    luckyDrawLayoutBinding.imgLeft.setClickable(false);
                 }else if(pos==stringArrayList.size()-1)
                 {
-                    luckyDrawLayoutBinding.imgRight.setVisibility(View.VISIBLE);
+                    luckyDrawLayoutBinding.imgRight.setClickable(true);
                 }else
                 {
-                    luckyDrawLayoutBinding.imgLeft.setVisibility(View.VISIBLE);
-                    luckyDrawLayoutBinding.imgRight.setVisibility(View.VISIBLE);
+                    luckyDrawLayoutBinding.imgLeft.setClickable(true);
+                    luckyDrawLayoutBinding.imgRight.setClickable(true);
                 }
                 luckyDrawLayoutBinding.txtDesc.setText(stringArrayList.get(pos));
             }
@@ -295,14 +295,14 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 pos++;
                 if(pos==stringArrayList.size()-1)
                 {
-                    luckyDrawLayoutBinding.imgRight.setVisibility(View.INVISIBLE);
+                    luckyDrawLayoutBinding.imgRight.setClickable(false);
                 }else if(pos==1)
                 {
-                    luckyDrawLayoutBinding.imgLeft.setVisibility(View.VISIBLE);
+                    luckyDrawLayoutBinding.imgLeft.setClickable(true);
                 }else
                 {
-                    luckyDrawLayoutBinding.imgLeft.setVisibility(View.VISIBLE);
-                    luckyDrawLayoutBinding.imgRight.setVisibility(View.VISIBLE);
+                    luckyDrawLayoutBinding.imgLeft.setClickable(true);
+                    luckyDrawLayoutBinding.imgRight.setClickable(true);
                 }
                 luckyDrawLayoutBinding.txtDesc.setText(stringArrayList.get(pos));
             }
