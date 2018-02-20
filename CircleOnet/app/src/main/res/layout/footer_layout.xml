@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:elevation="15dp"
-        android:background="@color/shadow_color"
-        >
     <FrameLayout
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <View
+            android:elevation="10dp"
+            android:id="@+id/v1"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="15dp"
+            android:background="#979595"/>
+
+        <!--<ImageView
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:src="@drawable/dashboard_out"/>-->
+        </RelativeLayout>
 
         <LinearLayout
             android:weightSum="3"
@@ -42,21 +53,61 @@
                     android:layout_below="@+id/imgCard"
                     android:textSize="12sp" />
             </LinearLayout>
-            <LinearLayout
+            <RelativeLayout
                 android:layout_weight="1"
-                android:orientation="vertical"
+                android:id="@+id/rlDashboard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                >
+                android:layout_centerVertical="true"
+                android:layout_centerInParent="true">
                 <ImageView
-                    android:visibility="invisible"
-                    android:src="@drawable/dashboard"
+                    android:id="@+id/imgDashboard"
+                    android:src="@drawable/dashboard_corner"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="1dp"
+                    android:layout_height="58dp"
                     android:layout_centerHorizontal="true"/>
 
-            </LinearLayout>
+                <com.circle8.circleOne.Utils.CircularTextView
+                    android:layout_marginLeft="83dp"
+                    android:layout_marginTop="35dp"
+                    android:visibility="gone"
+                    android:id="@+id/txtNotificationCountAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:gravity="center"
+                    android:padding="1dp"
+                    android:textSize="8sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white" />
+
+                <!-- <com.circle8.circleOne.Utils.CircularTextView
+                     android:visibility="visible"
+                     android:layout_alignParentTop="true"
+                     android:layout_toRightOf="@+id/imgLogo"
+                     android:layout_marginLeft="-5dp"
+                     android:id="@+id/txtNotificationCountAction"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="0"
+                     android:padding="1dp"
+                     android:textSize="8sp"
+                     android:gravity="center"
+                     android:textStyle="bold"
+                     android:textColor="@color/white" />
+ -->
+
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:layout_marginTop="-5dp"
+                    android:id="@+id/tvDashboard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dashboard"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_below="@+id/imgDashboard"
+                    android:textSize="12sp" />
+            </RelativeLayout>
             <LinearLayout
                 android:layout_weight="1"
                 android:orientation="vertical"
@@ -81,70 +132,6 @@
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
-        <RelativeLayout
-            android:layout_weight="1"
-            android:id="@+id/rlDashboard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:gravity="center">
-            <FrameLayout
-                android:id="@+id/fm_dashboard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/imgDashboard"
-                    android:elevation="20dp"
-                    android:src="@drawable/dashboard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="1dp"
-                    android:layout_centerHorizontal="true"/>
-            </FrameLayout>
-            <com.circle8.circleOne.Utils.CircularTextView
-                android:layout_marginLeft="83dp"
-                android:layout_marginTop="35dp"
-                android:visibility="gone"
-                android:id="@+id/txtNotificationCountAction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1"
-                android:gravity="center"
-                android:padding="1dp"
-                android:textSize="8sp"
-                android:textStyle="bold"
-                android:textColor="@color/white" />
-
-            <!-- <com.circle8.circleOne.Utils.CircularTextView
-                 android:visibility="visible"
-                 android:layout_alignParentTop="true"
-                 android:layout_toRightOf="@+id/imgLogo"
-                 android:layout_marginLeft="-5dp"
-                 android:id="@+id/txtNotificationCountAction"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:text="0"
-                 android:padding="1dp"
-                 android:textSize="8sp"
-                 android:gravity="center"
-                 android:textStyle="bold"
-                 android:textColor="@color/white" />
--->
-
-            <com.circle8.circleOne.Utils.cgTextView
-                android:layout_marginTop="-9dp"
-                android:id="@+id/tvDashboard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dashboard"
-                android:layout_centerInParent="true"
-                android:textColor="@color/colorPrimary"
-                android:layout_below="@+id/fm_dashboard"
-                android:textSize="12sp" />
-        </RelativeLayout>
     </FrameLayout>
-    </LinearLayout>
 </layout>
