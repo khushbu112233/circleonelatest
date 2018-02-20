@@ -113,6 +113,10 @@ import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -133,6 +137,7 @@ import io.fabric.sdk.android.Fabric;
 
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.POST2;
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 import static com.circle8.circleOne.Utils.Validation.validateLogin;
 
@@ -2355,7 +2360,10 @@ public class LoginActivity extends AppCompatActivity implements
                         if (!Linkedin.equals("")) {
                             LISessionManager.getInstance(getApplicationContext()).clearSession();
                         }
-                        Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+
+                        new HttpAsyncRegistrationTask().execute(Utility.BASE_URL+"Registration");
+
+                        /*Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                         intent.putExtra("Facebook", Facebook);
                         intent.putExtra("Google", Google);
                         intent.putExtra("Linkedin", Linkedin);
@@ -2363,7 +2371,7 @@ public class LoginActivity extends AppCompatActivity implements
                         intent.putExtra("UserName", final_name);
                         intent.putExtra("Email", final_email);
                         intent.putExtra("Image", final_image);
-                        startActivity(intent);
+                        startActivity(intent);*/
                     }
                 } else {
                     Toast.makeText(getBaseContext(), "Not able to login..", Toast.LENGTH_LONG).show();
@@ -2371,7 +2379,10 @@ public class LoginActivity extends AppCompatActivity implements
 
 
             } catch (JSONException e) {
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+
+                new HttpAsyncRegistrationTask().execute(Utility.BASE_URL+"Registration");
+
+                /*Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                 intent.putExtra("Facebook", Facebook);
                 intent.putExtra("Google", Google);
                 intent.putExtra("Linkedin", Linkedin);
@@ -2379,11 +2390,210 @@ public class LoginActivity extends AppCompatActivity implements
                 intent.putExtra("UserName", final_name);
                 intent.putExtra("Email", final_email);
                 intent.putExtra("Image", final_image);
-                startActivity(intent);
+                startActivity(intent);*/
             }
             //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         }
     }
+
+
+    private class HttpAsyncRegistrationTask extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+        String first_name = "", last_name = "";
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            /*dialog = new ProgressDialog(RegisterActivity.this);
+            dialog.setMessage("Registering...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+
+            String loading = "Registering" ;
+
+            try {
+                String kept = final_name.substring(0, final_name.indexOf(" "));
+                String remainder = final_name.substring(final_name.indexOf(" ") + 1, final_name.length());
+                first_name = kept;
+                last_name = remainder;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            //CustomProgressDialog(loading);
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            String date_DOB = "";
+
+            date_DOB = "";
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("Facebook", Facebook);
+                jsonObject.accumulate("FirstName", first_name);
+                jsonObject.accumulate("Gender", "");
+                jsonObject.accumulate("Google", Google);
+                jsonObject.accumulate("LastName", last_name);
+                jsonObject.accumulate("Linkedin", Linkedin);
+                jsonObject.accumulate("Password", "");
+                jsonObject.accumulate("Phone", "");
+                jsonObject.accumulate("Photo_String", "");
+                jsonObject.accumulate("Platform", "Android");
+                jsonObject.accumulate("ReferralCode", "");
+                jsonObject.accumulate("Token", pushToken);
+                jsonObject.accumulate("Twitter", Twitter);
+                jsonObject.accumulate("UserName", final_email);
+                jsonObject.accumulate("dob", date_DOB);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return POST2(urls[0],jsonObject);
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+           // activityRegisterBinding.rlProgressDialog.setVisibility(View.GONE);
+
+            // Toast.makeText(getApplicationContext(), final_email, Toast.LENGTH_LONG).show();
+            userName = final_email;
+            try {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String success = jsonObject.getString("success").toString();
+                    String message = jsonObject.getString("message").toString();
+                    final String Status = jsonObject.getString("Status").toString();
+                    UserID = jsonObject.getString("userId").toString();
+                    if (success.equals("1") && message.equalsIgnoreCase("Successfully Registered.")) {
+                        // Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                        final QBUser user = new QBUser(final_email, "circle@123");
+                        user.setExternalId("");
+                        user.setEmail(final_email);
+                        user.setFullName(final_name);
+                        StringifyArrayList<String> tags = new StringifyArrayList<String>();
+                        tags.add("dev");
+                        user.setTags(tags);
+
+                        try {
+                            QBUsers.signUp(user).performAsync(new QBEntityCallback<QBUser>() {
+                                @Override
+                                public void onSuccess(final QBUser user, Bundle args) {
+
+                                    Q_ID = String.valueOf(user.getId());
+                                    new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
+                                    if (Status.equalsIgnoreCase("Verified")) {
+                                        new HttpAsyncTaskSocialMedia().execute(Utility.BASE_URL+"SocialMediaLogin");
+
+                                    } else {
+                                        new HttpAsyncTaskVerify().execute(Utility.BASE_URL+"AccVerification/" + UserID);
+                                    }
+                                }
+
+                                @Override
+                                public void onError(QBResponseException errors) {
+                                    Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                    //  Q_ID = String.valueOf(user.getId());
+                                    // new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
+                                    if (Status.equalsIgnoreCase("Verified")) {
+                                        new HttpAsyncTaskSocialMedia().execute(Utility.BASE_URL+"SocialMediaLogin");
+
+                                    } else {
+                                        new HttpAsyncTaskVerify().execute(Utility.BASE_URL+"AccVerification/" + UserID);
+                                    }
+                                }
+                            });
+                        }catch (Exception e) {
+
+                            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                            // Q_ID = String.valueOf(user.getId());
+                            //new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
+                            if (Status.equalsIgnoreCase("Verified")) {
+                                new HttpAsyncTaskSocialMedia().execute(Utility.BASE_URL+"SocialMediaLogin");
+                            } else {
+                                new HttpAsyncTaskVerify().execute(Utility.BASE_URL+"AccVerification/" + UserID);
+                            }
+                        }
+                    } else {
+                        Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getBaseContext(), "Not able to register..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private class HttpAsyncTaskVerify extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(LoginActivity.this);
+            dialog.setMessage("Verifying..please Check your mail..");
+            //dialog.setTitle("Saving Reminder");
+            // dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return POSTGET(urls[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            //  dialog.dismiss();
+            /*Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();*/
+            // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            new HttpAsyncTask().execute(Utility.BASE_URL + "UserLogin");
+
+        }
+    }
+
+    public String POSTGET(String url) {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            HttpGet httpPost = new HttpGet(url);
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
 
     @Override
     public void onBackPressed() {
