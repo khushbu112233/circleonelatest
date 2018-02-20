@@ -121,7 +121,7 @@
                 android:layout_height="50dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_chip_blue"
+                android:src="@drawable/ic_chip_gold"
                 android:visibility="visible" />
 
             <LinearLayout
