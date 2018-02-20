@@ -11,9 +11,11 @@ import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -23,6 +25,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -46,6 +49,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.circle8.circleOne.Fragments.CardsFragment;
 import com.circle8.circleOne.Fragments.ConnectFragment;
 import com.circle8.circleOne.Fragments.DashboardFragment;
@@ -86,9 +90,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.linkedin.platform.LISessionManager;
 import com.quickblox.messages.services.SubscribeService;
 import com.quickblox.sample.core.utils.SharedPrefsHelper;
+import com.theartofdev.edmodo.cropper.CropImage;
 import com.twitter.sdk.android.Twitter;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.text.SimpleDateFormat;
@@ -96,6 +103,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
+
 import static com.circle8.circleOne.Activity.CardsActivity.Connection_Limit;
 import static com.circle8.circleOne.Activity.CardsActivity.MIME_TEXT;
 import static com.circle8.circleOne.Activity.CardsActivity.decrypt;
@@ -107,8 +115,8 @@ import static com.circle8.circleOne.Utils.Utility.callSubPAge;
 
 public class DashboardActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
         ActivityCompat.OnRequestPermissionsResultCallback,
-        PermissionUtils.PermissionResultCallback{
-
+        PermissionUtils.PermissionResultCallback
+{
     private static final String TAG = DashboardActivity.class.getSimpleName();
     private FragmentManager fragmentManager;
     private Fragment fragment = null;
@@ -575,29 +583,51 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Utility.freeMemory();
-        Utility.deleteCache(getApplicationContext());
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        try {
-
-            final LocationSettingsStates states = LocationSettingsStates.fromIntent(data);
-            switch (requestCode) {
-                case REQUEST_CHECK_SETTINGS:
-                    switch (resultCode) {
-                        case Activity.RESULT_OK:
-                            // All required changes were successfully made
-                            getLocation();
-                            break;
-                        case Activity.RESULT_CANCELED:
-                            // The user was asked to change settings, but chose not to
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
+        /*for dashBoard fragment's result*/
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
+        {
+            if (getCurrentFragment() instanceof DashboardFragment)
+            {
+                ((DashboardFragment) getCurrentFragment()).ResultData(resultCode,data,DashboardActivity.this);
             }
-        }catch (Exception e){}
+        }
+        else
+        {
+            try
+            {
+                final LocationSettingsStates states = LocationSettingsStates.fromIntent(data);
+                switch (requestCode)
+                {
+                    case REQUEST_CHECK_SETTINGS:
+                        switch (resultCode)
+                        {
+                            case Activity.RESULT_OK:
+                                // All required changes were successfully made
+                                getLocation();
+                                break;
+                            case Activity.RESULT_CANCELED:
+                                // The user was asked to change settings, but chose not to
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                }
+            }
+            catch (Exception e){}
+        }
+    }
+
+    public String getRealPathFromURI(Uri uri)
+    {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        return cursor.getString(idx);
     }
 
 

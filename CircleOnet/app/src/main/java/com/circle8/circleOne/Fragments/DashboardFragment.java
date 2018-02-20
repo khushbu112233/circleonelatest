@@ -3,22 +3,29 @@ package com.circle8.circleOne.Fragments;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +38,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.circle8.circleOne.Activity.AddManuallyActivity;
 import com.circle8.circleOne.Activity.AddQRActivity;
 import com.circle8.circleOne.Activity.DashboardActivity;
 import com.circle8.circleOne.Activity.ManuallyActivity;
@@ -40,24 +48,41 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Helper.ReferralCodeSession;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Pref;
+import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.FragmentDashboardLayoutBinding;
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.text.Text;
+import com.google.android.gms.vision.text.TextBlock;
+import com.google.android.gms.vision.text.TextRecognizer;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import static android.app.Activity.RESULT_OK;
 import static android.graphics.Color.WHITE;
 import static com.circle8.circleOne.Utils.Utility.callMainPage;
 import static com.circle8.circleOne.Utils.Utility.callSubPAge;
@@ -67,7 +92,8 @@ import static com.circle8.circleOne.Utils.Utility.encrypt;
  * Created by Ample-Arch on 06-01-2018.
  */
 
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends Fragment
+{
     public static FragmentDashboardLayoutBinding fragmentDashboardLayoutBinding;
     View view;
     Context context;
@@ -90,13 +116,16 @@ public class DashboardFragment extends Fragment {
     private boolean netCheck = false;
     private boolean isViewShown = false;
 
+    /*for texture image to text*/
+    List<TextBlock> textBlocks = new ArrayList<>();
+    List<String> scanTextLineList = new ArrayList<>();
 
     @Override
-    public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
-        fragmentDashboardLayoutBinding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_dashboard_layout, container, false);
+    public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState)
+    {
+        fragmentDashboardLayoutBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_dashboard_layout, container, false);
         view = fragmentDashboardLayoutBinding.getRoot();
-        context =getActivity();
+        context = getActivity();
         session = new LoginSession(context);
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
         DashboardActivity.setActionBarTitle("Dashboard", false);
@@ -105,7 +134,9 @@ public class DashboardFragment extends Fragment {
         return view;
     }
 
-    public void fetchData(){
+    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
+    public void fetchData()
+    {
         initClick();
 
         HashMap<String, String> user = session.getUserDetails();
@@ -118,14 +149,12 @@ public class DashboardFragment extends Fragment {
         HashMap<String, String> referral = referralCodeSession.getReferralDetails();
         refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
 
-
         if (DashboardActivity.NotificationCount.equals("0")) {
             fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
         }
         else {
             fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
             fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setText(DashboardActivity.NotificationCount);
-
         }
 
         searchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -133,14 +162,17 @@ public class DashboardFragment extends Fragment {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
                 String search = searchView.getText().toString();
-                if (view != null) {
+                if (view != null)
+                {
                     InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
-                if (search.equals("")){
-                }
-                else {
+                if (search.equals(""))
+                {
 
+                }
+                else
+                {
                     SortFragment.CardListApi = "SearchConnect";
                     SortFragment.FindBY = "NAME";
                     SortFragment.Search = search;
@@ -179,8 +211,8 @@ public class DashboardFragment extends Fragment {
         //  Toast.makeText(getContext(), DashboardActivity.NotificationCount, Toast.LENGTH_LONG).show();
         imgSearch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View view)
+            {
                 String search = searchView.getText().toString();
                 if (view != null) {
                     InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -218,7 +250,6 @@ public class DashboardFragment extends Fragment {
                 }
             }
         });
-
 
         try
         {
@@ -306,10 +337,10 @@ public class DashboardFragment extends Fragment {
 
     }
 
-    public  void CreateQRCode(String qrCodeData, String charset, Map hintMap, int qrCodeheight, int qrCodewidth){
-
-
-        try {
+    public  void CreateQRCode(String qrCodeData, String charset, Map hintMap, int qrCodeheight, int qrCodewidth)
+    {
+        try
+        {
             //generating qr code in bitmatrix type
             BitMatrix matrix = new MultiFormatWriter().encode(new String(qrCodeData.getBytes(charset), charset),
                     BarcodeFormat.QR_CODE, qrCodewidth, qrCodeheight, hintMap);
@@ -347,7 +378,8 @@ public class DashboardFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
         callMainPage("Dashboard");
         DashboardActivity.setActionBarTitle("Dashboard", false);
@@ -378,8 +410,8 @@ public class DashboardFragment extends Fragment {
         }
     }
 
-    public void initClick() {
-
+    public void initClick()
+    {
         fragmentDashboardLayoutBinding.includeNotiRewardShare.rlNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -391,6 +423,7 @@ public class DashboardFragment extends Fragment {
                         .commit();
             }
         });
+
         fragmentDashboardLayoutBinding.includeNotiRewardShare.rlQrCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -500,7 +533,6 @@ public class DashboardFragment extends Fragment {
         fragmentDashboardLayoutBinding.includeTapQr.rlManually.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(context, ManuallyActivity.class);
                 startActivity(intent);
             }
@@ -512,8 +544,23 @@ public class DashboardFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        fragmentDashboardLayoutBinding.includeTapQr.rlScanCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                scanTextLineList.clear();
+                textBlocks.clear();
+                selectImageToCrop();
+
+              /*  Intent intent = new Intent(context, AddCardScanActivity.class);
+                startActivity(intent);*/
+            }
+        });
     }
-    public static Bitmap mergeBitmaps(Bitmap overlay, Bitmap bitmap) {
+
+    public static Bitmap mergeBitmaps(Bitmap overlay, Bitmap bitmap)
+    {
         int height = bitmap.getHeight();
         int width = bitmap.getWidth();
         Bitmap combined = Bitmap.createBitmap(width, height, bitmap.getConfig());
@@ -526,4 +573,212 @@ public class DashboardFragment extends Fragment {
         canvas.drawBitmap(overlay, centreX, centreY, null);
         return combined;
     }
+
+    /**
+     *
+     */
+    private void selectImageToCrop()
+    {
+        final CharSequence[] items = { "Select Card", "Cancel" };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Select card to scan");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                boolean result= Utility.checkPermission(context);
+                boolean result1=Utility.checkCameraPermission(context);
+
+                if (items[item].equals("Select Card"))
+                {
+                    if (result && result1)
+                    {
+                        CropImage.activity(null)
+                                .setActivityTitle("Card Scanner")
+                                .setCropShape(CropImageView.CropShape.RECTANGLE)
+                                .setGuidelines(CropImageView.Guidelines.ON)
+                                .setCropMenuCropButtonTitle("Scan")
+                                .start(getActivity());
+                    }
+                }
+                else if (items[item].equals("Cancel"))
+                {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    public String getRealPathFromURI(Uri uri)
+    {
+        Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        return cursor.getString(idx);
+    }
+
+    private void inspectFromBitmap(Bitmap bitmap)
+    {
+        TextRecognizer textRecognizer = new TextRecognizer.Builder(context).build();
+        try
+        {
+            if (!textRecognizer.isOperational())
+            {
+                new android.app.AlertDialog.Builder(context).setMessage("Text recognizer could not be set up on your device").show();
+                return;
+            }
+
+            Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+            SparseArray<TextBlock> origTextBlocks = textRecognizer.detect(frame);
+
+            String blocks = "";
+            String lines = "";
+            String words = "";
+            for (int index = 0; index < origTextBlocks.size(); index++)
+            {
+                //extract scanned text blocks here
+                TextBlock tBlock = origTextBlocks.valueAt(index);
+                blocks = blocks + tBlock.getValue() + "\n" + "\n";
+                for (Text line : tBlock.getComponents())
+                {
+                    //extract scanned text lines here
+                    lines = lines + line.getValue() + "\n";
+
+                    /*adding single line in arrayList*/
+                    scanTextLineList.add(line.getValue());
+
+                    for (Text element : line.getComponents())
+                    {
+                        //extract scanned text words here
+                        words = words + element.getValue() + ", ";
+                    }
+                }
+            }
+
+            for (int i = 0; i < origTextBlocks.size(); i++)
+            {
+                TextBlock textBlock = origTextBlocks.valueAt(i);
+                textBlocks.add(textBlock);
+            }
+
+            Collections.sort(textBlocks, new Comparator<TextBlock>()
+            {
+                @Override
+                public int compare(TextBlock o1, TextBlock o2)
+                {
+                    int diffOfTops = o1.getBoundingBox().top - o2.getBoundingBox().top;
+                    int diffOfLefts = o1.getBoundingBox().left - o2.getBoundingBox().left;
+                    if (diffOfTops != 0)
+                    {
+                        return diffOfTops;
+                    }
+                    return diffOfLefts;
+                }
+            });
+
+            StringBuilder detectedText = new StringBuilder();
+            for (TextBlock textBlock : textBlocks)
+            {
+                if (textBlock != null && textBlock.getValue() != null)
+                {
+                    detectedText.append(textBlock.getValue());
+                    detectedText.append("\n");
+                }
+            }
+
+            /*this complete text scan value from scanned*/
+            String detectText = String.valueOf(detectedText);
+
+            /*now convert List<> to StringArray[]*/
+            int n = scanTextLineList.size();
+            String[] scanTextArray = scanTextLineList.toArray(new String[n]);
+
+            /*now pass arrayList of TextLines data to another activity*/
+            Intent iPut = new Intent(context, AddManuallyActivity.class);
+            iPut.putExtra("ScanTextArray", scanTextArray);
+            startActivity(iPut);
+        }
+        finally
+        {
+            textRecognizer.release();
+        }
+    }
+
+    public void ResultData(int resultCode, Intent data, DashboardActivity dashboardActivity)
+    {
+        CropImage.ActivityResult result = CropImage.getActivityResult(data);
+        if (resultCode == RESULT_OK)
+        {
+            Bitmap bitmap = null;
+            try
+            {
+                bitmap = BitmapFactory.decodeStream(dashboardActivity.getContentResolver().openInputStream(result.getUri()));
+                if (bitmap.equals("") || bitmap == null)
+                {
+                    bitmap = BitmapFactory.decodeFile(getRealPathFromURI(result.getUri()));
+                }
+                // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
+                Utility.freeMemory();
+
+                long size = Utility.imageCalculateSize(bitmap);
+
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+
+                if (size > 500000){
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bytes);
+                }
+                else if (size > 400000){
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 55, bytes);
+                }
+                else if (size > 300000){
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
+                }
+                else if (size > 200000){
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 70, bytes);
+                }
+                else if (size > 100000){
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bytes);
+                }
+                else {
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                }
+                //   bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
+
+                File destination = new File(Environment.getExternalStorageDirectory(),
+                        System.currentTimeMillis() + ".jpg");
+
+                FileOutputStream fo;
+                try {
+                    destination.createNewFile();
+                    fo = new FileOutputStream(destination);
+                    fo.write(bytes.toByteArray());
+                    fo.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                inspectFromBitmap(bitmap);
+
+                bitmap.recycle();
+
+                Toast.makeText(getActivity(),"Success:",Toast.LENGTH_SHORT).show();
+            }
+            catch (FileNotFoundException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+
+                Toast.makeText(getActivity(),"Error:",Toast.LENGTH_SHORT).show();
+            }
+        }
+        else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE)
+        {
+            Utility.freeMemory();
+            Toast.makeText(getActivity(), "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
+        }
+    }
+
 }

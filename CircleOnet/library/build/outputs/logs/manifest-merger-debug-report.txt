@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from E:\Kajal\CircleOne\Project\CircleOnet\library\AndroidManifest.xml:1:1-3:12
-INJECTED from E:\Kajal\CircleOne\Project\CircleOnet\library\AndroidManifest.xml:1:1-3:12
-INJECTED from E:\Kajal\CircleOne\Project\CircleOnet\library\AndroidManifest.xml:1:1-3:12
+ADDED from D:\khushbu\CircleOneLive\CircleOnet\library\AndroidManifest.xml:1:1-3:12
+INJECTED from D:\khushbu\CircleOneLive\CircleOnet\library\AndroidManifest.xml:1:1-3:12
+INJECTED from D:\khushbu\CircleOneLive\CircleOnet\library\AndroidManifest.xml:1:1-3:12
 	package
-		ADDED from E:\Kajal\CircleOne\Project\CircleOnet\library\AndroidManifest.xml:1:11-46
-		INJECTED from E:\Kajal\CircleOne\Project\CircleOnet\library\AndroidManifest.xml
-		INJECTED from E:\Kajal\CircleOne\Project\CircleOnet\library\AndroidManifest.xml
+		ADDED from D:\khushbu\CircleOneLive\CircleOnet\library\AndroidManifest.xml:1:11-46
+		INJECTED from D:\khushbu\CircleOneLive\CircleOnet\library\AndroidManifest.xml
+		INJECTED from D:\khushbu\CircleOneLive\CircleOnet\library\AndroidManifest.xml
