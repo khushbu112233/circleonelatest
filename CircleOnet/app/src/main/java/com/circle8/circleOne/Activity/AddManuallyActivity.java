@@ -50,49 +50,53 @@ public class AddManuallyActivity extends AppCompatActivity implements View.OnCli
             String size = String.valueOf(scanTextLineList.size());
 
             String scanItems = scanTextLineList.get(i);
-            if (scanItems.matches(NAME))
+            if(scanItems.length()>2)
             {
-                String[] name = scanItems.split(" ");
-
-                activityAddManuallyBinding.etFirstName.setText(name[0]);
-                activityAddManuallyBinding.etLastName.setText(name[1]);
-                scanTextLineList.remove(i);
-            }
-            else if (scanItems.matches(EMAIL) || scanItems.contains("@"))
-            {
-                activityAddManuallyBinding.etEmail.append(scanItems+"\n");
-                scanTextLineList.remove(i);
-            }
-            else if (scanItems.matches(PHONE) || scanItems.startsWith("+") || scanItems.startsWith("0"))
-            {
-                activityAddManuallyBinding.etPhone.append(scanItems+"\n");
-                scanTextLineList.remove(i);
-            }
-            else if (scanItems.startsWith("www"))
-            {
-                activityAddManuallyBinding.etWebsite.setText(scanItems);
-                scanTextLineList.remove(i);
-            }
-            else if (scanItems.contains("pvt") || scanItems.contains("ltd") || scanItems.contains("llp"))
-            {
-                activityAddManuallyBinding.etCompany.setText(scanItems);
-                scanTextLineList.remove(i);
-            }
-            else
-            {
-                int n = scanTextLineList.size();
-
-                String[] scanTextArray1 = scanTextLineList.toArray(new String[n]);
-                StringBuilder builder = new StringBuilder();
-                for (String string : scanTextArray1)
+                if (scanItems.matches(NAME))
                 {
-                    builder.append(string+"\n");
+                    String[] name = scanItems.split(" ");
 
+                    activityAddManuallyBinding.etFirstName.setText(name[0]);
+                    activityAddManuallyBinding.etLastName.setText(name[1]);
+                    scanTextLineList.remove(i);
                 }
-                activityAddManuallyBinding.etAddress.setText(builder);
+                else if (scanItems.matches(EMAIL) || scanItems.contains("@"))
+                {
+                    activityAddManuallyBinding.etEmail.append(scanItems+"\n");
+                    scanTextLineList.remove(i);
+                }
+                else if (scanItems.matches(PHONE) || scanItems.startsWith("+") || scanItems.startsWith("0"))
+                {
+                    activityAddManuallyBinding.etPhone.append(scanItems+"\n");
+                    scanTextLineList.remove(i);
+                }
+                else if (scanItems.startsWith("www"))
+                {
+                    activityAddManuallyBinding.etWebsite.setText(scanItems);
+                    scanTextLineList.remove(i);
+                }
+                else if (scanItems.contains("pvt") || scanItems.contains("ltd") || scanItems.contains("llp"))
+                {
+                    activityAddManuallyBinding.etCompany.setText(scanItems);
+                    scanTextLineList.remove(i);
+                }
+                else
+                {
+                    int n = scanTextLineList.size();
+
+                    String[] scanTextArray1 = scanTextLineList.toArray(new String[n]);
+                    StringBuilder builder = new StringBuilder();
+                    for (String string : scanTextArray1)
+                    {
+                        builder.append(string+"\n");
+
+                    }
+                    activityAddManuallyBinding.etAddress.setText(builder);
 //                Toast.makeText(getApplicationContext(),builder,Toast.LENGTH_SHORT).show();
 //                activityAddManuallyBinding.etAddress.setText(Arrays.toString(scanTextArray1));
+                }
             }
+
         }
         scanTextLineList.clear();
     }
