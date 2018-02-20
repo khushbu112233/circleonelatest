@@ -3,18 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/luckydraw">
+
         <LinearLayout
-            android:id="@+id/rltopmain"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="530dp"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/luckydraw"
-            >
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_above="@+id/lnrBottom">
             <RelativeLayout
-                android:paddingBottom="10dp"
+                android:layout_alignParentTop="true"
+                android:id="@+id/rltTop"
+                android:paddingBottom="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -28,15 +29,15 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginTop="1dp"
                     android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
 
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_marginBottom="5dp"
                     android:id="@+id/txtprofile"
-                    android:textSize="19dp"
+                    android:textSize="17dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="2dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Lucky Draw"
@@ -44,40 +45,48 @@
             </RelativeLayout>
 
             <FrameLayout
+                android:layout_weight="0"
+                android:id="@+id/frame_image"
+                android:layout_below="@+id/rltTop"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/imglogo"
-                android:layout_width="370dp"
-                android:layout_height="160dp"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
                 android:src="@drawable/back_logo"/>
 
                 <ImageView
-                    android:layout_width="350dp"
+                    android:layout_width="280dp"
                     android:layout_gravity="center"
-                    android:layout_height="150dp"
+                    android:layout_height="wrap_content"
                     android:src="@drawable/luckydraw_logo1"/>
 
 
             </FrameLayout>
             <LinearLayout
+                android:weightSum="4"
+                android:layout_weight="1"
+                android:layout_below="@+id/frame_image"
                 android:id="@+id/rl1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
                 <com.wajahatkarim3.easyflipview.EasyFlipView
+                    android:layout_weight="1"
                     android:id="@+id/easyFlipView1"
-                    android:layout_width="80dp"
-                    android:layout_height="110dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     app:flipDuration="400"
                     app:flipType="horizontal"
                     android:layout_marginLeft="5dp"
                     >
                     <FrameLayout
-                        android:layout_width="80dp"
-                        android:layout_height="110dp"
+                        android:id="@+id/frame_card1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:scaleType="fitXY"
                         android:layout_marginLeft="5dp">
                         <ImageView
@@ -123,29 +132,31 @@
                     </FrameLayout>
                     <ImageView
                         android:id="@+id/img11"
-                        android:layout_width="80dp"
-                        android:layout_height="110dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:scaleType="fitXY"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_gray_front"/>
                 </com.wajahatkarim3.easyflipview.EasyFlipView>
                 <com.wajahatkarim3.easyflipview.EasyFlipView
+                    android:layout_weight="1"
                     android:id="@+id/easyFlipView2"
                     android:layout_toRightOf="@+id/easyFlipView1"
-                    android:layout_width="80dp"
-                    android:layout_height="110dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     app:flipDuration="400"
                     app:flipType="horizontal"
                     android:layout_marginLeft="10dp"
                     >
                     <FrameLayout
-                        android:layout_width="80dp"
-                        android:layout_height="110dp"
+                        android:id="@+id/frame_card2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:scaleType="fitXY"
                         android:layout_marginLeft="5dp">
                         <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="110dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:scaleType="fitXY"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_gold_bg"/>
@@ -185,30 +196,32 @@
 
                     <ImageView
                         android:id="@+id/img21"
-                        android:layout_width="80dp"
-                        android:layout_height="110dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:scaleType="fitXY"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_gray_front"/>
 
                 </com.wajahatkarim3.easyflipview.EasyFlipView>
                 <com.wajahatkarim3.easyflipview.EasyFlipView
+                    android:layout_weight="1"
                     android:id="@+id/easyFlipView3"
                     android:layout_toRightOf="@+id/easyFlipView2"
-                    android:layout_width="80dp"
-                    android:layout_height="110dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     app:flipDuration="400"
                     app:flipType="horizontal"
                     android:layout_marginLeft="10dp"
                     >
                     <FrameLayout
-                        android:layout_width="80dp"
-                        android:layout_height="110dp"
+                        android:id="@+id/frame_card3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:scaleType="fitXY"
                         android:layout_marginLeft="5dp">
                         <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="110dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:scaleType="fitXY"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_gold_bg"/>
@@ -251,8 +264,8 @@
                     </FrameLayout>
                     <ImageView
                         android:id="@+id/img31"
-                        android:layout_width="80dp"
-                        android:layout_height="110dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:scaleType="fitXY"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_gray_front"/>
@@ -260,22 +273,24 @@
                 </com.wajahatkarim3.easyflipview.EasyFlipView>
                 <com.wajahatkarim3.easyflipview.EasyFlipView
                     android:id="@+id/easyFlipView4"
+                    android:layout_weight="1"
                     android:layout_toRightOf="@+id/easyFlipView3"
-                    android:layout_width="80dp"
-                    android:layout_height="110dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     app:flipDuration="400"
                     app:flipType="horizontal"
                     android:layout_marginRight="5dp"
                     android:layout_marginLeft="10dp"
                     >
                     <FrameLayout
-                        android:layout_width="80dp"
-                        android:layout_height="110dp"
+                        android:id="@+id/frame_card4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:scaleType="fitXY"
                         android:layout_marginLeft="5dp">
                         <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="110dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:scaleType="fitXY"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_gold_bg"/>
@@ -318,8 +333,8 @@
                     </FrameLayout>
                     <ImageView
                         android:id="@+id/img41"
-                        android:layout_width="80dp"
-                        android:layout_height="110dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:scaleType="fitXY"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_gray_front"/>
@@ -327,6 +342,9 @@
                 </com.wajahatkarim3.easyflipview.EasyFlipView>
             </LinearLayout>
             <LinearLayout
+                android:weightSum="4"
+                android:layout_weight="1"
+                android:layout_below="@+id/rl1"
                 android:layout_marginTop="15dp"
                 android:id="@+id/rl2"
                 android:layout_width="match_parent"
@@ -334,21 +352,23 @@
                 android:gravity="center"
                 android:orientation="horizontal">
                 <com.wajahatkarim3.easyflipview.EasyFlipView
+                    android:layout_weight="1"
                     android:id="@+id/easyFlipView5"
-                    android:layout_width="80dp"
-                    android:layout_height="110dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     app:flipDuration="400"
                     android:layout_marginLeft="5dp"
                     app:flipType="horizontal"
                     >
                     <FrameLayout
-                        android:layout_width="80dp"
-                        android:layout_height="110dp"
+                        android:id="@+id/frame_card5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:scaleType="fitXY"
                         android:layout_marginLeft="5dp">
                         <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="110dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:scaleType="fitXY"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_gold_bg"/>
@@ -392,30 +412,32 @@
 
                     <ImageView
                         android:id="@+id/img51"
-                        android:layout_width="80dp"
-                        android:layout_height="110dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:scaleType="fitXY"
                         android:src="@drawable/ic_gray_front" />
 
                 </com.wajahatkarim3.easyflipview.EasyFlipView>
                 <com.wajahatkarim3.easyflipview.EasyFlipView
+                    android:layout_weight="1"
                     android:id="@+id/easyFlipView6"
                     android:layout_toRightOf="@+id/easyFlipView5"
-                    android:layout_width="80dp"
-                    android:layout_height="110dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     app:flipDuration="400"
                     android:layout_marginLeft="10dp"
                     app:flipType="horizontal"
                     >
                     <FrameLayout
-                        android:layout_width="80dp"
-                        android:layout_height="110dp"
+                        android:id="@+id/frame_card6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:scaleType="fitXY"
                         android:layout_marginLeft="5dp">
                         <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="110dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:scaleType="fitXY"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_gold_bg"/>
@@ -458,30 +480,32 @@
                     </FrameLayout>
                     <ImageView
                         android:id="@+id/img61"
-                        android:layout_width="80dp"
-                        android:layout_height="110dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:scaleType="fitXY"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_gray_front"/>
 
                 </com.wajahatkarim3.easyflipview.EasyFlipView>
                 <com.wajahatkarim3.easyflipview.EasyFlipView
+                    android:layout_weight="1"
                     android:id="@+id/easyFlipView7"
                     android:layout_toRightOf="@+id/easyFlipView6"
-                    android:layout_width="80dp"
-                    android:layout_height="110dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     app:flipDuration="400"
                     app:flipType="horizontal"
                     android:layout_marginLeft="10dp"
                     >
                     <FrameLayout
-                        android:layout_width="80dp"
-                        android:layout_height="110dp"
+                        android:id="@+id/frame_card7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:scaleType="fitXY"
                         android:layout_marginLeft="5dp">
                         <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="110dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:scaleType="fitXY"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_gold_bg"/>
@@ -524,31 +548,33 @@
                     </FrameLayout>
                     <ImageView
                         android:id="@+id/img71"
-                        android:layout_width="80dp"
-                        android:layout_height="110dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:scaleType="fitXY"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_gray_front"/>
 
                 </com.wajahatkarim3.easyflipview.EasyFlipView>
                 <com.wajahatkarim3.easyflipview.EasyFlipView
+                    android:layout_weight="1"
                     android:id="@+id/easyFlipView8"
                     android:layout_toRightOf="@+id/easyFlipView7"
-                    android:layout_width="80dp"
-                    android:layout_height="110dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     app:flipDuration="400"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="5dp"
                     app:flipType="horizontal"
                     >
                     <FrameLayout
-                        android:layout_width="80dp"
-                        android:layout_height="110dp"
+                        android:id="@+id/frame_card8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:scaleType="fitXY"
                         android:layout_marginLeft="5dp">
                         <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="110dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:scaleType="fitXY"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_gold_bg"/>
@@ -591,8 +617,8 @@
                     </FrameLayout>
                     <ImageView
                         android:id="@+id/img81"
-                        android:layout_width="80dp"
-                        android:layout_height="110dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:scaleType="fitXY"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_gray_front"/>
@@ -601,6 +627,7 @@
             </LinearLayout>
 
             <include
+                android:layout_weight="0"
                 android:id="@+id/includePrize"
                 layout="@layout/include_prize_layout"
                 android:layout_width="match_parent"
@@ -608,15 +635,13 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/rl2" />
-
         </LinearLayout>
-        <LinearLayout
-            android:layout_below="@+id/rltopmain"
+        <RelativeLayout
+            android:id="@+id/lnrBottom"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/luckydraw_botoom_bg">
+            android:background="@drawable/gradient_lucky_draw">
             <RelativeLayout
                 android:id="@+id/rl3"
                 android:layout_width="match_parent"
@@ -634,15 +659,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:layout_centerInParent="true"
                     android:text="tetrt sdfdsfsd sdfsdf sdfsdf sdfds f fdsfdsf sdfsdf sdfsdf sdfdsf sdfdsf sdfsd dsfdsf dsfdsf sfsdf fsdf sdfsdf dsf sdff  sfsdf  sfdfsd sdfsd sfdsf fdsf sfdsdf sfds sfdsd fdsfsdfsdfdsfsdfdsf"
                     android:maxLines="5"
                     android:textColor="@color/white"
                     android:gravity="center"
                     android:layout_toLeftOf="@+id/imgRight"
                     android:layout_toRightOf="@+id/imgLeft"
-                    android:textSize="15sp"
-                    android:layout_centerVertical="true"/>
+                    android:textSize="10sp"
+                    />
                 <ImageView
                     android:id="@+id/imgRight"
                     android:layout_width="30dp"
@@ -651,13 +675,8 @@
                     android:layout_alignParentRight="true"
                     android:src="@drawable/ic_right_white_arrow"/>
 
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/rlTerm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
                 <TextView
+                    android:layout_below="@+id/txtDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -665,9 +684,11 @@
                     android:text="Terms &amp; Condition"
                     android:textColor="@color/white"
                     android:gravity="center"
-                    android:textSize="15sp"
+                    android:textSize="12sp"
                     android:layout_centerVertical="true"/>
+
             </RelativeLayout>
-        </LinearLayout>
+
+        </RelativeLayout>
     </RelativeLayout>
 </layout>
