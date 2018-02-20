@@ -127,42 +127,91 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 mp.start();
                 count = 0;
                 prizeIdList = new ArrayList<>();
+
+                luckyDrawLayoutBinding.easyFlipView1.setClickable(true);
+                luckyDrawLayoutBinding.easyFlipView1.setFlipEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView1.setFlipOnTouch(true);
+                luckyDrawLayoutBinding.easyFlipView1.setEnabled(true);
+
+                luckyDrawLayoutBinding.easyFlipView2.setClickable(true);
+                luckyDrawLayoutBinding.easyFlipView2.setEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView2.setFlipEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView2.setFlipOnTouch(true);
+
+                luckyDrawLayoutBinding.easyFlipView3.setClickable(true);
+                luckyDrawLayoutBinding.easyFlipView3.setEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView3.setFlipEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView3.setFlipOnTouch(true);
+
+                luckyDrawLayoutBinding.easyFlipView4.setClickable(true);
+                luckyDrawLayoutBinding.easyFlipView4.setEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView4.setFlipEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView4.setFlipOnTouch(true);
+
+                luckyDrawLayoutBinding.easyFlipView5.setClickable(true);
+                luckyDrawLayoutBinding.easyFlipView5.setEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView5.setFlipEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView5.setFlipOnTouch(true);
+
+                luckyDrawLayoutBinding.easyFlipView6.setClickable(true);
+                luckyDrawLayoutBinding.easyFlipView6.setEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView6.setFlipEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView6.setFlipOnTouch(true);
+
+                luckyDrawLayoutBinding.easyFlipView7.setClickable(true);
+                luckyDrawLayoutBinding.easyFlipView7.setEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView7.setFlipEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView7.setFlipOnTouch(true);
+
+                luckyDrawLayoutBinding.easyFlipView8.setClickable(true);
+                luckyDrawLayoutBinding.easyFlipView8.setEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView8.setFlipEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView8.setFlipOnTouch(true);
+
                 if (luckyDrawLayoutBinding.easyFlipView1.isBackSide()) {
+
                     luckyDrawLayoutBinding.easyFlipView1.flipTheView();
                     luckyDrawLayoutBinding.easyFlipView1.flipTheView(true);
                 }
 
                 if (luckyDrawLayoutBinding.easyFlipView2.isBackSide()) {
+
                     luckyDrawLayoutBinding.easyFlipView2.flipTheView();
                     luckyDrawLayoutBinding.easyFlipView2.flipTheView(true);
                 }
 
                 if (luckyDrawLayoutBinding.easyFlipView3.isBackSide()) {
+
                     luckyDrawLayoutBinding.easyFlipView3.flipTheView();
                     luckyDrawLayoutBinding.easyFlipView3.flipTheView(true);
                 }
 
                 if (luckyDrawLayoutBinding.easyFlipView4.isBackSide()) {
+
                     luckyDrawLayoutBinding.easyFlipView4.flipTheView();
                     luckyDrawLayoutBinding.easyFlipView4.flipTheView(true);
                 }
 
                 if (luckyDrawLayoutBinding.easyFlipView5.isBackSide()) {
+
                     luckyDrawLayoutBinding.easyFlipView5.flipTheView();
                     luckyDrawLayoutBinding.easyFlipView5.flipTheView(true);
                 }
 
                 if (luckyDrawLayoutBinding.easyFlipView6.isBackSide()) {
+
                     luckyDrawLayoutBinding.easyFlipView6.flipTheView();
                     luckyDrawLayoutBinding.easyFlipView6.flipTheView(true);
                 }
 
                 if (luckyDrawLayoutBinding.easyFlipView7.isBackSide()) {
+
                     luckyDrawLayoutBinding.easyFlipView7.flipTheView();
                     luckyDrawLayoutBinding.easyFlipView7.flipTheView(true);
                 }
 
                 if (luckyDrawLayoutBinding.easyFlipView8.isBackSide()) {
+
                     luckyDrawLayoutBinding.easyFlipView8.flipTheView();
                     luckyDrawLayoutBinding.easyFlipView8.flipTheView(true);
                 }
@@ -356,7 +405,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
 
     public void countMaintain(int count)
     {
-        if(count==3) {
+        if(count>=3) {
             luckyDrawLayoutBinding.easyFlipView1.setEnabled(false);
             luckyDrawLayoutBinding.easyFlipView2.setEnabled(false);
             luckyDrawLayoutBinding.easyFlipView3.setEnabled(false);
