@@ -28,8 +28,8 @@
 
         <LinearLayout
             android:weightSum="3"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
+            android:orientation="horizontal"
             android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_weight="1"

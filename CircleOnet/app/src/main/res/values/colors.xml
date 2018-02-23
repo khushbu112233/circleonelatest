@@ -63,4 +63,7 @@
     <color name="random_color_8">#d0021b</color>
     <color name="random_color_9">#166642</color>
     <color name="random_color_10">#bdbdbd</color>
+
+    <color name="gradient_timer_start">#664219</color>
+    <color name="gradient_timer_end">#ad7c24</color>
 </resources>
