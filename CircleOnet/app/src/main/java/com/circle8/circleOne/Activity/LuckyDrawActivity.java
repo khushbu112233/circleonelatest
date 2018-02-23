@@ -143,6 +143,14 @@ public class LuckyDrawActivity extends AppCompatActivity {
 
             }
         });
+        luckyDrawLayoutBinding.includePrize.rtlToken.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LuckyDrawActivity.this,TokenActivity.class);
+                startActivity(i);
+
+            }
+        });
         luckyDrawLayoutBinding.includePrize.rtlRefresh.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override

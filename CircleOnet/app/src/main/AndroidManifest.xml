@@ -364,6 +364,10 @@
         <activity
             android:name=".Activity.PrizeHistoryActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".Activity.TokenActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.DashboardActivity"
             android:theme="@style/NoActionbar">

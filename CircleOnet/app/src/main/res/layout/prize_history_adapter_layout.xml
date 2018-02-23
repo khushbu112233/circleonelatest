@@ -5,19 +5,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/bg_for_history"
         android:weightSum="1">
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
             android:orientation="vertical"
-            android:layout_weight="0.10">
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="0.20">
 
             <FrameLayout
                 android:id="@+id/fmPrize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_gravity="center">
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -38,23 +45,6 @@
                     />
 
             </FrameLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.60"
-            android:layout_gravity="center"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/txtName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="test"
-                android:layout_marginLeft="5dp"
-                android:textColor="@color/black"
-                android:gravity="left"
-                android:textSize="15sp"
-                android:layout_gravity="center"/>
             <TextView
                 android:id="@+id/txtResult"
                 android:layout_width="match_parent"
@@ -65,11 +55,32 @@
                 android:gravity="left"
                 android:textSize="15sp"
                 android:layout_gravity="center"/>
+
         </LinearLayout>
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="0.50"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="left"
+                android:text="test"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="45dp"
             android:layout_weight="0.30"
+            android:gravity="center"
             android:layout_gravity="center"
             android:orientation="vertical">
             <TextView
