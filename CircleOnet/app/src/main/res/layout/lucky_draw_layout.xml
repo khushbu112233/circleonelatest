@@ -48,22 +48,151 @@
                 android:layout_weight="0"
                 android:id="@+id/frame_image"
                 android:layout_below="@+id/rltTop"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
             <ImageView
+                android:layout_centerInParent="true"
                 android:id="@+id/imglogo"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/back_logo"/>
 
                 <ImageView
-                    android:layout_width="280dp"
+                    android:layout_centerInParent="true"
                     android:layout_gravity="center"
+                    android:layout_width="280dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/luckydraw_logo1"/>
 
+                </RelativeLayout>
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/bg_gold"
+                    android:layout_gravity="right"
+                    android:layout_width="176dp"
+                    android:layout_height="40dp">
 
+                    <TextView
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:text="2"
+                        android:id="@+id/txtDay1"
+                        android:layout_marginLeft="2dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/timer_black"
+                        android:layout_width="15dp"
+                        android:layout_height="30dp" />
+                    <TextView
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:text="2"
+                        android:id="@+id/txtDay2"
+                        android:layout_marginLeft="2dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/timer_black"
+                        android:layout_width="15dp"
+                        android:layout_height="30dp" />
+
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:src="@drawable/timer_colon"
+                        />
+
+                    <TextView
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:text="2"
+                        android:id="@+id/txtHour1"
+                        android:layout_marginLeft="2dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/timer_black"
+                        android:layout_width="15dp"
+                        android:layout_height="30dp" />
+                    <TextView
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:text="2"
+                        android:id="@+id/txtHour2"
+                        android:layout_marginLeft="2dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/timer_black"
+                        android:layout_width="15dp"
+                        android:layout_height="30dp" />
+
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:src="@drawable/timer_colon"
+                        />
+
+                    <TextView
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:text="2"
+                        android:id="@+id/txtMinute1"
+                        android:layout_marginLeft="2dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/timer_black"
+                        android:layout_width="15dp"
+                        android:layout_height="30dp" />
+                    <TextView
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:text="2"
+                        android:id="@+id/txtMinute2"
+                        android:layout_marginLeft="2dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/timer_black"
+                        android:layout_width="15dp"
+                        android:layout_height="30dp" />
+
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:src="@drawable/timer_colon"
+                        />
+
+                    <TextView
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:text="2"
+                        android:id="@+id/txtSecond1"
+                        android:layout_marginLeft="5dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/timer_black"
+                        android:layout_width="15dp"
+                        android:layout_height="30dp" />
+                    <TextView
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:text="2"
+                        android:id="@+id/txtSecond2"
+                        android:layout_marginLeft="2dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/timer_black"
+                        android:layout_width="15dp"
+                        android:layout_height="30dp" />
+
+                </LinearLayout>
             </FrameLayout>
             <LinearLayout
                 android:weightSum="4"
