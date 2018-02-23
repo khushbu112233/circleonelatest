@@ -18,13 +18,6 @@ public class PrizeHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         prizeHistoryLayoutBinding = DataBindingUtil.setContentView(this, R.layout.prize_history_layout);
-
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         if(Pref.getValue(PrizeHistoryActivity.this,"History","").equalsIgnoreCase("2"))
         {
             prizeHistoryAdapter = new PrizeHistoryAdapter(PrizeHistoryActivity.this,LuckyDrawActivity.prizeHistorys);
@@ -36,5 +29,12 @@ public class PrizeHistoryActivity extends AppCompatActivity {
             prizeHistoryLayoutBinding.lstPrizeHistory.setAdapter(prizeHistoryAdapter);
             prizeHistoryAdapter.notifyDataSetChanged();
         }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 }

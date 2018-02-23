@@ -138,7 +138,7 @@ dependencies {
     implementation(project(":sample-core"))
     implementation "se.emilsjolander:stickylistheaders:${rootProject.stickyListHeaders}"
     implementation 'com.github.orangegangsters:swipy:1.2.2@aar'
-
+    implementation 'com.github.devlight:infinitecycleviewpager:1.0.2'
     implementation "com.quickblox:quickblox-android-sdk-extensions:$rootProject.qbSdkVersion"
     implementation 'io.reactivex:rxandroid:1.1.0'
     implementation 'com.wajahatkarim3.EasyFlipView:EasyFlipView:2.0.5'
