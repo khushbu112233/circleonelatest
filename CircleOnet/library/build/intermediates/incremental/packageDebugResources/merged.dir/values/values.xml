@@ -4,6 +4,7 @@
     <color name="current_day_of_month">#03A7E9</color>
     <color name="day_disabled_background_color">#F1F5F8</color>
     <color name="day_disabled_text_color">#DEDEDE</color>
+    <color name="golden">#d9a03d</color>
     <color name="selected_day_background">#03A7E9</color>
     <color name="white">#FFFFFF</color>
     <declare-styleable name="CustomCalendarView"><attr format="color" name="calendarTitleTextColor"/><attr format="color" name="dayOfWeekTextColor"/><attr format="color" name="dayOfMonthTextColor"/><attr format="color" name="calendarBackgroundColor"/><attr format="color" name="disabledDayBackgroundColor"/><attr format="color" name="disabledDayTextColor"/><attr format="color" name="selectedDayBackgroundColor"/><attr format="color" name="selectedDayTextColor"/><attr format="color" name="weekLayoutBackgroundColor"/><attr format="color" name="titleLayoutBackgroundColor"/><attr format="color" name="currentDayOfMonthColor"/></declare-styleable>

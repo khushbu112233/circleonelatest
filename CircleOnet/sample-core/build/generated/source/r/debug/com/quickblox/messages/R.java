@@ -39,13 +39,13 @@ public final class R {
         public static int common_google_signin_btn_text_light_focused = 0x7f060043;
         public static int common_google_signin_btn_text_light_pressed = 0x7f060044;
         public static int common_google_signin_btn_tint = 0x7f060045;
-        public static int notification_action_color_filter = 0x7f060066;
-        public static int notification_icon_bg_color = 0x7f060067;
-        public static int notification_material_background_media_default_color = 0x7f060068;
-        public static int primary_text_default_material_dark = 0x7f060073;
-        public static int ripple_material_light = 0x7f060082;
-        public static int secondary_text_default_material_dark = 0x7f060083;
-        public static int secondary_text_default_material_light = 0x7f060084;
+        public static int notification_action_color_filter = 0x7f060067;
+        public static int notification_icon_bg_color = 0x7f060068;
+        public static int notification_material_background_media_default_color = 0x7f060069;
+        public static int primary_text_default_material_dark = 0x7f060074;
+        public static int ripple_material_light = 0x7f060083;
+        public static int secondary_text_default_material_dark = 0x7f060084;
+        public static int secondary_text_default_material_light = 0x7f060085;
     }
     public static final class dimen {
         public static int compat_button_inset_horizontal_material = 0x7f080068;

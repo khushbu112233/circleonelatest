@@ -129,7 +129,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Pref.setValue(LuckyDrawActivity.this,"History","2");
-                Intent i = new Intent(LuckyDrawActivity.this,PrizeHistoryActivity.class);
+                Intent i = new Intent(LuckyDrawActivity.this,RedeemActivity.class);
                 startActivity(i);
 
                }
@@ -151,6 +151,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
 
             }
         });
+
         luckyDrawLayoutBinding.includePrize.rtlRefresh.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override

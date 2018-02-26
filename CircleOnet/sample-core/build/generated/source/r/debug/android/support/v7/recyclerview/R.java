@@ -31,10 +31,10 @@ public final class R {
         public static int abc_action_bar_embed_tabs = 0x7f050001;
     }
     public static final class color {
-        public static int notification_action_color_filter = 0x7f060066;
-        public static int notification_icon_bg_color = 0x7f060067;
-        public static int ripple_material_light = 0x7f060082;
-        public static int secondary_text_default_material_light = 0x7f060084;
+        public static int notification_action_color_filter = 0x7f060067;
+        public static int notification_icon_bg_color = 0x7f060068;
+        public static int ripple_material_light = 0x7f060083;
+        public static int secondary_text_default_material_light = 0x7f060085;
     }
     public static final class dimen {
         public static int compat_button_inset_horizontal_material = 0x7f080068;

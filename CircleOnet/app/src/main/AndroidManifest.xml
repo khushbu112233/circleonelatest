@@ -364,6 +364,9 @@
         <activity
             android:name=".Activity.PrizeHistoryActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.RedeemActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".Activity.TokenActivity"

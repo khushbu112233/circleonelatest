@@ -28,24 +28,24 @@ public final class R {
         public static final int abc_action_bar_embed_tabs = 0x7f0a0000;
     }
     public static final class color {
-        public static final int common_google_signin_btn_text_dark = 0x7f0c007f;
+        public static final int common_google_signin_btn_text_dark = 0x7f0c0080;
         public static final int common_google_signin_btn_text_dark_default = 0x7f0c001c;
         public static final int common_google_signin_btn_text_dark_disabled = 0x7f0c001d;
         public static final int common_google_signin_btn_text_dark_focused = 0x7f0c001e;
         public static final int common_google_signin_btn_text_dark_pressed = 0x7f0c001f;
-        public static final int common_google_signin_btn_text_light = 0x7f0c0080;
+        public static final int common_google_signin_btn_text_light = 0x7f0c0081;
         public static final int common_google_signin_btn_text_light_default = 0x7f0c0020;
         public static final int common_google_signin_btn_text_light_disabled = 0x7f0c0021;
         public static final int common_google_signin_btn_text_light_focused = 0x7f0c0022;
         public static final int common_google_signin_btn_text_light_pressed = 0x7f0c0023;
-        public static final int common_google_signin_btn_tint = 0x7f0c0081;
+        public static final int common_google_signin_btn_tint = 0x7f0c0082;
         public static final int notification_action_color_filter = 0x7f0c0000;
-        public static final int notification_icon_bg_color = 0x7f0c0042;
-        public static final int notification_material_background_media_default_color = 0x7f0c0043;
-        public static final int primary_text_default_material_dark = 0x7f0c0048;
-        public static final int ripple_material_light = 0x7f0c0057;
-        public static final int secondary_text_default_material_dark = 0x7f0c0058;
-        public static final int secondary_text_default_material_light = 0x7f0c0059;
+        public static final int notification_icon_bg_color = 0x7f0c0043;
+        public static final int notification_material_background_media_default_color = 0x7f0c0044;
+        public static final int primary_text_default_material_dark = 0x7f0c0049;
+        public static final int ripple_material_light = 0x7f0c0058;
+        public static final int secondary_text_default_material_dark = 0x7f0c0059;
+        public static final int secondary_text_default_material_light = 0x7f0c005a;
     }
     public static final class dimen {
         public static final int compat_button_inset_horizontal_material = 0x7f080056;

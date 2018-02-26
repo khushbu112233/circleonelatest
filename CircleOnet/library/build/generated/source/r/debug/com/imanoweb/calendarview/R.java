@@ -25,8 +25,9 @@ public final class R {
         public static int current_day_of_month = 0x7f060002;
         public static int day_disabled_background_color = 0x7f060003;
         public static int day_disabled_text_color = 0x7f060004;
-        public static int selected_day_background = 0x7f060005;
-        public static int white = 0x7f060006;
+        public static int golden = 0x7f060005;
+        public static int selected_day_background = 0x7f060006;
+        public static int white = 0x7f060007;
     }
     public static final class dimen {
         public static int calendarTitlePaddingBottom = 0x7f080001;

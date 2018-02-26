@@ -134,7 +134,7 @@ dependencies {
 
     implementation("com.quickblox:quickblox-android-sdk-chat:$rootProject.qbSdkVersion")
     implementation("com.quickblox:quickblox-android-sdk-content:$rootProject.qbSdkVersion")
-
+    compile 'com.crystal:crystalrangeseekbar:1.1.3'
     implementation(project(":sample-core"))
     implementation "se.emilsjolander:stickylistheaders:${rootProject.stickyListHeaders}"
     implementation 'com.github.orangegangsters:swipy:1.2.2@aar'

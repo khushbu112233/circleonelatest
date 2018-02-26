@@ -7,6 +7,7 @@
     <color name="textColor">#3cc1c8</color>
     <color name="blue">#00abea</color>
     <color name="white">#ffffff</color>
+    <color name="golden">#d9a03d</color>
     <color name="unselected">#8f9194</color>
     <color name="pressed_color">#4d90fe</color>
     <color name="default_color">#ffffff</color>

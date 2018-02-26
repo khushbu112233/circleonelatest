@@ -14,8 +14,9 @@ int color black 0x7f060001
 int color current_day_of_month 0x7f060002
 int color day_disabled_background_color 0x7f060003
 int color day_disabled_text_color 0x7f060004
-int color selected_day_background 0x7f060005
-int color white 0x7f060006
+int color golden 0x7f060005
+int color selected_day_background 0x7f060006
+int color white 0x7f060007
 int dimen calendarTitlePaddingBottom 0x7f080001
 int dimen calendarTitlePaddingTop 0x7f080002
 int dimen dateTitleTextSize 0x7f080003

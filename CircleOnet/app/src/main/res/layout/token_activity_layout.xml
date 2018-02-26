@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -40,5 +41,163 @@
                 android:layout_below="@+id/fmRibbon"
                 android:src="@drawable/ic_coin"/>
         </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/bg_for_history"
+            android:weightSum="1">
+            <TextView
+                android:id="@+id/txt1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Earn additional tokens by sharing CircleOne you receive a token every time a new user register with your reffered code."
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imgShare"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/coincircle"/>
+            <TextView
+                android:id="@+id/txtShareCount"
+                android:layout_below="@+id/imgPrize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Share"
+                android:textSize="11sp"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"
+                android:layout_centerVertical="true"/>
+        </FrameLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:background="@color/golden"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/bg_for_history"
+            android:weightSum="1">
+            <TextView
+                android:id="@+id/txt2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Exchange for additional tokens by utilizing your CircleOne Points.5 CircleOne Points = 1 token"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/txt3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Your CircleOne Points:"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/golden"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:layout_gravity="center"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:weightSum="1">
+            <TextView
+                android:id="@+id/txt4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="105"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/golden"
+                android:gravity="center"
+                android:textSize="21sp"
+                android:layout_gravity="center"/>
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center"
+                android:tint="@color/golden"
+                android:src="@drawable/login_logo"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical">
+            <SeekBar
+                android:id="@+id/rangeSeekbar3"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:thumb="@drawable/circle_small_coin"
+                android:progressDrawable="@drawable/background_fill"
+                />
+        </LinearLayout>
+        <!-- app:corner_radius="10"
+         app:min_value="0"
+         app:max_value="100"
+         app:bar_color="@color/golden"
+         app:bar_highlight_color="@color/golden"
+         app:left_thumb_image="@drawable/circle_small_coin"
+         app:data_type="_integer"-->
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imgPrize"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/coincircle"/>
+            <TextView
+                android:id="@+id/txtPrizeCount"
+                android:layout_below="@+id/imgPrize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Share"
+                android:textSize="11sp"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"
+                android:layout_centerVertical="true"/>
+        </FrameLayout>
+
     </LinearLayout>
 </layout>

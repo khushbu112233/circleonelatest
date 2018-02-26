@@ -114,8 +114,9 @@ containing a value of this type.
         public static final int current_day_of_month=0x7f050001;
         public static final int day_disabled_background_color=0x7f050002;
         public static final int day_disabled_text_color=0x7f050003;
-        public static final int selected_day_background=0x7f050004;
-        public static final int white=0x7f050005;
+        public static final int golden=0x7f050004;
+        public static final int selected_day_background=0x7f050005;
+        public static final int white=0x7f050006;
     }
     public static final class dimen {
         public static final int calendarTitlePaddingBottom=0x7f060000;
