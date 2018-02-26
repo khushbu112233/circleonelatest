@@ -56,7 +56,7 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <service android:name=".Utils.Timer_Service"/>
+
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
@@ -115,7 +115,9 @@
             </intent-filter>
             -->
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity" >
+        </activity>
+        <receiver android:name="Utils.TimeReceiver"/>
         <activity
             android:name=".Activity.EventsActivity"
             android:screenOrientation="portrait" />
@@ -325,6 +327,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         -->
+        <service android:name="Utils.TimeService"/>
         <activity
             android:name=".Activity.AttachmentDisplay"
             android:theme="@style/NoActionbarSplash" />
