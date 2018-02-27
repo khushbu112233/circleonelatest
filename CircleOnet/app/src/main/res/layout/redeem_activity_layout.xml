@@ -8,7 +8,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            >
             <RelativeLayout
                 android:id="@+id/fmRibbon"
                 android:layout_width="match_parent"
@@ -25,7 +25,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="50dp"
                     android:layout_marginTop="25dp"
                     android:gravity="center"
                     android:text="Redeem"
@@ -42,8 +41,13 @@
         </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:weightSum="5"
+            android:orientation="vertical">
             <LinearLayout
+                android:id="@+id/ll1"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -53,7 +57,7 @@
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp">
+                    android:layout_marginLeft="5dp">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -70,23 +74,26 @@
                             android:layout_height="wrap_content"
                             android:text="A"
                             android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
                             android:layout_gravity="top|left"
                             android:gravity="left"
                             android:textColor="@color/black"/>
                         <TextView
                             android:id="@+id/txt1"
                             android:layout_width="match_parent"
-                            android:layout_height="70dp"
+                            android:layout_height="wrap_content"
                             android:text="A"
-                            android:textSize="40sp"
+                            android:textSize="30sp"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:textColor="@color/black"/>
+
                         <ImageView
                             android:id="@+id/img1"
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_gravity="right|bottom"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
                             android:src="@drawable/ic_coin_redeem"/>
                     </LinearLayout>
 
@@ -96,36 +103,45 @@
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp">
+                    android:layout_marginLeft="5dp">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_gold_bg"/>
-                    <RelativeLayout
-                        android:layout_width="120dp"
-                        android:layout_height="90dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:orientation="vertical">
                         <TextView
+                            android:id="@+id/txtTop2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="B"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
                             android:id="@+id/txt2"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="wrap_content"
                             android:text="B"
-                            android:textSize="40sp"
+                            android:textSize="30sp"
                             android:layout_gravity="center"
-                            android:layout_centerInParent="true"
-                            android:layout_centerVertical="true"
-                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
                             android:textColor="@color/black"/>
+
                         <ImageView
                             android:id="@+id/img2"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_gravity="bottom"
-                            android:layout_alignParentBottom="true"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
                             android:src="@drawable/ic_coin_redeem"/>
-                    </RelativeLayout>
+                    </LinearLayout>
 
                 </FrameLayout>
                 <FrameLayout
@@ -133,36 +149,45 @@
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp">
+                    android:layout_marginLeft="5dp">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_gold_bg"/>
-                    <RelativeLayout
-                        android:layout_width="120dp"
-                        android:layout_height="90dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:orientation="vertical">
                         <TextView
+                            android:id="@+id/txtTop3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="C"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
                             android:id="@+id/txt3"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="wrap_content"
                             android:text="C"
-                            android:textSize="40sp"
+                            android:textSize="30sp"
                             android:layout_gravity="center"
-                            android:layout_centerInParent="true"
-                            android:layout_centerVertical="true"
-                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
                             android:textColor="@color/black"/>
+
                         <ImageView
                             android:id="@+id/img3"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_gravity="bottom"
-                            android:layout_alignParentBottom="true"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
                             android:src="@drawable/ic_coin_redeem"/>
-                    </RelativeLayout>
+                    </LinearLayout>
 
                 </FrameLayout>
                 <FrameLayout
@@ -170,36 +195,45 @@
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp">
+                    android:layout_marginLeft="5dp">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_gold_bg"/>
-                    <RelativeLayout
-                        android:layout_width="120dp"
-                        android:layout_height="90dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:orientation="vertical">
                         <TextView
+                            android:id="@+id/txtTop4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="D"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
                             android:id="@+id/txt4"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="wrap_content"
                             android:text="D"
-                            android:textSize="40sp"
+                            android:textSize="30sp"
                             android:layout_gravity="center"
-                            android:layout_centerInParent="true"
-                            android:layout_centerVertical="true"
-                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
                             android:textColor="@color/black"/>
+
                         <ImageView
                             android:id="@+id/img4"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_gravity="bottom"
-                            android:layout_alignParentBottom="true"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
                             android:src="@drawable/ic_coin_redeem"/>
-                    </RelativeLayout>
+                    </LinearLayout>
 
                 </FrameLayout>
                 <FrameLayout
@@ -207,38 +241,1001 @@
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp">
+                    android:layout_marginLeft="5dp">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_gold_bg"/>
-                    <RelativeLayout
-                        android:layout_width="120dp"
-                        android:layout_height="90dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:orientation="vertical">
                         <TextView
+                            android:id="@+id/txtTop5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="E"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
                             android:id="@+id/txt5"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="wrap_content"
                             android:text="E"
-                            android:textSize="40sp"
+                            android:textSize="30sp"
                             android:layout_gravity="center"
-                            android:layout_centerInParent="true"
-                            android:layout_centerVertical="true"
-                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
                             android:textColor="@color/black"/>
+
                         <ImageView
                             android:id="@+id/img5"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_gravity="bottom"
-                            android:layout_alignParentBottom="true"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
                             android:src="@drawable/ic_coin_redeem"/>
-                    </RelativeLayout>
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll2"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="5">
+                <FrameLayout
+                    android:id="@+id/frame_card11"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gold_bg"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txtTop11"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="F"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txt11"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="F"
+                            android:textSize="30sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"/>
 
+                        <ImageView
+                            android:id="@+id/img11"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/ic_coin_redeem"/>
+                    </LinearLayout>
+
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/frame_card12"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gold_bg"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txtTop12"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="G"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txt12"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="G"
+                            android:textSize="30sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"/>
+
+                        <ImageView
+                            android:id="@+id/img12"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/ic_coin_redeem"/>
+                    </LinearLayout>
+
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/frame_card13"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gold_bg"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txtTop13"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="H"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txt13"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="H"
+                            android:textSize="30sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"/>
+
+                        <ImageView
+                            android:id="@+id/img13"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/ic_coin_redeem"/>
+                    </LinearLayout>
+
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/frame_card14"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gold_bg"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txtTop14"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="I"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txt14"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="I"
+                            android:textSize="30sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"/>
+
+                        <ImageView
+                            android:id="@+id/img14"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/ic_coin_redeem"/>
+                    </LinearLayout>
+
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/frame_card15"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gold_bg"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txtTop15"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="J"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txt15"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="J"
+                            android:textSize="30sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"/>
+
+                        <ImageView
+                            android:id="@+id/img15"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/ic_coin_redeem"/>
+                    </LinearLayout>
+                </FrameLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll21"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="5">
+                <FrameLayout
+                    android:id="@+id/frame_card21"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gold_bg"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txtTop21"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="K"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txt21"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="K"
+                            android:textSize="30sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"/>
+
+                        <ImageView
+                            android:id="@+id/img21"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/ic_coin_redeem"/>
+                    </LinearLayout>
+
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/frame_card22"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gold_bg"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txtTop22"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="L"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txt22"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="L"
+                            android:textSize="30sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"/>
+
+                        <ImageView
+                            android:id="@+id/img22"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/ic_coin_redeem"/>
+                    </LinearLayout>
+
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/frame_card23"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gold_bg"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txtTop23"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="M"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txt23"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="M"
+                            android:textSize="30sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"/>
+
+                        <ImageView
+                            android:id="@+id/img23"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/ic_coin_redeem"/>
+                    </LinearLayout>
+
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/frame_card24"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gold_bg"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txtTop24"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="N"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txt24"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="N"
+                            android:textSize="30sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"/>
+
+                        <ImageView
+                            android:id="@+id/img24"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/ic_coin_redeem"/>
+                    </LinearLayout>
+
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/frame_card25"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gold_bg"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txtTop25"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="O"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txt25"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="O"
+                            android:textSize="30sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"/>
+
+                        <ImageView
+                            android:id="@+id/img25"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/ic_coin_redeem"/>
+                    </LinearLayout>
+                </FrameLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll31"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="5">
+                <FrameLayout
+                    android:id="@+id/frame_card31"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gold_bg"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txtTop31"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="P"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txt31"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="P"
+                            android:textSize="30sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"/>
+
+                        <ImageView
+                            android:id="@+id/img31"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/ic_coin_redeem"/>
+                    </LinearLayout>
+
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/frame_card32"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gold_bg"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txtTop32"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Q"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txt32"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Q"
+                            android:textSize="30sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"/>
+
+                        <ImageView
+                            android:id="@+id/img32"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/ic_coin_redeem"/>
+                    </LinearLayout>
+
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/frame_card33"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gold_bg"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txtTop33"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="R"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txt33"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="R"
+                            android:textSize="30sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"/>
+
+                        <ImageView
+                            android:id="@+id/img33"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/ic_coin_redeem"/>
+                    </LinearLayout>
+
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/frame_card34"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gold_bg"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txtTop34"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="S"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txt34"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="S"
+                            android:textSize="30sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"/>
+
+                        <ImageView
+                            android:id="@+id/img34"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/ic_coin_redeem"/>
+                    </LinearLayout>
+
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/frame_card35"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gold_bg"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txtTop35"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="T"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txt35"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="T"
+                            android:textSize="30sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"/>
+
+                        <ImageView
+                            android:id="@+id/img35"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/ic_coin_redeem"/>
+                    </LinearLayout>
+                </FrameLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll41"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="5">
+                <FrameLayout
+                    android:id="@+id/frame_card41"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gold_bg"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txtTop41"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="U"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txt41"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="U"
+                            android:textSize="30sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"/>
+
+                        <ImageView
+                            android:id="@+id/img41"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/ic_coin_redeem"/>
+                    </LinearLayout>
+
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/frame_card42"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gold_bg"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txtTop42"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="V"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txt42"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="V"
+                            android:textSize="30sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"/>
+
+                        <ImageView
+                            android:id="@+id/img42"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/ic_coin_redeem"/>
+                    </LinearLayout>
+
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/frame_card43"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gold_bg"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txtTop43"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="W"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txt43"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="W"
+                            android:textSize="30sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"/>
+
+                        <ImageView
+                            android:id="@+id/img43"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/ic_coin_redeem"/>
+                    </LinearLayout>
+
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/frame_card44"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gold_bg"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txtTop44"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Y"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txt44"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Y"
+                            android:textSize="30sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"/>
+
+                        <ImageView
+                            android:id="@+id/img44"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/ic_coin_redeem"/>
+                    </LinearLayout>
+
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/frame_card45"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gold_bg"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txtTop45"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Z"
+                            android:textSize="10sp"
+                            android:layout_marginLeft="18dp"
+                            android:layout_gravity="top|left"
+                            android:gravity="left"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txt45"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Z"
+                            android:textSize="30sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"/>
+
+                        <ImageView
+                            android:id="@+id/img45"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/ic_coin_redeem"/>
+                    </LinearLayout>
                 </FrameLayout>
 
             </LinearLayout>
