@@ -369,7 +369,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.RedeemActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionbar"/>
 
         <activity
             android:name=".Activity.TokenActivity"
