@@ -1,24 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/luckydraw"
         android:orientation="vertical">
+
         <RelativeLayout
+            android:id="@+id/rltTop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="5dp"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp">
+
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="1dp"
+                android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
+
+            <com.circle8.circleOne.Utils.cgTextView
+                android:id="@+id/txtprofile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="2dp"
+                android:text="Token*"
+                android:textColor="@color/white"
+                android:textSize="17dp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_weight="0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <RelativeLayout
                 android:id="@+id/fmRibbon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <ImageView
                     android:id="@+id/imgRibbon"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_ribbon"/>
+                    android:layout_height="90dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/ic_ribbon" />
 
                 <com.circle8.circleOne.Utils.cgBoldTextView
                     android:id="@+id/txtPrizeHistory"
@@ -26,146 +66,449 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="15dp"
                     android:gravity="center"
-                    android:text="Token"
+                    android:text="Token*"
                     android:textColor="@color/black"
                     android:textSize="17dp" />
             </RelativeLayout>
+
             <ImageView
-                android:layout_width="200dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="-50dp"
+                android:layout_width="160dp"
+                android:layout_height="80dp"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/fmRibbon"
-                android:src="@drawable/ic_coin"/>
+                android:layout_marginTop="-60dp"
+                android:src="@drawable/ic_coin" />
+
+            <LinearLayout
+                android:layout_width="176dp"
+                android:layout_height="45dp"
+                android:layout_below="@+id/fmRibbon"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="-30dp"
+                android:background="@drawable/bg_gold"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txtDay1"
+                            android:layout_width="15dp"
+                            android:layout_height="27dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="2dp"
+                            android:background="@drawable/timer_black"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txtDay2"
+                            android:layout_width="15dp"
+                            android:layout_height="27dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="2dp"
+                            android:background="@drawable/timer_black"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="2dp"
+                        android:gravity="center"
+                        android:text="Days"
+                        android:textColor="@color/black"
+                        android:textSize="9dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/timer_colon" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txtHour1"
+                            android:layout_width="15dp"
+                            android:layout_height="27dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="2dp"
+                            android:background="@drawable/timer_black"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txtHour2"
+                            android:layout_width="15dp"
+                            android:layout_height="27dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="2dp"
+                            android:background="@drawable/timer_black"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="2dp"
+                        android:gravity="center"
+                        android:text="Hour"
+                        android:textColor="@color/black"
+                        android:textSize="9dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/timer_colon" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txtMinute1"
+                            android:layout_width="15dp"
+                            android:layout_height="27dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="2dp"
+                            android:background="@drawable/timer_black"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txtMinute2"
+                            android:layout_width="15dp"
+                            android:layout_height="27dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="2dp"
+                            android:background="@drawable/timer_black"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="2dp"
+                        android:gravity="center"
+                        android:text="Minute"
+                        android:textColor="@color/black"
+                        android:textSize="9dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/timer_colon" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txtSecond1"
+                            android:layout_width="15dp"
+                            android:layout_height="27dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="2dp"
+                            android:background="@drawable/timer_black"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txtSecond2"
+                            android:layout_width="15dp"
+                            android:layout_height="27dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="2dp"
+                            android:background="@drawable/timer_black"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="2dp"
+                        android:gravity="center"
+                        android:text="Second"
+                        android:textColor="@color/black"
+                        android:textSize="9dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
         </RelativeLayout>
+
         <LinearLayout
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="20dp"
+            android:orientation="vertical"
+            android:layout_weight="1">
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/bg_for_history"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp"
             android:weightSum="1">
-            <TextView
+
+            <com.circle8.circleOne.Utils.cgTextView
                 android:id="@+id/txt1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Earn additional tokens by sharing CircleOne you receive a token every time a new user register with your reffered code."
-                android:layout_marginLeft="5dp"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:textSize="15sp"
-                android:layout_gravity="center"/>
-        </LinearLayout>
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/imgShare"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:layout_alignParentLeft="true"
-                android:src="@drawable/coincircle"/>
-            <TextView
-                android:id="@+id/txtShareCount"
-                android:layout_below="@+id/imgPrize"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:text="Exchange for additional tokens by utilizing your CircleOne Points.5 CircleOne Points = 1 token"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <com.circle8.circleOne.Utils.cgBoldTextView
+
+            android:id="@+id/txt3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="0dp"
+            android:gravity="center"
+            android:text="Your CircleOne Points:"
+            android:textColor="#d1ae5c"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.circle8.circleOne.Utils.cgBoldTextView
+                android:id="@+id/txt4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Share"
-                android:textSize="11sp"
-                android:textColor="@color/black"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:text="105"
+                android:textColor="#d1ae5c"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/login_logo"
+                android:tint="@color/golden" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:id="@+id/layoutSlider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="45dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageLeft"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_minus"></ImageView>
+
+            <ImageView
+                android:id="@+id/imageRight"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_plus"></ImageView>
+
+            <SeekBar
+                android:id="@+id/sliderZoom"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/imageRight"
+                android:layout_toRightOf="@id/imageLeft"
+                android:maxHeight="2dip"
+                android:minHeight="2dip"
+                android:progressDrawable="@xml/progress_drawable"
+                android:thumb="@xml/thumb_drawable"></SeekBar>
+        </RelativeLayout>
+
+
+        <FrameLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgPrize"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="center"
+                android:src="@drawable/coincircle" />
+
+            <TextView
+                android:id="@+id/txtPrizeCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgPrize"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
                 android:gravity="center_vertical"
-                android:layout_centerVertical="true"/>
+                android:text="Confirm"
+                android:textColor="@color/black"
+                android:textSize="11sp" />
         </FrameLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginLeft="20dp"
-            android:background="@color/golden"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/bg_for_history"
-            android:weightSum="1">
-            <TextView
-                android:id="@+id/txt2"
+            android:layout_marginTop="5dp"
+            android:background="@color/golden" />
+
+            <LinearLayout
+                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Exchange for additional tokens by utilizing your CircleOne Points.5 CircleOne Points = 1 token"
-                android:layout_marginLeft="5dp"
-                android:textColor="@color/black"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/bg_for_history"
                 android:gravity="center"
-                android:textSize="15sp"
-                android:layout_gravity="center"/>
-        </LinearLayout>
-        <TextView
-            android:id="@+id/txt3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Your CircleOne Points:"
-            android:layout_marginLeft="5dp"
-            android:textColor="@color/golden"
-            android:layout_marginTop="10dp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:textSize="15sp"
-            android:layout_gravity="center"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:weightSum="1">
-            <TextView
-                android:id="@+id/txt4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="105"
-                android:layout_marginLeft="5dp"
-                android:textColor="@color/golden"
-                android:gravity="center"
-                android:textSize="21sp"
-                android:layout_gravity="center"/>
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginLeft="5dp"
-                android:layout_gravity="center"
-                android:tint="@color/golden"
-                android:src="@drawable/login_logo"/>
-        </LinearLayout>
-        <LinearLayout
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="1">
+
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:id="@+id/txt2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text="Earn additional tokens by sharing CircleOne you receive a token every time a new user register with your reffered code."
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="vertical">
-            <SeekBar
-                android:id="@+id/rangeSeekbar3"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
+
+            <FrameLayout
+                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:thumb="@drawable/circle_small_coin"
-                android:progressDrawable="@drawable/background_fill"
-                />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imgShare"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="center"
+                    android:src="@drawable/coincircle" />
+
+                <TextView
+                    android:id="@+id/txtShareCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgPrize"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:gravity="center_vertical"
+                    android:text="Share"
+                    android:textColor="@color/black"
+                    android:textSize="11sp" />
+            </FrameLayout>
+
         </LinearLayout>
         <!-- app:corner_radius="10"
          app:min_value="0"
@@ -174,29 +517,27 @@
          app:bar_highlight_color="@color/golden"
          app:left_thumb_image="@drawable/circle_small_coin"
          app:data_type="_integer"-->
-
-        <FrameLayout
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/lnrBottom"
+            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/imgPrize"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:layout_alignParentLeft="true"
-                android:src="@drawable/coincircle"/>
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradient_lucky_draw">
             <TextView
-                android:id="@+id/txtPrizeCount"
-                android:layout_below="@+id/imgPrize"
-                android:layout_width="wrap_content"
+                android:id="@+id/txtDesc"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Share"
-                android:textSize="11sp"
-                android:textColor="@color/black"
-                android:gravity="center_vertical"
-                android:layout_centerVertical="true"/>
-        </FrameLayout>
+                android:layout_margin="5dp"
+                android:text="Terms &amp; Condition"
+                android:maxLines="5"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_toLeftOf="@+id/imgRight"
+                android:layout_toRightOf="@+id/imgLeft"
+                android:textSize="10sp"
+                />
 
+        </RelativeLayout>
     </LinearLayout>
 </layout>
