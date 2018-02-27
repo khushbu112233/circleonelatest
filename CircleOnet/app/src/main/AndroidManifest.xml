@@ -213,9 +213,7 @@
         <activity
             android:name=".Activity.GroupTag"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".Activity.Notification"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ExternalNFC.NFCExternal"
             android:screenOrientation="portrait" />
