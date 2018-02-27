@@ -213,9 +213,9 @@
         <activity
             android:name=".Activity.GroupTag"
             android:screenOrientation="portrait" />
-        <activity
+        <!--<activity
             android:name=".Activity.Notification"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" />-->
         <activity
             android:name=".ExternalNFC.NFCExternal"
             android:screenOrientation="portrait" />
@@ -389,7 +389,8 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="application/com.circle8.circleOne" />
+                <data android:mimeType="application/com.circle8.circleOne"
+                    tools:ignore="AppLinkUrlError" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
