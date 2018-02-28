@@ -403,7 +403,8 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_plus"></ImageView>
 
-            <SeekBar
+
+            <com.circle8.circleOne.Utils.MySeekBar
                 android:id="@+id/sliderZoom"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -413,7 +414,15 @@
                 android:maxHeight="2dip"
                 android:minHeight="2dip"
                 android:progressDrawable="@xml/progress_drawable"
-                android:thumb="@xml/thumb_drawable"></SeekBar>
+                android:thumb="@xml/thumb_drawable"></com.circle8.circleOne.Utils.MySeekBar>
+
+            <TextView
+                android:id="@+id/txtSeekValue"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textSize="15dp"/>
         </RelativeLayout>
 
 
