@@ -43,7 +43,6 @@ import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.FragmentList1Binding;
-import com.flurry.android.FlurryAgent;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -58,7 +57,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.circle8.circleOne.Activity.CardsActivity.Connection_Limit;
 import static com.circle8.circleOne.Utils.Utility.POST2;

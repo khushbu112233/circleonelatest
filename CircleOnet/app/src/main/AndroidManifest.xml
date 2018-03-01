@@ -371,6 +371,10 @@
             android:name=".Activity.RedeemActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar"/>
+        <activity
+            android:name=".Activity.RedeemListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionbar"/>
 
         <activity
             android:name=".Activity.TokenActivity"
@@ -401,7 +405,8 @@
                 <data android:mimeType="application/com.circle8.circleone" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.AddManuallyActivity"></activity>
+        <activity android:name=".Activity.AddManuallyActivity"
+            android:theme="@style/NoActionbar"></activity>
     </application>
 
 </manifest>

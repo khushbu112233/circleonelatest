@@ -33,7 +33,6 @@ import com.circle8.circleOne.Model.UserObject;
 import com.circle8.circleOne.MultiContactPicker;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
-import com.circle8.circleOne.Walkthrough.HelpActivity;
 import com.google.gson.Gson;
 
 import java.security.InvalidAlgorithmParameterException;

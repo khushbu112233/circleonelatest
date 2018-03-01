@@ -3,13 +3,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_margin="10dp"
         android:background="@drawable/bg_with_golden_border"
         android:orientation="vertical">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/txt1"
@@ -46,60 +44,115 @@
         <LinearLayout
             android:id="@+id/ll1"
             android:layout_weight="1"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:weightSum="1"
             android:orientation="horizontal"
             >
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:layout_weight="0.40"
-                android:weightSum="1">
+                android:layout_weight="0.50"
+                >
                 <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.40">
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    >
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:src="@drawable/ic_gold_bg"/>
+
                     <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
+                        <TextView
+                            android:id="@+id/txtTop1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:text="A"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginLeft="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
                         <TextView
                             android:id="@+id/txtL1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="A"
+                            android:gravity="center"
+                            android:layout_centerInParent="true"
                             android:textSize="30sp"
                             android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txtBottom1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginRight="10dp"
+                            android:textSize="10sp"
+                            android:text="A"/>
                     </RelativeLayout>
+
                 </FrameLayout>
 
                 <TextView
-                    android:layout_weight="0.20"
-                    android:layout_width="wrap_content"
+                    android:layout_width="30dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="+"
                     android:gravity="center"
                     android:textSize="30sp"/>
                 <FrameLayout
-                    android:layout_weight="0.40"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    >
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:src="@drawable/ic_gold_bg"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
+                        <TextView
+                            android:id="@+id/txtTop2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:text="A"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginLeft="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
+                        <TextView
+                            android:id="@+id/txtL2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="A"
+                            android:gravity="center"
+                            android:layout_centerInParent="true"
+                            android:textSize="30sp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/txtBottom2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginRight="10dp"
+                            android:textSize="10sp"
+                            android:text="A"/>
+                    </RelativeLayout>
+
                 </FrameLayout>
 
             </LinearLayout>
@@ -108,7 +161,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
-                android:layout_weight="0.60"
+                android:layout_weight="0.50"
                 android:gravity="center">
                 <LinearLayout
                     android:gravity="center"
@@ -144,7 +197,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text=""
+                            android:text="1"
                             android:textColor="@color/black"
                             android:gravity="center_vertical"
                             android:layout_centerVertical="true"/>
@@ -156,7 +209,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Prizes"
+                        android:text="Redeem"
                         android:textColor="#F0DB91"
                         android:gravity="center_vertical"
                         android:layout_centerVertical="true"/>

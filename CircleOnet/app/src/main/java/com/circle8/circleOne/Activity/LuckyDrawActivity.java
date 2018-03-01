@@ -3,31 +3,30 @@ package com.circle8.circleOne.Activity;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.AlarmManager;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,9 +38,11 @@ import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.TimeReceiver;
 import com.circle8.circleOne.Utils.Timer_Service;
+import com.circle8.circleOne.Utils.TouchImageView;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.LuckyDrawLayoutBinding;
 import com.wajahatkarim3.easyflipview.EasyFlipView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,8 +72,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
     String date_time;
     Calendar calendar;
     SimpleDateFormat simpleDateFormat;
-   // EditText et_hours;
-
+    // EditText et_hours;
     private PrefUtils prefUtils;
     private CountDownTimer countDownTimer;
     private int timeToStart;
@@ -184,7 +184,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
 
 
             //et_hours.setEnabled(false);
-           // btn_start.setEnabled(false);
+            // btn_start.setEnabled(false);
 
 
             calendar = Calendar.getInstance();
@@ -201,10 +201,10 @@ public class LuckyDrawActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Pref.setValue(LuckyDrawActivity.this,"History","2");
-                Intent i = new Intent(LuckyDrawActivity.this,RedeemActivity.class);
+                Intent i = new Intent(LuckyDrawActivity.this,RedeemListActivity.class);
                 startActivity(i);
 
-               }
+            }
         });
         luckyDrawLayoutBinding.includePrize.rtlprize.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -223,6 +223,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
 
             }
         });
+
 
         luckyDrawLayoutBinding.includePrize.rtlRefresh.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -479,6 +480,89 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 prizeIdList.add(Integer.parseInt(allCards.get(7).getPrize_ID()));
             }
         });
+        luckyDrawLayoutBinding.frameCard1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              //  if(luckyDrawLayoutBinding.easyFlipView1.isBackSide()) {
+                    dialog();
+                //}
+            }
+        });
+        luckyDrawLayoutBinding.frameCard2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(luckyDrawLayoutBinding.easyFlipView2.isBackSide()) {
+                    dialog();
+                }
+            }
+        });
+        luckyDrawLayoutBinding.frameCard3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(luckyDrawLayoutBinding.easyFlipView3.isBackSide()) {
+                    dialog();
+                }
+            }
+        });
+        luckyDrawLayoutBinding.frameCard4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(luckyDrawLayoutBinding.easyFlipView4.isBackSide()) {
+                    dialog();
+                }
+            }
+        });
+        luckyDrawLayoutBinding.frameCard5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(luckyDrawLayoutBinding.easyFlipView5.isBackSide()) {
+                    dialog();
+                }
+            }
+        });
+        luckyDrawLayoutBinding.frameCard6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(luckyDrawLayoutBinding.easyFlipView6.isBackSide()) {
+                    dialog();
+                }
+            }
+        });
+        luckyDrawLayoutBinding.frameCard7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(luckyDrawLayoutBinding.easyFlipView7.isBackSide()) {
+                    dialog();
+                }
+            }
+        });
+
+        luckyDrawLayoutBinding.frameCard8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(luckyDrawLayoutBinding.easyFlipView8.isBackSide()) {
+                    dialog();
+                }
+            }
+        });
+    }
+
+    private void dialog() {
+        final Dialog dialog=new Dialog(LuckyDrawActivity.this);
+        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        dialog.setContentView(R.layout.layout_full_image);
+        TouchImageView bmImage = (TouchImageView) dialog.findViewById(R.id.img_receipt);
+        bmImage.setImageResource(R.drawable.ic_gold_bg);
+        Button button=(Button)dialog.findViewById(R.id.btn_dissmiss);
+        dialog.setCancelable(true);
+        dialog.show();
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
     @Override
@@ -675,7 +759,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
 
     public void countMaintain(int count)
     {
-        if(count>=3) {
+        if(count>=2) {
             luckyDrawLayoutBinding.easyFlipView1.setEnabled(false);
             luckyDrawLayoutBinding.easyFlipView2.setEnabled(false);
             luckyDrawLayoutBinding.easyFlipView3.setEnabled(false);
@@ -982,20 +1066,20 @@ public class LuckyDrawActivity extends AppCompatActivity {
             {
                 JSONObject response = new JSONObject(result);
                 Log.e("response",""+response);
-                    JSONArray jsonArray = response.getJSONArray("prize_details");
-                    prizeHistorysAll.clear();
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject iCon = jsonArray.getJSONObject(i);
-                        PrizeHistory prizeHistoryModel = new PrizeHistory();
-                        prizeHistoryModel.setUserId(iCon.getString("userid"));
-                        prizeHistoryModel.setPrize_ID(iCon.getString("Prize_ID"));
-                        prizeHistoryModel.setPrize_Name(iCon.getString("Prize_Name"));
-                        prizeHistoryModel.setPrize_Image(iCon.getString("Prize_Image"));
-                        prizeHistoryModel.setResult(iCon.getString("Result"));
-                        prizeHistoryModel.setPlay_Date(iCon.getString("Play_Date"));
-                        prizeHistorysAll.add(prizeHistoryModel);
+                JSONArray jsonArray = response.getJSONArray("prize_details");
+                prizeHistorysAll.clear();
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject iCon = jsonArray.getJSONObject(i);
+                    PrizeHistory prizeHistoryModel = new PrizeHistory();
+                    prizeHistoryModel.setUserId(iCon.getString("userid"));
+                    prizeHistoryModel.setPrize_ID(iCon.getString("Prize_ID"));
+                    prizeHistoryModel.setPrize_Name(iCon.getString("Prize_Name"));
+                    prizeHistoryModel.setPrize_Image(iCon.getString("Prize_Image"));
+                    prizeHistoryModel.setResult(iCon.getString("Result"));
+                    prizeHistoryModel.setPlay_Date(iCon.getString("Play_Date"));
+                    prizeHistorysAll.add(prizeHistoryModel);
 
-                    }
+                }
 
             }
             catch (JSONException e)

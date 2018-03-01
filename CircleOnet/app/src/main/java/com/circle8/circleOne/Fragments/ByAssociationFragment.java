@@ -33,22 +33,17 @@ import com.circle8.circleOne.Model.ConnectList;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.FragmentConnectListBinding;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.POST2;
-import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class ByAssociationFragment  extends Fragment implements View.OnClickListener,AdapterView.OnItemClickListener

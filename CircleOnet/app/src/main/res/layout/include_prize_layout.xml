@@ -24,7 +24,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center"
-                    android:layout_alignParentLeft="true"
+                                        android:layout_alignParentLeft="true"
                     android:src="@drawable/coincircle"/>
                 <TextView
                     android:id="@+id/txtPrizeCount"
@@ -149,6 +149,8 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center"
+                    android:elevation="20dp"
+                    android:translationZ="20dp"
                     android:layout_alignParentLeft="true"
                     android:src="@drawable/coincircle"/>
                 <TextView
