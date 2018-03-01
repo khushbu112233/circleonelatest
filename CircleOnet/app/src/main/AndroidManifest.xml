@@ -378,7 +378,8 @@
 
         <activity
             android:name=".Activity.TokenActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionbar"/>
         <activity
             android:name=".Activity.DashboardActivity"
             android:theme="@style/NoActionbar">
@@ -406,7 +407,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.AddManuallyActivity"
-            android:theme="@style/NoActionbar"></activity>
+            android:theme="@style/NoActionbar"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
