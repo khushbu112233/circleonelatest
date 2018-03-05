@@ -18,16 +18,12 @@ package com.circle8.circleOne.widget;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.view.View;
 import android.widget.RemoteViews;
 
 import com.circle8.circleOne.ApplicationUtils.MyApplication;
 import com.circle8.circleOne.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 /**
  * Example widget provider
