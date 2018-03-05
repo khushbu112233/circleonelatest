@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.circle8.circleOne">
+    package="com.circle8.circleOne" >
 
     <permission
         android:name="com.circle8.circleOne.permission.C2D_MESSAGE"
@@ -68,16 +68,6 @@
                 <category android:name="com.quickblox.sample.chat" />
             </intent-filter>
         </receiver>
-
-        <!--
-        <service
-            android:name=".gcm.GcmPushListenerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            </intent-filter>
-        </service>
-        -->
         <service
             android:name="com.quickblox.messages.services.gcm.QBGcmPushInstanceIDService"
             android:exported="false">
@@ -105,18 +95,8 @@
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout"
             android:screenOrientation="portrait">
 
-            <!--
-            <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="application/circle8ircleonet" />
-            </intent-filter>
-            -->
         </activity>
-        <activity android:name=".MainActivity" >
-        </activity>
+        <activity android:name=".MainActivity" />
         <receiver android:name="Utils.TimeReceiver"/>
         <activity
             android:name=".Activity.EventsActivity"
@@ -207,15 +187,11 @@
             android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.FingerPrintLogin"
-            android:label="CircleOne"
             android:screenOrientation="portrait"
             android:theme="@style/ThemeDialog" />
         <activity
             android:name=".Activity.GroupTag"
             android:screenOrientation="portrait" />
-        <!--<activity
-            android:name=".Activity.Notification"
-            android:screenOrientation="portrait" />-->
         <activity
             android:name=".ExternalNFC.NFCExternal"
             android:screenOrientation="portrait" />
@@ -300,10 +276,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/ThemeDialog" />
         <activity
-            android:name=".Activity.ImageZoom"
-            android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar" />
-        <activity
             android:name=".Activity.SearchGroupMembers"
             android:screenOrientation="portrait" />
         <activity
@@ -321,12 +293,7 @@
             android:name=".Activity.CreateGroupActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
-        <!--
-            <activity
-            android:name=".Activity.MerchantDetailActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar" />
-        -->
+
         <service android:name="Utils.TimeService"/>
         <activity
             android:name=".Activity.AttachmentDisplay"
@@ -410,5 +377,4 @@
             android:theme="@style/NoActionbar"
             android:screenOrientation="portrait"></activity>
     </application>
-
 </manifest>

@@ -230,8 +230,9 @@ public class LuckyDrawActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                mp.start();
                 count = 0;
+                mp.start();
+
                 prizeIdList = new ArrayList<>();
 
                 luckyDrawLayoutBinding.easyFlipView1.setClickable(true);
@@ -390,17 +391,22 @@ public class LuckyDrawActivity extends AppCompatActivity {
             }
         });
 
-
         luckyDrawLayoutBinding.easyFlipView1.setOnFlipListener(new EasyFlipView.OnFlipAnimationListener() {
             @Override
             public void onViewFlipCompleted(EasyFlipView flipView, EasyFlipView.FlipState newCurrentSide)
             {
                 count++;
                 countMaintain(count);
-                flipView.setClickable(false);
-                flipView.setEnabled(false);
-                prizeIdList.add(Integer.parseInt(allCards.get(0).getPrize_ID()));
 
+                if(luckyDrawLayoutBinding.easyFlipView1.isBackSide()) {
+                    dialog();
+                }else {
+                    flipView.setClickable(false);
+                    flipView.setEnabled(false);
+                    flipView.setFlipEnabled(false);
+                    flipView.setFlipOnTouch(false);
+                    prizeIdList.add(Integer.parseInt(allCards.get(0).getPrize_ID()));
+                }
             }
         });
         luckyDrawLayoutBinding.easyFlipView2.setOnFlipListener(new EasyFlipView.OnFlipAnimationListener() {
@@ -409,9 +415,16 @@ public class LuckyDrawActivity extends AppCompatActivity {
             {
                 count++;
                 countMaintain(count);
-                flipView.setClickable(false);
-                flipView.setEnabled(false);
-                prizeIdList.add(Integer.parseInt(allCards.get(1).getPrize_ID()));
+
+                if(luckyDrawLayoutBinding.easyFlipView2.isBackSide()) {
+                    dialog();
+                }else {
+                    flipView.setClickable(false);
+                    flipView.setEnabled(false);
+                    flipView.setFlipEnabled(false);
+                    flipView.setFlipOnTouch(false);
+                    prizeIdList.add(Integer.parseInt(allCards.get(1).getPrize_ID()));
+                }
             }
         });
         luckyDrawLayoutBinding.easyFlipView3.setOnFlipListener(new EasyFlipView.OnFlipAnimationListener() {
@@ -420,9 +433,16 @@ public class LuckyDrawActivity extends AppCompatActivity {
             {
                 count++;
                 countMaintain(count);
-                flipView.setClickable(false);
-                flipView.setEnabled(false);
-                prizeIdList.add(Integer.parseInt(allCards.get(2).getPrize_ID()));
+
+                if(luckyDrawLayoutBinding.easyFlipView3.isBackSide()) {
+                    dialog();
+                }else {
+                    flipView.setClickable(false);
+                    flipView.setEnabled(false);
+                    flipView.setFlipEnabled(false);
+                    flipView.setFlipOnTouch(false);
+                    prizeIdList.add(Integer.parseInt(allCards.get(2).getPrize_ID()));
+                }
             }
         });
         luckyDrawLayoutBinding.easyFlipView4.setOnFlipListener(new EasyFlipView.OnFlipAnimationListener() {
@@ -431,9 +451,16 @@ public class LuckyDrawActivity extends AppCompatActivity {
             {
                 count++;
                 countMaintain(count);
-                flipView.setClickable(false);
-                flipView.setEnabled(false);
-                prizeIdList.add(Integer.parseInt(allCards.get(3).getPrize_ID()));
+
+                if(luckyDrawLayoutBinding.easyFlipView4.isBackSide()) {
+                    dialog();
+                }else {
+                    flipView.setClickable(false);
+                    flipView.setEnabled(false);
+                    flipView.setFlipEnabled(false);
+                    flipView.setFlipOnTouch(false);
+                    prizeIdList.add(Integer.parseInt(allCards.get(3).getPrize_ID()));
+                }
             }
         });
         luckyDrawLayoutBinding.easyFlipView5.setOnFlipListener(new EasyFlipView.OnFlipAnimationListener() {
@@ -442,9 +469,16 @@ public class LuckyDrawActivity extends AppCompatActivity {
             {
                 count++;
                 countMaintain(count);
-                flipView.setClickable(false);
-                flipView.setEnabled(false);
-                prizeIdList.add(Integer.parseInt(allCards.get(4).getPrize_ID()));
+
+                if(luckyDrawLayoutBinding.easyFlipView5.isBackSide()) {
+                    dialog();
+                }else {
+                    flipView.setClickable(false);
+                    flipView.setEnabled(false);
+                    flipView.setFlipEnabled(false);
+                    flipView.setFlipOnTouch(false);
+                    prizeIdList.add(Integer.parseInt(allCards.get(4).getPrize_ID()));
+                }
             }
         });
         luckyDrawLayoutBinding.easyFlipView6.setOnFlipListener(new EasyFlipView.OnFlipAnimationListener() {
@@ -453,20 +487,35 @@ public class LuckyDrawActivity extends AppCompatActivity {
             {
                 count++;
                 countMaintain(count);
-                flipView.setClickable(false);
-                flipView.setEnabled(false);
-                prizeIdList.add(Integer.parseInt(allCards.get(5).getPrize_ID()));
+
+                if(luckyDrawLayoutBinding.easyFlipView6.isBackSide()) {
+                    dialog();
+                }else {
+                    flipView.setClickable(false);
+                    flipView.setEnabled(false);
+                    flipView.setFlipEnabled(false);
+                    flipView.setFlipOnTouch(false);
+                    prizeIdList.add(Integer.parseInt(allCards.get(5).getPrize_ID()));
+                }
             }
         });
         luckyDrawLayoutBinding.easyFlipView7.setOnFlipListener(new EasyFlipView.OnFlipAnimationListener() {
             @Override
             public void onViewFlipCompleted(EasyFlipView flipView, EasyFlipView.FlipState newCurrentSide)
             {
+
                 count++;
                 countMaintain(count);
-                flipView.setClickable(false);
-                flipView.setEnabled(false);
-                prizeIdList.add(Integer.parseInt(allCards.get(6).getPrize_ID()));
+
+                if(luckyDrawLayoutBinding.easyFlipView7.isBackSide()) {
+                    dialog();
+                }else {
+                    flipView.setClickable(false);
+                    flipView.setEnabled(false);
+                    flipView.setFlipEnabled(false);
+                    flipView.setFlipOnTouch(false);
+                    prizeIdList.add(Integer.parseInt(allCards.get(6).getPrize_ID()));
+                }
             }
         });
         luckyDrawLayoutBinding.easyFlipView8.setOnFlipListener(new EasyFlipView.OnFlipAnimationListener() {
@@ -475,76 +524,20 @@ public class LuckyDrawActivity extends AppCompatActivity {
             {
                 count++;
                 countMaintain(count);
-                flipView.setClickable(false);
-                flipView.setEnabled(false);
-                prizeIdList.add(Integer.parseInt(allCards.get(7).getPrize_ID()));
-            }
-        });
-        luckyDrawLayoutBinding.frameCard1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              //  if(luckyDrawLayoutBinding.easyFlipView1.isBackSide()) {
+
+                if(luckyDrawLayoutBinding.easyFlipView8.isBackSide())
+                {
                     dialog();
-                //}
-            }
-        });
-        luckyDrawLayoutBinding.frameCard2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(luckyDrawLayoutBinding.easyFlipView2.isBackSide()) {
-                    dialog();
-                }
-            }
-        });
-        luckyDrawLayoutBinding.frameCard3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(luckyDrawLayoutBinding.easyFlipView3.isBackSide()) {
-                    dialog();
-                }
-            }
-        });
-        luckyDrawLayoutBinding.frameCard4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(luckyDrawLayoutBinding.easyFlipView4.isBackSide()) {
-                    dialog();
-                }
-            }
-        });
-        luckyDrawLayoutBinding.frameCard5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(luckyDrawLayoutBinding.easyFlipView5.isBackSide()) {
-                    dialog();
-                }
-            }
-        });
-        luckyDrawLayoutBinding.frameCard6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(luckyDrawLayoutBinding.easyFlipView6.isBackSide()) {
-                    dialog();
-                }
-            }
-        });
-        luckyDrawLayoutBinding.frameCard7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(luckyDrawLayoutBinding.easyFlipView7.isBackSide()) {
-                    dialog();
+                }else {
+                    flipView.setClickable(false);
+                    flipView.setEnabled(false);
+                    flipView.setFlipEnabled(false);
+                    flipView.setFlipOnTouch(false);
+                    prizeIdList.add(Integer.parseInt(allCards.get(7).getPrize_ID()));
                 }
             }
         });
 
-        luckyDrawLayoutBinding.frameCard8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(luckyDrawLayoutBinding.easyFlipView8.isBackSide()) {
-                    dialog();
-                }
-            }
-        });
     }
 
     private void dialog() {
@@ -768,6 +761,14 @@ public class LuckyDrawActivity extends AppCompatActivity {
             luckyDrawLayoutBinding.easyFlipView6.setEnabled(false);
             luckyDrawLayoutBinding.easyFlipView7.setEnabled(false);
             luckyDrawLayoutBinding.easyFlipView8.setEnabled(false);
+            luckyDrawLayoutBinding.easyFlipView1.setClickable(false);
+            luckyDrawLayoutBinding.easyFlipView2.setClickable(false);
+            luckyDrawLayoutBinding.easyFlipView3.setClickable(false);
+            luckyDrawLayoutBinding.easyFlipView4.setClickable(false);
+            luckyDrawLayoutBinding.easyFlipView5.setClickable(false);
+            luckyDrawLayoutBinding.easyFlipView6.setClickable(false);
+            luckyDrawLayoutBinding.easyFlipView7.setClickable(false);
+            luckyDrawLayoutBinding.easyFlipView8.setClickable(false);
             luckyDrawLayoutBinding.easyFlipView1.setFlipOnTouch(false);
             luckyDrawLayoutBinding.easyFlipView2.setFlipOnTouch(false);
             luckyDrawLayoutBinding.easyFlipView3.setFlipOnTouch(false);
