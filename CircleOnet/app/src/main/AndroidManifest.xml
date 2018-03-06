@@ -117,7 +117,7 @@
         </activity>
         <activity android:name=".MainActivity" >
         </activity>
-        <receiver android:name=".Utils.TimeReceiver"/>
+       <!-- <receiver android:name=".Utils.TimeReceiver"/>-->
         <activity
             android:name=".Activity.EventsActivity"
             android:screenOrientation="portrait" />
@@ -156,6 +156,7 @@
             android:name=".Activity.ConnectActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
+        <activity android:name=".Activity.RedeemListActivity"></activity>
         <activity
             android:name=".Activity.Connect3Activity"
             android:screenOrientation="portrait"

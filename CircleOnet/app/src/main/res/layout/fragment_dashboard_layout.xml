@@ -58,7 +58,7 @@
             android:layout_alignParentBottom="true"
             android:id="@+id/includeNotiRewardShare"
             layout="@layout/reward_noti_share_layout"
-            android:layout_height="130dp"
+            android:layout_height="155dp"
             android:layout_width="match_parent" />
 
     </RelativeLayout>
