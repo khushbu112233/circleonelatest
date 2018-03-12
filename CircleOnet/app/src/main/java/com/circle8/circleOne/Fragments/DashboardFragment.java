@@ -28,6 +28,7 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -95,6 +96,7 @@ import static com.circle8.circleOne.Utils.Utility.encrypt;
 public class DashboardFragment extends Fragment
 {
     public static FragmentDashboardLayoutBinding fragmentDashboardLayoutBinding;
+
     View view;
     Context context;
     int count=0;
@@ -412,6 +414,15 @@ public class DashboardFragment extends Fragment
 
     public void initClick()
     {
+
+        fragmentDashboardLayoutBinding.ivBlackImg.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                fragmentDashboardLayoutBinding.ivBlackImg.setVisibility(View.INVISIBLE);
+                fragmentDashboardLayoutBinding.rlGuiderDisplay.setVisibility(View.INVISIBLE);
+                return false;
+            }
+        });
         fragmentDashboardLayoutBinding.includeNotiRewardShare.rlNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

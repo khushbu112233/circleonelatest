@@ -9,7 +9,12 @@
         <item name="android:windowDisablePreview">true</item>
         <item name="android:windowBackground">@drawable/white</item>
     </style>
-
+    <style name="DialogAnimation">
+        <item name="android:windowExitAnimation">@anim/animation</item>
+    </style>
+    <style name="DialogSlideAnim" parent="@android:style/Theme.Dialog">
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+    </style>
     <style name="NoActionbar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>

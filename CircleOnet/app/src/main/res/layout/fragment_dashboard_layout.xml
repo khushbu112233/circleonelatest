@@ -1,65 +1,386 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <RelativeLayout
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:id="@+id/lnrSearch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <com.circle8.circleOne.Utils.MyRiadProAutoComplete
-                android:layout_centerVertical="true"
-                android:background="@drawable/txt_back"
-                android:paddingRight="10dp"
-                android:layout_toLeftOf="@+id/imgSearch"
-                android:paddingLeft="10dp"
-                android:hint="Search to my contacts"
-                android:id="@+id/searchView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:textColor="@color/black"
-                android:textColorHint="#9FA0A0"
-                android:textSize="12dp"
-                android:focusableInTouchMode="true"
-                android:imeOptions="actionSearch"
-                android:inputType="textAutoComplete|textAutoCorrect" />
+        android:layout_height="match_parent">
 
-            <ImageView
-                android:layout_marginRight="10dp"
-                android:layout_centerVertical="true"
-                android:backgroundTint="@color/colorAccent"
-                android:src="@drawable/search"
-                android:id="@+id/imgSearch"
-                android:layout_alignParentRight="true"
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
-        </RelativeLayout>
-        <LinearLayout
-            android:layout_above="@+id/includeNotiRewardShare"
-            android:layout_below="@+id/lnrSearch"
-            android:id="@+id/lnrDashboard"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <RelativeLayout
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/lnrSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.circle8.circleOne.Utils.MyRiadProAutoComplete
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/txt_back"
+                    android:paddingRight="10dp"
+                    android:layout_toLeftOf="@+id/imgSearch"
+                    android:paddingLeft="10dp"
+                    android:hint="Search to my contacts"
+                    android:id="@+id/searchView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:textColor="@color/black"
+                    android:textColorHint="#9FA0A0"
+                    android:textSize="12dp"
+                    android:focusableInTouchMode="true"
+                    android:imeOptions="actionSearch"
+                    android:inputType="textAutoComplete|textAutoCorrect" />
+
+                <ImageView
+                    android:layout_marginRight="10dp"
+                    android:layout_centerVertical="true"
+                    android:backgroundTint="@color/colorAccent"
+                    android:src="@drawable/search"
+                    android:id="@+id/imgSearch"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+            </RelativeLayout>
+
             <include
+                android:layout_above="@+id/includeNotiRewardShare"
+                android:layout_below="@+id/lnrSearch"
                 android:id="@+id/includeTapQr"
                 android:layout_gravity="center"
                 layout="@layout/tap_qrcode_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-        </LinearLayout>
-        <include
-            android:layout_alignParentBottom="true"
-            android:id="@+id/includeNotiRewardShare"
-            layout="@layout/reward_noti_share_layout"
-            android:layout_height="155dp"
-            android:layout_width="match_parent" />
+                android:layout_height="match_parent" />
+            <include
+                android:layout_alignParentBottom="true"
+                android:id="@+id/includeNotiRewardShare"
+                layout="@layout/reward_noti_share_layout"
+                android:layout_height="130dp"
+                android:layout_width="match_parent" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/ivBlackImg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            android:alpha="0.6"/>
+
+        <RelativeLayout
+            android:id="@+id/rlGuiderDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/llInstruct1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:alpha="0.85"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="2dp">
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/hand_over"
+                    android:layout_gravity="left"
+                    android:layout_centerHorizontal="true" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tap to open your sidebar for more features"
+                    android:textColor="@android:color/white"
+                    android:textSize="11sp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginRight="5dp"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlSearchSpace"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginTop="0dp">
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/rlAddSpace"
+                android:layout_below="@+id/rlSearchSpace"
+                android:layout_above="@+id/rlAddBottomSpace"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="1"
+                android:visibility="visible">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/rlTop"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/llInstruct2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.50"
+                            android:alpha="0.8">
+
+                            <ImageView
+                                android:id="@+id/imgHand1"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_centerHorizontal="true"
+                                android:src="@drawable/hand_over" />
+
+                            <com.circle8.circleOne.Utils.cgTextView
+                                android:id="@+id/tvTapCard"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/imgHand1"
+                                android:layout_centerInParent="true"
+                                android:layout_marginTop="10dp"
+                                android:text="Add new contact via NFC card"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0" />
+
+                        <RelativeLayout
+                            android:id="@+id/llInstruct3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.50"
+                            android:alpha="0.8">
+
+                            <ImageView
+                                android:id="@+id/imgHand2"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_centerHorizontal="true"
+                                android:src="@drawable/hand_over" />
+
+                            <com.circle8.circleOne.Utils.cgTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/imgHand2"
+                                android:layout_centerInParent="true"
+                                android:layout_marginTop="10dp"
+                                android:text="Add a new contact via QR code"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlMiddiator"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rlTop"
+                        android:layout_marginBottom="30dp"
+                        android:layout_marginTop="20dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/rlBottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_below="@+id/rlMiddiator"
+                        android:layout_marginBottom="0dp"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/rlInstruct4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.50"
+                            android:alpha="0.8">
+
+                            <ImageView
+                                android:id="@+id/imgHand3"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_centerHorizontal="true"
+                                android:src="@drawable/hand_over" />
+
+                            <com.circle8.circleOne.Utils.cgTextView
+                                android:id="@+id/tvScanQrCode"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/imgHand3"
+                                android:layout_centerInParent="true"
+                                android:layout_marginTop="10dp"
+                                android:text="Tap to add new contact via OCR"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0" />
+
+                        <RelativeLayout
+                            android:id="@+id/rlInstruct5"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.50"
+                            android:alpha="0.8">
+
+                            <ImageView
+                                android:id="@+id/imgHand4"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_centerHorizontal="true"
+                                android:src="@drawable/hand_over" />
+
+                            <com.circle8.circleOne.Utils.cgTextView
+                                android:id="@+id/tvMyQrCode"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/imgHand4"
+                                android:layout_centerInParent="true"
+                                android:layout_marginTop="10dp"
+                                android:text="Add new contact manually"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlAddBottomSpace"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_alignParentBottom="true">
+
+                <LinearLayout
+                    android:layout_marginBottom="0dp"
+                    android:layout_width="match_parent"
+                    android:weightSum="3"
+                    android:gravity="center"
+                    android:layout_height="100dp"
+                    android:layout_alignParentBottom="true">
+
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:id="@+id/llInstruct6"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerInParent="true"
+                        android:alpha="0.85">
+                        <ImageView
+                            android:id="@+id/imgHand5"
+                            android:src="@drawable/hand_over"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerHorizontal="true"/>
+
+                        <com.circle8.circleOne.Utils.cgTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tap to access your unique Qr Code"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:layout_below="@+id/imgHand5"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:id="@+id/llInstruct7"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_centerInParent="true">
+                        <com.circle8.circleOne.Utils.cgTextView
+                            android:id="@+id/txtRewards"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tap to check on your points  Rewards"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+                        <ImageView
+                            android:id="@+id/imgHand6"
+                            android:layout_below="@+id/txtRewards"
+                            android:src="@drawable/hand_over"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerHorizontal="true"/>
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:id="@+id/llInstruct8"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_alignParentRight="true">
+
+                        <ImageView
+                            android:id="@+id/imgHand7"
+                            android:src="@drawable/hand_over"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerHorizontal="true"/>
+
+                        <com.circle8.circleOne.Utils.cgTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tap to call or message your Contacts"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/white"
+                            android:layout_below="@+id/imgHand7"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
 
     </RelativeLayout>
+
 </layout>

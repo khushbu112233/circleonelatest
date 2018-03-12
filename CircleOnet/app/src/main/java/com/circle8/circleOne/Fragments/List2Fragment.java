@@ -15,6 +15,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -122,6 +123,15 @@ public class List2Fragment extends Fragment
         if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")) {
             fragmentList2Binding.searchView.setText(SortFragment.Search );
         }
+        fragmentList2Binding.ivBlackImg1.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                fragmentList2Binding.rl1.setVisibility(View.INVISIBLE);
+                fragmentList2Binding.rl2.setVisibility(View.INVISIBLE);
+                fragmentList2Binding.ivBlackImg1.setVisibility(View.INVISIBLE);
+                return false;
+            }
+        });
         fragmentList2Binding.searchView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

@@ -2,6 +2,7 @@ package com.circle8.circleOne.Fragments;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -9,21 +10,22 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.circle8.circleOne.Activity.DashboardActivity;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.FragmentCardsBinding;
-import com.flurry.android.FlurryAgent;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.circle8.circleOne.Activity.CardsActivity.Connection_Limit;
 import static com.circle8.circleOne.Activity.DashboardActivity.setActionBarTitle;
@@ -77,6 +79,29 @@ public class CardsFragment extends Fragment
 
             }
         }
+        final AlertDialog ShadowAlertDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme).create();
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.card_dialog_shadow_layout, null);
+        LinearLayout llDialog = (LinearLayout) dialogView.findViewById(R.id.llDialog);
+
+        ColorDrawable dialogColor = new ColorDrawable(getResources().getColor(R.color.black));
+        dialogColor.setAlpha(200);
+        ShadowAlertDialog.getWindow().setBackgroundDrawable(dialogColor);
+        ShadowAlertDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        // alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
+        // tvBarName.setText(User_name);
+//                    bitmap = TextToImageEncode(barName);
+        //  ivBarImage.setImageBitmap(mergeBitmaps(overlay, bitmap));
+//
+        llDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShadowAlertDialog.dismiss();
+            }
+        });
+
+        ShadowAlertDialog.setView(dialogView);
+        ShadowAlertDialog.show();
         // Set up the ViewPager with the sections adapter.
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

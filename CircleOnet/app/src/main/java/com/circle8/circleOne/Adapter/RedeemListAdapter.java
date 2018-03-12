@@ -22,7 +22,7 @@ public class RedeemListAdapter extends BaseAdapter {
     }
     @Override
     public int getCount() {
-        return 5;
+        return 10;
     }
 
     @Override

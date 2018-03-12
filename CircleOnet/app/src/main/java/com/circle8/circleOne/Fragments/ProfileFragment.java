@@ -199,7 +199,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         fragmentProfileBinding.txtTestimonial.setText(ss);
         fragmentProfileBinding.txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
         fragmentProfileBinding.txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
-        fragmentProfileBinding.includeFrame2.imgProfile.setOnClickListener(this);
+        fragmentProfileBinding.includeFrame1.imgProfile.setOnClickListener(this);
         fragmentProfileBinding.txtAttachment.setOnClickListener(this);
         fragmentProfileBinding.fbUrl.setOnClickListener(this);
         fragmentProfileBinding.googleUrl.setOnClickListener(this);
@@ -302,9 +302,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     popupWindow.dismiss();
                     profileSession.createProfileSession(String.valueOf(i));
                     profileIndex = i;
-                    fragmentProfileBinding.includeFrame2.tvPersonName.setText(allTags.get(i).getFirstName() + " " + allTags.get(i).getLastName());
-                    fragmentProfileBinding.includeFrame2.tvDesignation.setText(allTags.get(i).getDesignation());
-                    fragmentProfileBinding.includeFrame2.tvCompany.setText(allTags.get(i).getCompanyName());
+                    fragmentProfileBinding.includeFrame1.tvPersonName.setText(allTags.get(i).getFirstName() + " " + allTags.get(i).getLastName());
+                    fragmentProfileBinding.includeFrame1.tvDesignation.setText(allTags.get(i).getDesignation());
+                    fragmentProfileBinding.includeFrame1.tvCompany.setText(allTags.get(i).getCompanyName());
                     fragmentProfileBinding.tvName.setText(allTags.get(i).getFirstName() + " " + allTags.get(i).getLastName());
                     fragmentProfileBinding.tvCompanyName.setText(allTags.get(i).getCompanyName());
                     fragmentProfileBinding.tvDesi.setText(allTags.get(i).getDesignation());
@@ -610,18 +610,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     }
 
                     if (allTags.get(i).getUserPhoto().equals("")) {
-                        fragmentProfileBinding.includeFrame2.progressBar1.setVisibility(View.GONE);
-                        fragmentProfileBinding.includeFrame2.imgProfile.setImageResource(R.drawable.usr_white1);
+                        fragmentProfileBinding.includeFrame1.progressBar1.setVisibility(View.GONE);
+                        fragmentProfileBinding.includeFrame1.imgProfile.setImageResource(R.drawable.usr_white1);
                     } else {
-                        fragmentProfileBinding.includeFrame2.progressBar1.setVisibility(View.VISIBLE);
+                        fragmentProfileBinding.includeFrame1.progressBar1.setVisibility(View.VISIBLE);
                         Glide.with(getActivity()).load(Utility.BASE_IMAGE_URL + "UserProfile/" + allTags.get(i).getUserPhoto())
                                 .asBitmap()
-                                .into(new BitmapImageViewTarget(fragmentProfileBinding.includeFrame2.imgProfile) {
+                                .into(new BitmapImageViewTarget(fragmentProfileBinding.includeFrame1.imgProfile) {
                                     @Override
                                     public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
                                         super.onResourceReady(drawable, anim);
-                                        fragmentProfileBinding.includeFrame2.progressBar1.setVisibility(View.GONE);
-                                        fragmentProfileBinding.includeFrame2.imgProfile.setImageBitmap(drawable);
+                                        fragmentProfileBinding.includeFrame1.progressBar1.setVisibility(View.GONE);
+                                        fragmentProfileBinding.includeFrame1.imgProfile.setImageBitmap(drawable);
                                     }
                                 });
 
@@ -994,13 +994,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     personName = allTags.get(profileIndex).getFirstName() + " "+ allTags.get(profileIndex).getLastName() ;
                     if(personName.equalsIgnoreCase("") || personName.equalsIgnoreCase("null"))
                     {
-                        fragmentProfileBinding.includeFrame2.tvPersonName.setVisibility(View.GONE);
+                        fragmentProfileBinding.includeFrame1.tvPersonName.setVisibility(View.GONE);
                         fragmentProfileBinding.llNameBox.setVisibility(View.GONE);
                     }
                     else
                     {
                         fragmentProfileBinding.tvName.setText(personName);
-                        fragmentProfileBinding.includeFrame2.tvPersonName.setText(personName);
+                        fragmentProfileBinding.includeFrame1.tvPersonName.setText(personName);
                     }
 
                     fragmentProfileBinding.tvProfileName.setText(allTags.get(profileIndex).getProfile());
@@ -1167,23 +1167,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     if(allTags.get(profileIndex).getDesignation().equalsIgnoreCase("")
                             || allTags.get(profileIndex).getDesignation().equalsIgnoreCase("null"))
                     {
-                        fragmentProfileBinding.includeFrame2.tvDesignation.setVisibility(View.GONE);
+                        fragmentProfileBinding.includeFrame1.tvDesignation.setVisibility(View.GONE);
                         fragmentProfileBinding.llDesignationBox.setVisibility(View.GONE);
                     }
                     else
                     {
-                        fragmentProfileBinding.includeFrame2.tvDesignation.setText(allTags.get(profileIndex).getDesignation());
+                        fragmentProfileBinding.includeFrame1.tvDesignation.setText(allTags.get(profileIndex).getDesignation());
                         fragmentProfileBinding.tvDesi.setText(allTags.get(profileIndex).getDesignation());
                     }
                     if(allTags.get(profileIndex).getCompanyName().equalsIgnoreCase("")
                             || allTags.get(profileIndex).getCompanyName().equalsIgnoreCase("null"))
                     {
-                        fragmentProfileBinding.includeFrame2.tvCompany.setVisibility(View.GONE);
+                        fragmentProfileBinding.includeFrame1.tvCompany.setVisibility(View.GONE);
                         fragmentProfileBinding.llCompanyBox.setVisibility(View.GONE);
                     }
                     else
                     {
-                        fragmentProfileBinding.includeFrame2.tvCompany.setText(allTags.get(profileIndex).getCompanyName());
+                        fragmentProfileBinding.includeFrame1.tvCompany.setText(allTags.get(profileIndex).getCompanyName());
                         fragmentProfileBinding.tvCompanyName.setText(allTags.get(profileIndex).getCompanyName());
                     }
                     mobile="";
@@ -1325,19 +1325,19 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
                     if (allTags.get(profileIndex).getUserPhoto().equals(""))
                     {
-                        fragmentProfileBinding.includeFrame2.progressBar1.setVisibility(View.GONE);
-                        fragmentProfileBinding.includeFrame2.imgProfile.setImageResource(R.drawable.usr_white1);
+                        fragmentProfileBinding.includeFrame1.progressBar1.setVisibility(View.GONE);
+                        fragmentProfileBinding.includeFrame1.imgProfile.setImageResource(R.drawable.usr_white1);
                     }
                     else {
-                        fragmentProfileBinding.includeFrame2.progressBar1.setVisibility(View.VISIBLE);
+                        fragmentProfileBinding.includeFrame1.progressBar1.setVisibility(View.VISIBLE);
                         Glide.with(mContext).load(Utility.BASE_IMAGE_URL+"UserProfile/"+allTags.get(profileIndex).getUserPhoto())
                                 .asBitmap()
-                                .into(new BitmapImageViewTarget(fragmentProfileBinding.includeFrame2.imgProfile) {
+                                .into(new BitmapImageViewTarget(fragmentProfileBinding.includeFrame1.imgProfile) {
                                     @Override
                                     public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
                                         super.onResourceReady(drawable, anim);
-                                        fragmentProfileBinding.includeFrame2.progressBar1.setVisibility(View.GONE);
-                                        fragmentProfileBinding.includeFrame2.imgProfile.setImageBitmap(drawable);
+                                        fragmentProfileBinding.includeFrame1.progressBar1.setVisibility(View.GONE);
+                                        fragmentProfileBinding.includeFrame1.imgProfile.setImageBitmap(drawable);
                                     }
                                 });
                     }
@@ -1627,7 +1627,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                         "' for a quick and simple registration! https://circle8.asia/mobileApp.html";
                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, fragmentProfileBinding.includeFrame2.tvPersonName.getText().toString());
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, fragmentProfileBinding.includeFrame1.tvPersonName.getText().toString());
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
 
@@ -1643,7 +1643,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                 ColorDrawable dialogColor = new ColorDrawable(getResources().getColor(R.color.colorPrimary));
                 dialogColor.setAlpha(70);
                 QR_AlertDialog.getWindow().setBackgroundDrawable(dialogColor);
-                tvBarName.setText(fragmentProfileBinding.includeFrame2.tvPersonName.getText().toString());
+                tvBarName.setText(fragmentProfileBinding.includeFrame1.tvPersonName.getText().toString());
                 ivBarImage.setImageBitmap(mergeBitmaps(overlay,bitmapQR));
 
                 fl_QRFrame.setOnClickListener(new View.OnClickListener() {

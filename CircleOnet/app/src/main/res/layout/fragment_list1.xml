@@ -1,183 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-<android.support.constraint.ConstraintLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
-   >
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:fillViewport="true"
-    android:nestedScrollingEnabled="false"
-    tools:context="com.circle8.circleOne.Fragments.List1Fragment">
-
-        <com.circle8.circleOne.Utils.MyRiadProAutoComplete
-            android:layout_marginTop="8dp"
-            android:background="@drawable/txt_back"
-            android:paddingRight="10dp"
-            android:layout_toLeftOf="@+id/imgSearch"
-            android:paddingLeft="10dp"
-            android:hint="Search by name"
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:textSize="12dp"
-            android:focusableInTouchMode="true"
-            android:imeOptions="actionSearch"
-            android:inputType="textAutoComplete|textAutoCorrect"
-            android:textColor="@color/black"
-            android:textColorHint="#9FA0A0"/>
-
-        <ImageView
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
-            android:backgroundTint="@color/colorAccent"
-            android:background="@drawable/search"
-            android:id="@+id/imgSearch"
-            android:layout_alignParentRight="true"
-            android:layout_width="20dp"
-            android:layout_height="20dp" />
-
-    <View
-        android:layout_marginTop="3dp"
-        android:id="@+id/view"
-        android:layout_below="@+id/imgSearch"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorPrimary"/>
-
-    <TextView
-        android:id="@+id/tvFriendInfo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/view"
-        android:layout_marginTop="20dp"
-        android:text="@string/no_connection"
-        android:textSize="16sp"
-        android:textAlignment="center"
-        android:textColor="@color/unselected"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:visibility="gone"/>
-
-    <!-- TODO: Update blank fragment layout -->
-    <ScrollView
-        android:layout_below="@+id/view"
-        android:fillViewport="true"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:nestedScrollingEnabled="false"
-        android:scrollbars="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:weightSum="2"
-            android:id="@+id/lnrList"
-            android:splitMotionEvents="false"
+    <android.support.constraint.ConstraintLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:fillViewport="true"
+            android:nestedScrollingEnabled="false"
+            tools:context="com.circle8.circleOne.Fragments.List1Fragment">
 
-            <include layout="@layout/include_layout_carousel1"
-                android:id="@+id/include_carousel1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-            </include>
-
-            <include layout="@layout/include_layout_carousel2"
-                android:id="@+id/include_carousel2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-            </include>
-        </LinearLayout>
-    </ScrollView>
-
-    <TextView
-        android:textAlignment="center"
-        android:visibility="gone"
-        android:id="@+id/txtNoCard1"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/no_friend_connection"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/txtNoCard1">
-
-        <RelativeLayout
-            android:id="@+id/rlProgressDialog"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:background="@color/colorPrimary"
-            android:elevation="20dp"
-            android:visibility="gone">
-
-            <LinearLayout
+            <com.circle8.circleOne.Utils.MyRiadProAutoComplete
+                android:layout_marginTop="8dp"
+                android:background="@drawable/txt_back"
+                android:paddingRight="10dp"
+                android:layout_toLeftOf="@+id/imgSearch"
+                android:paddingLeft="10dp"
+                android:hint="Search by name"
+                android:id="@+id/searchView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:orientation="horizontal"
-                android:weightSum="1">
+                android:ems="10"
+                android:textSize="12dp"
+                android:focusableInTouchMode="true"
+                android:imeOptions="actionSearch"
+                android:inputType="textAutoComplete|textAutoCorrect"
+                android:textColor="@color/black"
+                android:textColorHint="#9FA0A0"/>
+
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/colorAccent"
+                android:background="@drawable/search"
+                android:id="@+id/imgSearch"
+                android:layout_alignParentRight="true"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+
+            <View
+                android:layout_marginTop="3dp"
+                android:id="@+id/view"
+                android:layout_below="@+id/imgSearch"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:id="@+id/tvFriendInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/view"
+                android:layout_marginTop="20dp"
+                android:text="@string/no_connection"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:textColor="@color/unselected"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:visibility="gone"/>
+
+            <!-- TODO: Update blank fragment layout -->
+            <ScrollView
+                android:layout_below="@+id/view"
+                android:fillViewport="true"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:nestedScrollingEnabled="false"
+                android:scrollbars="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:weightSum="2"
+                    android:id="@+id/lnrList"
+                    android:splitMotionEvents="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/include_layout_carousel1"
+                        android:id="@+id/include_carousel1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+                    </include>
+                    <include layout="@layout/include_layout_carousel2"
+                        android:id="@+id/include_carousel2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+                    </include>
+                </LinearLayout>
+            </ScrollView>
+
+            <TextView
+                android:textAlignment="center"
+                android:visibility="gone"
+                android:id="@+id/txtNoCard1"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_friend_connection"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true">
 
                 <RelativeLayout
+                    android:id="@+id/rlProgressDialog"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="70dp"
                     android:layout_centerInParent="true"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="15dp"
-                    android:layout_weight="0.6"
-                    android:gravity="right">
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    android:background="@color/colorPrimary"
+                    android:elevation="20dp"
+                    android:visibility="gone">
 
-                    <ImageView
-                        android:id="@+id/imgConnecting1"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/round1" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
 
-                    <ImageView
-                        android:id="@+id/imgConnecting2"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/round2" />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="15dp"
+                            android:layout_weight="0.6"
+                            android:gravity="right">
 
-                    <ImageView
-                        android:id="@+id/imgConnecting3"
-                        android:layout_width="8dp"
-                        android:layout_height="8dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/round3" />
+                            <ImageView
+                                android:id="@+id/imgConnecting1"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/round1" />
+
+                            <ImageView
+                                android:id="@+id/imgConnecting2"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/round2" />
+
+                            <ImageView
+                                android:id="@+id/imgConnecting3"
+                                android:layout_width="8dp"
+                                android:layout_height="8dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/round3" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/txtProgressing"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/imgConnecting"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="0dp"
+                            android:layout_weight="0.4"
+                            android:text="Connecting."
+                            android:textColor="@color/white"
+                            android:textSize="15dp" />
+                    </LinearLayout>
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/txtProgressing"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/imgConnecting"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="0dp"
-                    android:layout_weight="0.4"
-                    android:text="Connecting."
-                    android:textColor="@color/white"
-                    android:textSize="15dp" />
-            </LinearLayout>
+            </RelativeLayout>
         </RelativeLayout>
-
-    </RelativeLayout>
-  </RelativeLayout>
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 </layout>
