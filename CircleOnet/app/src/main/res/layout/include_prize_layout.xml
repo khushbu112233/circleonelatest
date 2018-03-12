@@ -67,7 +67,7 @@
         <LinearLayout
             android:gravity="center"
             android:layout_weight="1"
-            android:id="@+id/rtlHistory"
+            android:id="@+id/rtlRedeem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -88,7 +88,7 @@
                     app:sl_shadowColor="@android:color/darker_gray"
                     app:sl_shadowRadius="5dp">
                     <ImageView
-                        android:id="@+id/imgHistory"
+                        android:id="@+id/imgRedeem"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_gravity="center"
@@ -96,8 +96,8 @@
                         android:src="@drawable/coincircle"/>
                 </com.dd.ShadowLayout>
                 <TextView
-                    android:id="@+id/txtHistoryCount"
-                    android:layout_below="@+id/imgPrize"
+                    android:id="@+id/txtRedeemCount"
+                    android:layout_below="@+id/imgRedeem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -108,12 +108,12 @@
             </FrameLayout>
             <TextView
                 android:layout_marginTop="-5dp"
-                android:id="@+id/txtHistory"
-                android:layout_below="@+id/imgPrize"
+                android:id="@+id/txtRedeem"
+                android:layout_below="@+id/imgRedeem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="History"
+                android:text="Redeem"
                 android:textColor="#F0DB91"
                 android:gravity="center_vertical"
                 android:layout_centerVertical="true"/>
@@ -168,7 +168,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Token"
+                android:text="Token+"
                 android:textColor="#F0DB91"
                 android:gravity="center_vertical"
                 android:layout_centerVertical="true"/>

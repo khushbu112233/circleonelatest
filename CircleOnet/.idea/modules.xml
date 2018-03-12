@@ -3,21 +3,13 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CircleOnet.iml" filepath="$PROJECT_DIR$/CircleOnet.iml" />
-      <module fileurl="file://E:\Kajal\CircleOne\Project\CircleOnet\CircleOnet.iml" filepath="E:\Kajal\CircleOne\Project\CircleOnet\CircleOnet.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://E:\Kajal\CircleOne\Project\CircleOnet\app\app.iml" filepath="E:\Kajal\CircleOne\Project\CircleOnet\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/carousel/carousel.iml" filepath="$PROJECT_DIR$/carousel/carousel.iml" />
-      <module fileurl="file://E:\Kajal\CircleOne\Project\CircleOnet\carousel\carousel.iml" filepath="E:\Kajal\CircleOne\Project\CircleOnet\carousel\carousel.iml" />
       <module fileurl="file://$PROJECT_DIR$/imgLoaderlibrary/imgLoaderlibrary.iml" filepath="$PROJECT_DIR$/imgLoaderlibrary/imgLoaderlibrary.iml" />
-      <module fileurl="file://E:\Kajal\CircleOne\Project\CircleOnet\imgLoaderlibrary\imgLoaderlibrary.iml" filepath="E:\Kajal\CircleOne\Project\CircleOnet\imgLoaderlibrary\imgLoaderlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
-      <module fileurl="file://E:\Kajal\CircleOne\Project\CircleOnet\library\library.iml" filepath="E:\Kajal\CircleOne\Project\CircleOnet\library\library.iml" />
       <module fileurl="file://$PROJECT_DIR$/linkedin-sdk/linkedin-sdk.iml" filepath="$PROJECT_DIR$/linkedin-sdk/linkedin-sdk.iml" />
-      <module fileurl="file://E:\Kajal\CircleOne\Project\CircleOnet\linkedin-sdk\linkedin-sdk.iml" filepath="E:\Kajal\CircleOne\Project\CircleOnet\linkedin-sdk\linkedin-sdk.iml" />
       <module fileurl="file://$PROJECT_DIR$/nfclib/nfclib.iml" filepath="$PROJECT_DIR$/nfclib/nfclib.iml" />
-      <module fileurl="file://E:\Kajal\CircleOne\Project\CircleOnet\nfclib\nfclib.iml" filepath="E:\Kajal\CircleOne\Project\CircleOnet\nfclib\nfclib.iml" />
       <module fileurl="file://$PROJECT_DIR$/sample-core/sample-core.iml" filepath="$PROJECT_DIR$/sample-core/sample-core.iml" />
-      <module fileurl="file://E:\Kajal\CircleOne\Project\CircleOnet\sample-core\sample-core.iml" filepath="E:\Kajal\CircleOne\Project\CircleOnet\sample-core\sample-core.iml" />
     </modules>
   </component>
 </project>

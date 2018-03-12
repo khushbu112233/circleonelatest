@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@color/white"
         >
 
         <RelativeLayout
@@ -31,7 +32,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add Manually"
+                android:text="Card"
                 android:textColor="@color/white"/>
 
         </RelativeLayout>
@@ -202,7 +203,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -266,6 +267,151 @@
                             android:layout_height="wrap_content"
                             android:maxLines="6"
                             android:inputType="textMultiLine"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/lnrCardsDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
+
+                            <com.circle8.circleOne.Utils.orkebyTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="monospace"
+                                android:text="Front Card"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="13sp"
+                                android:textStyle="normal" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp">
+
+                                <com.circle8.circleOne.Utils.cgTextView
+                                    android:id="@+id/txtCardFront"
+                                    android:layout_width="200dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentLeft="true"
+                                    android:background="@drawable/txt_box_blue"
+                                    android:gravity="start"
+                                    android:padding="10dp"
+                                    android:hint="Add Image"
+                                    android:textSize="12sp" />
+
+                                <com.circle8.circleOne.Utils.orkebyBoldTextView
+                                    android:id="@+id/txtfrontDelete"
+                                    android:layout_width="wrap_content"
+                                    android:gravity="left|center_vertical"
+                                    android:padding="2dp"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_height="match_parent"
+                                    android:fontFamily="monospace"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_toRightOf="@+id/txtCardFront"
+                                    android:text="X"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <com.circle8.circleOne.Utils.cgTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:text="            "
+                                    android:layout_marginRight="5dp"
+                                    android:layout_toLeftOf="@+id/ivAttachFrontImage"
+                                    android:layout_alignParentBottom="true"/>
+
+
+                                <ImageView
+                                    android:id="@+id/ivAttachFrontImage"
+                                    android:layout_width="20dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/ic_attach_blue"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentBottom="true"/>
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
+
+                            <com.circle8.circleOne.Utils.orkebyTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="monospace"
+                                android:text="Back Card"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="13sp"
+                                android:textStyle="normal" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp">
+
+                                <com.circle8.circleOne.Utils.cgTextView
+                                    android:id="@+id/txtCardBack"
+                                    android:layout_width="200dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentLeft="true"
+                                    android:background="@drawable/txt_box_blue"
+                                    android:gravity="start"
+                                    android:padding="10dp"
+                                    android:hint="Add Image"
+                                    android:textSize="12sp" />
+
+                                <com.circle8.circleOne.Utils.orkebyBoldTextView
+                                    android:id="@+id/txtbackDelete"
+                                    android:layout_width="wrap_content"
+                                    android:gravity="left|center_vertical"
+                                    android:padding="2dp"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_height="match_parent"
+                                    android:fontFamily="monospace"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_toRightOf="@+id/txtCardBack"
+                                    android:text="X"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <com.circle8.circleOne.Utils.cgTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:text="            "
+                                    android:layout_marginRight="5dp"
+                                    android:layout_toLeftOf="@+id/ivAttachBackImage"
+                                    android:layout_alignParentBottom="true"/>
+
+                                <ImageView
+                                    android:id="@+id/ivAttachBackImage"
+                                    android:layout_width="20dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/ic_attach_blue"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentBottom="true"/>
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
                     </LinearLayout>
 
                 </LinearLayout>

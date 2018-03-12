@@ -1,0 +1,124 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/imgMenu"
+        android:layout_gravity="right"
+        android:layout_width="20dp"
+        android:layout_height="18dp"
+        android:src="@drawable/menu_icon"/>
+
+    <RelativeLayout
+        android:id="@+id/rltHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+
+        <ImageView
+            android:tint="@color/colorPrimary"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_history"
+            android:backgroundTint="@color/colorPrimary"
+            android:id="@+id/imgHistory"
+            />
+
+        <com.circle8.circleOne.Utils.orkebyTextView
+            android:id="@+id/tvHistory"
+            android:textSize="14dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="History"
+            android:textStyle=""
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/imgHistory"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginRight="15dp"
+        android:id="@+id/rltContactUs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+
+        <ImageView
+            android:tint="@color/colorPrimary"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_contact"
+            android:id="@+id/imgContactUS"
+            android:backgroundTint="@color/colorPrimary"
+            />
+
+        <com.circle8.circleOne.Utils.orkebyTextView
+            android:id="@+id/tvContactUs"
+            android:textSize="14dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contact us"
+            android:textStyle=""
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/imgContactUS"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_marginRight="15dp"
+        android:id="@+id/rltHelp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+
+        <ImageView
+            android:tint="@color/colorPrimary"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_help"
+            android:id="@+id/imgHelp"
+            android:backgroundTint="@color/colorPrimary"
+            />
+
+        <com.circle8.circleOne.Utils.orkebyTextView
+            android:id="@+id/tvHelp"
+            android:textSize="14dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Help"
+            android:textStyle=""
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/imgHelp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

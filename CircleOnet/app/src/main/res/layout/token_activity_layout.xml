@@ -8,16 +8,13 @@
         android:background="@drawable/luckydraw"
         android:orientation="vertical">
 
+
         <RelativeLayout
             android:id="@+id/rltTop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="5dp"
-            android:background="@color/colorPrimary"
             android:orientation="horizontal"
-            android:paddingBottom="5dp">
-
+            android:background="@color/colorPrimary">
             <ImageView
                 android:id="@+id/imgBack"
                 android:layout_width="30dp"
@@ -30,17 +27,27 @@
                 android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
 
             <com.circle8.circleOne.Utils.cgTextView
+                android:layout_marginBottom="5dp"
                 android:id="@+id/txtprofile"
+                android:textSize="17dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="2dp"
-                android:text="Token*"
-                android:textColor="@color/white"
-                android:textSize="17dp" />
-        </RelativeLayout>
+                android:text="Token"
+                android:textColor="@color/white"/>
 
+            <ImageView
+                android:id="@+id/imgrightDrawer"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="1dp"
+                android:src="@drawable/ic_dehaze_black_24dp" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_weight="0"
