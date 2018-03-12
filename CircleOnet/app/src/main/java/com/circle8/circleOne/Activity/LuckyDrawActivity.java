@@ -54,6 +54,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
+import at.wirecube.additiveanimations.additive_animator.AdditiveAnimator;
+
 public class LuckyDrawActivity extends AppCompatActivity {
     LuckyDrawLayoutBinding luckyDrawLayoutBinding;
     ArrayList<String> stringArrayList = new ArrayList<>();
@@ -201,7 +203,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Pref.setValue(LuckyDrawActivity.this,"History","2");
-                Intent i = new Intent(LuckyDrawActivity.this,RedeemListActivity.class);
+                Intent i = new Intent(LuckyDrawActivity.this,RedeemActivity.class);
                 startActivity(i);
 
             }
@@ -326,7 +328,18 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 Collections.shuffle(allCards);
                 Log.e("prizeIdList",""+prizeIdList);
 
-                ObjectAnimator flip1 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView1, "rotationY", 180f, 360f);
+                ObjectAnimator animX = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView2,
+                        View.TRANSLATION_Y, -1* luckyDrawLayoutBinding.easyFlipView2.getWidth(), 0);
+                animX.setDuration(500);
+                animX.start();
+
+
+                new AdditiveAnimator().setDuration(500)
+                        .target(luckyDrawLayoutBinding.easyFlipView1).x(100).y(100)
+                        .target(luckyDrawLayoutBinding.easyFlipView4).yBy(20).xBy(-500)
+                        .start();
+
+                /*ObjectAnimator flip1 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView1, "rotationY", 180f, 360f);
                 flip1.setDuration(1500);
                 flip1.start();
                 ObjectAnimator flip2 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView2, "rotationY", 180f, 360f);
@@ -349,7 +362,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 flip7.start();
                 ObjectAnimator flip8 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView8, "rotationY", 180f, 360f);
                 flip8.setDuration(1500);
-                flip8.start();
+                flip8.start();*/
             }
         });
         luckyDrawLayoutBinding.imgLeft.setOnClickListener(new View.OnClickListener() {

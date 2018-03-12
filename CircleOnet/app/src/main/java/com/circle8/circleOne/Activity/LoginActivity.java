@@ -43,6 +43,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.ApplicationUtils.MyApplication;
+import com.circle8.circleOne.Common.AuthUtils;
+import com.circle8.circleOne.Common.KeyboardUtils;
+import com.circle8.circleOne.Common.ValidationUtils;
 import com.circle8.circleOne.Helper.CustomSharedPreference;
 import com.circle8.circleOne.Helper.FingerPrintSession;
 import com.circle8.circleOne.Helper.LoginSession;
@@ -57,6 +60,8 @@ import com.circle8.circleOne.Utils.PrefUtils;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.chat.ChatHelper;
 import com.circle8.circleOne.databinding.ActivityLoginBinding;
+import com.circle8.circleOne.ui.activities.authorization.BaseAuthActivity;
+import com.circle8.circleOne.ui.activities.base.BaseActivity;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -97,9 +102,12 @@ import com.linkedin.platform.listeners.AuthListener;
 import com.linkedin.platform.utils.Scope;
 import com.onesignal.OSPermissionSubscriptionState;
 import com.onesignal.OneSignal;
+import com.quickblox.auth.session.QBSessionManager;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.core.helper.StringifyArrayList;
+import com.quickblox.q_municate_core.models.LoginType;
+import com.quickblox.q_municate_db.managers.DataManager;
 import com.quickblox.sample.core.ui.dialog.ProgressDialogFragment;
 import com.quickblox.sample.core.utils.SharedPrefsHelper;
 import com.quickblox.users.QBUsers;
@@ -134,14 +142,17 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
 import io.fabric.sdk.android.Fabric;
+import rx.Observer;
 
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 import static com.circle8.circleOne.Utils.Validation.validateLogin;
+import static com.circle8.circleOne.ui.activities.authorization.BaseAuthActivity.serviceManager;
+import static com.circle8.circleOne.ui.activities.base.BaseActivity.appSharedHelper;
 
-public class LoginActivity extends AppCompatActivity implements
+public class LoginActivity extends BaseAuthActivity implements
         View.OnClickListener,
         GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
         TextWatcher,
@@ -199,9 +210,15 @@ public class LoginActivity extends AppCompatActivity implements
     String UserID = "";
     Boolean netCheck= false;
     public static ActivityLoginBinding activityLoginBinding;
+
+    @Override
+    protected int getContentResId() {
+        return R.layout.activity_login;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
 
@@ -541,6 +558,55 @@ public class LoginActivity extends AppCompatActivity implements
 //        Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
 
     }
+
+
+    private void login() {
+        KeyboardUtils.hideKeyboard(this);
+
+        BaseAuthActivity.loginType = LoginType.EMAIL;
+
+        String userEmail = activityLoginBinding.etLoginUser.getText().toString();
+        String userPassword = "circle@123";
+
+        if (new ValidationUtils(this).isLoginDataValid(emailTextInputLayout, passwordTextInputLayout,
+                userEmail, userPassword)) {
+
+            //showProgress();
+            boolean ownerUser =   QBSessionManager.getInstance().getSessionParameters() != null && userEmail.equals(QBSessionManager.getInstance().getSessionParameters().getUserEmail());
+            if (!ownerUser) {
+                DataManager.getInstance().clearAllTables();
+            }
+
+            login(userEmail, userPassword);
+        }
+    }
+
+    protected void login(String userEmail, final String userPassword) {
+        appSharedHelper.saveFirstAuth(true);
+        appSharedHelper.saveSavedRememberMe(true);
+        appSharedHelper.saveUsersImportInitialized(true);
+        QBUser user = new QBUser(null, userPassword, userEmail);
+
+        serviceManager.login(user).subscribe(new Observer<QBUser>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d(TAG, "onError" + e.getMessage());
+                //hideProgress();
+                AuthUtils.parseExceptionMessage(LoginActivity.this, e.getMessage());
+            }
+
+            @Override
+            public void onNext(QBUser qbUser) {
+                performLoginSuccessAction(qbUser);
+            }
+        });
+    }
+
 
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -893,6 +959,7 @@ public class LoginActivity extends AppCompatActivity implements
 
                         if (Status.equalsIgnoreCase("Verified")) {
 
+                            login();
                             if (Q_ID.equals("")){
 
                                 final QBUser user = new QBUser(UserName, "circle@123");
@@ -1986,7 +2053,7 @@ public class LoginActivity extends AppCompatActivity implements
                         referralCodeSession.createReferral(jsonArray.getString("ReferrenceCode"));
                         if (Status.equalsIgnoreCase("Verified")) {
 
-
+                            login();
                             if (Q_ID.equals("")){
 
                                 final QBUser user = new QBUser(UserName, "circle@123");

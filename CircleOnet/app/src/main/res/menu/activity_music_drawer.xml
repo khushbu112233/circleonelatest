@@ -22,6 +22,13 @@
             android:title="Manage My Profile" />
     </group>
 
+    <group android:id="@+id/chat" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_chat"
+            android:icon="@drawable/ic_manage_cards"
+            android:title="Chat" />
+    </group>
+
     <group android:id="@+id/four" android:checkableBehavior="single">
         <item
             android:id="@+id/nav_card_request"

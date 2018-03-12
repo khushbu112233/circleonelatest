@@ -3,7 +3,7 @@
     package="com.quickblox.sample.core.test" >
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="15"
         android:targetSdkVersion="23" />
 
     <instrumentation

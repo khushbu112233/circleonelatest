@@ -21,7 +21,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
     useLibrary 'org.apache.http.legacy'
-
+    flavorDimensions "standard"
     defaultConfig {
         applicationId "com.circle8.circleOne"
         minSdkVersion 19
@@ -32,11 +32,23 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [onesignal_app_id               : "8cc4b927-da5f-4152-805d-bf3b40e53773",
                                 onesignal_google_project_number: "REMOTE"]
+
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "APP_ID", '"64560"'
+            buildConfigField "String", "AUTH_KEY", '"xQsH-J2Sp2zMbVN"'
+            buildConfigField "String", "AUTH_SECRET", '"Q-43QyykEAY25Gx"'
+            buildConfigField "String", "API_ENDPOINT", '"https://api.quickblox.com"'
+            buildConfigField "String", "CHAT_ENDPOINT", '"chat.quickblox.com"'
+            buildConfigField "String", "ACCOUNT_KEY", '"msrUiaw88yBL96Ln7yqk"'
+            buildConfigField "String", "FIREBASE_AUTH_PROJECT_ID", '"circleone-fe177"'
+            resValue "string", "facebookAppId", '"1975329582755186"'
+            resValue "string", "sender_id", '"564268798411"'
+            manifestPlaceholders = [fabricApiKey:"7aea78439bec41a9005c7488bb6751c5e33fe270"]
         }
     }
 
@@ -47,6 +59,7 @@ android {
     dexOptions {
         // Prevent OutOfMemory with MultiDex during the build phase
         javaMaxHeapSize "4g"
+        preDexLibraries = false
     }
     lintOptions {
         abortOnError false
@@ -68,6 +81,35 @@ android {
     dataBinding {
         enabled = true
     }
+
+    productFlavors {
+
+        standard {
+            buildConfigField "String", "APP_ID", '"64560"'
+            buildConfigField "String", "AUTH_KEY", '"xQsH-J2Sp2zMbVN"'
+            buildConfigField "String", "AUTH_SECRET", '"Q-43QyykEAY25Gx"'
+            buildConfigField "String", "API_ENDPOINT", '"https://api.quickblox.com"'
+            buildConfigField "String", "CHAT_ENDPOINT", '"chat.quickblox.com"'
+            buildConfigField "String", "ACCOUNT_KEY", '"msrUiaw88yBL96Ln7yqk"'
+            buildConfigField "String", "FIREBASE_AUTH_PROJECT_ID", '"circleone-fe177"'
+            resValue "string", "facebookAppId", '"1975329582755186"'
+            resValue "string", "sender_id", '"564268798411"'
+            manifestPlaceholders = [fabricApiKey:"7aea78439bec41a9005c7488bb6751c5e33fe270"]
+        }
+
+        custom {
+            buildConfigField "String", "APP_ID", '"64560"'
+            buildConfigField "String", "AUTH_KEY", '"xQsH-J2Sp2zMbVN"'
+            buildConfigField "String", "AUTH_SECRET", '"Q-43QyykEAY25Gx"'
+            buildConfigField "String", "API_ENDPOINT", '"https://api.quickblox.com"'
+            buildConfigField "String", "CHAT_ENDPOINT", '"chat.quickblox.com"'
+            buildConfigField "String", "ACCOUNT_KEY", '"msrUiaw88yBL96Ln7yqk"'
+            buildConfigField "String", "FIREBASE_AUTH_PROJECT_ID", '"circleone-fe177"'
+            resValue "string", "facebookAppId", '"1975329582755186"'
+            resValue "string", "sender_id", '"564268798411"'
+            manifestPlaceholders = [fabricApiKey:"7aea78439bec41a9005c7488bb6751c5e33fe270"]
+        }
+    }
 }
 
 repositories {
@@ -85,7 +127,15 @@ configurations.all {
     }
 }
 
+configurations{
+    compile.exclude group: 'org.jetbrains', module:'annotations'
+    compile.exclude group: 'com.intellij', module: 'annotations'
+}
+
 dependencies {
+    /*androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })*/
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation project(path: ':library')
@@ -137,7 +187,7 @@ dependencies {
     implementation 'com.crystal:crystalrangeseekbar:1.1.3'
     implementation(project(":sample-core"))
     implementation "se.emilsjolander:stickylistheaders:${rootProject.stickyListHeaders}"
-    implementation 'com.github.orangegangsters:swipy:1.2.2@aar'
+    implementation 'com.github.orangegangsters:swipy:1.2.0@aar'
     implementation 'com.github.devlight:infinitecycleviewpager:1.0.2'
     implementation "com.quickblox:quickblox-android-sdk-extensions:$rootProject.qbSdkVersion"
     implementation 'io.reactivex:rxandroid:1.1.0'
@@ -150,7 +200,37 @@ dependencies {
 
     implementation 'com.daimajia.easing:library:2.0@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
+    implementation 'at.wirecube:additive_animations:1.5.0'
+    implementation project(path: ':q-municate_user_service')
+    implementation project(path: ':q-municate_auth_service')
+    implementation project(path: ':q-municate_user_cache')
+    implementation project(':Q-municate_core')
+    //compile "com.jakewharton:butterknife:${rootProject.butterknifeVersion}"
+    implementation "com.jakewharton:butterknife:${rootProject.butterknifeVersion}" //woo new Gradle API!
+    annotationProcessor "com.jakewharton:butterknife-compiler:${rootProject.butterknifeVersion}"
+    compile "com.firebase:firebase-jobdispatcher-with-gcm-dep:${rootProject.firebaseDispatcherVersion}"
+    compile "com.google.firebase:firebase-auth:11.4.2"
+    compile ("com.firebaseui:firebase-ui-auth:${rootProject.firebaseUiAuthVersion}"){
+        exclude group: 'com.google.android.gms'
+    }
 
+    compile ("org.jetbrains:annotations-java5:15.0") {
+        exclude group: 'org.jetbrains', module: 'annotations'
+    }
+
+    compile ("com.intellij:annotations:12.0") {
+        exclude group: 'com.intellij', module: 'annotations'
+    }
+
+   /* compile "com.nostra13.universalimageloader:universal-image-loader:${rootProject.universalImageLoaderVersion}"*/
+    compile "com.afollestad.material-dialogs:core:${rootProject.materialDialogsVersion}"
+    compile "com.timehop.stickyheadersrecyclerview:library:${rootProject.stickylistheadersRecyclerViewVersion}@aar"
+    compile "com.rockerhieu.emojicon:library:${rootProject.emojiconVersion}"
+    compile "com.soundcloud.android:android-crop:${rootProject.cropVersion}@aar"
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.2@aar') {
+        transitive = true;
+    }
+    compile 'com.github.stoyicker:aligningrecyclerview:1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
 }

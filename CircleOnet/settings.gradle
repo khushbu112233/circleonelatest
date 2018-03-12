@@ -1,1 +1,1 @@
-include ':app', ':library', ':nfclib', ':carousel', ':linkedin-sdk', ':sample-core', ':imgLoaderlibrary'
+include ':app', ':library', ':nfclib', ':carousel', ':linkedin-sdk', ':sample-core', ':imgLoaderlibrary', ':q-municate_base_cache', ':q-municate_auth_service', ':q-municate_base_service', ':q-municate_user_service', ':Q-municate_db', ':q-municate_user_cache', ':Q-municate_core'

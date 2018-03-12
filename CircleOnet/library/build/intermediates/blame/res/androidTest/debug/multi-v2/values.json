@@ -31,6 +31,38 @@
                     }
                 }
             ]
+        },
+        {
+            "outputFile": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\values\\values.xml",
+            "map": [
+                {
+                    "source": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\library\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,27,28,32,38",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,95,150,214,272,313,371,1058,1115,1169,1218,1274,1328,1377,1437,1485,1524,1571,1618,1671,1721,1783,1943,1976,2155,2439",
+                        "endLines": "2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21,22,23,26,27,31,37,41",
+                        "endColumns": "39,54,63,57,40,57,39,56,53,48,55,53,48,59,47,38,46,46,52,49,61,12,32,12,12,12",
+                        "endOffsets": "90,145,209,267,308,366,406,1110,1164,1213,1269,1323,1372,1432,1480,1519,1566,1613,1666,1716,1778,1938,1971,2150,2434,2591"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\library\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+            "map": [
+                {
+                    "source": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\library\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,27,28,32,38",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,95,150,214,272,313,371,1058,1115,1169,1218,1274,1328,1377,1437,1485,1524,1571,1618,1671,1721,1783,1943,1976,2155,2439",
+                        "endLines": "2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21,22,23,26,27,31,37,41",
+                        "endColumns": "39,54,63,57,40,57,39,56,53,48,55,53,48,59,47,38,46,46,52,49,61,12,32,12,12,12",
+                        "endOffsets": "90,145,209,267,308,366,406,1110,1164,1213,1269,1323,1372,1432,1480,1519,1566,1613,1666,1716,1778,1938,1971,2150,2434,2591"
+                    }
+                }
+            ]
         }
     ]
 }
