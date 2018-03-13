@@ -319,24 +319,26 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 Log.e("8",""+x8+" "+y8);
             }
         });
-        luckyDrawLayoutBinding.rtlTemp.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        luckyDrawLayoutBinding.llTemp.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
-                luckyDrawLayoutBinding.rtlTemp.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                luckyDrawLayoutBinding.llTemp.getViewTreeObserver().removeGlobalOnLayoutListener(this);
 
                 int[] locations = new int[2];
-                luckyDrawLayoutBinding.rtlTemp.getLocationOnScreen(locations);
+                luckyDrawLayoutBinding.llTemp.getLocationOnScreen(locations);
                 xTemp = locations[0];
                 yTemp = locations[1];
 
             }
         });
+
         luckyDrawLayoutBinding.includePrize.rtlRedeem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 luckyDrawLayoutBinding.rtlTemp.setVisibility(View.VISIBLE);
+                luckyDrawLayoutBinding.llTemp.setVisibility(View.GONE);
                 luckyDrawLayoutBinding.rl1.setVisibility(View.GONE);
                 luckyDrawLayoutBinding.rl2.setVisibility(View.GONE);
+
 
                 luckyDrawLayoutBinding.easyFlipViewr1.animate()
                         .translationX((width / 2)-100)
@@ -646,7 +648,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
 
                 luckyDrawLayoutBinding.easyFlipViewr5.animate()
                         .translationX((width / 2)-100)
-                        .translationY((yTemp/2)+25)
+                        .translationY((yTemp/2)-250)
                         .setListener(new Animator.AnimatorListener() {
                             @Override
                             public void onAnimationStart(Animator animator) {
@@ -657,7 +659,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                             public void onAnimationEnd(Animator animator) {
                                 luckyDrawLayoutBinding.easyFlipViewr5.animate()
                                         .translationX((width / 2)-350)
-                                        .translationY((yTemp/2)+25)
+                                        .translationY((yTemp/2)-250)
                                         .setListener(new Animator.AnimatorListener() {
                                             @Override
                                             public void onAnimationStart(Animator animator) {
@@ -668,7 +670,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                                             public void onAnimationEnd(Animator animator) {
                                                 luckyDrawLayoutBinding.easyFlipViewr5.animate()
                                                         .translationX((width / 2)-100)
-                                                        .translationY((yTemp/2)+25)
+                                                        .translationY((yTemp/2)-250)
                                                         .setListener(new Animator.AnimatorListener() {
                                                             @Override
                                                             public void onAnimationStart(Animator animator) {
@@ -724,7 +726,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
 
                 luckyDrawLayoutBinding.easyFlipViewr6.animate()
                         .translationX((width / 2)-280)
-                        .translationY((yTemp/2)+25)
+                        .translationY((yTemp/2)-250)
                         .setListener(new Animator.AnimatorListener() {
                             @Override
                             public void onAnimationStart(Animator animator) {
@@ -735,7 +737,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                             public void onAnimationEnd(Animator animator) {
                                 luckyDrawLayoutBinding.easyFlipViewr6.animate()
                                         .translationX((width / 2)-450)
-                                        .translationY((yTemp/2)+25)
+                                        .translationY((yTemp/2)-250)
                                         .setListener(new Animator.AnimatorListener() {
                                             @Override
                                             public void onAnimationStart(Animator animator) {
@@ -746,7 +748,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                                             public void onAnimationEnd(Animator animator) {
                                                 luckyDrawLayoutBinding.easyFlipViewr6.animate()
                                                         .translationX((width / 2)-280)
-                                                        .translationY((yTemp/2)+25)
+                                                        .translationY((yTemp/2)-250)
                                                         .setListener(new Animator.AnimatorListener() {
                                                             @Override
                                                             public void onAnimationStart(Animator animator) {
@@ -803,7 +805,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
 
                 luckyDrawLayoutBinding.easyFlipViewr7.animate()
                         .translationX((width / 2)-440)
-                        .translationY((yTemp/2)+25)
+                        .translationY((yTemp/2)-250)
                         .setListener(new Animator.AnimatorListener() {
                             @Override
                             public void onAnimationStart(Animator animator) {
@@ -814,7 +816,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                             public void onAnimationEnd(Animator animator) {
                                 luckyDrawLayoutBinding.easyFlipViewr7.animate()
                                         .translationX((width / 2)-300)
-                                        .translationY((yTemp/2)+25)
+                                        .translationY((yTemp/2)-250)
                                         .setListener(new Animator.AnimatorListener() {
                                             @Override
                                             public void onAnimationStart(Animator animator) {
@@ -825,7 +827,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                                             public void onAnimationEnd(Animator animator) {
                                                 luckyDrawLayoutBinding.easyFlipViewr7.animate()
                                                         .translationX((width / 2)-440)
-                                                        .translationY((yTemp/2)+25)
+                                                        .translationY((yTemp/2)-250)
                                                         .setListener(new Animator.AnimatorListener() {
                                                             @Override
                                                             public void onAnimationStart(Animator animator) {
@@ -882,7 +884,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
 
                 luckyDrawLayoutBinding.easyFlipViewr8.animate()
                         .translationX((width / 2)-620)
-                        .translationY((yTemp/2)+25)
+                        .translationY((yTemp/2)-250)
                         .setListener(new Animator.AnimatorListener() {
                             @Override
                             public void onAnimationStart(Animator animator) {
@@ -893,7 +895,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                             public void onAnimationEnd(Animator animator) {
                                 luckyDrawLayoutBinding.easyFlipViewr8.animate()
                                         .translationX((width / 2)-350)
-                                        .translationY((yTemp/2)+25)
+                                        .translationY((yTemp/2)-250)
                                         .setListener(new Animator.AnimatorListener() {
                                             @Override
                                             public void onAnimationStart(Animator animator) {
@@ -904,7 +906,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                                             public void onAnimationEnd(Animator animator) {
                                                 luckyDrawLayoutBinding.easyFlipViewr8.animate()
                                                         .translationX((width / 2)-620)
-                                                        .translationY((yTemp/2)+25)
+                                                        .translationY((yTemp/2)-250)
                                                         .setListener(new Animator.AnimatorListener() {
                                                             @Override
                                                             public void onAnimationStart(Animator animator) {
@@ -965,6 +967,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         luckyDrawLayoutBinding.rtlTemp.setVisibility(View.GONE);
+                        luckyDrawLayoutBinding.llTemp.setVisibility(View.VISIBLE);
                         luckyDrawLayoutBinding.rl1.setVisibility(View.VISIBLE);
                         luckyDrawLayoutBinding.rl2.setVisibility(View.VISIBLE);
 

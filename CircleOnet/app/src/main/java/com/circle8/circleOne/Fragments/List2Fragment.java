@@ -123,6 +123,16 @@ public class List2Fragment extends Fragment
         if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")) {
             fragmentList2Binding.searchView.setText(SortFragment.Search );
         }
+        if(Pref.getValue(mContext,"first_time_run","").equalsIgnoreCase("1")) {
+            fragmentList2Binding.rl1.setVisibility(View.VISIBLE);
+            fragmentList2Binding.rl2.setVisibility(View.VISIBLE);
+            fragmentList2Binding.ivBlackImg1.setVisibility(View.VISIBLE);
+        }else
+        {
+            fragmentList2Binding.rl1.setVisibility(View.INVISIBLE);
+            fragmentList2Binding.rl2.setVisibility(View.INVISIBLE);
+            fragmentList2Binding.ivBlackImg1.setVisibility(View.INVISIBLE);
+        }
         fragmentList2Binding.ivBlackImg1.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {

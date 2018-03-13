@@ -150,7 +150,14 @@ public class DashboardFragment extends Fragment
         referralCodeSession = new ReferralCodeSession(context);
         HashMap<String, String> referral = referralCodeSession.getReferralDetails();
         refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
-
+        if(Pref.getValue(context,"first_time_run","").equalsIgnoreCase("1")) {
+            fragmentDashboardLayoutBinding.ivBlackImg.setVisibility(View.VISIBLE);
+            fragmentDashboardLayoutBinding.rlGuiderDisplay.setVisibility(View.VISIBLE);
+        }else
+        {
+            fragmentDashboardLayoutBinding.ivBlackImg.setVisibility(View.INVISIBLE);
+            fragmentDashboardLayoutBinding.rlGuiderDisplay.setVisibility(View.INVISIBLE);
+        }
         if (DashboardActivity.NotificationCount.equals("0")) {
             fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
         }

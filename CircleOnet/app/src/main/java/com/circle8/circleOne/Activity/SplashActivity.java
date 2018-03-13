@@ -36,21 +36,25 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (prefs.getBoolean("firstrun", true)) {
+                    Pref.setValue(SplashActivity.this,"first_time_run","1");
                     Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
                     if (MyApplication.notiStatus.equals("")) {
+                        Pref.setValue(SplashActivity.this,"first_time_run","0");
                         if (Pref.getValue(SplashActivity.this, "login_value", "").equalsIgnoreCase("1")) {
                             Intent userIntent = new Intent(SplashActivity.this, DashboardActivity.class);
                             //userIntent.putExtra("viewpager_position", 0);
                             startActivity(userIntent);
                             finish();
                         } else {
+                            Pref.setValue(SplashActivity.this,"first_time_run","0");
                             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                             finish();
                         }
                     } else {
+                        Pref.setValue(SplashActivity.this,"first_time_run","0");
                         if (MyApplication.notiStatus.equalsIgnoreCase("dashboard")) {
                             Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -30,6 +30,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -160,7 +161,20 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         fragmentProfileBinding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_profile, container, false);
         view = fragmentProfileBinding.getRoot();
-
+        if(Pref.getValue(mContext,"first_time_run","").equalsIgnoreCase("1")) {
+            fragmentProfileBinding.rl2.setVisibility(View.VISIBLE);
+            fragmentProfileBinding.rlLeftBottom.setVisibility(View.VISIBLE);
+            fragmentProfileBinding.rlRightBottom.setVisibility(View.VISIBLE);
+            fragmentProfileBinding.ivBlackImg.setVisibility(View.VISIBLE);
+            fragmentProfileBinding.rlTopInclude.setVisibility(View.VISIBLE);
+        }else
+        {
+            fragmentProfileBinding.rl2.setVisibility(View.INVISIBLE);
+            fragmentProfileBinding.rlLeftBottom.setVisibility(View.INVISIBLE);
+            fragmentProfileBinding.rlRightBottom.setVisibility(View.INVISIBLE);
+            fragmentProfileBinding.ivBlackImg.setVisibility(View.INVISIBLE);
+            fragmentProfileBinding.rlTopInclude.setVisibility(View.INVISIBLE);
+        }
         return view;
     }
 
@@ -246,6 +260,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                 }
             }
         });
+        fragmentProfileBinding.ivBlackImg.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                fragmentProfileBinding.rl2.setVisibility(View.INVISIBLE);
+                fragmentProfileBinding.rlLeftBottom.setVisibility(View.INVISIBLE);
+                fragmentProfileBinding.rlRightBottom.setVisibility(View.INVISIBLE);
+                fragmentProfileBinding.ivBlackImg.setVisibility(View.INVISIBLE);
+                fragmentProfileBinding.rlTopInclude.setVisibility(View.INVISIBLE);
+                return false;
+            }
+        });
 
     }
 
@@ -288,7 +313,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                 Log.e("pos",""+i);
                 if (profile_array.get(i).toString().equals("Add New Profile")) {
                     callSubPAge("AddNewProfile","Profile");
-                //    Toast.makeText(getActivity(),TestimonialProfileId,Toast.LENGTH_LONG).show();
+                    //    Toast.makeText(getActivity(),TestimonialProfileId,Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getContext(), EditProfileActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
