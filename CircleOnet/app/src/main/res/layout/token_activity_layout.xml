@@ -12,7 +12,7 @@
         <RelativeLayout
             android:id="@+id/rltTop"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:orientation="horizontal"
             android:background="@color/colorPrimary">
             <ImageView
@@ -21,7 +21,7 @@
                 android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="1dp"
                 android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
@@ -30,7 +30,7 @@
                 android:layout_marginBottom="5dp"
                 android:id="@+id/txtprofile"
                 android:textSize="17dp"
-                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
                 android:layout_marginTop="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,11 +39,11 @@
 
             <ImageView
                 android:id="@+id/imgrightDrawer"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="1dp"
                 android:src="@drawable/ic_dehaze_black_24dp" />
@@ -440,8 +440,8 @@
 
             <ImageView
                 android:id="@+id/imgPrize"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
                 android:layout_alignParentLeft="true"
                 android:layout_gravity="center"
                 android:src="@drawable/coincircle" />
@@ -456,7 +456,7 @@
                 android:gravity="center_vertical"
                 android:text="Confirm"
                 android:textColor="@color/black"
-                android:textSize="11sp" />
+                android:textSize="10sp" />
         </FrameLayout>
         <View
             android:layout_width="match_parent"
