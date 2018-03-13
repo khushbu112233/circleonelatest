@@ -334,6 +334,157 @@ public class LuckyDrawActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
+                   Intent i = new Intent(LuckyDrawActivity.this,RedeemActivity.class);
+                  startActivity(i);
+
+            }
+        });
+        luckyDrawLayoutBinding.includePrize.rtlprize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Pref.setValue(LuckyDrawActivity.this,"History","1");
+                Intent i = new Intent(LuckyDrawActivity.this,PrizeHistoryActivity.class);
+                startActivity(i);
+
+            }
+        });
+        luckyDrawLayoutBinding.includePrize.rtlToken.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LuckyDrawActivity.this,TokenActivity.class);
+                startActivity(i);
+
+            }
+        });
+
+
+        luckyDrawLayoutBinding.includePrize.rtlRefresh.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onClick(View view) {
+
+                count = 0;
+                mp.start();
+
+                prizeIdList = new ArrayList<>();
+
+                luckyDrawLayoutBinding.easyFlipView1.setClickable(true);
+                luckyDrawLayoutBinding.easyFlipView1.setFlipEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView1.setFlipOnTouch(true);
+                luckyDrawLayoutBinding.easyFlipView1.setEnabled(true);
+
+                luckyDrawLayoutBinding.easyFlipView2.setClickable(true);
+                luckyDrawLayoutBinding.easyFlipView2.setEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView2.setFlipEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView2.setFlipOnTouch(true);
+
+                luckyDrawLayoutBinding.easyFlipView3.setClickable(true);
+                luckyDrawLayoutBinding.easyFlipView3.setEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView3.setFlipEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView3.setFlipOnTouch(true);
+
+                luckyDrawLayoutBinding.easyFlipView4.setClickable(true);
+                luckyDrawLayoutBinding.easyFlipView4.setEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView4.setFlipEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView4.setFlipOnTouch(true);
+
+                luckyDrawLayoutBinding.easyFlipView5.setClickable(true);
+                luckyDrawLayoutBinding.easyFlipView5.setEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView5.setFlipEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView5.setFlipOnTouch(true);
+
+                luckyDrawLayoutBinding.easyFlipView6.setClickable(true);
+                luckyDrawLayoutBinding.easyFlipView6.setEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView6.setFlipEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView6.setFlipOnTouch(true);
+
+                luckyDrawLayoutBinding.easyFlipView7.setClickable(true);
+                luckyDrawLayoutBinding.easyFlipView7.setEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView7.setFlipEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView7.setFlipOnTouch(true);
+
+                luckyDrawLayoutBinding.easyFlipView8.setClickable(true);
+                luckyDrawLayoutBinding.easyFlipView8.setEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView8.setFlipEnabled(true);
+                luckyDrawLayoutBinding.easyFlipView8.setFlipOnTouch(true);
+
+               /* if (luckyDrawLayoutBinding.easyFlipView1.isBackSide()) {
+
+                    luckyDrawLayoutBinding.easyFlipView1.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView1.flipTheView(true);
+                }
+
+                if (luckyDrawLayoutBinding.easyFlipView2.isBackSide()) {
+
+                    luckyDrawLayoutBinding.easyFlipView2.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView2.flipTheView(true);
+                }
+
+                if (luckyDrawLayoutBinding.easyFlipView3.isBackSide()) {
+
+                    luckyDrawLayoutBinding.easyFlipView3.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView3.flipTheView(true);
+                }
+
+                if (luckyDrawLayoutBinding.easyFlipView4.isBackSide()) {
+
+                    luckyDrawLayoutBinding.easyFlipView4.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView4.flipTheView(true);
+                }
+
+                if (luckyDrawLayoutBinding.easyFlipView5.isBackSide()) {
+
+                    luckyDrawLayoutBinding.easyFlipView5.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView5.flipTheView(true);
+                }
+
+                if (luckyDrawLayoutBinding.easyFlipView6.isBackSide()) {
+
+                    luckyDrawLayoutBinding.easyFlipView6.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView6.flipTheView(true);
+                }
+
+                if (luckyDrawLayoutBinding.easyFlipView7.isBackSide()) {
+
+                    luckyDrawLayoutBinding.easyFlipView7.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView7.flipTheView(true);
+                }
+
+                if (luckyDrawLayoutBinding.easyFlipView8.isBackSide()) {
+
+                    luckyDrawLayoutBinding.easyFlipView8.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView8.flipTheView(true);
+                }
+
+                Collections.shuffle(allCards);
+                Log.e("prizeIdList",""+prizeIdList);
+
+                ObjectAnimator flip1 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView1, "rotationY", 180f, 360f);
+                flip1.setDuration(1500);
+                flip1.start();
+                ObjectAnimator flip2 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView2, "rotationY", 180f, 360f);
+                flip2.setDuration(1500);
+                flip2.start();
+                ObjectAnimator flip3 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView3, "rotationY", 180f, 360f);
+                flip3.setDuration(1500);
+                flip3.start();
+                ObjectAnimator flip4 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView4, "rotationY", 180f, 360f);
+                flip4.setDuration(1500);
+                flip4.start();
+                ObjectAnimator flip5 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView5, "rotationY", 180f, 360f);
+                flip5.setDuration(1500);
+                flip5.start();
+                ObjectAnimator flip6 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView6, "rotationY", 180f, 360f);
+                flip6.setDuration(1500);
+                flip6.start();
+                ObjectAnimator flip7 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView7, "rotationY", 180f, 360f);
+                flip7.setDuration(1500);
+                flip7.start();
+                ObjectAnimator flip8 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView8, "rotationY", 180f, 360f);
+                flip8.setDuration(1500);
+                flip8.start();*/
+
                 luckyDrawLayoutBinding.rtlTemp.setVisibility(View.VISIBLE);
                 luckyDrawLayoutBinding.rl1.setVisibility(View.GONE);
                 luckyDrawLayoutBinding.rl2.setVisibility(View.GONE);
@@ -971,155 +1122,6 @@ public class LuckyDrawActivity extends AppCompatActivity {
                     }
                 }, 1000);
 
-                //   Intent i = new Intent(LuckyDrawActivity.this,RedeemActivity.class);
-                //  startActivity(i);
-
-            }
-        });
-        luckyDrawLayoutBinding.includePrize.rtlprize.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Pref.setValue(LuckyDrawActivity.this,"History","1");
-                Intent i = new Intent(LuckyDrawActivity.this,PrizeHistoryActivity.class);
-                startActivity(i);
-
-            }
-        });
-        luckyDrawLayoutBinding.includePrize.rtlToken.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(LuckyDrawActivity.this,TokenActivity.class);
-                startActivity(i);
-
-            }
-        });
-
-
-        luckyDrawLayoutBinding.includePrize.rtlRefresh.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onClick(View view) {
-
-                count = 0;
-                mp.start();
-
-                prizeIdList = new ArrayList<>();
-
-                luckyDrawLayoutBinding.easyFlipView1.setClickable(true);
-                luckyDrawLayoutBinding.easyFlipView1.setFlipEnabled(true);
-                luckyDrawLayoutBinding.easyFlipView1.setFlipOnTouch(true);
-                luckyDrawLayoutBinding.easyFlipView1.setEnabled(true);
-
-                luckyDrawLayoutBinding.easyFlipView2.setClickable(true);
-                luckyDrawLayoutBinding.easyFlipView2.setEnabled(true);
-                luckyDrawLayoutBinding.easyFlipView2.setFlipEnabled(true);
-                luckyDrawLayoutBinding.easyFlipView2.setFlipOnTouch(true);
-
-                luckyDrawLayoutBinding.easyFlipView3.setClickable(true);
-                luckyDrawLayoutBinding.easyFlipView3.setEnabled(true);
-                luckyDrawLayoutBinding.easyFlipView3.setFlipEnabled(true);
-                luckyDrawLayoutBinding.easyFlipView3.setFlipOnTouch(true);
-
-                luckyDrawLayoutBinding.easyFlipView4.setClickable(true);
-                luckyDrawLayoutBinding.easyFlipView4.setEnabled(true);
-                luckyDrawLayoutBinding.easyFlipView4.setFlipEnabled(true);
-                luckyDrawLayoutBinding.easyFlipView4.setFlipOnTouch(true);
-
-                luckyDrawLayoutBinding.easyFlipView5.setClickable(true);
-                luckyDrawLayoutBinding.easyFlipView5.setEnabled(true);
-                luckyDrawLayoutBinding.easyFlipView5.setFlipEnabled(true);
-                luckyDrawLayoutBinding.easyFlipView5.setFlipOnTouch(true);
-
-                luckyDrawLayoutBinding.easyFlipView6.setClickable(true);
-                luckyDrawLayoutBinding.easyFlipView6.setEnabled(true);
-                luckyDrawLayoutBinding.easyFlipView6.setFlipEnabled(true);
-                luckyDrawLayoutBinding.easyFlipView6.setFlipOnTouch(true);
-
-                luckyDrawLayoutBinding.easyFlipView7.setClickable(true);
-                luckyDrawLayoutBinding.easyFlipView7.setEnabled(true);
-                luckyDrawLayoutBinding.easyFlipView7.setFlipEnabled(true);
-                luckyDrawLayoutBinding.easyFlipView7.setFlipOnTouch(true);
-
-                luckyDrawLayoutBinding.easyFlipView8.setClickable(true);
-                luckyDrawLayoutBinding.easyFlipView8.setEnabled(true);
-                luckyDrawLayoutBinding.easyFlipView8.setFlipEnabled(true);
-                luckyDrawLayoutBinding.easyFlipView8.setFlipOnTouch(true);
-
-                if (luckyDrawLayoutBinding.easyFlipView1.isBackSide()) {
-
-                    luckyDrawLayoutBinding.easyFlipView1.flipTheView();
-                    luckyDrawLayoutBinding.easyFlipView1.flipTheView(true);
-                }
-
-                if (luckyDrawLayoutBinding.easyFlipView2.isBackSide()) {
-
-                    luckyDrawLayoutBinding.easyFlipView2.flipTheView();
-                    luckyDrawLayoutBinding.easyFlipView2.flipTheView(true);
-                }
-
-                if (luckyDrawLayoutBinding.easyFlipView3.isBackSide()) {
-
-                    luckyDrawLayoutBinding.easyFlipView3.flipTheView();
-                    luckyDrawLayoutBinding.easyFlipView3.flipTheView(true);
-                }
-
-                if (luckyDrawLayoutBinding.easyFlipView4.isBackSide()) {
-
-                    luckyDrawLayoutBinding.easyFlipView4.flipTheView();
-                    luckyDrawLayoutBinding.easyFlipView4.flipTheView(true);
-                }
-
-                if (luckyDrawLayoutBinding.easyFlipView5.isBackSide()) {
-
-                    luckyDrawLayoutBinding.easyFlipView5.flipTheView();
-                    luckyDrawLayoutBinding.easyFlipView5.flipTheView(true);
-                }
-
-                if (luckyDrawLayoutBinding.easyFlipView6.isBackSide()) {
-
-                    luckyDrawLayoutBinding.easyFlipView6.flipTheView();
-                    luckyDrawLayoutBinding.easyFlipView6.flipTheView(true);
-                }
-
-                if (luckyDrawLayoutBinding.easyFlipView7.isBackSide()) {
-
-                    luckyDrawLayoutBinding.easyFlipView7.flipTheView();
-                    luckyDrawLayoutBinding.easyFlipView7.flipTheView(true);
-                }
-
-                if (luckyDrawLayoutBinding.easyFlipView8.isBackSide()) {
-
-                    luckyDrawLayoutBinding.easyFlipView8.flipTheView();
-                    luckyDrawLayoutBinding.easyFlipView8.flipTheView(true);
-                }
-
-                Collections.shuffle(allCards);
-                Log.e("prizeIdList",""+prizeIdList);
-
-                ObjectAnimator flip1 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView1, "rotationY", 180f, 360f);
-                flip1.setDuration(1500);
-                flip1.start();
-                ObjectAnimator flip2 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView2, "rotationY", 180f, 360f);
-                flip2.setDuration(1500);
-                flip2.start();
-                ObjectAnimator flip3 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView3, "rotationY", 180f, 360f);
-                flip3.setDuration(1500);
-                flip3.start();
-                ObjectAnimator flip4 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView4, "rotationY", 180f, 360f);
-                flip4.setDuration(1500);
-                flip4.start();
-                ObjectAnimator flip5 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView5, "rotationY", 180f, 360f);
-                flip5.setDuration(1500);
-                flip5.start();
-                ObjectAnimator flip6 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView6, "rotationY", 180f, 360f);
-                flip6.setDuration(1500);
-                flip6.start();
-                ObjectAnimator flip7 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView7, "rotationY", 180f, 360f);
-                flip7.setDuration(1500);
-                flip7.start();
-                ObjectAnimator flip8 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView8, "rotationY", 180f, 360f);
-                flip8.setDuration(1500);
-                flip8.start();
             }
         });
         luckyDrawLayoutBinding.imgrightDrawer.setOnClickListener(new View.OnClickListener() {
@@ -1410,7 +1412,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
     }
 
     private void onTimerFinish() {
-        Toast.makeText(this, "Countdown timer finished!", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Countdown timer finished!", Toast.LENGTH_SHORT).show();
         prefUtils.setStartedTime(0);
         timeToStart = MAX_TIME;
         updatingUI();
