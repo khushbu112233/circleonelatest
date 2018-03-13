@@ -1,5 +1,6 @@
 package com.circle8.circleOne.Fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -63,6 +65,9 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -85,8 +90,12 @@ import javax.crypto.NoSuchPaddingException;
 
 import static android.app.Activity.RESULT_OK;
 import static android.graphics.Color.WHITE;
+import static com.circle8.circleOne.Activity.AddManuallyActivity.BitMapToString;
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
+import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.callMainPage;
 import static com.circle8.circleOne.Utils.Utility.callSubPAge;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 import static com.circle8.circleOne.Utils.Utility.encrypt;
 
 /**
@@ -121,6 +130,9 @@ public class DashboardFragment extends Fragment
     /*for texture image to text*/
     List<TextBlock> textBlocks = new ArrayList<>();
     List<String> scanTextLineList = new ArrayList<>();
+    private static String final_ImgBase64 = "";
+    private String ImgName1="";
+    private String[] scanTextArray;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState)
@@ -700,15 +712,16 @@ public class DashboardFragment extends Fragment
 
             /*this complete text scan value from scanned*/
             String detectText = String.valueOf(detectedText);
-
             /*now convert List<> to StringArray[]*/
             int n = scanTextLineList.size();
-            String[] scanTextArray = scanTextLineList.toArray(new String[n]);
+            scanTextArray = scanTextLineList.toArray(new String[n]);
+            new HttpAsyncTaskFrontUpload().execute(Utility.BASE_URL+"ImgUpload");
 
             /*now pass arrayList of TextLines data to another activity*/
-            Intent iPut = new Intent(context, AddManuallyActivity.class);
+            /*Intent iPut = new Intent(context, AddManuallyActivity.class);
             iPut.putExtra("ScanTextArray", scanTextArray);
-            startActivity(iPut);
+            iPut.putExtra("card", ImgName1);
+            startActivity(iPut);*/
         }
         finally
         {
@@ -771,6 +784,9 @@ public class DashboardFragment extends Fragment
                     e.printStackTrace();
                 }
 
+                final_ImgBase64 = BitMapToString(bitmap);
+                //   Upload();
+
                 inspectFromBitmap(bitmap);
 
                 bitmap.recycle();
@@ -789,6 +805,73 @@ public class DashboardFragment extends Fragment
         {
             Utility.freeMemory();
             Toast.makeText(getActivity(), "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    private class HttpAsyncTaskFrontUpload extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            String loading = "Uploading" ;
+            CustomProgressDialog(loading, getActivity());
+
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("ImgBase64", final_ImgBase64);
+                jsonObject.accumulate("classification", "card");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+              dismissProgress();
+            //fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try
+            {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String ImgName = jsonObject.getString("ImgName").toString();
+                    String success = jsonObject.getString("success").toString();
+
+                    if (success.equals("1") && ImgName != null) {
+                        /*Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                        finish();*/
+                         //Toast.makeText(getContext(), ImgName, Toast.LENGTH_LONG).show();
+                        ImgName1 = ImgName;
+                        Intent iPut = new Intent(context, AddManuallyActivity.class);
+                        iPut.putExtra("ScanTextArray", scanTextArray);
+                        iPut.putExtra("card", ImgName1);
+                        startActivity(iPut);
+                    } else {
+                        Toast.makeText(getContext(), "Error while uploading image..", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Not able to upload..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         }
     }
 
