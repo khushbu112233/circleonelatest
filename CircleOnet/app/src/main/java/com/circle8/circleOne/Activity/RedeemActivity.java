@@ -5,6 +5,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -20,6 +23,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.RedeemListAdapter;
@@ -68,6 +72,21 @@ public class RedeemActivity extends AppCompatActivity {
      //   redeemActivityLayoutBinding.llActivity.startAnimation(slide_up);
         prefUtils = new PrefUtils(getApplicationContext());
 
+        TextView txt1 = (TextView) findViewById(R.id.txtDay1);
+        int[] color = {Color.parseColor("#dfc977"), Color.parseColor("#ffffff")};
+        float[] position = {0, 1};
+        Shader.TileMode tile_mode0 = Shader.TileMode.REPEAT; // or TileMode.REPEAT;
+        LinearGradient lin_grad0 = new LinearGradient(0, 0, 0, 200, color, position, tile_mode0);
+        Shader shader_gradient0 = lin_grad0;
+        txt1.getPaint().setShader(shader_gradient0);
+        redeemActivityLayoutBinding.txtDay2.getPaint().setShader(shader_gradient0);
+        redeemActivityLayoutBinding.txtHour1.getPaint().setShader(shader_gradient0);
+        redeemActivityLayoutBinding.txtHour2.getPaint().setShader(shader_gradient0);
+        redeemActivityLayoutBinding.txtMinute1.getPaint().setShader(shader_gradient0);
+        redeemActivityLayoutBinding.txtMinute2.getPaint().setShader(shader_gradient0);
+        redeemActivityLayoutBinding.txtSecond1.getPaint().setShader(shader_gradient0);
+        redeemActivityLayoutBinding.txtSecond2.getPaint().setShader(shader_gradient0);
+        
         if (timerState == TimerState.STOPPED) {
             prefUtils.setStartedTime((int) getNow());
             startTimer();
