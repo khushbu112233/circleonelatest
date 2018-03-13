@@ -410,7 +410,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 luckyDrawLayoutBinding.easyFlipView8.setFlipEnabled(true);
                 luckyDrawLayoutBinding.easyFlipView8.setFlipOnTouch(true);
 
-               /* if (luckyDrawLayoutBinding.easyFlipView1.isBackSide()) {
+                if (luckyDrawLayoutBinding.easyFlipView1.isBackSide()) {
 
                     luckyDrawLayoutBinding.easyFlipView1.flipTheView();
                     luckyDrawLayoutBinding.easyFlipView1.flipTheView(true);
@@ -461,7 +461,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 Collections.shuffle(allCards);
                 Log.e("prizeIdList",""+prizeIdList);
 
-                ObjectAnimator flip1 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView1, "rotationY", 180f, 360f);
+                /*ObjectAnimator flip1 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView1, "rotationY", 180f, 360f);
                 flip1.setDuration(1500);
                 flip1.start();
                 ObjectAnimator flip2 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView2, "rotationY", 180f, 360f);
