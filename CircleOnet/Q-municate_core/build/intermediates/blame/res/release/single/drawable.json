@@ -1,0 +1,610 @@
+[
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_textfield_search_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_textfield_search_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_btn_default_mtrl_shape.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_btn_default_mtrl_shape.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_text_dark.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\8a81e73bd7acefe2ce03e7060debdd98b2697d37\\output\\res\\drawable\\common_google_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\notification_bg.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\5b612ff36a6e98a22be9796604b9cda69bf39da3\\output\\res\\drawable\\notification_bg.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_icon_light.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_icon_light.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\messenger_button_white_bg_round.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\e9df9b2225cb27dc64d168b8cbf5047a0e82ed6d\\output\\res\\drawable\\messenger_button_white_bg_round.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ic_go_search_api_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_ic_go_search_api_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\messenger_button_white_bg_selector.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\e87b12cac89de8a2ec1e0031f31296fed52c6b0b\\output\\res\\drawable\\messenger_button_white_bg_selector.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ratingbar_indicator_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_ratingbar_indicator_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_btn_check_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_btn_check_material.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\notification_bg_low.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\5b612ff36a6e98a22be9796604b9cda69bf39da3\\output\\res\\drawable\\notification_bg_low.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\messenger_button_white_bg_selector.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\e9df9b2225cb27dc64d168b8cbf5047a0e82ed6d\\output\\res\\drawable\\messenger_button_white_bg_selector.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_btn_colored_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\tooltip_frame_light.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\tooltip_frame_light.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_vector_test.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_vector_test.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_icon_dark_normal.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_icon_dark_normal.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\com_facebook_auth_dialog_background.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\e87b12cac89de8a2ec1e0031f31296fed52c6b0b\\output\\res\\drawable\\com_facebook_auth_dialog_background.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\messenger_button_blue_bg_round.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\e87b12cac89de8a2ec1e0031f31296fed52c6b0b\\output\\res\\drawable\\messenger_button_blue_bg_round.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ic_ab_back_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_ic_ab_back_material.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\com_facebook_auth_dialog_cancel_background.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\e9df9b2225cb27dc64d168b8cbf5047a0e82ed6d\\output\\res\\drawable\\com_facebook_auth_dialog_cancel_background.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\badge_attach_message_time.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\557bb6c6f8b2c6b1a02cb69c8ea8f9b7ca0b5488\\output\\res\\drawable\\badge_attach_message_time.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\com_facebook_send_button_icon.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\e9df9b2225cb27dc64d168b8cbf5047a0e82ed6d\\output\\res\\drawable\\com_facebook_send_button_icon.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_icon_dark_normal.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\8a81e73bd7acefe2ce03e7060debdd98b2697d37\\output\\res\\drawable\\common_google_signin_btn_icon_dark_normal.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_edit_text_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_edit_text_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_text_dark.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_text_light_normal.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_text_light_normal.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_btn_check_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_btn_check_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_text_cursor_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_text_cursor_material.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_switch_thumb_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_switch_thumb_material.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\avd_playpause_play_to_pause.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\557bb6c6f8b2c6b1a02cb69c8ea8f9b7ca0b5488\\output\\res\\drawable\\avd_playpause_play_to_pause.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_cab_background_internal_bg.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_cab_background_internal_bg.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_list_selector_background_transition_holo_dark.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_list_selector_background_transition_holo_dark.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ic_menu_overflow_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_ic_menu_overflow_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\com_facebook_button_send_background.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\e87b12cac89de8a2ec1e0031f31296fed52c6b0b\\output\\res\\drawable\\com_facebook_button_send_background.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ic_voice_search_api_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_ic_voice_search_api_material.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_btn_default_mtrl_shape.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_btn_default_mtrl_shape.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\progress_bar_states.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\557bb6c6f8b2c6b1a02cb69c8ea8f9b7ca0b5488\\output\\res\\drawable\\progress_bar_states.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_icon_dark_focused.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\8a81e73bd7acefe2ce03e7060debdd98b2697d37\\output\\res\\drawable\\common_google_signin_btn_icon_dark_focused.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\com_facebook_auth_dialog_background.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\e9df9b2225cb27dc64d168b8cbf5047a0e82ed6d\\output\\res\\drawable\\com_facebook_auth_dialog_background.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\avd_playpause_play_to_pause.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\c26bb7af62dfac347625ef77d76e129157a818af\\output\\res\\drawable\\avd_playpause_play_to_pause.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ic_menu_overflow_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_ic_menu_overflow_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\com_facebook_auth_dialog_cancel_background.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\e87b12cac89de8a2ec1e0031f31296fed52c6b0b\\output\\res\\drawable\\com_facebook_auth_dialog_cancel_background.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_seekbar_track_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_seekbar_track_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\messenger_button_white_bg_round.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\e87b12cac89de8a2ec1e0031f31296fed52c6b0b\\output\\res\\drawable\\messenger_button_white_bg_round.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\asl_playpause.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\c26bb7af62dfac347625ef77d76e129157a818af\\output\\res\\drawable\\asl_playpause.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_icon_light.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\8a81e73bd7acefe2ce03e7060debdd98b2697d37\\output\\res\\drawable\\common_google_signin_btn_icon_light.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\tooltip_frame_dark.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\tooltip_frame_dark.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_text_dark_focused.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_text_dark_focused.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_spinner_textfield_background_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_spinner_textfield_background_material.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\asl_playpause.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\557bb6c6f8b2c6b1a02cb69c8ea8f9b7ca0b5488\\output\\res\\drawable\\asl_playpause.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\com_facebook_button_background.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\e87b12cac89de8a2ec1e0031f31296fed52c6b0b\\output\\res\\drawable\\com_facebook_button_background.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\com_facebook_button_icon.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\e9df9b2225cb27dc64d168b8cbf5047a0e82ed6d\\output\\res\\drawable\\com_facebook_button_icon.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_switch_thumb_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_switch_thumb_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\avd_playpause_pause_to_play.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\c26bb7af62dfac347625ef77d76e129157a818af\\output\\res\\drawable\\avd_playpause_pause_to_play.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_list_selector_holo_light.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_list_selector_holo_light.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_btn_radio_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_btn_radio_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ratingbar_small_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_ratingbar_small_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_tab_indicator_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_tab_indicator_material.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_icon_disabled.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\8a81e73bd7acefe2ce03e7060debdd98b2697d37\\output\\res\\drawable\\common_google_signin_btn_icon_disabled.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ic_voice_search_api_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_ic_voice_search_api_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_item_background_holo_light.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_item_background_holo_light.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_list_selector_holo_dark.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_list_selector_holo_dark.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_icon_dark.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_icon_dark.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ic_clear_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_ic_clear_material.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_item_background_holo_dark.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_item_background_holo_dark.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ratingbar_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_ratingbar_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ratingbar_indicator_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_ratingbar_indicator_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_icon_disabled.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_icon_disabled.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_cab_background_top_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_cab_background_top_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\shape_circle.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\c26bb7af62dfac347625ef77d76e129157a818af\\output\\res\\drawable\\shape_circle.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_icon_light_focused.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\8a81e73bd7acefe2ce03e7060debdd98b2697d37\\output\\res\\drawable\\common_google_signin_btn_icon_light_focused.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ic_search_api_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_ic_search_api_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\notification_bg_low.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\75a908df38441cacdb49dd81bd2576a489b3ae79\\output\\res\\drawable\\notification_bg_low.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\shape_border.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\557bb6c6f8b2c6b1a02cb69c8ea8f9b7ca0b5488\\output\\res\\drawable\\shape_border.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\messenger_button_blue_bg_round.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\e9df9b2225cb27dc64d168b8cbf5047a0e82ed6d\\output\\res\\drawable\\messenger_button_blue_bg_round.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\com_facebook_button_login_silver_background.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\e9df9b2225cb27dc64d168b8cbf5047a0e82ed6d\\output\\res\\drawable\\com_facebook_button_login_silver_background.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\avd_playpause_pause_to_play.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\557bb6c6f8b2c6b1a02cb69c8ea8f9b7ca0b5488\\output\\res\\drawable\\avd_playpause_pause_to_play.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\messenger_button_blue_bg_selector.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\e9df9b2225cb27dc64d168b8cbf5047a0e82ed6d\\output\\res\\drawable\\messenger_button_blue_bg_selector.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_btn_colored_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\vd_playpause_play.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\557bb6c6f8b2c6b1a02cb69c8ea8f9b7ca0b5488\\output\\res\\drawable\\vd_playpause_play.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_text_light_focused.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_text_light_focused.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_text_dark_normal.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_text_dark_normal.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\com_facebook_button_icon.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\e87b12cac89de8a2ec1e0031f31296fed52c6b0b\\output\\res\\drawable\\com_facebook_button_icon.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\com_facebook_auth_dialog_header_background.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\e9df9b2225cb27dc64d168b8cbf5047a0e82ed6d\\output\\res\\drawable\\com_facebook_auth_dialog_header_background.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\vd_playpause_play.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\c26bb7af62dfac347625ef77d76e129157a818af\\output\\res\\drawable\\vd_playpause_play.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_btn_borderless_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_btn_borderless_material.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_list_selector_background_transition_holo_dark.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_list_selector_background_transition_holo_dark.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\com_facebook_button_background.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\e9df9b2225cb27dc64d168b8cbf5047a0e82ed6d\\output\\res\\drawable\\com_facebook_button_background.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_seekbar_thumb_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_seekbar_thumb_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ic_clear_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_ic_clear_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ic_go_search_api_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_ic_go_search_api_material.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\com_facebook_button_send_background.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\e9df9b2225cb27dc64d168b8cbf5047a0e82ed6d\\output\\res\\drawable\\com_facebook_button_send_background.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_text_dark_normal.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\8a81e73bd7acefe2ce03e7060debdd98b2697d37\\output\\res\\drawable\\common_google_signin_btn_text_dark_normal.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_list_selector_holo_dark.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_list_selector_holo_dark.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\tooltip_frame_light.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\tooltip_frame_light.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\com_facebook_button_like_background.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\e9df9b2225cb27dc64d168b8cbf5047a0e82ed6d\\output\\res\\drawable\\com_facebook_button_like_background.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_list_selector_background_transition_holo_light.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_list_selector_background_transition_holo_light.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\tooltip_frame_dark.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\tooltip_frame_dark.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_seekbar_tick_mark_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_seekbar_tick_mark_material.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_textfield_search_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_textfield_search_material.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_text_light.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\8a81e73bd7acefe2ce03e7060debdd98b2697d37\\output\\res\\drawable\\common_google_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_btn_borderless_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_btn_borderless_material.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\vd_playpause_pause.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\557bb6c6f8b2c6b1a02cb69c8ea8f9b7ca0b5488\\output\\res\\drawable\\vd_playpause_pause.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_icon_light_focused.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_icon_light_focused.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_item_background_holo_dark.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_item_background_holo_dark.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_text_cursor_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_text_cursor_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\com_facebook_send_button_icon.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\e87b12cac89de8a2ec1e0031f31296fed52c6b0b\\output\\res\\drawable\\com_facebook_send_button_icon.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\shape_circle.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\557bb6c6f8b2c6b1a02cb69c8ea8f9b7ca0b5488\\output\\res\\drawable\\shape_circle.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_tab_indicator_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_tab_indicator_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_cab_background_top_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_cab_background_top_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\shape_border.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\c26bb7af62dfac347625ef77d76e129157a818af\\output\\res\\drawable\\shape_border.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\notification_icon_background.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\5b612ff36a6e98a22be9796604b9cda69bf39da3\\output\\res\\drawable\\notification_icon_background.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_list_selector_background_transition_holo_light.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_list_selector_background_transition_holo_light.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_item_background_holo_light.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_item_background_holo_light.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ratingbar_small_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_ratingbar_small_material.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_text_light_focused.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\8a81e73bd7acefe2ce03e7060debdd98b2697d37\\output\\res\\drawable\\common_google_signin_btn_text_light_focused.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_btn_radio_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_btn_radio_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_dialog_material_background.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_dialog_material_background.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\badge_attach_message_time.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\c26bb7af62dfac347625ef77d76e129157a818af\\output\\res\\drawable\\badge_attach_message_time.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ic_ab_back_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_ic_ab_back_material.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_icon_light_normal.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\8a81e73bd7acefe2ce03e7060debdd98b2697d37\\output\\res\\drawable\\common_google_signin_btn_icon_light_normal.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\progress_bar_states.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\c26bb7af62dfac347625ef77d76e129157a818af\\output\\res\\drawable\\progress_bar_states.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\com_facebook_button_login_silver_background.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\e87b12cac89de8a2ec1e0031f31296fed52c6b0b\\output\\res\\drawable\\com_facebook_button_login_silver_background.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ratingbar_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_ratingbar_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_text_disabled.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_text_disabled.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\messenger_button_blue_bg_selector.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\e87b12cac89de8a2ec1e0031f31296fed52c6b0b\\output\\res\\drawable\\messenger_button_blue_bg_selector.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\vd_playpause_pause.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\c26bb7af62dfac347625ef77d76e129157a818af\\output\\res\\drawable\\vd_playpause_pause.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\notification_tile_bg.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\5b612ff36a6e98a22be9796604b9cda69bf39da3\\output\\res\\drawable\\notification_tile_bg.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_spinner_textfield_background_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_spinner_textfield_background_material.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_text_disabled.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\8a81e73bd7acefe2ce03e7060debdd98b2697d37\\output\\res\\drawable\\common_google_signin_btn_text_disabled.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_text_light_normal.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\8a81e73bd7acefe2ce03e7060debdd98b2697d37\\output\\res\\drawable\\common_google_signin_btn_text_light_normal.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_cab_background_internal_bg.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_cab_background_internal_bg.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_seekbar_thumb_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_seekbar_thumb_material.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_text_dark_focused.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\8a81e73bd7acefe2ce03e7060debdd98b2697d37\\output\\res\\drawable\\common_google_signin_btn_text_dark_focused.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_edit_text_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_edit_text_material.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_vector_test.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_vector_test.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ic_search_api_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_ic_search_api_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\notification_icon_background.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\75a908df38441cacdb49dd81bd2576a489b3ae79\\output\\res\\drawable\\notification_icon_background.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_seekbar_tick_mark_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_seekbar_tick_mark_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\notification_bg.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\75a908df38441cacdb49dd81bd2576a489b3ae79\\output\\res\\drawable\\notification_bg.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\com_facebook_auth_dialog_header_background.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\e87b12cac89de8a2ec1e0031f31296fed52c6b0b\\output\\res\\drawable\\com_facebook_auth_dialog_header_background.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_list_selector_holo_light.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_list_selector_holo_light.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_dialog_material_background.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_dialog_material_background.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_icon_dark.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\8a81e73bd7acefe2ce03e7060debdd98b2697d37\\output\\res\\drawable\\common_google_signin_btn_icon_dark.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\abc_seekbar_track_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_seekbar_track_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_text_light.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_icon_light_normal.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_icon_light_normal.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\notification_tile_bg.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\75a908df38441cacdb49dd81bd2576a489b3ae79\\output\\res\\drawable\\notification_tile_bg.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\com_facebook_button_like_background.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\e87b12cac89de8a2ec1e0031f31296fed52c6b0b\\output\\res\\drawable\\com_facebook_button_like_background.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\release\\drawable\\common_google_signin_btn_icon_dark_focused.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_icon_dark_focused.xml"
+    }
+]

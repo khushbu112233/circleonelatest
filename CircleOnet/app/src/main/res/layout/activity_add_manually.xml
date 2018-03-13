@@ -203,7 +203,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -416,31 +416,33 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:id="@+id/lnrSubmit"
+                    android:layout_below="@id/scroll"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:visibility="gone"
+                        android:background="@color/colorPrimary"/>
+                    <TextView
+                        android:gravity="center"
+                        android:textSize="17dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="ADD"
+                        android:textColor="@color/colorPrimary"/>
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </ScrollView>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:id="@+id/lnrSubmit"
-            android:layout_below="@id/scroll"
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:visibility="gone"
-                android:background="@color/colorPrimary"/>
-            <TextView
-                android:gravity="center"
-                android:textSize="17dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="ADD"
-                android:textColor="@color/colorPrimary"/>
 
-        </LinearLayout>
 
     </LinearLayout>
 

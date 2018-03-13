@@ -1,11 +1,13 @@
 package com.circle8.circleOne.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -15,11 +17,16 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.circle8.circleOne.Helper.LoginSession;
+import com.circle8.circleOne.Helper.ReferralCodeSession;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.ActivityAddManuallyBinding;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -28,7 +35,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
+import static com.circle8.circleOne.Utils.Utility.POST2;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class AddManuallyActivity extends AppCompatActivity implements View.OnClickListener
 {
@@ -38,7 +50,15 @@ public class AddManuallyActivity extends AppCompatActivity implements View.OnCli
     static String cardType = "";
     String NAME = "", EMAIL = "", PHONE = "", WEBSITE = "", ADDRESS = "", COMPANY = "";
     boolean result, result1;
+    String front_image = "";
+    private LoginSession session;
     private static String final_ImgBase64 = "";
+    HashMap<String, String> user;
+    ReferralCodeSession referralCodeSession;
+    private String refer = "";
+    String first_name = "";
+    String last_name = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -48,8 +68,22 @@ public class AddManuallyActivity extends AppCompatActivity implements View.OnCli
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         result= Utility.checkPermission(AddManuallyActivity.this);
         result1=Utility.checkCameraPermission(AddManuallyActivity.this);
+
+        session = new LoginSession(getApplicationContext());
+        user = session.getUserDetails();
+
+        referralCodeSession = new ReferralCodeSession(getApplicationContext());
+        HashMap<String, String> referral = referralCodeSession.getReferralDetails();
+        refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
+
+        String name1 = user.get(LoginSession.KEY_NAME);
+        first_name = name1.substring(0, name1.indexOf(" "));
+        last_name = name1.substring(name1.indexOf(" ") + 1, name1.length());
+
         activityAddManuallyBinding.tvMoreInfo.setOnClickListener(this);
         activityAddManuallyBinding.imgBack.setOnClickListener(this);
+        activityAddManuallyBinding.txtfrontDelete.setOnClickListener(this);
+        activityAddManuallyBinding.txtbackDelete.setOnClickListener(this);
         activityAddManuallyBinding.ivAttachFrontImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,7 +116,9 @@ public class AddManuallyActivity extends AppCompatActivity implements View.OnCli
         /*now get ArrayString*/
         Intent iGet = getIntent();
         String [] scanTextArray = iGet.getStringArrayExtra("ScanTextArray");
-
+        front_image = iGet.getStringExtra("card");
+        Toast.makeText(getApplicationContext(), front_image, Toast.LENGTH_LONG).show();
+        activityAddManuallyBinding.txtCardFront.setText(front_image);
         /*convert StringArray to List<>*/
         List<String> scanTextLineList1 = new ArrayList<String>(Arrays.asList(scanTextArray));
         scanTextLineList = scanTextLineList1;
@@ -145,6 +181,8 @@ public class AddManuallyActivity extends AppCompatActivity implements View.OnCli
 
         }
         scanTextLineList.clear();
+
+        activityAddManuallyBinding.lnrSubmit.setOnClickListener(this);
     }
 
     @Override
@@ -159,6 +197,32 @@ public class AddManuallyActivity extends AppCompatActivity implements View.OnCli
             else
             {
                 activityAddManuallyBinding.llMoreLay.setVisibility(View.VISIBLE);
+            }
+        }
+        if ( v == activityAddManuallyBinding.txtfrontDelete)
+        {
+            activityAddManuallyBinding.txtCardFront.setText("");
+        }
+        if ( v == activityAddManuallyBinding.txtbackDelete)
+        {
+            activityAddManuallyBinding.txtCardBack.setText("");
+        }
+        if ( v == activityAddManuallyBinding.lnrSubmit)
+        {
+            if (activityAddManuallyBinding.etEmail.getText().toString().equals("")){
+                Toast.makeText(getApplicationContext(), "please enter email-id", Toast.LENGTH_LONG).show();
+            }
+            else if (activityAddManuallyBinding.etFirstName.getText().toString().equals("")){
+                Toast.makeText(getApplicationContext(), "please enter first name", Toast.LENGTH_LONG).show();
+            }
+            else if (activityAddManuallyBinding.etLastName.getText().toString().equals("")){
+                Toast.makeText(getApplicationContext(), "please enter last name", Toast.LENGTH_LONG).show();
+            }
+            else if (activityAddManuallyBinding.etPhone.getText().toString().equals("")){
+                Toast.makeText(getApplicationContext(), "please enter phone number", Toast.LENGTH_LONG).show();
+            }
+            else {
+                new HttpAsyncTaskAddContact().execute(Utility.BASE_URL + "AddContact");
             }
         }
         if ( v == activityAddManuallyBinding.imgBack)
@@ -244,11 +308,11 @@ public class AddManuallyActivity extends AppCompatActivity implements View.OnCli
 
                     if (cardType.equals("front")) {
 
-                       // HttpAsyncTaskFrontUpload().execute(Utility.BASE_URL+"ImgUpload");
+                        new HttpAsyncTaskFrontUpload().execute(Utility.BASE_URL+"ImgUpload");
                     }
                     else if (cardType.equals("back")) {
 
-                       // HttpAsyncTaskBackUpload().execute(Utility.BASE_URL+"ImgUpload");
+                        new HttpAsyncTaskBackUpload().execute(Utility.BASE_URL+"ImgUpload");
                     }
 
                 } catch (FileNotFoundException e) {
@@ -261,6 +325,197 @@ public class AddManuallyActivity extends AppCompatActivity implements View.OnCli
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Toast.makeText(this, "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
             }
+        }
+    }
+
+    private class HttpAsyncTaskBackUpload extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String loading = "Uploading" ;
+            CustomProgressDialog(loading, AddManuallyActivity.this);
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("ImgBase64", final_ImgBase64);
+                jsonObject.accumulate("classification", "card");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            dismissProgress();
+            //fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try
+            {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String ImgName = jsonObject.getString("ImgName").toString();
+                    String success = jsonObject.getString("success").toString();
+
+                    if (success.equals("1") && ImgName != null) {
+                        /*Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                        finish();*/
+                        // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+                        activityAddManuallyBinding.txtCardBack.setText(ImgName);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Error while uploading image..", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Not able to upload..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    private class HttpAsyncTaskAddContact extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String loading = "Adding Card" ;
+            CustomProgressDialog(loading, AddManuallyActivity.this);
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("Contact_Email", activityAddManuallyBinding.etEmail.getText().toString());
+                jsonObject.accumulate("Contact_FirstName", activityAddManuallyBinding.etFirstName.getText().toString());
+                jsonObject.accumulate("Contact_LastName", activityAddManuallyBinding.etLastName.getText().toString());
+                jsonObject.accumulate("Contact_Phone", activityAddManuallyBinding.etPhone.getText().toString());
+                jsonObject.accumulate("My_Email", user.get(LoginSession.KEY_EMAIL));
+                jsonObject.accumulate("My_FirstName", first_name);
+                jsonObject.accumulate("My_LastName", last_name);
+                jsonObject.accumulate("My_Phone", user.get(LoginSession.KEY_PHONE));
+                jsonObject.accumulate("my_profileid", user.get(LoginSession.KEY_PROFILEID));
+                jsonObject.accumulate("ReferralCode", refer);
+                jsonObject.accumulate("Card_Back", activityAddManuallyBinding.txtCardBack.getText().toString());
+                jsonObject.accumulate("Card_Front", activityAddManuallyBinding.txtCardFront.getText().toString());
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            dismissProgress();
+            //fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try
+            {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String success = jsonObject.getString("success").toString();
+
+                    if (success.equals("1") ) {
+                        /*Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                        finish();*/
+                        Toast.makeText(getApplicationContext(), "Add Contact request sent successfully", Toast.LENGTH_LONG).show();
+                        //activityAddManuallyBinding.txtCardBack.setText(ImgName);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Request not send", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Not able to send request..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    private class HttpAsyncTaskFrontUpload extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            String loading = "Uploading" ;
+            CustomProgressDialog(loading, AddManuallyActivity.this);
+
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("ImgBase64", final_ImgBase64);
+                jsonObject.accumulate("classification", "card");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+              dismissProgress();
+           // fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try
+            {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String ImgName = jsonObject.getString("ImgName").toString();
+                    String success = jsonObject.getString("success").toString();
+
+                    if (success.equals("1") && ImgName != null) {
+                        /*Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                        finish();*/
+                        // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+                        activityAddManuallyBinding.txtCardFront.setText(ImgName);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Error while uploading image..", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Not able to upload..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         }
     }
 }

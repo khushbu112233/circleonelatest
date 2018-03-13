@@ -8,12 +8,19 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/Q-municate_core" />
+            <option value="$PROJECT_DIR$/Q-municate_db" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/carousel" />
             <option value="$PROJECT_DIR$/imgLoaderlibrary" />
             <option value="$PROJECT_DIR$/library" />
             <option value="$PROJECT_DIR$/linkedin-sdk" />
             <option value="$PROJECT_DIR$/nfclib" />
+            <option value="$PROJECT_DIR$/q-municate_auth_service" />
+            <option value="$PROJECT_DIR$/q-municate_base_cache" />
+            <option value="$PROJECT_DIR$/q-municate_base_service" />
+            <option value="$PROJECT_DIR$/q-municate_user_cache" />
+            <option value="$PROJECT_DIR$/q-municate_user_service" />
             <option value="$PROJECT_DIR$/sample-core" />
           </set>
         </option>

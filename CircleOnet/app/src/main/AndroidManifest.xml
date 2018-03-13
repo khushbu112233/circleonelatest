@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.circle8.circleOne">
+    package="com.circle8.circleOne"
+    android:installLocation="preferExternal">
 
     <permission
         android:name="com.circle8.circleOne.permission.C2D_MESSAGE"
@@ -14,6 +15,7 @@
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -23,12 +25,30 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
 
     <uses-feature
         android:name="android.hardware.nfc"
         android:required="false" />
 
     <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -47,9 +67,9 @@
         <meta-data
             android:name="com.onesignal.NotificationOpened.DEFAULT"
             android:value="DISABLE" />
-        <meta-data
+        <!--<meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
+            android:value="@string/facebook_app_id" />-->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_map_api" />
@@ -88,16 +108,17 @@
 
         <meta-data
             android:name="com.quickblox.messages.TYPE"
-            android:value="GCM" />
+            android:value="FCM" />
         <meta-data
             android:name="com.quickblox.messages.SENDER_ID"
-            android:value="564268798411" />
+            android:value="@string/sender_id" />
         <meta-data
             android:name="com.quickblox.messages.QB_ENVIRONMENT"
-            android:value="DEVELOPMENT" />
+            android:value="PRODUCTION" />
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="7aea78439bec41a9005c7488bb6751c5e33fe270" />
+            android:value="${fabricApiKey}"
+            tools:replace="android:value"/>
 
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
         <activity
@@ -115,9 +136,8 @@
             </intent-filter>
             -->
         </activity>
-        <activity android:name=".MainActivity" >
-        </activity>
-       <!-- <receiver android:name=".Utils.TimeReceiver"/>-->
+        <activity android:name=".MainActivity"></activity>
+        <!-- <receiver android:name=".Utils.TimeReceiver"/> -->
         <activity
             android:name=".Activity.EventsActivity"
             android:screenOrientation="portrait" />
@@ -156,7 +176,7 @@
             android:name=".Activity.ConnectActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
-        <activity android:name=".Activity.RedeemListActivity"></activity>
+        <activity android:name=".Activity.RedeemListActivity" />
         <activity
             android:name=".Activity.Connect3Activity"
             android:screenOrientation="portrait"
@@ -214,9 +234,11 @@
         <activity
             android:name=".Activity.GroupTag"
             android:screenOrientation="portrait" />
-        <!--<activity
+        <!--
+            <activity
             android:name=".Activity.Notification"
-            android:screenOrientation="portrait" />-->
+            android:screenOrientation="portrait" />
+        -->
         <activity
             android:name=".ExternalNFC.NFCExternal"
             android:screenOrientation="portrait" />
@@ -328,7 +350,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         -->
-        <service android:name=".Utils.TimeService"/>
+        <service android:name=".Utils.TimeService" />
+
         <activity
             android:name=".Activity.AttachmentDisplay"
             android:theme="@style/NoActionbarSplash" />
@@ -355,7 +378,6 @@
             android:name=".chat.SelectUsersActivity"
             android:screenOrientation="portrait" />
 
-
         <receiver android:name=".widget.UILWidgetProvider">
             <meta-data
                 android:name="android.appwidget.provider"
@@ -365,6 +387,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
         </receiver>
+
         <activity
             android:name=".Activity.PrizeHistoryActivity"
             android:screenOrientation="portrait"
@@ -372,11 +395,12 @@
         <activity
             android:name=".Activity.RedeemActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar"/>
+        android:theme="@style/NoActionbar"/>
+
         <activity
             android:name=".Activity.TokenActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar"/>
+            android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.DashboardActivity"
             android:theme="@style/NoActionbar">
@@ -392,7 +416,8 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="application/com.circle8.circleOne"
+                <data
+                    android:mimeType="application/com.circle8.circleOne"
                     tools:ignore="AppLinkUrlError" />
             </intent-filter>
             <intent-filter>
@@ -403,9 +428,220 @@
                 <data android:mimeType="application/com.circle8.circleone" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.AddManuallyActivity"
-            android:theme="@style/NoActionbar"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Activity.AddManuallyActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionbar" />
+        <activity android:name=".Activity.AnimActivity"></activity>
+
+
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.authorization.SplashActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.authorization.LandingActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.authorization.LoginActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.authorization.SignUpActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.main.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.settings.SettingsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.invitefriends.InviteFriendsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.feedback.FeedbackActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.profile.UserProfileActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.call.CallActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.chats.NewMessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.chats.NewGroupDialogActivity"
+            android:noHistory="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.chats.CreateGroupDialogActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.chats.PrivateDialogActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.chats.GroupDialogActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.chats.GroupDialogDetailsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.profile.MyProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.chats.AddFriendsToGroupActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.changepassword.ChangePasswordActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.forgotpassword.ForgotPasswordActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.agreements.UserAgreementActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.soundcloud.android.crop.CropImageActivity" />
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.about.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/AppThemeQB"
+            android:name="com.circle8.circleOne.ui.activities.others.PreviewImageActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.circle8.circleOne.ui.activities.location.MapsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeQB"/>
+        <activity android:name="com.quickblox.ui.kit.chatmessage.adapter.media.video.ui.VideoPlayerActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:launchMode="singleTop"
+            android:theme="@style/VideoPlayerTheme">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="http"/>
+                <data android:scheme="https"/>
+                <data android:scheme="content"/>
+                <data android:scheme="asset"/>
+                <data android:scheme="file"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.circle8.circleOne.ui.activities.others.ExitActivity"
+            android:theme="@android:style/Theme.NoDisplay"
+            android:autoRemoveFromRecents="true"/>
+
+
+        <service
+            android:name="com.quickblox.q_municate_core.service.QBService"
+            android:icon="@drawable/ic_launcher"/>
+        <service
+            android:name="com.circle8.circleOne.fcm.FcmPushListenerService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.quickblox.messages.services.fcm.QBFcmPushInstanceIDService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="com.circle8.circleOne.Common.broadcasts.NetworkChangeReceiver"
+            android:label="NetworkChangeReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.circle8.circleOne.Common.broadcasts.ChatMessageReceiver"
+            android:label="ChatMessageReceiver">
+            <intent-filter>
+                <action android:name="q_municate.got_chat_message" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.quickblox.q_municate_core.network.NetworkGCMTaskService"
+            android:permission="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.gcm.ACTION_TASK_READY"/>
+            </intent-filter>
+        </service>
+
+        <service android:name=".service.SessionJobService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
+        <service android:name="com.circle8.circleOne.service.CallService" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+
     </application>
 
 </manifest>

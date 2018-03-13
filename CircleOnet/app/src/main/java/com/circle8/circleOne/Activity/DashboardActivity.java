@@ -67,6 +67,7 @@ import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.chat.ChatHelper;
 import com.circle8.circleOne.chat.qb.QbDialogHolder;
 import com.circle8.circleOne.databinding.ActivityDashboardBinding;
+import com.circle8.circleOne.ui.activities.authorization.*;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -257,32 +258,37 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                     Intent intent = new Intent(DashboardActivity.this, ManageMyProfile.class);
                     startActivity(intent);
                     navigationView.getMenu().getItem(2).setCheckable(false);
-                } else if (id == R.id.nav_card_request) {
+                } else if (id == R.id.nav_chat) {
                     navigationView.getMenu().getItem(3).setCheckable(true);
-                    Intent intent = new Intent(DashboardActivity.this, NewCardRequestActivity.class);
+                    Intent intent = new Intent(DashboardActivity.this, com.circle8.circleOne.ui.activities.authorization.SplashActivity.class);
                     startActivity(intent);
                     navigationView.getMenu().getItem(3).setCheckable(false);
-                }else if (id == R.id.nav_connect) {
+                } else if (id == R.id.nav_card_request) {
                     navigationView.getMenu().getItem(4).setCheckable(true);
-                    Intent intent = new Intent(DashboardActivity.this, ConnectFragment.class);
+                    Intent intent = new Intent(DashboardActivity.this, NewCardRequestActivity.class);
                     startActivity(intent);
                     navigationView.getMenu().getItem(4).setCheckable(false);
-                }else if(id == R.id.nav_events)
-                {
+                }else if (id == R.id.nav_connect) {
                     navigationView.getMenu().getItem(5).setCheckable(true);
-                    Intent intent = new Intent(DashboardActivity.this, EventsActivity.class);
+                    Intent intent = new Intent(DashboardActivity.this, ConnectFragment.class);
                     startActivity(intent);
                     navigationView.getMenu().getItem(5).setCheckable(false);
-                }else if(id == R.id.nav_circle)
+                }else if(id == R.id.nav_events)
                 {
                     navigationView.getMenu().getItem(6).setCheckable(true);
-                    Intent intent = new Intent(DashboardActivity.this, GroupsActivity.class);
+                    Intent intent = new Intent(DashboardActivity.this, EventsActivity.class);
                     startActivity(intent);
                     navigationView.getMenu().getItem(6).setCheckable(false);
+                }else if(id == R.id.nav_circle)
+                {
+                    navigationView.getMenu().getItem(7).setCheckable(true);
+                    Intent intent = new Intent(DashboardActivity.this, GroupsActivity.class);
+                    startActivity(intent);
+                    navigationView.getMenu().getItem(7).setCheckable(false);
                 }else if(id == R.id.nav_invite)
                 {
                     callSubPAge("Invite","LeftMenu");
-                    navigationView.getMenu().getItem(7).setCheckable(true);
+                    navigationView.getMenu().getItem(8).setCheckable(true);
                     String shareBody = "I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional networks a step further. Use the code '" + refer +
                             "' for a quick and simple registration! https://circle8.asia/mobileApp.html";
                     Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -292,36 +298,36 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                     startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
                  /*    Intent intent = new Intent(DashboardActivity.this, RewardsPointsActivity.class);
                     startActivity(intent);*/
-                    navigationView.getMenu().getItem(7).setCheckable(false);
+                    navigationView.getMenu().getItem(8).setCheckable(false);
                 }else if(id == R.id.nav_history)
                 {
 
-                    navigationView.getMenu().getItem(8).setCheckable(true);
+                    navigationView.getMenu().getItem(9).setCheckable(true);
                     Intent intent = new Intent(DashboardActivity.this, HistoryActivity.class);
                     startActivity(intent);
-                    navigationView.getMenu().getItem(8).setCheckable(false);
+                    navigationView.getMenu().getItem(9).setCheckable(false);
                 }else if(id == R.id.nav_subscription)
                 {
-                    navigationView.getMenu().getItem(9).setCheckable(true);
+                    navigationView.getMenu().getItem(10).setCheckable(true);
                     Intent intent = new Intent(DashboardActivity.this, SubscriptionActivity.class);
                     startActivity(intent);
-                    navigationView.getMenu().getItem(9).setCheckable(false);
+                    navigationView.getMenu().getItem(10).setCheckable(false);
                 }else if(id == R.id.nav_help)
                 {
-                    navigationView.getMenu().getItem(10).setCheckable(true);
+                    navigationView.getMenu().getItem(11).setCheckable(true);
                     Intent intent = new Intent(DashboardActivity.this, Help2Activity.class);
                     startActivity(intent);
-                    navigationView.getMenu().getItem(10).setCheckable(false);
+                    navigationView.getMenu().getItem(11).setCheckable(false);
                 }else if(id == R.id.nav_contact_us)
                 {
-                    navigationView.getMenu().getItem(11).setCheckable(true);
+                    navigationView.getMenu().getItem(12).setCheckable(true);
 
                     Intent intent = new Intent(DashboardActivity.this, ContactUsActivity.class);
                     startActivity(intent);
-                    navigationView.getMenu().getItem(11).setCheckable(false);
+                    navigationView.getMenu().getItem(12).setCheckable(false);
                 }else if(id == R.id.nav_logout)
                 {
-                    navigationView.getMenu().getItem(12).setCheckable(true);
+                    navigationView.getMenu().getItem(13).setCheckable(true);
 
                     CustomProgressDialog("Logout",DashboardActivity.this);
 
@@ -371,7 +377,7 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                     }
 
                     LISessionManager.getInstance(getApplicationContext()).clearSession();
-                    navigationView.getMenu().getItem(12).setCheckable(false);
+                    navigationView.getMenu().getItem(13).setCheckable(false);
                 }
 
 

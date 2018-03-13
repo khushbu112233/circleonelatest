@@ -22,14 +22,23 @@ import com.circle8.circleOne.Activity.NewCardRequestActivity;
 import com.circle8.circleOne.Activity.NotificationActivity;
 import com.circle8.circleOne.Activity.RewardsPointsActivity;
 import com.circle8.circleOne.Activity.SubscriptionActivity;
+import com.circle8.circleOne.BuildConfig;
+import com.circle8.circleOne.Common.ActivityLifecycleHandler;
+import com.circle8.circleOne.Common.StringObfuscator;
+import com.circle8.circleOne.Common.helpers.ServiceManager;
+import com.circle8.circleOne.Common.helpers.SharedHelper;
+import com.circle8.circleOne.Common.image.ImageLoaderUtils;
 import com.circle8.circleOne.ConnectivityReceiver;
 import com.circle8.circleOne.Fragments.ConnectFragment;
 import com.circle8.circleOne.Helper.CustomSharedPreference;
 import com.circle8.circleOne.Model.SampleConfigs;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.SessionListener;
 import com.circle8.circleOne.Utils.ConfigUtils;
 import com.circle8.circleOne.Utils.Consts;
 import com.circle8.circleOne.Utils.Pref;
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.facebook.FacebookSdk;
 import com.flurry.android.FlurryAgent;
 import com.google.gson.Gson;
@@ -42,6 +51,18 @@ import com.onesignal.OSNotification;
 import com.onesignal.OSNotificationAction;
 import com.onesignal.OSNotificationOpenResult;
 import com.onesignal.OneSignal;
+import com.quickblox.auth.session.QBSettings;
+import com.quickblox.chat.QBChatService;
+import com.quickblox.chat.connections.tcp.QBTcpChatConnectionFabric;
+import com.quickblox.chat.connections.tcp.QBTcpConfigurationBuilder;
+import com.quickblox.core.QBHttpConnectionConfig;
+import com.quickblox.core.ServiceZone;
+import com.quickblox.q_municate_auth_service.QMAuthService;
+import com.quickblox.q_municate_core.utils.ConstsCore;
+import com.quickblox.q_municate_db.managers.DataManager;
+import com.quickblox.q_municate_user_cache.QMUserCacheImpl;
+import com.quickblox.q_municate_user_service.QMUserService;
+import com.quickblox.q_municate_user_service.cache.QMUserCache;
 import com.quickblox.sample.core.CoreApp;
 import com.quickblox.sample.core.utils.ActivityLifecycle;
 import com.twitter.sdk.android.Twitter;
@@ -68,6 +89,8 @@ public class MyApplication extends CoreApp
     Object activityToLaunch = null;
     public static String notiStatus = "";
     private CustomSharedPreference shared;
+    private SessionListener sessionListener;
+    private SharedHelper appSharedHelper;
 
     @Override
     protected void attachBaseContext(Context base)
@@ -107,6 +130,10 @@ public class MyApplication extends CoreApp
         FacebookSdk.sdkInitialize(getApplicationContext());
         ActivityLifecycle.init(this);
         initSampleConfigs();
+
+        initFabric();
+        initApplication();
+        registerActivityLifecycleCallbacks(new ActivityLifecycleHandler());
 
         builder = new GsonBuilder();
         gson = builder.create();
@@ -210,6 +237,76 @@ public class MyApplication extends CoreApp
                 .unsubscribeWhenNotificationsAreDisabled(true)
                 .init();
 
+    }
+
+    private void initFabric() {
+        Crashlytics crashlyticsKit = new Crashlytics.Builder()
+                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                .build();
+
+        Fabric.with(this, crashlyticsKit);
+    }
+
+    private void initApplication() {
+        mInstance = this;
+
+        sessionListener = new SessionListener();
+        getAppSharedHelper();
+        initQb();
+        initDb();
+        initImageLoader1(this);
+        initServices();
+    }
+
+    private void initQb() {
+        QBSettings.getInstance().init(getApplicationContext(),
+                StringObfuscator.getApplicationId(),
+                StringObfuscator.getAuthKey(),
+                StringObfuscator.getAuthSecret());
+        QBSettings.getInstance().setAccountKey(StringObfuscator.getAccountKey());
+
+        initDomains();
+        initHTTPConfig();
+
+        QBTcpConfigurationBuilder configurationBuilder = new QBTcpConfigurationBuilder()
+                .setAutojoinEnabled(false)
+                .setSocketTimeout(0);
+
+        QBChatService.setConnectionFabric(new QBTcpChatConnectionFabric(configurationBuilder));
+
+        QBChatService.setDebugEnabled(true);
+    }
+
+    private void initDomains() {
+        QBSettings.getInstance().setEndpoints(StringObfuscator.getApiEndpoint(), StringObfuscator.getChatEndpoint(), ServiceZone.PRODUCTION);
+        QBSettings.getInstance().setZone(ServiceZone.PRODUCTION);
+    }
+
+    private void initHTTPConfig(){
+        QBHttpConnectionConfig.setConnectTimeout(ConstsCore.HTTP_TIMEOUT_IN_SECONDS);
+        QBHttpConnectionConfig.setReadTimeout(ConstsCore.HTTP_TIMEOUT_IN_SECONDS);
+    }
+
+    private void initDb() {
+        DataManager.init(this);
+    }
+
+    private void initImageLoader1(Context context) {
+        ImageLoader.getInstance().init(ImageLoaderUtils.getImageLoaderConfiguration(context));
+    }
+
+    private void initServices() {
+        QMAuthService.init();
+        QMUserCache userCache = new QMUserCacheImpl(this);
+        QMUserService.init(userCache);
+
+        ServiceManager.getInstance();
+    }
+
+    public synchronized SharedHelper getAppSharedHelper() {
+        return appSharedHelper == null
+                ? appSharedHelper = new SharedHelper(this)
+                : appSharedHelper;
     }
 
     public RequestQueue getRequestQueue() {

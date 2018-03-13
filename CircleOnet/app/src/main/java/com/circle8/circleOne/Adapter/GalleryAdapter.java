@@ -65,19 +65,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     public interface OnItemClickListener{
         public void onItemClick(int poisition);
     }
-    GalleryAdapter(Context context) {
-        inflater = LayoutInflater.from(context);
-
-        options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.ic_stub)
-                .showImageOnFail(R.drawable.ic_error)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .considerExifParams(true)
-                .displayer(new CircleBitmapDisplayer(Color.WHITE, 5))
-                .build();
-    }
-
     private static class AnimateFirstDisplayListener extends SimpleImageLoadingListener {
 
         static final List<String> displayedImages = Collections.synchronizedList(new LinkedList<String>());
