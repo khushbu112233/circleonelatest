@@ -12,6 +12,34 @@
         "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\f73efd2bc295a07cb16496a6cce9c1f3\\res\\drawable-v21\\avd_show_password.xml"
     },
     {
+        "merged": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\avd_show_password.xml",
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\1b2d375ad081b9ac493283b038eadb7e\\res\\drawable-v21\\avd_show_password.xml"
+    },
+    {
+        "merged": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\abc_btn_colored_material.xml",
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\2bbc37f62a0527ff58a9c686f0e3adbc\\res\\drawable-v21\\abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\abc_action_bar_item_background_material.xml",
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\2bbc37f62a0527ff58a9c686f0e3adbc\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
+    },
+    {
+        "merged": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\design_bottom_navigation_item_background.xml",
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\1b2d375ad081b9ac493283b038eadb7e\\res\\drawable-v21\\design_bottom_navigation_item_background.xml"
+    },
+    {
+        "merged": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\design_password_eye.xml",
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\1b2d375ad081b9ac493283b038eadb7e\\res\\drawable-v21\\design_password_eye.xml"
+    },
+    {
+        "merged": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\notification_action_background.xml",
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\3277bb1dda08f3c1373fa672d4a8ec1a\\res\\drawable-v21\\notification_action_background.xml"
+    },
+    {
+        "merged": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\avd_hide_password.xml",
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\1b2d375ad081b9ac493283b038eadb7e\\res\\drawable-v21\\avd_hide_password.xml"
+    },
+    {
         "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\abc_action_bar_item_background_material.xml",
         "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\caf3c154a55d04c1a30786dcb9eb6268\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
     },
@@ -30,5 +58,9 @@
     {
         "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\design_bottom_navigation_item_background.xml",
         "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\f73efd2bc295a07cb16496a6cce9c1f3\\res\\drawable-v21\\design_bottom_navigation_item_background.xml"
+    },
+    {
+        "merged": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\abc_edit_text_material.xml",
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\2bbc37f62a0527ff58a9c686f0e3adbc\\res\\drawable-v21\\abc_edit_text_material.xml"
     }
 ]

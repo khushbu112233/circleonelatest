@@ -24,6 +24,14 @@
         "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable-v21\\abc_btn_colored_material.xml"
     },
     {
+        "merged": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\abc_edit_text_material.xml",
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\2bbc37f62a0527ff58a9c686f0e3adbc\\res\\drawable-v21\\abc_edit_text_material.xml"
+    },
+    {
+        "merged": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\notification_action_background.xml",
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\3277bb1dda08f3c1373fa672d4a8ec1a\\res\\drawable-v21\\notification_action_background.xml"
+    },
+    {
         "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\abc_btn_colored_material.xml",
         "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\caf3c154a55d04c1a30786dcb9eb6268\\res\\drawable-v21\\abc_btn_colored_material.xml"
     },
@@ -32,12 +40,20 @@
         "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
     },
     {
+        "merged": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\abc_btn_colored_material.xml",
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\2bbc37f62a0527ff58a9c686f0e3adbc\\res\\drawable-v21\\abc_btn_colored_material.xml"
+    },
+    {
         "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\abc_edit_text_material.xml",
         "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\caf3c154a55d04c1a30786dcb9eb6268\\res\\drawable-v21\\abc_edit_text_material.xml"
     },
     {
         "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\asl_playpause.xml",
         "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\557bb6c6f8b2c6b1a02cb69c8ea8f9b7ca0b5488\\output\\res\\drawable-v21\\asl_playpause.xml"
+    },
+    {
+        "merged": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\asl_playpause.xml",
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\chat-message-adapter-2.0.aar\\cdcc5303acb6959548c94e60fceaebda\\res\\drawable-v21\\asl_playpause.xml"
     },
     {
         "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\abc_btn_colored_material.xml",
@@ -54,6 +70,10 @@
     {
         "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\abc_action_bar_item_background_material.xml",
         "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
+    },
+    {
+        "merged": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\abc_action_bar_item_background_material.xml",
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\2bbc37f62a0527ff58a9c686f0e3adbc\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
     },
     {
         "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\notification_action_background.xml",
