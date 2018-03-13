@@ -1594,6 +1594,14 @@ public class LuckyDrawActivity extends AppCompatActivity {
 
         // set on item selected
 
+        rltHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Pref.setValue(LuckyDrawActivity.this,"History","2");
+                Intent i = new Intent(LuckyDrawActivity.this,PrizeHistoryActivity.class);
+                startActivity(i);
+            }
+        });
         // some other visual settings for popup window
         popupWindow.setFocusable(true);
         popupWindow.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
