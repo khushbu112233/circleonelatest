@@ -17,11 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.circle8.circleOne.Activity.DashboardActivity;
+import com.circle8.circleOne.Activity.SplashActivity;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
@@ -79,29 +78,31 @@ public class CardsFragment extends Fragment
 
             }
         }
-        final AlertDialog ShadowAlertDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme).create();
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.card_dialog_shadow_layout, null);
-        LinearLayout llDialog = (LinearLayout) dialogView.findViewById(R.id.llDialog);
+        if(Pref.getValue(context,"first_time_run","").equalsIgnoreCase("1")) {
+            final AlertDialog ShadowAlertDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme).create();
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            final View dialogView = inflater.inflate(R.layout.card_dialog_shadow_layout, null);
+            LinearLayout llDialog = (LinearLayout) dialogView.findViewById(R.id.llDialog);
 
-        ColorDrawable dialogColor = new ColorDrawable(getResources().getColor(R.color.black));
-        dialogColor.setAlpha(200);
-        ShadowAlertDialog.getWindow().setBackgroundDrawable(dialogColor);
-        ShadowAlertDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        // alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
-        // tvBarName.setText(User_name);
+            ColorDrawable dialogColor = new ColorDrawable(getResources().getColor(R.color.black));
+            dialogColor.setAlpha(200);
+            ShadowAlertDialog.getWindow().setBackgroundDrawable(dialogColor);
+            ShadowAlertDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+            // alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
+            // tvBarName.setText(User_name);
 //                    bitmap = TextToImageEncode(barName);
-        //  ivBarImage.setImageBitmap(mergeBitmaps(overlay, bitmap));
+            //  ivBarImage.setImageBitmap(mergeBitmaps(overlay, bitmap));
 //
-        llDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ShadowAlertDialog.dismiss();
-            }
-        });
+            llDialog.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ShadowAlertDialog.dismiss();
+                }
+            });
 
-        ShadowAlertDialog.setView(dialogView);
-        ShadowAlertDialog.show();
+            ShadowAlertDialog.setView(dialogView);
+            ShadowAlertDialog.show();
+        }
         // Set up the ViewPager with the sections adapter.
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

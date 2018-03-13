@@ -918,6 +918,67 @@
                 android:textSize="12sp" />
         </RelativeLayout>
         <RelativeLayout
+            android:id="@+id/rlTopInclude"
+            android:layout_width="match_parent"
+            android:layout_height="245dp"
+            android:layout_alignParentTop="true">
+        <RelativeLayout
+            android:id="@+id/rlCenter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            >
+
+            <ImageView
+                android:id="@+id/imgHandPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:src="@drawable/hand_over" />
+
+            <com.circle8.circleOne.Utils.cgTextView
+                android:id="@+id/tvPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_below="@+id/imgHandPhoto"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:text="Upload a photo of yourself by tapping on the camera"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rlRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            >
+
+            <ImageView
+                android:id="@+id/imgHandMenu"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/hand_over" />
+
+            <com.circle8.circleOne.Utils.cgTextView
+                android:id="@+id/tvMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgHandMenu"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:text="Switch Create profile"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
             android:id="@+id/rlLeftBottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

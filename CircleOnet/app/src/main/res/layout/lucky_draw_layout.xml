@@ -920,6 +920,12 @@
 
             </RelativeLayout>
             <LinearLayout
+                android:id="@+id/llTemp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical">
+            <LinearLayout
                 android:weightSum="4"
                 android:layout_weight="1"
                 android:layout_below="@+id/frame_image"
@@ -1658,7 +1664,7 @@
                     </com.dd.ShadowLayout>
                 </com.wajahatkarim3.easyflipview.EasyFlipView>
             </LinearLayout>
-
+            </LinearLayout>
             <include
                 android:layout_weight="0"
                 android:id="@+id/includePrize"
