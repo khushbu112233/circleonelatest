@@ -1,6 +1,21 @@
 {
     "logs": [
         {
+            "outputFile": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-mr-rIN\\values-mr-rIN.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\exoplayer-ui-r2.5.1.aar\\f8bbee0579eed937e4ca29dd79598211\\res\\values-mr-rIN\\values-mr-rIN.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,140,212,284,353,429,516,609,694,768",
+                        "endColumns": "84,71,71,68,75,86,92,84,73,65",
+                        "endOffsets": "135,207,279,348,424,511,604,689,763,829"
+                    }
+                }
+            ]
+        },
+        {
             "outputFile": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-mr-rIN\\values-mr-rIN.xml",
             "map": [
                 {
@@ -20,6 +35,21 @@
             "map": [
                 {
                     "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\exoplayer-ui-r2.5.1.aar\\d7370d8480793970ec001d780e3e5fad\\res\\values-mr-rIN\\values-mr-rIN.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,140,212,284,353,429,516,609,694,768",
+                        "endColumns": "84,71,71,68,75,86,92,84,73,65",
+                        "endOffsets": "135,207,279,348,424,511,604,689,763,829"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\Q-municate_core\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-mr-rIN\\values-mr-rIN.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\exoplayer-ui-r2.5.1.aar\\f8bbee0579eed937e4ca29dd79598211\\res\\values-mr-rIN\\values-mr-rIN.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4",

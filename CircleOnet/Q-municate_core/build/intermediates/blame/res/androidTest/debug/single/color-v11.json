@@ -8,6 +8,10 @@
         "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\color-v11\\abc_background_cache_hint_selector_material_light.xml"
     },
     {
+        "merged": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v11\\abc_background_cache_hint_selector_material_light.xml",
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\2bbc37f62a0527ff58a9c686f0e3adbc\\res\\color-v11\\abc_background_cache_hint_selector_material_light.xml"
+    },
+    {
         "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v11\\abc_background_cache_hint_selector_material_light.xml",
         "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\color-v11\\abc_background_cache_hint_selector_material_light.xml"
     },
@@ -18,6 +22,10 @@
     {
         "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v11\\abc_background_cache_hint_selector_material_dark.xml",
         "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\color-v11\\abc_background_cache_hint_selector_material_dark.xml"
+    },
+    {
+        "merged": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v11\\abc_background_cache_hint_selector_material_dark.xml",
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\2bbc37f62a0527ff58a9c686f0e3adbc\\res\\color-v11\\abc_background_cache_hint_selector_material_dark.xml"
     },
     {
         "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v11\\abc_background_cache_hint_selector_material_dark.xml",
