@@ -88,7 +88,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
     private TimerState timerState;
     private static final int MAX_TIME = 86410;
     private PopupWindow popupWindow;
-    float x,y,x1,y1,x2,y2,x3,y3,x4,y4,x5,y5,x6,y6,x7,y7,x8,y8,xr1,yr1,xr2,yr2,xr3,yr3,xr4,yr4,xr5,yr5,xr6,yr6,xr7,yr7,xr8,yr8,xTemp,yTemp;
+    float x,y,x1,y1,x2,y2,x3,y3,x4,y4,x5,y5,x6,y6,x7,y7,x8,y8,xTemp,yTemp;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +101,30 @@ public class LuckyDrawActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         final int height = displayMetrics.heightPixels;
         final int width = displayMetrics.widthPixels;
+
+        x1 = luckyDrawLayoutBinding.easyFlipView1.getX();
+        y1 = luckyDrawLayoutBinding.easyFlipView1.getY();
+
+        x2 = luckyDrawLayoutBinding.easyFlipView2.getX();
+        y2 = luckyDrawLayoutBinding.easyFlipView2.getY();
+
+        x3 = luckyDrawLayoutBinding.easyFlipView3.getX();
+        y3 = luckyDrawLayoutBinding.easyFlipView3.getY();
+
+        x4 = luckyDrawLayoutBinding.easyFlipView4.getX();
+        y4 = luckyDrawLayoutBinding.easyFlipView4.getY();
+
+        x5 = luckyDrawLayoutBinding.easyFlipView5.getX();
+        y5 = luckyDrawLayoutBinding.easyFlipView5.getY();
+
+        x6 = luckyDrawLayoutBinding.easyFlipView6.getX();
+        y6 = luckyDrawLayoutBinding.easyFlipView6.getY();
+
+        x7 = luckyDrawLayoutBinding.easyFlipView7.getX();
+        y7 = luckyDrawLayoutBinding.easyFlipView7.getY();
+
+        x8 = luckyDrawLayoutBinding.easyFlipView8.getX();
+        y8 = luckyDrawLayoutBinding.easyFlipView8.getY();
 
         luckyDrawLayoutBinding.includePrize.rtlRedeem.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
@@ -230,119 +254,6 @@ public class LuckyDrawActivity extends AppCompatActivity {
         }else {
             Toast.makeText(getApplicationContext(),"Please select the value below 24 hours",Toast.LENGTH_SHORT).show();
         }
-       /* luckyDrawLayoutBinding.easyFlipView1.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            public void onGlobalLayout() {
-                luckyDrawLayoutBinding.easyFlipView1.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-
-                int[] locations = new int[2];
-                luckyDrawLayoutBinding.easyFlipView1.getLocationOnScreen(locations);
-                x1 = locations[0];
-                y1 = locations[1];
-                Log.e("1",""+x1+" "+y1);
-            }
-        });
-
-        luckyDrawLayoutBinding.easyFlipView2.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            public void onGlobalLayout() {
-                luckyDrawLayoutBinding.easyFlipView2.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-
-                int[] locations = new int[2];
-                luckyDrawLayoutBinding.easyFlipView2.getLocationOnScreen(locations);
-                x2 = locations[0];
-                y2 = locations[1];
-                Log.e("2",""+x2+" "+y2);
-            }
-        });
-        luckyDrawLayoutBinding.easyFlipView3.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            public void onGlobalLayout() {
-                luckyDrawLayoutBinding.easyFlipView3.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-
-                int[] locations = new int[2];
-                luckyDrawLayoutBinding.easyFlipView3.getLocationOnScreen(locations);
-                x3 = locations[0];
-                y3 = locations[1];
-                Log.e("3",""+x3+" "+y3);
-            }
-        });
-        luckyDrawLayoutBinding.easyFlipView4.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            public void onGlobalLayout() {
-                luckyDrawLayoutBinding.easyFlipView4.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-
-                int[] locations = new int[2];
-                luckyDrawLayoutBinding.easyFlipView4.getLocationOnScreen(locations);
-                x4 = locations[0];
-                y4 = locations[1];
-                Log.e("4",""+x4+" "+y4);
-            }
-        });
-        luckyDrawLayoutBinding.easyFlipView5.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            public void onGlobalLayout() {
-                luckyDrawLayoutBinding.easyFlipViewr5.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-
-                int[] locations = new int[2];
-                luckyDrawLayoutBinding.easyFlipView5.getLocationOnScreen(locations);
-                x5 = locations[0];
-                y5 = locations[1];
-                Log.e("5",""+x5+" "+y5);
-            }
-        });
-        luckyDrawLayoutBinding.easyFlipView6.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            public void onGlobalLayout() {
-                luckyDrawLayoutBinding.easyFlipView6.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-
-                int[] locations = new int[2];
-                luckyDrawLayoutBinding.easyFlipView6.getLocationOnScreen(locations);
-                x6 = locations[0];
-                y6 = locations[1];
-                Log.e("6",""+x6+" "+y6);
-            }
-        });
-        luckyDrawLayoutBinding.easyFlipView7.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            public void onGlobalLayout() {
-                luckyDrawLayoutBinding.easyFlipView7.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-
-                int[] locations = new int[2];
-                luckyDrawLayoutBinding.easyFlipView7.getLocationOnScreen(locations);
-                x7 = locations[0];
-                y7 = locations[1];
-                Log.e("7",""+x7+" "+y7);
-            }
-        });
-        luckyDrawLayoutBinding.easyFlipView8.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            public void onGlobalLayout() {
-                luckyDrawLayoutBinding.easyFlipView8.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-
-                int[] locations = new int[2];
-                luckyDrawLayoutBinding.easyFlipView8.getLocationOnScreen(locations);
-                x8 = locations[0];
-                y8 = locations[1];
-                Log.e("8",""+x8+" "+y8);
-            }
-        });
-       */
-        x1= luckyDrawLayoutBinding.easyFlipView1.getX();
-        y1 = luckyDrawLayoutBinding.easyFlipView1.getY();
-
-        x2 = luckyDrawLayoutBinding.easyFlipView2.getX();
-        y2 = luckyDrawLayoutBinding.easyFlipView2.getY();
-
-        x3 = luckyDrawLayoutBinding.easyFlipView3.getX();
-        y3 = luckyDrawLayoutBinding.easyFlipView3.getY();
-
-        x4 = luckyDrawLayoutBinding.easyFlipView4.getX();
-        y4 = luckyDrawLayoutBinding.easyFlipView4.getY();
-
-        x5= luckyDrawLayoutBinding.easyFlipView5.getX();
-        y5 = luckyDrawLayoutBinding.easyFlipView5.getY();
-
-        x6 = luckyDrawLayoutBinding.easyFlipView6.getX();
-        y6 = luckyDrawLayoutBinding.easyFlipView6.getY();
-
-        x7 = luckyDrawLayoutBinding.easyFlipView7.getX();
-        y7 = luckyDrawLayoutBinding.easyFlipView7.getY();
-
-        x8 = luckyDrawLayoutBinding.easyFlipView8.getX();
-        y8 = luckyDrawLayoutBinding.easyFlipView8.getY();
 
         luckyDrawLayoutBinding.llTemp.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
@@ -435,86 +346,27 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 luckyDrawLayoutBinding.easyFlipView8.setFlipEnabled(true);
                 luckyDrawLayoutBinding.easyFlipView8.setFlipOnTouch(true);
 
-                if (luckyDrawLayoutBinding.easyFlipView1.isBackSide()) {
-
-                    luckyDrawLayoutBinding.easyFlipView1.flipTheView();
-                    luckyDrawLayoutBinding.easyFlipView1.flipTheView(true);
-                }
-
-                if (luckyDrawLayoutBinding.easyFlipView2.isBackSide()) {
-
-                    luckyDrawLayoutBinding.easyFlipView2.flipTheView();
-                    luckyDrawLayoutBinding.easyFlipView2.flipTheView(true);
-                }
-
-                if (luckyDrawLayoutBinding.easyFlipView3.isBackSide()) {
-
-                    luckyDrawLayoutBinding.easyFlipView3.flipTheView();
-                    luckyDrawLayoutBinding.easyFlipView3.flipTheView(true);
-                }
-
-                if (luckyDrawLayoutBinding.easyFlipView4.isBackSide()) {
-
-                    luckyDrawLayoutBinding.easyFlipView4.flipTheView();
-                    luckyDrawLayoutBinding.easyFlipView4.flipTheView(true);
-                }
-
-                if (luckyDrawLayoutBinding.easyFlipView5.isBackSide()) {
-
-                    luckyDrawLayoutBinding.easyFlipView5.flipTheView();
-                    luckyDrawLayoutBinding.easyFlipView5.flipTheView(true);
-                }
-
-                if (luckyDrawLayoutBinding.easyFlipView6.isBackSide()) {
-
-                    luckyDrawLayoutBinding.easyFlipView6.flipTheView();
-                    luckyDrawLayoutBinding.easyFlipView6.flipTheView(true);
-                }
-
-                if (luckyDrawLayoutBinding.easyFlipView7.isBackSide()) {
-
-                    luckyDrawLayoutBinding.easyFlipView7.flipTheView();
-                    luckyDrawLayoutBinding.easyFlipView7.flipTheView(true);
-                }
-
-                if (luckyDrawLayoutBinding.easyFlipView8.isBackSide()) {
-
-                    luckyDrawLayoutBinding.easyFlipView8.flipTheView();
-                    luckyDrawLayoutBinding.easyFlipView8.flipTheView(true);
-                }
-
-                Collections.shuffle(allCards);
-                Log.e("prizeIdList",""+prizeIdList);
-
-                /*ObjectAnimator flip1 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView1, "rotationY", 180f, 360f);
-                flip1.setDuration(1500);
-                flip1.start();
-                ObjectAnimator flip2 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView2, "rotationY", 180f, 360f);
-                flip2.setDuration(1500);
-                flip2.start();
-                ObjectAnimator flip3 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView3, "rotationY", 180f, 360f);
-                flip3.setDuration(1500);
-                flip3.start();
-                ObjectAnimator flip4 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView4, "rotationY", 180f, 360f);
-                flip4.setDuration(1500);
-                flip4.start();
-                ObjectAnimator flip5 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView5, "rotationY", 180f, 360f);
-                flip5.setDuration(1500);
-                flip5.start();
-                ObjectAnimator flip6 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView6, "rotationY", 180f, 360f);
-                flip6.setDuration(1500);
-                flip6.start();
-                ObjectAnimator flip7 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView7, "rotationY", 180f, 360f);
-                flip7.setDuration(1500);
-                flip7.start();
-                ObjectAnimator flip8 = ObjectAnimator.ofFloat(luckyDrawLayoutBinding.easyFlipView8, "rotationY", 180f, 360f);
-                flip8.setDuration(1500);
-                flip8.start();*/
 
                 luckyDrawLayoutBinding.rtlTemp.setVisibility(View.VISIBLE);
                 luckyDrawLayoutBinding.llTemp.setVisibility(View.GONE);
                 luckyDrawLayoutBinding.rl1.setVisibility(View.GONE);
                 luckyDrawLayoutBinding.rl2.setVisibility(View.GONE);
+                luckyDrawLayoutBinding.easyFlipViewr1.setX(x1);
+                luckyDrawLayoutBinding.easyFlipViewr1.setY(y1);
+                luckyDrawLayoutBinding.easyFlipViewr2.setX(x2);
+                luckyDrawLayoutBinding.easyFlipViewr2.setY(y2);
+                luckyDrawLayoutBinding.easyFlipViewr3.setX(x3);
+                luckyDrawLayoutBinding.easyFlipViewr3.setY(y3);
+                luckyDrawLayoutBinding.easyFlipViewr4.setX(x4);
+                luckyDrawLayoutBinding.easyFlipViewr4.setY(y4);
+                luckyDrawLayoutBinding.easyFlipViewr5.setX(x5);
+                luckyDrawLayoutBinding.easyFlipViewr5.setY(y5);
+                luckyDrawLayoutBinding.easyFlipViewr6.setX(x6);
+                luckyDrawLayoutBinding.easyFlipViewr6.setY(y6);
+                luckyDrawLayoutBinding.easyFlipViewr7.setX(x7);
+                luckyDrawLayoutBinding.easyFlipViewr7.setY(y7);
+                luckyDrawLayoutBinding.easyFlipViewr8.setX(x8);
+                luckyDrawLayoutBinding.easyFlipViewr8.setY(y8);
 
 
                 luckyDrawLayoutBinding.easyFlipViewr1.animate()
@@ -529,7 +381,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                             @Override
                             public void onAnimationEnd(Animator animator) {
                                 luckyDrawLayoutBinding.easyFlipViewr1.animate()
-                                        .translationX((width / 2)-350)
+                                        .translationX((width / 2)-(100+(width/4)))
                                         .translationY((yTemp/2)-25)
                                         .setListener(new Animator.AnimatorListener() {
                                             @Override
@@ -602,7 +454,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                             @Override
                             public void onAnimationEnd(Animator animator) {
                                 luckyDrawLayoutBinding.easyFlipViewr2.animate()
-                                        .translationX((width / 2)-450)
+                                        .translationX((width / 2)-100)
                                         .translationY((yTemp/2)-25)
                                         .setListener(new Animator.AnimatorListener() {
                                             @Override
@@ -681,7 +533,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                             @Override
                             public void onAnimationEnd(Animator animator) {
                                 luckyDrawLayoutBinding.easyFlipViewr3.animate()
-                                        .translationX((width /2 ) -300)
+                                        .translationX((width / 2)-(100+(width)))
                                         .translationY((yTemp/2)-25)
                                         .setListener(new Animator.AnimatorListener() {
                                             @Override
@@ -760,7 +612,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                             @Override
                             public void onAnimationEnd(Animator animator) {
                                 luckyDrawLayoutBinding.easyFlipViewr4.animate()
-                                        .translationX((width / 2)-350)
+                                        .translationX((width / 2)-(100+(width/2)))
                                         .translationY((yTemp/2)-25)
                                         .setListener(new Animator.AnimatorListener() {
                                             @Override
@@ -835,7 +687,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                             @Override
                             public void onAnimationEnd(Animator animator) {
                                 luckyDrawLayoutBinding.easyFlipViewr5.animate()
-                                        .translationX((width / 2)-350)
+                                        .translationX((width / 2)-(100+(width/4)))
                                         .translationY((yTemp/2)-250)
                                         .setListener(new Animator.AnimatorListener() {
                                             @Override
@@ -913,7 +765,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                             @Override
                             public void onAnimationEnd(Animator animator) {
                                 luckyDrawLayoutBinding.easyFlipViewr6.animate()
-                                        .translationX((width / 2)-450)
+                                        .translationX((width / 2)-100)
                                         .translationY((yTemp/2)-250)
                                         .setListener(new Animator.AnimatorListener() {
                                             @Override
@@ -992,7 +844,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                             @Override
                             public void onAnimationEnd(Animator animator) {
                                 luckyDrawLayoutBinding.easyFlipViewr7.animate()
-                                        .translationX((width / 2)-300)
+                                        .translationX((width / 2)-(100+(width)))
                                         .translationY((yTemp/2)-250)
                                         .setListener(new Animator.AnimatorListener() {
                                             @Override
@@ -1071,7 +923,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                             @Override
                             public void onAnimationEnd(Animator animator) {
                                 luckyDrawLayoutBinding.easyFlipViewr8.animate()
-                                        .translationX((width / 2)-350)
+                                        .translationX((width / 2)-(100+(width/2)))
                                         .translationY((yTemp/2)-250)
                                         .setListener(new Animator.AnimatorListener() {
                                             @Override
@@ -1155,6 +1007,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 luckyDrawLayoutBinding.easyFlipViewr7.setY(y7);
                 luckyDrawLayoutBinding.easyFlipViewr8.setX(x8);
                 luckyDrawLayoutBinding.easyFlipViewr8.setY(y8);
+
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
