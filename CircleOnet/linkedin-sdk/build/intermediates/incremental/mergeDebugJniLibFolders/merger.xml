@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="D:\khushbu\CircleOneWithChat\CircleOnet\linkedin-sdk\src\main\jniLibs"/></dataSet><dataSet config="debug"><source path="D:\khushbu\CircleOneWithChat\CircleOnet\linkedin-sdk\src\debug\jniLibs"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="E:\Kajal\CircleOne\Project\CircleOnet\linkedin-sdk\src\main\jniLibs"/></dataSet><dataSet config="debug"><source path="E:\Kajal\CircleOne\Project\CircleOnet\linkedin-sdk\src\debug\jniLibs"/></dataSet></merger>

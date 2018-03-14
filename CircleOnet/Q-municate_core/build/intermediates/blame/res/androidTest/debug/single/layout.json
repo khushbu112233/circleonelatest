@@ -1,11 +1,11 @@
 [
     {
-        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\list_item_attach_right.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\c26bb7af62dfac347625ef77d76e129157a818af\\output\\res\\layout\\list_item_attach_right.xml"
-    },
-    {
         "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\select_dialog_item_material.xml",
         "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\layout\\select_dialog_item_material.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\list_item_attach_right.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\c26bb7af62dfac347625ef77d76e129157a818af\\output\\res\\layout\\list_item_attach_right.xml"
     },
     {
         "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_radio.xml",
@@ -28,20 +28,20 @@
         "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\ea20b0e29feff15faaeae29c395df5df\\res\\layout\\notification_template_big_media_custom.xml"
     },
     {
-        "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_mode_close_item_material.xml",
-        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\caf3c154a55d04c1a30786dcb9eb6268\\res\\layout\\abc_action_mode_close_item_material.xml"
-    },
-    {
-        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\exo_simple_player_view.xml",
-        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\8e5384f538d0ff1dd9d2b9b455f1ae53b5c78386\\output\\res\\layout\\exo_simple_player_view.xml"
+        "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_expanded_menu_layout.xml",
+        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\caf3c154a55d04c1a30786dcb9eb6268\\res\\layout\\abc_expanded_menu_layout.xml"
     },
     {
         "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_icon_group.xml",
         "source": "C:\\Users\\ample-arch\\.android\\build-cache\\75a908df38441cacdb49dd81bd2576a489b3ae79\\output\\res\\layout\\notification_template_icon_group.xml"
     },
     {
-        "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_expanded_menu_layout.xml",
-        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\caf3c154a55d04c1a30786dcb9eb6268\\res\\layout\\abc_expanded_menu_layout.xml"
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\exo_simple_player_view.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\8e5384f538d0ff1dd9d2b9b455f1ae53b5c78386\\output\\res\\layout\\exo_simple_player_view.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_mode_close_item_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\caf3c154a55d04c1a30786dcb9eb6268\\res\\layout\\abc_action_mode_close_item_material.xml"
     },
     {
         "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\select_dialog_singlechoice_material.xml",
@@ -172,12 +172,12 @@
         "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\caf3c154a55d04c1a30786dcb9eb6268\\res\\layout\\select_dialog_singlechoice_material.xml"
     },
     {
-        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\list_item_attach_left.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\c26bb7af62dfac347625ef77d76e129157a818af\\output\\res\\layout\\list_item_attach_left.xml"
-    },
-    {
         "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\exo_simple_player_view.xml",
         "source": "C:\\Users\\ample-arch\\.android\\build-cache\\c087ed87e54f52f6d150230deb9c4526d6d67a2c\\output\\res\\layout\\exo_simple_player_view.xml"
+    },
+    {
+        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\list_item_attach_left.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\c26bb7af62dfac347625ef77d76e129157a818af\\output\\res\\layout\\list_item_attach_left.xml"
     },
     {
         "merged": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\list_item_attach_left_audio.xml",

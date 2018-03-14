@@ -4,12 +4,12 @@
         "source": "C:\\Users\\ample-arch\\.android\\build-cache\\9ad801a60588ef04bf6e4be10f00fd6ebfff0586\\output\\res\\layout\\notification_template_big_media_narrow_custom.xml"
     },
     {
-        "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_db\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_checkbox.xml",
-        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\caf3c154a55d04c1a30786dcb9eb6268\\res\\layout\\abc_list_menu_item_checkbox.xml"
-    },
-    {
         "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_db\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_menu_layout.xml",
         "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_action_menu_layout.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_db\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_checkbox.xml",
+        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\caf3c154a55d04c1a30786dcb9eb6268\\res\\layout\\abc_list_menu_item_checkbox.xml"
     },
     {
         "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_db\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_content_include.xml",
@@ -40,24 +40,24 @@
         "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_list_menu_item_layout.xml"
     },
     {
-        "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_db\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_media.xml",
-        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\ea20b0e29feff15faaeae29c395df5df\\res\\layout\\notification_template_media.xml"
-    },
-    {
         "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_db\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_up_container.xml",
         "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_action_bar_up_container.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_db\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_media.xml",
+        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\ea20b0e29feff15faaeae29c395df5df\\res\\layout\\notification_template_media.xml"
     },
     {
         "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_db\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_action_tombstone.xml",
         "source": "C:\\Users\\ample-arch\\.android\\build-cache\\75a908df38441cacdb49dd81bd2576a489b3ae79\\output\\res\\layout\\notification_action_tombstone.xml"
     },
     {
-        "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_db\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_select_dialog_material.xml",
-        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\caf3c154a55d04c1a30786dcb9eb6268\\res\\layout\\abc_select_dialog_material.xml"
-    },
-    {
         "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_db\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_big_media_narrow_custom.xml",
         "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\ea20b0e29feff15faaeae29c395df5df\\res\\layout\\notification_template_big_media_narrow_custom.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_db\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_select_dialog_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\caf3c154a55d04c1a30786dcb9eb6268\\res\\layout\\abc_select_dialog_material.xml"
     },
     {
         "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_db\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_alert_dialog_material.xml",
@@ -104,12 +104,12 @@
         "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\b8c7987c7c71defba920ba4c187a0c4f6cac7870\\output\\res\\layout\\notification_template_big_media_custom.xml"
     },
     {
-        "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_db\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_content_include.xml",
-        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\caf3c154a55d04c1a30786dcb9eb6268\\res\\layout\\abc_screen_content_include.xml"
-    },
-    {
         "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_db\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_part_chronometer.xml",
         "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\0395c9cea5d5573ec1d178a27768ffbc\\res\\layout\\notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_db\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_content_include.xml",
+        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\caf3c154a55d04c1a30786dcb9eb6268\\res\\layout\\abc_screen_content_include.xml"
     },
     {
         "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_db\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_search_dropdown_item_icons_2line.xml",

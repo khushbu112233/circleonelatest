@@ -20,12 +20,12 @@
         "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\exoplayer-ui-r2.5.1.aar\\f8bbee0579eed937e4ca29dd79598211\\res\\drawable-ldpi-v4\\exo_edit_mode_logo.png"
     },
     {
-        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-ldpi-v4\\exo_controls_repeat_one.png",
-        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\8e5384f538d0ff1dd9d2b9b455f1ae53b5c78386\\output\\res\\drawable-ldpi-v4\\exo_controls_repeat_one.png"
-    },
-    {
         "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-ldpi-v4\\exo_controls_next.png",
         "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\8e5384f538d0ff1dd9d2b9b455f1ae53b5c78386\\output\\res\\drawable-ldpi-v4\\exo_controls_next.png"
+    },
+    {
+        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-ldpi-v4\\exo_controls_repeat_one.png",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\8e5384f538d0ff1dd9d2b9b455f1ae53b5c78386\\output\\res\\drawable-ldpi-v4\\exo_controls_repeat_one.png"
     },
     {
         "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-ldpi-v4\\exo_controls_rewind.png",
