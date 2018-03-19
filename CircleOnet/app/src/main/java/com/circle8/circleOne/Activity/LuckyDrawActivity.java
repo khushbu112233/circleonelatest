@@ -73,6 +73,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
     int pos=0;
     CountDownTimer timer;
     int count=0;
+    int dialogClick=0;
     LoginSession session;
     public static String  UserId= "";
     int[] solutionArray = { 1, 2, 3, 4, 5, 6, 7, 8 };
@@ -240,6 +241,10 @@ public class LuckyDrawActivity extends AppCompatActivity {
         }.start();
 
 
+        if(dialogClick==2)
+        {
+            Log.e("dialogClick",""+dialogClick);
+        }
 
         int int_hours = 1;
 
@@ -1191,6 +1196,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 countMaintain(count);
 
                 if(luckyDrawLayoutBinding.easyFlipView2.isBackSide()) {
+                    dialogClick++;
                     dialog(allCards,1);
 
                 }else {
@@ -1210,6 +1216,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 countMaintain(count);
 
                 if(luckyDrawLayoutBinding.easyFlipView3.isBackSide()) {
+                    dialogClick++;
                     dialog(allCards,2);
 
                 }else {
@@ -1229,6 +1236,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 countMaintain(count);
 
                 if(luckyDrawLayoutBinding.easyFlipView4.isBackSide()) {
+                    dialogClick++;
                     dialog(allCards,3);
                 }else {
                     flipView.setClickable(false);
@@ -1247,6 +1255,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 countMaintain(count);
 
                 if(luckyDrawLayoutBinding.easyFlipView5.isBackSide()) {
+                    dialogClick++;
                     dialog(allCards,4);
 
                 }else {
@@ -1266,6 +1275,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 countMaintain(count);
 
                 if(luckyDrawLayoutBinding.easyFlipView6.isBackSide()) {
+                    dialogClick++;
                     dialog(allCards,5);
 
                 }else {
@@ -1286,6 +1296,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 countMaintain(count);
 
                 if(luckyDrawLayoutBinding.easyFlipView7.isBackSide()) {
+                    dialogClick++;
                     dialog(allCards,6);
 
                 }else {
@@ -1306,6 +1317,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
 
                 if(luckyDrawLayoutBinding.easyFlipView8.isBackSide())
                 {
+                    dialogClick++;
                     dialog(allCards,7);
 
                 }else {
