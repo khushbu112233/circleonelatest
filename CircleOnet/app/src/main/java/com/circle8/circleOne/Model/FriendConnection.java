@@ -36,7 +36,16 @@ public class FriendConnection
     String DateInitiated = "";
     String Longitude = "";
     String Latitude = "";
+    String Q_ID = "";
 
+
+    public String getQ_ID() {
+        return Q_ID;
+    }
+
+    public void setQ_ID(String q_ID) {
+        Q_ID = q_ID;
+    }
 
     public String getProfile_id() {
         return profile_id;

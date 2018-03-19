@@ -5,19 +5,20 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Rect;
 import android.graphics.Shader;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 
 import com.circle8.circleOne.PrefUtils;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.TimeReceiver;
 import com.circle8.circleOne.Utils.Timer_Service;
 import com.circle8.circleOne.databinding.TokenActivityLayoutBinding;
@@ -48,7 +50,7 @@ public class TokenActivity extends AppCompatActivity implements View.OnClickList
     private int timeToStart;
     private TimerState timerState;
     private static final int MAX_TIME = 86410;
-    
+    private PopupWindow popupWindow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +87,12 @@ public class TokenActivity extends AppCompatActivity implements View.OnClickList
         tokenActivityLayoutBinding.txtMinute2.getPaint().setShader(shader_gradient0);
         tokenActivityLayoutBinding.txtSecond1.getPaint().setShader(shader_gradient0);
         tokenActivityLayoutBinding.txtSecond2.getPaint().setShader(shader_gradient0);
+        tokenActivityLayoutBinding.imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         if (timerState == TimerState.STOPPED) {
             prefUtils.setStartedTime((int) getNow());
@@ -111,6 +119,67 @@ public class TokenActivity extends AppCompatActivity implements View.OnClickList
         }else {
             Toast.makeText(getApplicationContext(),"Please select the value below 24 hours",Toast.LENGTH_SHORT).show();
         }
+
+        tokenActivityLayoutBinding.imgrightDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow = popupWindowsort();
+                popupWindow.showAtLocation(view, Gravity.TOP | Gravity.RIGHT, 0, 0);
+
+            }
+        });
+    }
+
+    private PopupWindow popupWindowsort() {
+
+        // initialize a pop up window type
+        popupWindow = new PopupWindow(TokenActivity.this);
+
+        LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        // setContentView(inflator.inflate(layoutResID, null));
+
+        View view1 = inflator.inflate(R.layout.layout_lucky_menu, null);
+        popupWindow.setContentView(view1);
+        popupWindow.setOutsideTouchable(true);
+
+        RelativeLayout rltHistory = view1.findViewById(R.id.rltHistory);
+        RelativeLayout rltContactUs = view1.findViewById(R.id.rltContactUs);
+        RelativeLayout rltHelp = view1.findViewById(R.id.rltHelp);
+
+        ImageView imgDismiss = view1.findViewById(R.id.imgMenu);
+
+        // set our adapter and pass our pop up window contents
+        imgDismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+            }
+        });
+
+
+        // set on item selected
+
+        rltHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Pref.setValue(TokenActivity.this,"History","2");
+                Intent i = new Intent(TokenActivity.this,PrizeHistoryActivity.class);
+                startActivity(i);
+            }
+        });
+
+        // set on item selected
+
+        // some other visual settings for popup window
+        popupWindow.setFocusable(true);
+        popupWindow.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
+        // popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.white));
+        popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+
+        // set the listview as popup content
+
+        return popupWindow;
     }
 
     @Override

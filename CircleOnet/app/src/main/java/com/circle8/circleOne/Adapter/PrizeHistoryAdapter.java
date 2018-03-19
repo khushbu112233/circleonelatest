@@ -69,8 +69,8 @@ public class PrizeHistoryAdapter extends BaseAdapter {
             holder = (ViewHolder)view.getTag();
         }
         holder.txtName.setText(addEvent.get(i).getPrize_Name());
-        holder.txtDate.setText(addEvent.get(i).getPlay_Date());
-        holder.txtResult.setText(addEvent.get(i).getResult());
+       // holder.txtDate.setText(addEvent.get(i).getPlay_Date());
+       // holder.txtResult.setText(addEvent.get(i).getResult());
         if (addEvent.get(i).getPrize_Image().equals(""))
         {
             holder.progressBar.setVisibility(View.GONE);

@@ -9,8 +9,8 @@ public class PrizeHistory  {
     String Prize_ID;
     String Prize_Name;
     String Prize_Image;
-    String Result;
-    String Play_Date;
+    String Card_Name_1;
+    String Card_Name_2;
 
     public String getUserId() {
         return UserId;
@@ -44,19 +44,19 @@ public class PrizeHistory  {
         Prize_Image = prize_Image;
     }
 
-    public String getResult() {
-        return Result;
+    public String getCard_Name_1() {
+        return Card_Name_1;
     }
 
-    public void setResult(String result) {
-        Result = result;
+    public void setCard_Name_1(String card_Name_1) {
+        Card_Name_1 = card_Name_1;
     }
 
-    public String getPlay_Date() {
-        return Play_Date;
+    public String getCard_Name_2() {
+        return Card_Name_2;
     }
 
-    public void setPlay_Date(String play_Date) {
-        Play_Date = play_Date;
+    public void setCard_Name_2(String card_Name_2) {
+        Card_Name_2 = card_Name_2;
     }
 }

@@ -1,40 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_core\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-id\\values-id.xml",
-            "map": [
-                {
-                    "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\facebook-android-sdk-4.14.1.aar\\018547d1afed924822bde9a25360dfa4\\res\\values-id\\values-id.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,226,351,465,564,631,699,758,829,900,997,1070,1143,1227,1330,1394,1461",
-                        "endColumns": "170,124,113,98,66,67,58,70,70,96,72,72,83,102,63,66,138",
-                        "endOffsets": "221,346,460,559,626,694,753,824,895,992,1065,1138,1222,1325,1389,1456,1595"
-                    }
-                }
-            ]
-        },
-        {
-            "outputFile": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-id\\values-id.xml",
-            "map": [
-                {
-                    "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\facebook-android-sdk-4.14.1.aar\\018547d1afed924822bde9a25360dfa4\\res\\values-id\\values-id.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,226,351,465,564,631,699,758,829,900,997,1070,1143,1227,1330,1394,1461",
-                        "endColumns": "170,124,113,98,66,67,58,70,70,96,72,72,83,102,63,66,138",
-                        "endOffsets": "221,346,460,559,626,694,753,824,895,992,1065,1138,1222,1325,1389,1456,1595"
-                    }
-                }
-            ]
-        },
-        {
             "outputFile": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-id\\values-id.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\facebook-android-sdk-4.14.1.aar\\40665d0a8b93d0dddcbdc80c932233c2\\res\\values-id\\values-id.xml",
+                    "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\facebook-android-sdk-4.14.1.aar\\aee936ada55f8195f73d9a06af58e7ff\\res\\values-id\\values-id.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -49,7 +19,7 @@
             "outputFile": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\Q-municate_core\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-id\\values-id.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\facebook-android-sdk-4.14.1.aar\\40665d0a8b93d0dddcbdc80c932233c2\\res\\values-id\\values-id.xml",
+                    "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\facebook-android-sdk-4.14.1.aar\\aee936ada55f8195f73d9a06af58e7ff\\res\\values-id\\values-id.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",

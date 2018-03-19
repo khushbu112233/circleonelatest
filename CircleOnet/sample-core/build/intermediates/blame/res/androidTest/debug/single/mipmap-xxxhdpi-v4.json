@@ -1,9 +1,5 @@
 [
     {
-        "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\mipmap-xxxhdpi-v4\\ic_launcher.png",
-        "source": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\sample-core\\build\\intermediates\\bundles\\debug\\res\\mipmap-xxxhdpi-v4\\ic_launcher.png"
-    },
-    {
         "merged": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\mipmap-xxxhdpi-v4\\ic_launcher.png",
         "source": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\sample-core\\build\\intermediates\\bundles\\debug\\res\\mipmap-xxxhdpi-v4\\ic_launcher.png"
     }

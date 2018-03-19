@@ -321,7 +321,7 @@ public class ManageMyProfile extends AppCompatActivity
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
             String loading = "Deleting profile" ;
-            CustomProgressDialog(loading,getApplicationContext());
+            CustomProgressDialog(loading,ManageMyProfile.this);
         }
 
         @Override

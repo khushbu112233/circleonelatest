@@ -1,18 +1,6 @@
 [
     {
-        "merged": "D:\\Jay Nagar\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v16\\notification_template_custom_big.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\75a908df38441cacdb49dd81bd2576a489b3ae79\\output\\res\\layout-v16\\notification_template_custom_big.xml"
-    },
-    {
-        "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v16\\notification_template_custom_big.xml",
-        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\0395c9cea5d5573ec1d178a27768ffbc\\res\\layout-v16\\notification_template_custom_big.xml"
-    },
-    {
         "merged": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v16\\notification_template_custom_big.xml",
-        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\3277bb1dda08f3c1373fa672d4a8ec1a\\res\\layout-v16\\notification_template_custom_big.xml"
-    },
-    {
-        "merged": "E:\\Kajal\\CircleOne\\q-municate-android-master\\q-municate-android-master\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v16\\notification_template_custom_big.xml",
-        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\5b612ff36a6e98a22be9796604b9cda69bf39da3\\output\\res\\layout-v16\\notification_template_custom_big.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\888d1dac32e7a246260975ef2346b806\\res\\layout-v16\\notification_template_custom_big.xml"
     }
 ]

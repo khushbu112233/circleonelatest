@@ -1,25 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_core\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-v18\\values-v18.xml",
-            "map": [
-                {
-                    "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\caf3c154a55d04c1a30786dcb9eb6268\\res\\values-v18\\values-v18.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "48",
-                        "endOffsets": "99"
-                    }
-                }
-            ]
-        },
-        {
             "outputFile": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\Q-municate_core\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-v18\\values-v18.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\2bbc37f62a0527ff58a9c686f0e3adbc\\res\\values-v18\\values-v18.xml",
+                    "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\7da08c406ed2173e852befe2b5df4235\\res\\values-v18\\values-v18.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -34,22 +19,7 @@
             "outputFile": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-v18\\values-v18.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\2bbc37f62a0527ff58a9c686f0e3adbc\\res\\values-v18\\values-v18.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "48",
-                        "endOffsets": "99"
-                    }
-                }
-            ]
-        },
-        {
-            "outputFile": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\Q-municate_core\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-v18\\values-v18.xml",
-            "map": [
-                {
-                    "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\caf3c154a55d04c1a30786dcb9eb6268\\res\\values-v18\\values-v18.xml",
+                    "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\7da08c406ed2173e852befe2b5df4235\\res\\values-v18\\values-v18.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

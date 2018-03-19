@@ -14,7 +14,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -308,10 +307,12 @@ public class List1Fragment extends Fragment
             public void onScrolled(RecyclerView recyclerView, int dx, int dy)
             {
                 super.onScrolled(recyclerView, dx, dy);
+                //fragmentList1Binding.includeCarousel2.listHorizontal2.onScrolled(dx, dy);
                 fragmentList1Binding.includeCarousel2.listHorizontal2.removeOnScrollListener(scrollListeners[1]);
                 fragmentList1Binding.includeCarousel2.listHorizontal2.scrollBy(dx, dy);
                 fragmentList1Binding.includeCarousel2.listHorizontal2.addOnScrollListener(scrollListeners[1]);
             }
+
         };
         scrollListeners[1] = new RecyclerView.OnScrollListener( )
         {
@@ -319,13 +320,17 @@ public class List1Fragment extends Fragment
             public void onScrolled(RecyclerView recyclerView, int dx, int dy)
             {
                 super.onScrolled(recyclerView, dx, dy);
+              //  fragmentList1Binding.includeCarousel1.listHorizontal1.onScrolled(dx, dy);
                 fragmentList1Binding.includeCarousel1.listHorizontal1.removeOnScrollListener(scrollListeners[0]);
                 fragmentList1Binding.includeCarousel1.listHorizontal1.scrollBy(dx, dy);
-                fragmentList1Binding.includeCarousel1.listHorizontal1.addOnScrollListener(scrollListeners[0]);
+               fragmentList1Binding.includeCarousel1.listHorizontal1.addOnScrollListener(scrollListeners[0]);
             }
         };
+        fragmentList1Binding.includeCarousel1.listHorizontal1.removeOnScrollListener(scrollListeners[0]);
+        fragmentList1Binding.includeCarousel2.listHorizontal2.removeOnScrollListener(scrollListeners[1]);
+
         fragmentList1Binding.includeCarousel1.listHorizontal1.addOnScrollListener(scrollListeners[0]);
-        fragmentList1Binding.includeCarousel2.listHorizontal2.addOnScrollListener(scrollListeners[1]);
+       fragmentList1Binding.includeCarousel2.listHorizontal2.addOnScrollListener(scrollListeners[1]);
 
     }
 
@@ -731,7 +736,7 @@ public class List1Fragment extends Fragment
         layoutManager.setPostLayoutListener(new CarouselZoomPostLayoutListener());
         layoutManager.setMaxVisibleItems(3);
         manager1 = layoutManager;
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(manager1);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mAdapter);
         recyclerView.addOnScrollListener(new CenterScrollListener());
@@ -742,7 +747,7 @@ public class List1Fragment extends Fragment
         layoutManager.setPostLayoutListener(new CarouselZoomPostLayoutListener());
         layoutManager.setMaxVisibleItems(3);
         manager2 = layoutManager;
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(manager2);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mAdapter);
         recyclerView.addOnScrollListener(new CenterScrollListener());

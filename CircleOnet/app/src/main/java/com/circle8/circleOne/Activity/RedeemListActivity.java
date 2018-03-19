@@ -19,7 +19,7 @@ public class RedeemListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         redeemListLayoutBinding = DataBindingUtil.setContentView(this,R.layout.redeem_list_layout);
-        redeemListAdapter  = new RedeemListAdapter(RedeemListActivity.this);
-        redeemListLayoutBinding.lstRedeem.setAdapter(redeemListAdapter);
+     //   redeemListAdapter  = new RedeemListAdapter(RedeemListActivity.this);
+       // redeemListLayoutBinding.lstRedeem.setAdapter(redeemListAdapter);
     }
 }

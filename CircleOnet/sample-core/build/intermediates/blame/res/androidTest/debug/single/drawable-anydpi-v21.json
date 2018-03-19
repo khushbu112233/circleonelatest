@@ -1,18 +1,10 @@
 [
     {
         "merged": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-anydpi-v21\\design_ic_visibility_off.xml",
-        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\1b2d375ad081b9ac493283b038eadb7e\\res\\drawable-anydpi-v21\\design_ic_visibility_off.xml"
-    },
-    {
-        "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-anydpi-v21\\design_ic_visibility_off.xml",
-        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\f73efd2bc295a07cb16496a6cce9c1f3\\res\\drawable-anydpi-v21\\design_ic_visibility_off.xml"
-    },
-    {
-        "merged": "E:\\Kajal\\CircleOne\\Project\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-anydpi-v21\\design_ic_visibility.xml",
-        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\f73efd2bc295a07cb16496a6cce9c1f3\\res\\drawable-anydpi-v21\\design_ic_visibility.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\133c60005b72007085e510faa4f1dd99\\res\\drawable-anydpi-v21\\design_ic_visibility_off.xml"
     },
     {
         "merged": "D:\\khushbu\\CircleOneWithChat\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-anydpi-v21\\design_ic_visibility.xml",
-        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\1b2d375ad081b9ac493283b038eadb7e\\res\\drawable-anydpi-v21\\design_ic_visibility.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\133c60005b72007085e510faa4f1dd99\\res\\drawable-anydpi-v21\\design_ic_visibility.xml"
     }
 ]

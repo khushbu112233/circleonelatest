@@ -11,12 +11,14 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,6 +66,7 @@ public class RewardsPointsActivity extends Fragment implements View.OnClickListe
     static ImageView imgDrawer, imgBack;
     LoginSession loginSession ;
     String userId = "";
+    PopupWindow popupWindow;
     MerchantGetAllModel merchantGetAllModel ;
     ArrayList<MerchantGetAllModel> merchantGetAllModelArrayList = new ArrayList<>();
     //for new expandable listview
@@ -99,13 +102,50 @@ public class RewardsPointsActivity extends Fragment implements View.OnClickListe
         activityRewardsPointsBinding.imgLuckyDraw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i =new Intent(getActivity(),LuckyDrawActivity.class);
-                startActivity(i);
+                popupWindow = popupWindowsort();
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
             }
         });
 
         new HttpAsyncGetAll().execute(Utility.BASE_URL+"Merchant/GetAll");
         return view;
+    }
+
+    private PopupWindow popupWindowsort() {
+
+        // initialize a pop up window type
+        popupWindow = new PopupWindow(context);
+
+        LayoutInflater inflator = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        // setContentView(inflator.inflate(layoutResID, null));
+
+        View view1 = inflator.inflate(R.layout.start_dialog_layout, null);
+        popupWindow.setContentView(view1);
+        popupWindow.setOutsideTouchable(true);
+
+        TextView txtStart = view1.findViewById(R.id.txtStart);
+
+        txtStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+
+                Intent i =new Intent(getActivity(),LuckyDrawActivity.class);
+                startActivity(i);
+            }
+        });
+        // some other visual settings for popup window
+        popupWindow.setFocusable(true);
+
+        popupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        // popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.white));
+        popupWindow.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
+
+        // set the listview as popup content
+
+        return popupWindow;
     }
     private void init()
     {

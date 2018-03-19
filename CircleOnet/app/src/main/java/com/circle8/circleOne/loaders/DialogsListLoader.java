@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.circle8.circleOne.Common.DialogsUtils;
-import com.circle8.circleOne.Common.DialogsUtils;
+import com.circle8.circleOne.ui.activities.main.MainActivity;
 import com.quickblox.chat.model.QBChatDialog;
 import com.quickblox.q_municate_core.core.loader.BaseLoader;
 import com.quickblox.q_municate_core.models.DialogWrapper;
@@ -67,8 +67,18 @@ public class DialogsListLoader extends BaseLoader<List<DialogWrapper>> {
         Log.d(TAG, "getItems() chatDialogs size= " + chatDialogs.size());
 
         List<DialogWrapper> dialogWrappers = new ArrayList<>(chatDialogs.size());
-        for (QBChatDialog chatDialog : chatDialogs) {
+       /* for (QBChatDialog chatDialog : chatDialogs) {
             dialogWrappers.add(new DialogWrapper(getContext(), dataManager, chatDialog));
+        }*/
+
+        for (int i = 0; i < chatDialogs.size(); i++){
+            for (int j =  0; j < chatDialogs.get(i).getOccupants().size(); j++){
+                if (!dialogWrappers.contains(chatDialogs.get(i))) {
+                    if (MainActivity.friend_occupantids.contains(chatDialogs.get(i).getOccupants().get(j))) {
+                        dialogWrappers.add(new DialogWrapper(getContext(), dataManager, chatDialogs.get(i)));
+                    }
+                }
+            }
         }
 
         checkLoadFinishedFromREST(chatDialogs.size());

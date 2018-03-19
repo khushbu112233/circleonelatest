@@ -11,9 +11,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -32,13 +34,15 @@ import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.CardPrize;
 import com.circle8.circleOne.Model.PrizeHistory;
@@ -74,7 +78,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
     int[] solutionArray = { 1, 2, 3, 4, 5, 6, 7, 8 };
     ArrayList<CardPrize> allCards = new ArrayList<>();
     public static ArrayList<PrizeHistory> prizeHistorys = new ArrayList<>();
-    public static ArrayList<PrizeHistory> prizeHistorysAll = new ArrayList<>();
+
     int id = 0;
     ArrayList<Integer> prizeIdList= new ArrayList<>();
     String[] pointArray = {"CircleOne Points","Apple ipad pro","NFC Name Card","CircleOne Points","CircleOne Points","Amazon Kindle","Earphone","CircleOne Points"};
@@ -148,7 +152,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
         });
         new HttpAsyncTask().execute(Utility.BASE_URL+"RewardsGame/Refresh");
 
-        new HttpAsyncTaskWininingPrize().execute(Utility.BASE_URL+"RewardsGame/WinningPrize");
+      //  new HttpAsyncTaskWininingPrize().execute(Utility.BASE_URL+"RewardsGame/WinningPrize");
         stringArrayList.add("test fsdf sdfs dsfsd sdff sdfsdf sdfs sdfsdfs sdfsfs sdfsdfdsf dsfdsfsdf sdfsdfs");
         stringArrayList.add("test1 fsdf sdfs dsfsd sdff sdfsdf sdfs sdfsdfs sdfsfs sdfsdfdsf dsfdsfsdf sdfsdfs");
         stringArrayList.add("test2 fsdf sdfs dsfsd sdff sdfsdf sdfs sdfsdfs sdfsfs sdfsdfdsf dsfdsfsdf sdfsdfs");
@@ -198,6 +202,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
             startTimer();
             timerState = TimerState.RUNNING;
         }
+
 
         timer = new CountDownTimer(4000, 4000) {
             @Override
@@ -270,7 +275,6 @@ public class LuckyDrawActivity extends AppCompatActivity {
         luckyDrawLayoutBinding.includePrize.rtlRedeem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
                 Intent i = new Intent(LuckyDrawActivity.this,RedeemActivity.class);
                 startActivity(i);
@@ -346,12 +350,102 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 luckyDrawLayoutBinding.easyFlipView8.setFlipEnabled(true);
                 luckyDrawLayoutBinding.easyFlipView8.setFlipOnTouch(true);
 
+                if (luckyDrawLayoutBinding.easyFlipView1.isBackSide()) {
 
+                    luckyDrawLayoutBinding.easyFlipView1.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView1.flipTheView(true);
+                }
+
+                if (luckyDrawLayoutBinding.easyFlipView2.isBackSide()) {
+
+                    luckyDrawLayoutBinding.easyFlipView2.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView2.flipTheView(true);
+                }
+
+                if (luckyDrawLayoutBinding.easyFlipView3.isBackSide()) {
+
+                    luckyDrawLayoutBinding.easyFlipView3.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView3.flipTheView(true);
+                }
+
+                if (luckyDrawLayoutBinding.easyFlipView4.isBackSide()) {
+
+                    luckyDrawLayoutBinding.easyFlipView4.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView4.flipTheView(true);
+                }
+
+                if (luckyDrawLayoutBinding.easyFlipView5.isBackSide()) {
+
+                    luckyDrawLayoutBinding.easyFlipView5.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView5.flipTheView(true);
+                }
+
+                if (luckyDrawLayoutBinding.easyFlipView6.isBackSide()) {
+
+                    luckyDrawLayoutBinding.easyFlipView6.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView6.flipTheView(true);
+                }
+
+                if (luckyDrawLayoutBinding.easyFlipView7.isBackSide()) {
+
+                    luckyDrawLayoutBinding.easyFlipView7.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView7.flipTheView(true);
+                }
+
+                if (luckyDrawLayoutBinding.easyFlipView8.isBackSide()) {
+
+                    luckyDrawLayoutBinding.easyFlipView8.flipTheView();
+                    luckyDrawLayoutBinding.easyFlipView8.flipTheView(true);
+                }
+
+                Collections.shuffle(allCards);
+
+/*
                 luckyDrawLayoutBinding.rtlTemp.setVisibility(View.VISIBLE);
                 luckyDrawLayoutBinding.llTemp.setVisibility(View.GONE);
                 luckyDrawLayoutBinding.rl1.setVisibility(View.GONE);
+                luckyDrawLayoutBinding.rl2.setVisibility(View.GONE);*/
+                luckyDrawLayoutBinding.rl1.setVisibility(View.GONE);
                 luckyDrawLayoutBinding.rl2.setVisibility(View.GONE);
-                luckyDrawLayoutBinding.easyFlipViewr1.setX(x1);
+                luckyDrawLayoutBinding.llTemp.setBackgroundResource(R.drawable.animation_list_filling);
+/*
+
+                luckyDrawLayoutBinding.easyFlipView1.setVisibility(View.GONE);
+                luckyDrawLayoutBinding.easyFlipView2.setVisibility(View.GONE);
+                luckyDrawLayoutBinding.easyFlipView3.setVisibility(View.GONE);
+                luckyDrawLayoutBinding.easyFlipView4.setVisibility(View.GONE);
+                luckyDrawLayoutBinding.easyFlipView5.setVisibility(View.GONE);
+                luckyDrawLayoutBinding.easyFlipView6.setVisibility(View.GONE);
+                luckyDrawLayoutBinding.easyFlipView7.setVisibility(View.GONE);
+                luckyDrawLayoutBinding.easyFlipView8.setVisibility(View.GONE);
+*/
+
+                ((AnimationDrawable) luckyDrawLayoutBinding.llTemp.getBackground()).start();
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        luckyDrawLayoutBinding.rl1.setVisibility(View.VISIBLE);
+                        luckyDrawLayoutBinding.rl2.setVisibility(View.VISIBLE);
+                        ((AnimationDrawable) luckyDrawLayoutBinding.llTemp.getBackground()).stop();
+                        luckyDrawLayoutBinding.llTemp.setBackgroundResource(0);
+
+
+                        /*
+                        luckyDrawLayoutBinding.easyFlipView1.setVisibility(View.VISIBLE);
+                        luckyDrawLayoutBinding.easyFlipView2.setVisibility(View.VISIBLE);
+                        luckyDrawLayoutBinding.easyFlipView3.setVisibility(View.VISIBLE);
+                        luckyDrawLayoutBinding.easyFlipView4.setVisibility(View.VISIBLE);
+                        luckyDrawLayoutBinding.easyFlipView5.setVisibility(View.VISIBLE);
+                        luckyDrawLayoutBinding.easyFlipView6.setVisibility(View.VISIBLE);
+                        luckyDrawLayoutBinding.easyFlipView7.setVisibility(View.VISIBLE);
+                        luckyDrawLayoutBinding.easyFlipView8.setVisibility(View.VISIBLE);
+*/
+                    }
+                }, 750);
+
+                cardValueSet();
+                /*luckyDrawLayoutBinding.easyFlipViewr1.setX(x1);
                 luckyDrawLayoutBinding.easyFlipViewr1.setY(y1);
                 luckyDrawLayoutBinding.easyFlipViewr2.setX(x2);
                 luckyDrawLayoutBinding.easyFlipViewr2.setY(y2);
@@ -366,8 +460,9 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 luckyDrawLayoutBinding.easyFlipViewr7.setX(x7);
                 luckyDrawLayoutBinding.easyFlipViewr7.setY(y7);
                 luckyDrawLayoutBinding.easyFlipViewr8.setX(x8);
-                luckyDrawLayoutBinding.easyFlipViewr8.setY(y8);
+                luckyDrawLayoutBinding.easyFlipViewr8.setY(y8);*/
 
+/*
 
                 luckyDrawLayoutBinding.easyFlipViewr1.animate()
                         .translationX((width / 2)-100)
@@ -1019,6 +1114,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
 
                     }
                 }, 1000);
+*/
             }
         });
         luckyDrawLayoutBinding.imgrightDrawer.setOnClickListener(new View.OnClickListener() {
@@ -1076,7 +1172,8 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 countMaintain(count);
 
                 if(luckyDrawLayoutBinding.easyFlipView1.isBackSide()) {
-                    dialog();
+
+                    dialog(allCards,0);
                 }else {
                     flipView.setClickable(false);
                     flipView.setEnabled(false);
@@ -1094,7 +1191,8 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 countMaintain(count);
 
                 if(luckyDrawLayoutBinding.easyFlipView2.isBackSide()) {
-                    dialog();
+                    dialog(allCards,1);
+
                 }else {
                     flipView.setClickable(false);
                     flipView.setEnabled(false);
@@ -1112,7 +1210,8 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 countMaintain(count);
 
                 if(luckyDrawLayoutBinding.easyFlipView3.isBackSide()) {
-                    dialog();
+                    dialog(allCards,2);
+
                 }else {
                     flipView.setClickable(false);
                     flipView.setEnabled(false);
@@ -1130,7 +1229,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 countMaintain(count);
 
                 if(luckyDrawLayoutBinding.easyFlipView4.isBackSide()) {
-                    dialog();
+                    dialog(allCards,3);
                 }else {
                     flipView.setClickable(false);
                     flipView.setEnabled(false);
@@ -1148,7 +1247,8 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 countMaintain(count);
 
                 if(luckyDrawLayoutBinding.easyFlipView5.isBackSide()) {
-                    dialog();
+                    dialog(allCards,4);
+
                 }else {
                     flipView.setClickable(false);
                     flipView.setEnabled(false);
@@ -1166,7 +1266,8 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 countMaintain(count);
 
                 if(luckyDrawLayoutBinding.easyFlipView6.isBackSide()) {
-                    dialog();
+                    dialog(allCards,5);
+
                 }else {
                     flipView.setClickable(false);
                     flipView.setEnabled(false);
@@ -1185,7 +1286,8 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 countMaintain(count);
 
                 if(luckyDrawLayoutBinding.easyFlipView7.isBackSide()) {
-                    dialog();
+                    dialog(allCards,6);
+
                 }else {
                     flipView.setClickable(false);
                     flipView.setEnabled(false);
@@ -1204,7 +1306,8 @@ public class LuckyDrawActivity extends AppCompatActivity {
 
                 if(luckyDrawLayoutBinding.easyFlipView8.isBackSide())
                 {
-                    dialog();
+                    dialog(allCards,7);
+
                 }else {
                     flipView.setClickable(false);
                     flipView.setEnabled(false);
@@ -1217,13 +1320,27 @@ public class LuckyDrawActivity extends AppCompatActivity {
 
     }
 
-    private void dialog() {
+    private void dialog(ArrayList<CardPrize> strlist,int pos) {
         final Dialog dialog=new Dialog(LuckyDrawActivity.this);
         dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         dialog.setContentView(R.layout.layout_full_image);
         TouchImageView bmImage = (TouchImageView) dialog.findViewById(R.id.img_receipt);
+        TextView txtValue = (TextView)dialog.findViewById(R.id.txtValue);
+        final ImageView imgCenter = (ImageView)dialog.findViewById(R.id.imgCenter);
+        TextView txtpoint = (TextView)dialog.findViewById(R.id.txtpoint);
         bmImage.setImageResource(R.drawable.ic_gold_bg);
-        final Button button=(Button)dialog.findViewById(R.id.btn_dissmiss);
+        txtValue.setVisibility(View.GONE);
+        txtpoint.setText(strlist.get(pos).getPrize_Name());
+        Glide.with(LuckyDrawActivity.this).load(Utility.BASE_IMAGE_URL+"GamePrizes/" + strlist.get(pos).getPrize_Image())
+                .asBitmap()
+                .into(new BitmapImageViewTarget(imgCenter) {
+                    @Override
+                    public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                        super.onResourceReady(drawable, anim);
+                        imgCenter.setImageBitmap(drawable);
+                    }
+                });
+        final ImageView button=(ImageView)dialog.findViewById(R.id.btn_dissmiss);
         dialog.setCancelable(true);
         dialog.show();
         //  animationShrink = AnimationUtils.loadAnimation(this, R.anim.animation);
@@ -1581,19 +1698,21 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 luckyDrawLayoutBinding.includePrize.txtTokenCount.setText(Rewards_Points_Remain);
                 luckyDrawLayoutBinding.includePrize.txtRefreshCount.setText(No_Of_Tokens);
                 if(success.equalsIgnoreCase("1")) {
-                    JSONArray jsonArray = response.getJSONArray("prizes_8");
+                    JSONArray jsonArray = response.getJSONArray("cards_8");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject iCon = jsonArray.getJSONObject(i);
                         CardPrize cardPrizeModel = new CardPrize();
-                        cardPrizeModel.setPrize_ID(iCon.getString("Prize_ID"));
-                        cardPrizeModel.setPrize_Name(iCon.getString("Prize_Name"));
-                        cardPrizeModel.setPrize_Image(iCon.getString("Prize_Image"));
-                        cardPrizeModel.setPrize_Available_Count(iCon.getString("Prize_Available_Count"));
+                        cardPrizeModel.setPrize_ID(iCon.getString("Card_ID"));
+                        cardPrizeModel.setPrize_Name(iCon.getString("Card_Name"));
+                        cardPrizeModel.setPrize_Image(iCon.getString("Card_Image"));
+                       /* cardPrizeModel.setPrize_Available_Count(iCon.getString("Prize_Available_Count"));
                         cardPrizeModel.setPrize_Won_Count(iCon.getString("Prize_Won_Count"));
                         cardPrizeModel.setTotal_Prize_Count(iCon.getString("Total_Prize_Count"));
-                        allCards.add(cardPrizeModel);
+                       */
+                       allCards.add(cardPrizeModel);
 
                     }
+                    cardValueSet();
                 }
             }
             catch (JSONException e)
@@ -1601,6 +1720,107 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+    public void cardValueSet()
+    {
+        luckyDrawLayoutBinding.txtpoint1.setText(allCards.get(0).getPrize_Name());
+        luckyDrawLayoutBinding.txtpoint2.setText(allCards.get(1).getPrize_Name());
+        luckyDrawLayoutBinding.txtpoint3.setText(allCards.get(2).getPrize_Name());
+        luckyDrawLayoutBinding.txtpoint4.setText(allCards.get(3).getPrize_Name());
+        luckyDrawLayoutBinding.txtpoint5.setText(allCards.get(4).getPrize_Name());
+        luckyDrawLayoutBinding.txtpoint6.setText(allCards.get(5).getPrize_Name());
+        luckyDrawLayoutBinding.txtpoint7.setText(allCards.get(6).getPrize_Name());
+        luckyDrawLayoutBinding.txtpoint8.setText(allCards.get(7).getPrize_Name());
+
+        luckyDrawLayoutBinding.txt1.setVisibility(View.GONE);
+        luckyDrawLayoutBinding.txt2.setVisibility(View.GONE);
+        luckyDrawLayoutBinding.txt3.setVisibility(View.GONE);
+        luckyDrawLayoutBinding.txt4.setVisibility(View.GONE);
+        luckyDrawLayoutBinding.txt5.setVisibility(View.GONE);
+        luckyDrawLayoutBinding.txt6.setVisibility(View.GONE);
+        luckyDrawLayoutBinding.txt7.setVisibility(View.GONE);
+        luckyDrawLayoutBinding.txt8.setVisibility(View.GONE);
+
+
+        Glide.with(LuckyDrawActivity.this).load(Utility.BASE_IMAGE_URL+"GamePrizes/" + allCards.get(0).getPrize_Image())
+                .asBitmap()
+                .into(new BitmapImageViewTarget(luckyDrawLayoutBinding.img1) {
+                    @Override
+                    public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                        super.onResourceReady(drawable, anim);
+                        luckyDrawLayoutBinding.img1.setImageBitmap(drawable);
+                    }
+                });
+
+        Glide.with(LuckyDrawActivity.this).load(Utility.BASE_IMAGE_URL+"GamePrizes/" + allCards.get(1).getPrize_Image())
+                .asBitmap()
+                .into(new BitmapImageViewTarget(luckyDrawLayoutBinding.img2) {
+                    @Override
+                    public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                        super.onResourceReady(drawable, anim);
+                        luckyDrawLayoutBinding.img2.setImageBitmap(drawable);
+                    }
+                });
+
+        Glide.with(LuckyDrawActivity.this).load(Utility.BASE_IMAGE_URL+"GamePrizes/" + allCards.get(2).getPrize_Image())
+                .asBitmap()
+                .into(new BitmapImageViewTarget(luckyDrawLayoutBinding.img3) {
+                    @Override
+                    public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                        super.onResourceReady(drawable, anim);
+                        luckyDrawLayoutBinding.img3.setImageBitmap(drawable);
+                    }
+                });
+
+        Glide.with(LuckyDrawActivity.this).load(Utility.BASE_IMAGE_URL+"GamePrizes/" + allCards.get(3).getPrize_Image())
+                .asBitmap()
+                .into(new BitmapImageViewTarget(luckyDrawLayoutBinding.img4) {
+                    @Override
+                    public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                        super.onResourceReady(drawable, anim);
+                        luckyDrawLayoutBinding.img4.setImageBitmap(drawable);
+                    }
+                });
+
+        Glide.with(LuckyDrawActivity.this).load(Utility.BASE_IMAGE_URL+"GamePrizes/" + allCards.get(4).getPrize_Image())
+                .asBitmap()
+                .into(new BitmapImageViewTarget(luckyDrawLayoutBinding.img5) {
+                    @Override
+                    public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                        super.onResourceReady(drawable, anim);
+                        luckyDrawLayoutBinding.img5.setImageBitmap(drawable);
+                    }
+                });
+
+        Glide.with(LuckyDrawActivity.this).load(Utility.BASE_IMAGE_URL+"GamePrizes/" + allCards.get(5).getPrize_Image())
+                .asBitmap()
+                .into(new BitmapImageViewTarget(luckyDrawLayoutBinding.img6) {
+                    @Override
+                    public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                        super.onResourceReady(drawable, anim);
+                        luckyDrawLayoutBinding.img6.setImageBitmap(drawable);
+                    }
+                });
+
+        Glide.with(LuckyDrawActivity.this).load(Utility.BASE_IMAGE_URL+"GamePrizes/" + allCards.get(6).getPrize_Image())
+                .asBitmap()
+                .into(new BitmapImageViewTarget(luckyDrawLayoutBinding.img7) {
+                    @Override
+                    public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                        super.onResourceReady(drawable, anim);
+                        luckyDrawLayoutBinding.img7.setImageBitmap(drawable);
+                    }
+                });
+
+        Glide.with(LuckyDrawActivity.this).load(Utility.BASE_IMAGE_URL+"GamePrizes/" + allCards.get(7).getPrize_Image())
+                .asBitmap()
+                .into(new BitmapImageViewTarget(luckyDrawLayoutBinding.img8) {
+                    @Override
+                    public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                        super.onResourceReady(drawable, anim);
+                        luckyDrawLayoutBinding.img8.setImageBitmap(drawable);
+                    }
+                });
     }
     private class HttpAsyncTaskWininingPrize extends AsyncTask<String, Void, String>
     {
@@ -1633,7 +1853,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
             Log.e("response",""+result);
             dialog.dismiss();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
-            new HttpAsyncTaskprizeHistory().execute(Utility.BASE_URL+"RewardsGame/PrizeHistory_User");
+            //new HttpAsyncTaskprizeHistory().execute(Utility.BASE_URL+"RewardsGame/PrizeHistory_User");
 
             try
             {
@@ -1760,7 +1980,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
             Log.e("response_prize_history",""+result);
             dialog.dismiss();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
-            new HttpAsyncTaskprizeHistoryAll().execute(Utility.BASE_URL+"RewardsGame/PrizeHistory_All");
+
             try
             {
                 JSONObject response = new JSONObject(result);
@@ -1778,8 +1998,8 @@ public class LuckyDrawActivity extends AppCompatActivity {
                         prizeHistoryModel.setPrize_ID(iCon.getString("Prize_ID"));
                         prizeHistoryModel.setPrize_Name(iCon.getString("Prize_Name"));
                         prizeHistoryModel.setPrize_Image(iCon.getString("Prize_Image"));
-                        prizeHistoryModel.setResult(iCon.getString("Result"));
-                        prizeHistoryModel.setPlay_Date(iCon.getString("Play_Date"));
+                       // prizeHistoryModel.setResult(iCon.getString("Result"));
+                       // prizeHistoryModel.setPlay_Date(iCon.getString("Play_Date"));
                         prizeHistorys.add(prizeHistoryModel);
 
                     }
@@ -1793,57 +2013,5 @@ public class LuckyDrawActivity extends AppCompatActivity {
             }
         }
     }
-    private class HttpAsyncTaskprizeHistoryAll extends AsyncTask<String, Void, String>
-    {
-        ProgressDialog dialog;
 
-        @Override
-        protected void onPreExecute()
-        {
-            super.onPreExecute();
-            dialog = new ProgressDialog(LuckyDrawActivity.this);
-            dialog.setMessage("Fetching event...");
-            dialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... urls)
-        {
-            JSONObject jsonObject = new JSONObject();
-
-            return Utility.GET(urls[0]);
-        }
-        @Override
-        protected void onPostExecute(String result)
-        {
-            Log.e("response_prize_All",""+result);
-            dialog.dismiss();
-//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
-
-            try
-            {
-                JSONObject response = new JSONObject(result);
-                Log.e("response",""+response);
-                JSONArray jsonArray = response.getJSONArray("prize_details");
-                prizeHistorysAll.clear();
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject iCon = jsonArray.getJSONObject(i);
-                    PrizeHistory prizeHistoryModel = new PrizeHistory();
-                    prizeHistoryModel.setUserId(iCon.getString("userid"));
-                    prizeHistoryModel.setPrize_ID(iCon.getString("Prize_ID"));
-                    prizeHistoryModel.setPrize_Name(iCon.getString("Prize_Name"));
-                    prizeHistoryModel.setPrize_Image(iCon.getString("Prize_Image"));
-                    prizeHistoryModel.setResult(iCon.getString("Result"));
-                    prizeHistoryModel.setPlay_Date(iCon.getString("Play_Date"));
-                    prizeHistorysAll.add(prizeHistoryModel);
-
-                }
-
-            }
-            catch (JSONException e)
-            {
-                e.printStackTrace();
-            }
-        }
-    }
 }

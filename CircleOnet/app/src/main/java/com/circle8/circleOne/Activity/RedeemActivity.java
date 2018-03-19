@@ -2,12 +2,14 @@ package com.circle8.circleOne.Activity;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -27,13 +29,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.RedeemListAdapter;
+import com.circle8.circleOne.Model.PrizeHistory;
 import com.circle8.circleOne.PrefUtils;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.TimeReceiver;
 import com.circle8.circleOne.Utils.Timer_Service;
+import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.RedeemActivityLayoutBinding;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
@@ -56,13 +66,14 @@ public class RedeemActivity extends AppCompatActivity {
     private int timeToStart;
     private TimerState timerState;
     private static final int MAX_TIME = 86410;
+    public static ArrayList<PrizeHistory> prizeHistorysAll = new ArrayList<>();
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         redeemActivityLayoutBinding = DataBindingUtil.setContentView(this,R.layout.redeem_activity_layout);
-
-        redeemListAdapter  = new RedeemListAdapter(RedeemActivity.this);
+        new HttpAsyncTaskprizeHistoryAll().execute(Utility.BASE_URL+"RewardsGame/PrizeHistory_All");
+        redeemListAdapter  = new RedeemListAdapter(RedeemActivity.this,prizeHistorysAll);
         redeemActivityLayoutBinding.lstRedeem.setAdapter(redeemListAdapter);
         final Animation slide_down = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.slide_down);
@@ -79,6 +90,12 @@ public class RedeemActivity extends AppCompatActivity {
         LinearGradient lin_grad0 = new LinearGradient(0, 0, 0, 200, color, position, tile_mode0);
         Shader shader_gradient0 = lin_grad0;
         txt1.getPaint().setShader(shader_gradient0);
+        redeemActivityLayoutBinding.imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         redeemActivityLayoutBinding.txtDay2.getPaint().setShader(shader_gradient0);
         redeemActivityLayoutBinding.txtHour1.getPaint().setShader(shader_gradient0);
         redeemActivityLayoutBinding.txtHour2.getPaint().setShader(shader_gradient0);
@@ -309,7 +326,6 @@ public class RedeemActivity extends AppCompatActivity {
         ImageView imgDismiss = view1.findViewById(R.id.imgMenu);
 
         // set our adapter and pass our pop up window contents
-
         imgDismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -317,6 +333,17 @@ public class RedeemActivity extends AppCompatActivity {
             }
         });
 
+
+        // set on item selected
+
+        rltHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Pref.setValue(RedeemActivity.this,"History","2");
+                Intent i = new Intent(RedeemActivity.this,PrizeHistoryActivity.class);
+                startActivity(i);
+            }
+        });
 
         // set on item selected
 
@@ -330,5 +357,58 @@ public class RedeemActivity extends AppCompatActivity {
 
         return popupWindow;
     }
+    private class HttpAsyncTaskprizeHistoryAll extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
 
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            dialog = new ProgressDialog(RedeemActivity.this);
+            dialog.setMessage("Fetching event...");
+            dialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            JSONObject jsonObject = new JSONObject();
+
+            return Utility.GET(urls[0]);
+        }
+        @Override
+        protected void onPostExecute(String result)
+        {
+            Log.e("response_prize_All",""+result);
+            dialog.dismiss();
+//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+
+            try
+            {
+                JSONObject response = new JSONObject(result);
+                Log.e("response",""+response);
+                JSONArray jsonArray = response.getJSONArray("prize_details");
+                prizeHistorysAll.clear();
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject iCon = jsonArray.getJSONObject(i);
+                    PrizeHistory prizeHistoryModel = new PrizeHistory();
+
+                    //prizeHistoryModel.setUserId(iCon.getString("userid"));
+                    prizeHistoryModel.setPrize_ID(iCon.getString("Prize_ID"));
+                    prizeHistoryModel.setPrize_Name(iCon.getString("Prize_Name"));
+                    prizeHistoryModel.setPrize_Image(iCon.getString("Prize_Image"));
+                    prizeHistoryModel.setCard_Name_1(iCon.getString("Card_Name_1"));
+                    prizeHistoryModel.setCard_Name_2(iCon.getString("Card_Name_2"));
+                    prizeHistorysAll.add(prizeHistoryModel);
+
+                }
+            redeemListAdapter.notifyDataSetChanged();
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
 }

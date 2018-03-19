@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,12 +54,18 @@ public class PrizeHistoryActivity extends AppCompatActivity {
             prizeHistoryAdapter = new PrizeHistoryAdapter(PrizeHistoryActivity.this,LuckyDrawActivity.prizeHistorys);
             prizeHistoryLayoutBinding.lstPrizeHistory.setAdapter(prizeHistoryAdapter);
             prizeHistoryAdapter.notifyDataSetChanged();
-        }else if(Pref.getValue(PrizeHistoryActivity.this,"History","").equalsIgnoreCase("1"))
+        }/*else if(Pref.getValue(PrizeHistoryActivity.this,"History","").equalsIgnoreCase("1"))
         {
             prizeHistoryAdapter = new PrizeHistoryAdapter(PrizeHistoryActivity.this,LuckyDrawActivity.prizeHistorysAll);
             prizeHistoryLayoutBinding.lstPrizeHistory.setAdapter(prizeHistoryAdapter);
             prizeHistoryAdapter.notifyDataSetChanged();
-        }
+        }*/
+        prizeHistoryLayoutBinding.imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         prefUtils = new PrefUtils(getApplicationContext());
 
