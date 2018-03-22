@@ -29,7 +29,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.RedeemListAdapter;
+import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.PrizeHistory;
+import com.circle8.circleOne.Model.PushCardsDetail;
 import com.circle8.circleOne.PrefUtils;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Pref;
@@ -45,6 +47,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -65,23 +68,30 @@ public class RedeemActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private int timeToStart;
     private TimerState timerState;
+    LoginSession session;
     private static final int MAX_TIME = 86410;
+    ArrayList<PushCardsDetail> pushCardDetailList = new ArrayList<>();
     public static ArrayList<PrizeHistory> prizeHistorysAll = new ArrayList<>();
+    public static String  UserId= "";
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        redeemActivityLayoutBinding = DataBindingUtil.setContentView(this,R.layout.redeem_activity_layout);
-        new HttpAsyncTaskprizeHistoryAll().execute(Utility.BASE_URL+"RewardsGame/PrizeHistory_All");
-        redeemListAdapter  = new RedeemListAdapter(RedeemActivity.this,prizeHistorysAll);
+        redeemActivityLayoutBinding = DataBindingUtil.setContentView(this, R.layout.redeem_activity_layout);
+        new HttpAsyncTaskprizeHistoryAll().execute(Utility.BASE_URL + "RewardsGame/PrizeHistory_All");
+        redeemListAdapter = new RedeemListAdapter(RedeemActivity.this, prizeHistorysAll);
         redeemActivityLayoutBinding.lstRedeem.setAdapter(redeemListAdapter);
         final Animation slide_down = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.slide_down);
 
         final Animation slide_up = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.slide_up);
-     //   redeemActivityLayoutBinding.llActivity.startAnimation(slide_up);
+        //   redeemActivityLayoutBinding.llActivity.startAnimation(slide_up);
         prefUtils = new PrefUtils(getApplicationContext());
+
+        session = new LoginSession(getApplicationContext());
+        HashMap<String, String> user = session.getUserDetails();
+        UserId = user.get(LoginSession.KEY_USERID);
 
         TextView txt1 = (TextView) findViewById(R.id.txtDay1);
         int[] color = {Color.parseColor("#dfc977"), Color.parseColor("#ffffff")};
@@ -103,17 +113,17 @@ public class RedeemActivity extends AppCompatActivity {
         redeemActivityLayoutBinding.txtMinute2.getPaint().setShader(shader_gradient0);
         redeemActivityLayoutBinding.txtSecond1.getPaint().setShader(shader_gradient0);
         redeemActivityLayoutBinding.txtSecond2.getPaint().setShader(shader_gradient0);
-        
+
         if (timerState == TimerState.STOPPED) {
             prefUtils.setStartedTime((int) getNow());
             startTimer();
             timerState = TimerState.RUNNING;
         }
-        
-        
+
+
         int int_hours = 1;
 
-        if (int_hours<=24) {
+        if (int_hours <= 24) {
 
 
             //et_hours.setEnabled(false);
@@ -126,8 +136,8 @@ public class RedeemActivity extends AppCompatActivity {
 
             Intent intent_service = new Intent(getApplicationContext(), Timer_Service.class);
             startService(intent_service);
-        }else {
-            Toast.makeText(getApplicationContext(),"Please select the value below 24 hours",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Please select the value below 24 hours", Toast.LENGTH_SHORT).show();
         }
 
         redeemActivityLayoutBinding.imgrightDrawer.setOnClickListener(new View.OnClickListener() {
@@ -206,15 +216,15 @@ public class RedeemActivity extends AppCompatActivity {
 
 
         int days = (int) TimeUnit.SECONDS.toDays(timeToStart);
-        long hours = TimeUnit.SECONDS.toHours(timeToStart) - (days *24);
-        long minute = TimeUnit.SECONDS.toMinutes(timeToStart) - (TimeUnit.SECONDS.toHours(timeToStart)* 60);
-        long second = TimeUnit.SECONDS.toSeconds(timeToStart) - (TimeUnit.SECONDS.toMinutes(timeToStart) *60);
+        long hours = TimeUnit.SECONDS.toHours(timeToStart) - (days * 24);
+        long minute = TimeUnit.SECONDS.toMinutes(timeToStart) - (TimeUnit.SECONDS.toHours(timeToStart) * 60);
+        long second = TimeUnit.SECONDS.toSeconds(timeToStart) - (TimeUnit.SECONDS.toMinutes(timeToStart) * 60);
 
         //timerText.setText(String.valueOf(day+ ":" + hours + ":" + minute + ":" + second));
         String day = String.valueOf(days);
-        String hour = hours +"";
-        String min = minute +"";
-        String sec = second +"";
+        String hour = hours + "";
+        String min = minute + "";
+        String sec = second + "";
         try {
             if (day.length() >= 2) {
                 redeemActivityLayoutBinding.txtDay1.setText(day.substring(0, 1));
@@ -223,7 +233,7 @@ public class RedeemActivity extends AppCompatActivity {
                 redeemActivityLayoutBinding.txtDay1.setText("0");
                 redeemActivityLayoutBinding.txtDay2.setText(day);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -235,7 +245,7 @@ public class RedeemActivity extends AppCompatActivity {
                 redeemActivityLayoutBinding.txtHour1.setText("0");
                 redeemActivityLayoutBinding.txtHour2.setText(hour);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -247,7 +257,7 @@ public class RedeemActivity extends AppCompatActivity {
                 redeemActivityLayoutBinding.txtMinute1.setText("0");
                 redeemActivityLayoutBinding.txtMinute2.setText(min);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -259,7 +269,7 @@ public class RedeemActivity extends AppCompatActivity {
                 redeemActivityLayoutBinding.txtSecond1.setText("0");
                 redeemActivityLayoutBinding.txtSecond2.setText(sec);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
@@ -339,8 +349,8 @@ public class RedeemActivity extends AppCompatActivity {
         rltHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Pref.setValue(RedeemActivity.this,"History","2");
-                Intent i = new Intent(RedeemActivity.this,PrizeHistoryActivity.class);
+                Pref.setValue(RedeemActivity.this, "History", "2");
+                Intent i = new Intent(RedeemActivity.this, PrizeHistoryActivity.class);
                 startActivity(i);
             }
         });
@@ -357,13 +367,12 @@ public class RedeemActivity extends AppCompatActivity {
 
         return popupWindow;
     }
-    private class HttpAsyncTaskprizeHistoryAll extends AsyncTask<String, Void, String>
-    {
+
+    private class HttpAsyncTaskprizeHistoryAll extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(RedeemActivity.this);
             dialog.setMessage("Fetching event...");
@@ -371,23 +380,21 @@ public class RedeemActivity extends AppCompatActivity {
         }
 
         @Override
-        protected String doInBackground(String... urls)
-        {
+        protected String doInBackground(String... urls) {
             JSONObject jsonObject = new JSONObject();
 
             return Utility.GET(urls[0]);
         }
+
         @Override
-        protected void onPostExecute(String result)
-        {
-            Log.e("response_prize_All",""+result);
+        protected void onPostExecute(String result) {
+            Log.e("response_prize_All", "" + result);
             dialog.dismiss();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
-
-            try
-            {
+            new HttpAsyncTaskGetPushCard().execute(Utility.BASE_URL + "RewardsGame/GetPushedCards");
+            try {
                 JSONObject response = new JSONObject(result);
-                Log.e("response",""+response);
+
                 JSONArray jsonArray = response.getJSONArray("prize_details");
                 prizeHistorysAll.clear();
                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -403,12 +410,115 @@ public class RedeemActivity extends AppCompatActivity {
                     prizeHistorysAll.add(prizeHistoryModel);
 
                 }
-            redeemListAdapter.notifyDataSetChanged();
-            }
-            catch (JSONException e)
-            {
+                redeemListAdapter.notifyDataSetChanged();
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private class HttpAsyncTaskGetPushCard extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(RedeemActivity.this);
+            dialog.setMessage("Fetching event...");
+            dialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("userid",   UserId);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return Utility.POST2(urls[0],jsonObject);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.e("response_prize_All", "" + result);
+            dialog.dismiss();
+//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+            try {
+                JSONObject response = new JSONObject(result);
+                JSONArray jsonArray = response.getJSONArray("pushed_cards");
+                pushCardDetailList.clear();
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject iCon = jsonArray.getJSONObject(i);
+                    PushCardsDetail pushCardModel = new PushCardsDetail();
+
+                    //prizeHistoryModel.setUserId(iCon.getString("userid"));
+                    pushCardModel.setCard_Name(iCon.getString("Card_Name"));
+                    pushCardModel.setCount(iCon.getString("Count"));
+                    pushCardDetailList.add(pushCardModel);
+
+                }
+               setCardValue();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    private void setCardValue() {
+        redeemActivityLayoutBinding.txt1.setText(pushCardDetailList.get(0).getCard_Name());
+        redeemActivityLayoutBinding.txtTop1.setText(pushCardDetailList.get(0).getCard_Name());
+        redeemActivityLayoutBinding.txt2.setText(pushCardDetailList.get(1).getCard_Name());
+        redeemActivityLayoutBinding.txtTop2.setText(pushCardDetailList.get(1).getCard_Name());
+        redeemActivityLayoutBinding.txt3.setText(pushCardDetailList.get(2).getCard_Name());
+        redeemActivityLayoutBinding.txtTop3.setText(pushCardDetailList.get(2).getCard_Name());
+        redeemActivityLayoutBinding.txt4.setText(pushCardDetailList.get(3).getCard_Name());
+        redeemActivityLayoutBinding.txtTop4.setText(pushCardDetailList.get(3).getCard_Name());
+        redeemActivityLayoutBinding.txt5.setText(pushCardDetailList.get(4).getCard_Name());
+        redeemActivityLayoutBinding.txtTop5.setText(pushCardDetailList.get(4).getCard_Name());
+        redeemActivityLayoutBinding.txt6.setText(pushCardDetailList.get(5).getCard_Name());
+        redeemActivityLayoutBinding.txtTop6.setText(pushCardDetailList.get(5).getCard_Name());
+        redeemActivityLayoutBinding.txt7.setText(pushCardDetailList.get(6).getCard_Name());
+        redeemActivityLayoutBinding.txtTop7.setText(pushCardDetailList.get(6).getCard_Name());
+        redeemActivityLayoutBinding.txt8.setText(pushCardDetailList.get(7).getCard_Name());
+        redeemActivityLayoutBinding.txtTop8.setText(pushCardDetailList.get(7).getCard_Name());
+        redeemActivityLayoutBinding.txt9.setText(pushCardDetailList.get(8).getCard_Name());
+        redeemActivityLayoutBinding.txtTop9.setText(pushCardDetailList.get(8).getCard_Name());
+        redeemActivityLayoutBinding.txt10.setText(pushCardDetailList.get(9).getCard_Name());
+        redeemActivityLayoutBinding.txtTop10.setText(pushCardDetailList.get(9).getCard_Name());
+        redeemActivityLayoutBinding.txt11.setText(pushCardDetailList.get(10).getCard_Name());
+        redeemActivityLayoutBinding.txtTop11.setText(pushCardDetailList.get(10).getCard_Name());
+        redeemActivityLayoutBinding.txt12.setText(pushCardDetailList.get(11).getCard_Name());
+        redeemActivityLayoutBinding.txtTop12.setText(pushCardDetailList.get(11).getCard_Name());
+        redeemActivityLayoutBinding.txt13.setText(pushCardDetailList.get(12).getCard_Name());
+        redeemActivityLayoutBinding.txtTop13.setText(pushCardDetailList.get(12).getCard_Name());
+        redeemActivityLayoutBinding.txt14.setText(pushCardDetailList.get(13).getCard_Name());
+        redeemActivityLayoutBinding.txtTop14.setText(pushCardDetailList.get(13).getCard_Name());
+        redeemActivityLayoutBinding.txt15.setText(pushCardDetailList.get(14).getCard_Name());
+        redeemActivityLayoutBinding.txtTop15.setText(pushCardDetailList.get(14).getCard_Name());
+        redeemActivityLayoutBinding.txt16.setText(pushCardDetailList.get(15).getCard_Name());
+        redeemActivityLayoutBinding.txtTop16.setText(pushCardDetailList.get(15).getCard_Name());
+        redeemActivityLayoutBinding.txt17.setText(pushCardDetailList.get(16).getCard_Name());
+        redeemActivityLayoutBinding.txtTop17.setText(pushCardDetailList.get(16).getCard_Name());
+        redeemActivityLayoutBinding.txt18.setText(pushCardDetailList.get(17).getCard_Name());
+        redeemActivityLayoutBinding.txtTop18.setText(pushCardDetailList.get(17).getCard_Name());
+        redeemActivityLayoutBinding.txt19.setText(pushCardDetailList.get(18).getCard_Name());
+        redeemActivityLayoutBinding.txtTop19.setText(pushCardDetailList.get(18).getCard_Name());
+        redeemActivityLayoutBinding.txt20.setText(pushCardDetailList.get(19).getCard_Name());
+        redeemActivityLayoutBinding.txtTop20.setText(pushCardDetailList.get(19).getCard_Name());
+        redeemActivityLayoutBinding.txt21.setText(pushCardDetailList.get(20).getCard_Name());
+        redeemActivityLayoutBinding.txtTop21.setText(pushCardDetailList.get(20).getCard_Name());
+        redeemActivityLayoutBinding.txt22.setText(pushCardDetailList.get(21).getCard_Name());
+        redeemActivityLayoutBinding.txtTop22.setText(pushCardDetailList.get(21).getCard_Name());
+        redeemActivityLayoutBinding.txt23.setText(pushCardDetailList.get(22).getCard_Name());
+        redeemActivityLayoutBinding.txtTop23.setText(pushCardDetailList.get(22).getCard_Name());
+        redeemActivityLayoutBinding.txt24.setText(pushCardDetailList.get(23).getCard_Name());
+        redeemActivityLayoutBinding.txtTop24.setText(pushCardDetailList.get(23).getCard_Name());
+        redeemActivityLayoutBinding.txt25.setText(pushCardDetailList.get(24).getCard_Name());
+        redeemActivityLayoutBinding.txtTop25.setText(pushCardDetailList.get(24).getCard_Name());
+
+
     }
 }

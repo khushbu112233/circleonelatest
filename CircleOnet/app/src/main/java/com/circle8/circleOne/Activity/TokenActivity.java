@@ -12,6 +12,7 @@ import android.graphics.Shader;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -51,6 +52,7 @@ public class TokenActivity extends AppCompatActivity implements View.OnClickList
     private TimerState timerState;
     private static final int MAX_TIME = 86410;
     private PopupWindow popupWindow;
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +62,8 @@ public class TokenActivity extends AppCompatActivity implements View.OnClickList
         tokenActivityLayoutBinding.imageRight.setOnClickListener(this);
         tokenActivityLayoutBinding.sliderZoom.setOnSeekBarChangeListener(this);
 
+        tokenActivityLayoutBinding.sliderZoom.setMax(Pref.getValue(TokenActivity.this,"Rewards_Points_Remain",0));
+
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -68,8 +72,8 @@ public class TokenActivity extends AppCompatActivity implements View.OnClickList
         p.setMargins(
                 thumbRect.centerX(),0, 0, 0);
         tokenActivityLayoutBinding.txtSeekValue.setLayoutParams(p);
-        tokenActivityLayoutBinding.txtSeekValue.setText(String.valueOf(tokenActivityLayoutBinding.sliderZoom.getProgress()) + "");
-        tokenActivityLayoutBinding.txt4.setText(String.valueOf(tokenActivityLayoutBinding.sliderZoom.getProgress()) + "");
+        tokenActivityLayoutBinding.txtSeekValue.setText(String.valueOf(Pref.getValue(TokenActivity.this,"Rewards_Points_Remain",0)) + "");
+        tokenActivityLayoutBinding.txt4.setText(String.valueOf(Pref.getValue(TokenActivity.this,"Rewards_Points_Remain",0)) + "");
 
         prefUtils = new PrefUtils(getApplicationContext());
 
@@ -388,8 +392,8 @@ public class TokenActivity extends AppCompatActivity implements View.OnClickList
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
         p.addRule(RelativeLayout.CENTER_VERTICAL, seekBar.getId());
         Rect thumbRect = tokenActivityLayoutBinding.sliderZoom.getSeekBarThumb().getBounds();
-        p.setMargins(
-                thumbRect.centerX(),0, 0, 0);
+
+        p.setMargins(thumbRect.centerX(),0, 0, 0);
         tokenActivityLayoutBinding.txtSeekValue.setLayoutParams(p);
         tokenActivityLayoutBinding.txtSeekValue.setText(String.valueOf(progress) + "");
         tokenActivityLayoutBinding.txt4.setText(String.valueOf(progress) + "");

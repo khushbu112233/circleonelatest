@@ -76,6 +76,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
     int dialogClick=0;
     LoginSession session;
     public static String  UserId= "";
+    ArrayList<String> cardListClickDialog = new ArrayList<>();
     int[] solutionArray = { 1, 2, 3, 4, 5, 6, 7, 8 };
     ArrayList<CardPrize> allCards = new ArrayList<>();
     public static ArrayList<PrizeHistory> prizeHistorys = new ArrayList<>();
@@ -241,10 +242,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
         }.start();
 
 
-        if(dialogClick==2)
-        {
-            Log.e("dialogClick",""+dialogClick);
-        }
+
 
         int int_hours = 1;
 
@@ -1177,7 +1175,8 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 countMaintain(count);
 
                 if(luckyDrawLayoutBinding.easyFlipView1.isBackSide()) {
-
+                    dialogClick++;
+                    cardListClickDialog.add(allCards.get(0).getPrize_ID());
                     dialog(allCards,0);
                 }else {
                     flipView.setClickable(false);
@@ -1197,6 +1196,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
 
                 if(luckyDrawLayoutBinding.easyFlipView2.isBackSide()) {
                     dialogClick++;
+                    cardListClickDialog.add(allCards.get(1).getPrize_ID());
                     dialog(allCards,1);
 
                 }else {
@@ -1217,6 +1217,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
 
                 if(luckyDrawLayoutBinding.easyFlipView3.isBackSide()) {
                     dialogClick++;
+                    cardListClickDialog.add(allCards.get(2).getPrize_ID());
                     dialog(allCards,2);
 
                 }else {
@@ -1236,6 +1237,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 countMaintain(count);
 
                 if(luckyDrawLayoutBinding.easyFlipView4.isBackSide()) {
+                    cardListClickDialog.add(allCards.get(3).getPrize_ID());
                     dialogClick++;
                     dialog(allCards,3);
                 }else {
@@ -1255,6 +1257,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 countMaintain(count);
 
                 if(luckyDrawLayoutBinding.easyFlipView5.isBackSide()) {
+                    cardListClickDialog.add(allCards.get(4).getPrize_ID());
                     dialogClick++;
                     dialog(allCards,4);
 
@@ -1275,6 +1278,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 countMaintain(count);
 
                 if(luckyDrawLayoutBinding.easyFlipView6.isBackSide()) {
+                    cardListClickDialog.add(allCards.get(5).getPrize_ID());
                     dialogClick++;
                     dialog(allCards,5);
 
@@ -1296,6 +1300,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 countMaintain(count);
 
                 if(luckyDrawLayoutBinding.easyFlipView7.isBackSide()) {
+                    cardListClickDialog.add(allCards.get(6).getPrize_ID());
                     dialogClick++;
                     dialog(allCards,6);
 
@@ -1317,6 +1322,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
 
                 if(luckyDrawLayoutBinding.easyFlipView8.isBackSide())
                 {
+                    cardListClickDialog.add(allCards.get(7).getPrize_ID());
                     dialogClick++;
                     dialog(allCards,7);
 
@@ -1375,6 +1381,11 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 scaleDown.addListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
+                        if(dialogClick==2)
+                        {
+                            Log.e("dialogClick",""+dialogClick+"   "+cardListClickDialog);
+                            new HttpAsyncTaskGetPushCards().execute(Utility.BASE_URL+"RewardsGame/Push_Cards");
+                        }
                         dialog.dismiss();
                     }
                     @Override
@@ -1693,7 +1704,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result)
         {
-            Log.e("response",""+result);
+            Log.e("responseCardDetails",""+result);
             dialog.dismiss();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
@@ -1707,7 +1718,8 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 String userid = response.getString("userid");
                 String No_Of_Tokens = response.getString("No_Of_Tokens");
                 String Rewards_Points_Remain = response.getString("Rewards_Points_Remain");
-                luckyDrawLayoutBinding.includePrize.txtTokenCount.setText(Rewards_Points_Remain);
+                luckyDrawLayoutBinding.includePrize.txtTokenCount.setText(210/5+"");
+                Pref.setValue(LuckyDrawActivity.this,"Rewards_Points_Remain",(210/5));
                 luckyDrawLayoutBinding.includePrize.txtRefreshCount.setText(No_Of_Tokens);
                 if(success.equalsIgnoreCase("1")) {
                     JSONArray jsonArray = response.getJSONArray("cards_8");
@@ -1962,7 +1974,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
             }*/
         }
     }
-    private class HttpAsyncTaskprizeHistory extends AsyncTask<String, Void, String>
+    private class HttpAsyncTaskGetPushCards extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
 
@@ -1981,6 +1993,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.accumulate("userid",   UserId);
+                jsonObject.accumulate("Card_ID",cardListClickDialog);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

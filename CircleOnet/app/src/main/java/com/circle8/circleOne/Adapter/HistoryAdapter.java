@@ -17,7 +17,6 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Model.HistoryModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 

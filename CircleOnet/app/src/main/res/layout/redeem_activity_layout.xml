@@ -39,7 +39,7 @@
                 android:layout_height="25dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-               android:layout_centerVertical="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="1dp"
                 android:src="@drawable/ic_dehaze_black_24dp" />
@@ -89,15 +89,29 @@
                                 android:textColor="@color/black"
                                 android:textSize="17dp" />
                         </RelativeLayout>
-
-                        <ImageView
-                            android:layout_width="160dp"
-                            android:layout_height="80dp"
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_below="@+id/fmRibbon"
-                            android:layout_marginTop="-70dp"
-                            android:src="@drawable/ic_coin" />
+                            android:layout_marginTop="-70dp">
 
+                            <ImageView
+                                android:layout_width="160dp"
+                                android:layout_height="80dp"
+                                android:src="@drawable/ic_coin" />
+                            <TextView
+                                android:id="@+id/txtTopi1"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginBottom="3dp"
+                                android:text="0"
+                                android:layout_gravity="center|right"
+                                android:textColor="@color/black"
+                                android:textSize="15sp" />
+
+                        </FrameLayout>
                         <LinearLayout
                             android:layout_width="176dp"
                             android:layout_height="45dp"
@@ -321,6 +335,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginLeft="10dp"
                         android:weightSum="5">
 
                         <LinearLayout
@@ -375,14 +391,33 @@
                                         android:textSize="20sp" />
 
                                 </RelativeLayout>
-
-                                <ImageView
-                                    android:id="@+id/img1"
+                                <FrameLayout
                                     android:layout_width="wrap_content"
-                                    android:layout_height="20dp"
+                                    android:layout_height="wrap_content"
                                     android:layout_gravity="right|bottom"
-                                    android:layout_marginLeft="25dp"
-                                    android:src="@drawable/ic_coin_redeem" />
+                                    android:layout_marginLeft="25dp">
+
+                                    <ImageView
+                                        android:id="@+id/img1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="20dp"
+                                        android:text="0"
+                                        android:src="@drawable/ic_coin_redeem" />
+                                    <TextView
+                                        android:id="@+id/txti1"
+                                        android:layout_width="15dp"
+                                        android:layout_height="10dp"
+                                        android:text="0"
+                                        android:layout_marginTop="3dp"
+                                        android:gravity="center"
+                                        android:layout_gravity="top|right"
+                                        android:textColor="@color/black"
+                                        android:textSize="8sp" />
+
+                                </FrameLayout>
+
+
+
                             </FrameLayout>
 
                             <FrameLayout
