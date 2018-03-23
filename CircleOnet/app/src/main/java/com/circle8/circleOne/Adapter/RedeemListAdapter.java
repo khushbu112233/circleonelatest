@@ -1,10 +1,12 @@
 package com.circle8.circleOne.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.circle8.circleOne.Model.PrizeHistory;
@@ -42,7 +44,7 @@ public class RedeemListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View convertView, ViewGroup viewGroup) {
+    public View getView(final int i, View convertView, ViewGroup viewGroup) {
         View view = convertView ;
         ViewHolder holder = null;
         if( view == null)
@@ -58,6 +60,10 @@ public class RedeemListAdapter extends BaseAdapter {
             holder.txtTop2= (TextView)view.findViewById(R.id.txtTop2);
             holder.txt2= (TextView)view.findViewById(R.id.txt2);
             holder.txt1= (TextView)view.findViewById(R.id.txt1);
+            holder.txt3= (TextView)view.findViewById(R.id.txt3);
+            holder.txtPrizeCount = (TextView)view.findViewById(R.id.txtPrizeCount);
+            holder.llLeft = (LinearLayout)view.findViewById(R.id.llLeft);
+            holder.llRight = (LinearLayout)view.findViewById(R.id.llRight);
             view.setTag(holder);
         }
         else
@@ -74,10 +80,32 @@ public class RedeemListAdapter extends BaseAdapter {
 
         holder.txt2.setText(prizeHistorysAll.get(i).getPrize_Name());
         holder.txt1.setText((i+1)+" Prize");
+        holder.txt3.setText(prizeHistorysAll.get(i).getCard_Name_1()+"+"+prizeHistorysAll.get(i).getCard_Name_2());
+        final Integer str[] = {5,4,3,6,4,5,6,7,5,5,6,5,6,8,9,10,11,5,4,3};
+        holder.txtPrizeCount.setText(str[i]+"");
+        final ViewHolder finalHolder = holder;
+        holder.llLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("posL",""+i);
+                str[i]--;
+                finalHolder.txtPrizeCount.setText(str[i]+"");
+            }
+        });
+
+        holder.llRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("posR",""+i);
+                str[i]++;
+                finalHolder.txtPrizeCount.setText(str[i]+"");
+            }
+        });
         return view;
     }
     static class ViewHolder
     {
-        TextView txtL1,txtL2,txtBottom1,txtBottom2,txtTop1,txtTop2,txt2,txt1;
+        TextView txtL1,txtL2,txtBottom1,txtBottom2,txtTop1,txtTop2,txt2,txt1,txt3,txtPrizeCount;
+        LinearLayout llLeft,llRight;
     }
 }

@@ -9,12 +9,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Model.PrizeHistory;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+
 import java.util.ArrayList;
 
 /**
