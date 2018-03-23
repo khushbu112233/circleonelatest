@@ -11,27 +11,31 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Toast;
 
-import com.circle8.circleOne.Common.KeyboardUtils;
-import com.circle8.circleOne.Common.listeners.SearchListener;
-import com.circle8.circleOne.Common.listeners.UserOperationListener;
-import com.circle8.circleOne.Common.listeners.simple.SimpleOnRecycleItemClickListener;
 import com.circle8.circleOne.Fragments.SortFragment;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.chat.AttachmentPreviewAdapter;
+import com.circle8.circleOne.ui.activities.main.MainActivity;
 import com.circle8.circleOne.ui.activities.profile.UserProfileActivity;
 import com.circle8.circleOne.ui.adapters.search.GlobalSearchAdapter;
 import com.circle8.circleOne.ui.fragments.base.BaseFragment;
 import com.circle8.circleOne.ui.fragments.dialogs.base.OneButtonDialogFragment;
 import com.circle8.circleOne.ui.views.recyclerview.SimpleDividerItemDecoration;
+import com.circle8.circleOne.Common.KeyboardUtils;
+import com.circle8.circleOne.Common.listeners.SearchListener;
+import com.circle8.circleOne.Common.listeners.UserOperationListener;
+import com.circle8.circleOne.Common.listeners.simple.SimpleOnRecycleItemClickListener;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.quickblox.core.request.QBPagedRequestBuilder;
 import com.quickblox.q_municate_core.core.command.Command;
 import com.quickblox.q_municate_core.models.AppSession;
+import com.quickblox.q_municate_core.models.DialogWrapper;
 import com.quickblox.q_municate_core.qb.commands.friend.QBAddFriendCommand;
 import com.quickblox.q_municate_core.service.QBService;
 import com.quickblox.q_municate_core.service.QBServiceConsts;
@@ -307,16 +311,20 @@ public class GlobalSearchFragment extends BaseFragment implements SearchListener
 
                         @Override
                         public void onNext(List<QMUser> qbUsers) {
-
                             if (qbUsers != null && !qbUsers.isEmpty()) {
                                 checkForExcludeMe(qbUsers);
-
-                                for (int i = 0; i< allTaggs.size(); i++){
+                                /*for (int i = 0; i< allTaggs.size(); i++){
                                     if (allTaggs.get(i).getQ_ID().toString().equalsIgnoreCase(qbUsers.get(i).getId().toString())){
                                         usersList.add(qbUsers.get(i));
                                     }
-                                }
+                                }*/
 
+                                for (int i = 0; i < qbUsers.size(); i++){
+                                            if (MainActivity.friend_occupantids.contains(qbUsers.get(i).getId())) {
+                                                //dialogWrappers.add(new DialogWrapper(getContext(), dataManager, chatDialogs.get(i)));
+                                                usersList.add(qbUsers.get(i));
+                                            }
+                                }
 
                                 updateContactsList(usersList);
                             }

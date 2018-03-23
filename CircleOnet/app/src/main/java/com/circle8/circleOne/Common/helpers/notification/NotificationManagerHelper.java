@@ -25,7 +25,7 @@ public class NotificationManagerHelper {
 
     public final static int NOTIFICATION_ID = NotificationManagerHelper.class.hashCode();
     private static final String TAG = NotificationManagerHelper.class.getSimpleName();
-    private static final String CHANNEL_ONE_ID = "com.quickblox.circleOne.ONE";// The id of the channel.
+    private static final String CHANNEL_ONE_ID = "com.circle8.circleOne.ONE";// The id of the channel.
     private static final String CHANNEL_ONE_NAME = "Notifications";
 
     public static void sendChatNotificationEvent(Context context, int userId, String dialogId,

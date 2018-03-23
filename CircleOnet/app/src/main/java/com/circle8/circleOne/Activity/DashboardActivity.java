@@ -50,6 +50,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.circle8.circleOne.Common.helpers.FacebookHelper;
+import com.circle8.circleOne.Common.helpers.FirebaseAuthHelper;
+import com.circle8.circleOne.Common.helpers.ServiceManager;
 import com.circle8.circleOne.Fragments.CardsFragment;
 import com.circle8.circleOne.Fragments.ConnectFragment;
 import com.circle8.circleOne.Fragments.DashboardFragment;
@@ -68,6 +71,7 @@ import com.circle8.circleOne.chat.ChatHelper;
 import com.circle8.circleOne.chat.qb.QbDialogHolder;
 import com.circle8.circleOne.databinding.ActivityDashboardBinding;
 import com.circle8.circleOne.ui.activities.authorization.*;
+import com.circle8.circleOne.ui.activities.settings.SettingsActivity;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -90,6 +94,7 @@ import com.google.android.gms.plus.Plus;
 import com.google.firebase.auth.FirebaseAuth;
 import com.linkedin.platform.LISessionManager;
 import com.quickblox.messages.services.SubscribeService;
+import com.quickblox.q_municate_db.utils.ErrorUtils;
 import com.quickblox.sample.core.utils.SharedPrefsHelper;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.twitter.sdk.android.Twitter;
@@ -104,6 +109,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
+
+import rx.Subscriber;
 
 import static com.circle8.circleOne.Activity.CardsActivity.Connection_Limit;
 import static com.circle8.circleOne.Activity.CardsActivity.MIME_TEXT;
@@ -150,6 +157,10 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
     private String refer;
     boolean doubleBackToExitPressedOnce = false;
     ReferralCodeSession referralCodeSession;
+
+    private FacebookHelper facebookHelper;
+    private FirebaseAuthHelper firebaseAuthHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -180,7 +191,8 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         //  getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_logo_white);
         getSupportActionBar().setHomeAsUpIndicator(null);
-
+        facebookHelper = new FacebookHelper(this);
+        firebaseAuthHelper = new FirebaseAuthHelper();
         //  toggle.setHomeAsUpIndicator(R.id.icon);//add this for custom icon
         fragment = new DashboardFragment();
         Pref.setValue(DashboardActivity.this, "current_frag", "1");
@@ -375,6 +387,29 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                         // session.logoutUser();
                     } catch (Exception e) {
                     }
+
+                    facebookHelper.logout();
+                    firebaseAuthHelper.logout();
+
+                    ServiceManager.getInstance().logout(new Subscriber<Void>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            ErrorUtils.showError(DashboardActivity.this, e);
+                            //hideProgress();
+                        }
+
+                        @Override
+                        public void onNext(Void aVoid) {
+                            setResult(RESULT_OK);
+                          //  hideProgress();
+                          //  finish();
+                        }
+                    });
 
                     LISessionManager.getInstance(getApplicationContext()).clearSession();
                     navigationView.getMenu().getItem(13).setCheckable(false);

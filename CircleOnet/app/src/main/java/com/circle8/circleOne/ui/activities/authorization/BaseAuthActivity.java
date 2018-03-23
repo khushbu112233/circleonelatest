@@ -189,8 +189,8 @@ public abstract class BaseAuthActivity extends BaseActivity {
     }
 
     protected void startMainActivity() {
-        MainActivity.start(BaseAuthActivity.this);
-        finish();
+        //MainActivity.start(BaseAuthActivity.this);
+        //finish();
     }
 
     protected void login(String userEmail, final String userPassword) {
