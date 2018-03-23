@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.RedeemListAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
+import com.circle8.circleOne.Interface.ClickOfRedeem;
 import com.circle8.circleOne.Model.PrizeHistory;
 import com.circle8.circleOne.Model.PushCardsDetail;
 import com.circle8.circleOne.PrefUtils;
@@ -70,16 +71,19 @@ public class RedeemActivity extends AppCompatActivity {
     private TimerState timerState;
     LoginSession session;
     private static final int MAX_TIME = 86410;
+    ArrayList<String> prizeId = new ArrayList<>();
     ArrayList<PushCardsDetail> pushCardDetailList = new ArrayList<>();
     public static ArrayList<PrizeHistory> prizeHistorysAll = new ArrayList<>();
     public static String  UserId= "";
+    ClickOfRedeem clickOfRedeem;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         redeemActivityLayoutBinding = DataBindingUtil.setContentView(this, R.layout.redeem_activity_layout);
-        new HttpAsyncTaskprizeHistoryAll().execute(Utility.BASE_URL + "RewardsGame/PrizeHistory_All");
+        new HttpAsyncTaskprizeHistoryAll().execute(Utility.BASE_URL + "RewardsGame/PrizeHistory");
         redeemListAdapter = new RedeemListAdapter(RedeemActivity.this, prizeHistorysAll);
+        redeemListAdapter.onItemclickRedeem(clickOfRedeem);
         redeemActivityLayoutBinding.lstRedeem.setAdapter(redeemListAdapter);
         final Animation slide_down = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.slide_down);
@@ -100,10 +104,28 @@ public class RedeemActivity extends AppCompatActivity {
         LinearGradient lin_grad0 = new LinearGradient(0, 0, 0, 200, color, position, tile_mode0);
         Shader shader_gradient0 = lin_grad0;
         txt1.getPaint().setShader(shader_gradient0);
+
+
+
+        clickOfRedeem = new ClickOfRedeem() {
+
+            @Override
+            public void OnClickRedeem(String str) {
+                if(!prizeId.contains(str)) {
+                    prizeId.add(str);
+                }
+            }
+        };
         redeemActivityLayoutBinding.imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        redeemActivityLayoutBinding.txtRedeem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new HttpAsyncTaskRedeem().execute();
             }
         });
         redeemActivityLayoutBinding.txtDay2.getPaint().setShader(shader_gradient0);
@@ -367,7 +389,59 @@ public class RedeemActivity extends AppCompatActivity {
 
         return popupWindow;
     }
+    private class HttpAsyncTaskRedeem extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
 
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(RedeemActivity.this);
+            dialog.setMessage("Fetching event...");
+            dialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("userid",   UserId);
+                jsonObject.accumulate("Prize_ID",prizeId);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return Utility.POST2(urls[0],jsonObject);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.e("response_prize_All", "" + result);
+            dialog.dismiss();
+//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+            new HttpAsyncTaskGetPushCard().execute(Utility.BASE_URL + "RewardsGame/GetPushedCards");
+            try {
+                JSONObject response = new JSONObject(result);
+
+                JSONArray jsonArray = response.getJSONArray("prize_details");
+                prizeHistorysAll.clear();
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject iCon = jsonArray.getJSONObject(i);
+                    PrizeHistory prizeHistoryModel = new PrizeHistory();
+
+                    //prizeHistoryModel.setUserId(iCon.getString("userid"));
+                    prizeHistoryModel.setPrize_ID(iCon.getString("Prize_ID"));
+                    prizeHistoryModel.setPrize_Name(iCon.getString("Prize_Name"));
+                    prizeHistoryModel.setPrize_Image(iCon.getString("Prize_Image"));
+                    prizeHistoryModel.setCard_Name_1(iCon.getString("Card_Name_1"));
+                    prizeHistoryModel.setCard_Name_2(iCon.getString("Card_Name_2"));
+                    prizeHistorysAll.add(prizeHistoryModel);
+
+                }
+                redeemListAdapter.notifyDataSetChanged();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     private class HttpAsyncTaskprizeHistoryAll extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
@@ -382,8 +456,12 @@ public class RedeemActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... urls) {
             JSONObject jsonObject = new JSONObject();
-
-            return Utility.GET(urls[0]);
+            try {
+                jsonObject.accumulate("userid",   UserId);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return Utility.POST2(urls[0],jsonObject);
         }
 
         @Override
@@ -459,7 +537,7 @@ public class RedeemActivity extends AppCompatActivity {
                     pushCardDetailList.add(pushCardModel);
 
                 }
-               setCardValue();
+                setCardValue();
             } catch (JSONException e) {
                 e.printStackTrace();
             }

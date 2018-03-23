@@ -46,6 +46,7 @@
         </RelativeLayout>
         <ScrollView
             android:layout_below="@+id/rltTop"
+            android:layout_above="@+id/lnrBottom"
             android:id="@+id/sc1"
             android:scrollbars="vertical"
             android:layout_width="match_parent"
@@ -362,7 +363,7 @@
                                     <ImageView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:src="@drawable/ic_gold_bg"
+                                        android:src="@drawable/ic_card_with_black_and_blue"
                                         />
                                 </RelativeLayout>
 
@@ -430,7 +431,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_gold_bg" />
+                                    android:src="@drawable/ic_card_with_black_and_blue" />
 
                                 <TextView
                                     android:id="@+id/txtTop2"
@@ -478,7 +479,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_gold_bg" />
+                                    android:src="@drawable/ic_card_with_black_and_blue" />
 
                                 <TextView
                                     android:id="@+id/txtTop3"
@@ -526,7 +527,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_gold_bg" />
+                                    android:src="@drawable/ic_card_with_black_and_blue" />
 
                                 <TextView
                                     android:id="@+id/txtTop4"
@@ -574,7 +575,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_gold_bg" />
+                                    android:src="@drawable/ic_card_with_black_and_blue" />
 
                                 <TextView
                                     android:id="@+id/txtTop5"
@@ -636,7 +637,7 @@
                                     <ImageView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:src="@drawable/ic_gold_bg" />
+                                        android:src="@drawable/ic_card_with_black_and_blue" />
                                 </RelativeLayout>
 
                                 <TextView
@@ -685,7 +686,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_gold_bg" />
+                                    android:src="@drawable/ic_card_with_black_and_blue" />
 
                                 <TextView
                                     android:id="@+id/txtTop7"
@@ -733,7 +734,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_gold_bg" />
+                                    android:src="@drawable/ic_card_with_black_and_blue" />
 
                                 <TextView
                                     android:id="@+id/txtTop8"
@@ -781,7 +782,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_gold_bg" />
+                                    android:src="@drawable/ic_card_with_black_and_blue" />
 
                                 <TextView
                                     android:id="@+id/txtTop9"
@@ -829,7 +830,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_gold_bg" />
+                                    android:src="@drawable/ic_card_with_black_and_blue" />
 
                                 <TextView
                                     android:id="@+id/txtTop10"
@@ -892,7 +893,7 @@
                                     <ImageView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:src="@drawable/ic_gold_bg" />
+                                        android:src="@drawable/ic_card_with_black_and_blue" />
                                 </RelativeLayout>
 
                                 <TextView
@@ -941,7 +942,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_gold_bg" />
+                                    android:src="@drawable/ic_card_with_black_and_blue" />
 
                                 <TextView
                                     android:id="@+id/txtTop12"
@@ -989,7 +990,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_gold_bg" />
+                                    android:src="@drawable/ic_card_with_black_and_blue" />
 
                                 <TextView
                                     android:id="@+id/txtTop13"
@@ -1037,7 +1038,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_gold_bg" />
+                                    android:src="@drawable/ic_card_with_black_and_blue" />
 
                                 <TextView
                                     android:id="@+id/txtTop14"
@@ -1085,7 +1086,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_gold_bg" />
+                                    android:src="@drawable/ic_card_with_black_and_blue" />
 
                                 <TextView
                                     android:id="@+id/txtTop15"
@@ -1148,7 +1149,7 @@
                                     <ImageView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:src="@drawable/ic_gold_bg" />
+                                        android:src="@drawable/ic_card_with_black_and_blue" />
                                 </RelativeLayout>
 
                                 <TextView
@@ -1197,7 +1198,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_gold_bg" />
+                                    android:src="@drawable/ic_card_with_black_and_blue" />
 
                                 <TextView
                                     android:id="@+id/txtTop17"
@@ -1245,7 +1246,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_gold_bg" />
+                                    android:src="@drawable/ic_card_with_black_and_blue" />
 
                                 <TextView
                                     android:id="@+id/txtTop18"
@@ -1293,7 +1294,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_gold_bg" />
+                                    android:src="@drawable/ic_card_with_black_and_blue" />
 
                                 <TextView
                                     android:id="@+id/txtTop19"
@@ -1341,7 +1342,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_gold_bg" />
+                                    android:src="@drawable/ic_card_with_black_and_blue" />
 
                                 <TextView
                                     android:id="@+id/txtTop20"
@@ -1405,7 +1406,7 @@
                                     <ImageView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:src="@drawable/ic_gold_bg" />
+                                        android:src="@drawable/ic_card_with_black_and_blue" />
                                 </RelativeLayout>
 
                                 <TextView
@@ -1454,7 +1455,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_gold_bg" />
+                                    android:src="@drawable/ic_card_with_black_and_blue" />
 
                                 <TextView
                                     android:id="@+id/txtTop22"
@@ -1502,7 +1503,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_gold_bg" />
+                                    android:src="@drawable/ic_card_with_black_and_blue" />
 
                                 <TextView
                                     android:id="@+id/txtTop23"
@@ -1550,7 +1551,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_gold_bg" />
+                                    android:src="@drawable/ic_card_with_black_and_blue" />
 
                                 <TextView
                                     android:id="@+id/txtTop24"
@@ -1598,7 +1599,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_gold_bg" />
+                                    android:src="@drawable/ic_card_with_black_and_blue" />
 
                                 <TextView
                                     android:id="@+id/txtTop25"
@@ -1638,27 +1639,6 @@
 
                         </LinearLayout>
 
-                        <RelativeLayout
-                            android:id="@+id/lnrBottom"
-                            android:layout_alignParentBottom="true"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/gradient_lucky_draw">
-                            <TextView
-                                android:id="@+id/txtDesc"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:text="Terms &amp; Condition"
-                                android:maxLines="5"
-                                android:textColor="@color/white"
-                                android:gravity="center"
-                                android:layout_toLeftOf="@+id/imgRight"
-                                android:layout_toRightOf="@+id/imgLeft"
-                                android:textSize="10sp"
-                                />
-
-                        </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
@@ -1678,5 +1658,43 @@
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
+
+        <RelativeLayout
+            android:id="@+id/lnrBottom"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradient_lucky_draw">
+
+            <TextView
+                android:id="@+id/txtRedeem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Redeem"
+                android:maxLines="5"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_toLeftOf="@+id/imgRight"
+                android:layout_toRightOf="@+id/imgLeft"
+                android:textSize="10sp"
+                />
+
+            <TextView
+                android:id="@+id/txtDesc"
+                android:layout_below="@+id/txtRedeem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="The picture is for reference only.\n Please be subject to the actual products."
+                android:maxLines="5"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_toLeftOf="@+id/imgRight"
+                android:layout_toRightOf="@+id/imgLeft"
+                android:textSize="10sp"
+                />
+
+        </RelativeLayout>
     </RelativeLayout>
 </layout>

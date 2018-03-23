@@ -253,6 +253,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
+            android:name=".Activity.PrizeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionbar" />
+        <activity
             android:name=".Activity.WriteTestimonialActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />

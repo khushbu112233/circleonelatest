@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.circle8.circleOne.Interface.ClickOfRedeem;
 import com.circle8.circleOne.Model.PrizeHistory;
 import com.circle8.circleOne.R;
 
@@ -22,7 +23,10 @@ public class RedeemListAdapter extends BaseAdapter {
     Context context;
     private static LayoutInflater inflater = null;
     ArrayList<PrizeHistory> prizeHistorysAll;
-
+    ClickOfRedeem clickOfRedeem;
+    public void onItemclickRedeem(ClickOfRedeem clickOfRedeem) {
+        this.clickOfRedeem = clickOfRedeem;
+    }
     public RedeemListAdapter(Context context, ArrayList<PrizeHistory> prizeHistorysAll)
     {
         this.context=context;
@@ -90,6 +94,8 @@ public class RedeemListAdapter extends BaseAdapter {
                 Log.e("posL",""+i);
                 str[i]--;
                 finalHolder.txtPrizeCount.setText(str[i]+"");
+                clickOfRedeem.OnClickRedeem(prizeHistorysAll.get(i).getPrize_ID());
+
             }
         });
 
@@ -99,6 +105,7 @@ public class RedeemListAdapter extends BaseAdapter {
                 Log.e("posR",""+i);
                 str[i]++;
                 finalHolder.txtPrizeCount.setText(str[i]+"");
+                clickOfRedeem.OnClickRedeem(prizeHistorysAll.get(i).getPrize_ID());
             }
         });
         return view;

@@ -79,7 +79,6 @@ public class LuckyDrawActivity extends AppCompatActivity {
     ArrayList<String> cardListClickDialog = new ArrayList<>();
     int[] solutionArray = { 1, 2, 3, 4, 5, 6, 7, 8 };
     ArrayList<CardPrize> allCards = new ArrayList<>();
-    public static ArrayList<PrizeHistory> prizeHistorys = new ArrayList<>();
 
     int id = 0;
     ArrayList<Integer> prizeIdList= new ArrayList<>();
@@ -287,8 +286,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
         luckyDrawLayoutBinding.includePrize.rtlprize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Pref.setValue(LuckyDrawActivity.this,"History","1");
-                Intent i = new Intent(LuckyDrawActivity.this,PrizeHistoryActivity.class);
+                Intent i = new Intent(LuckyDrawActivity.this,PrizeActivity.class);
                 startActivity(i);
 
             }
@@ -1346,9 +1344,13 @@ public class LuckyDrawActivity extends AppCompatActivity {
         TextView txtValue = (TextView)dialog.findViewById(R.id.txtValue);
         final ImageView imgCenter = (ImageView)dialog.findViewById(R.id.imgCenter);
         TextView txtpoint = (TextView)dialog.findViewById(R.id.txtpoint);
+        TextView txtTop =  (TextView)dialog.findViewById(R.id.txtTop);
+        TextView txtBottom =  (TextView)dialog.findViewById(R.id.txtBottom);
         bmImage.setImageResource(R.drawable.ic_gold_bg);
         txtValue.setVisibility(View.GONE);
         txtpoint.setText(strlist.get(pos).getPrize_Name());
+        txtTop.setText(strlist.get(pos).getPrize_Name());
+        txtBottom.setText(strlist.get(pos).getPrize_Name());
         Glide.with(LuckyDrawActivity.this).load(Utility.BASE_IMAGE_URL+"GamePrizes/" + strlist.get(pos).getPrize_Image())
                 .asBitmap()
                 .into(new BitmapImageViewTarget(imgCenter) {
@@ -1358,7 +1360,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                         imgCenter.setImageBitmap(drawable);
                     }
                 });
-        final ImageView button=(ImageView)dialog.findViewById(R.id.btn_dissmiss);
+        final ImageView button=(ImageView)dialog.findViewById(R.id.imgClose);
         dialog.setCancelable(true);
         dialog.show();
         //  animationShrink = AnimationUtils.loadAnimation(this, R.anim.animation);
@@ -2014,7 +2016,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                 String message = response.getString("message");
                 String success = response.getString("success");
                 String userid = response.getString("userid");
-                if(success.equalsIgnoreCase("1")) {
+                /*if(success.equalsIgnoreCase("1")) {
                     JSONArray jsonArray = response.getJSONArray("prize_details");
                     prizeHistorys.clear();
                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -2030,7 +2032,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
                     }
 
 
-                }
+                }*/
             }
             catch (JSONException e)
             {

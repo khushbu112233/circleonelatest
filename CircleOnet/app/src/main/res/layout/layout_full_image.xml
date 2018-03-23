@@ -1,65 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="350dp"
-    android:layout_height="500dp"
-    android:orientation="vertical">
+    android:layout_width="250dp"
+    android:layout_height="400dp"
+    android:orientation="vertical"
+    android:background="@color/transparent"
+    >
     <FrameLayout
-        android:id="@+id/frame_card"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:layout_marginLeft="5dp">
-        <com.circle8.circleOne.Utils.TouchImageView
-            android:id="@+id/img_receipt"
+        android:layout_width="230dp"
+        android:layout_height="380dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+        <FrameLayout
+            android:id="@+id/frame_card"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_gold_bg"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/txtValue"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:visibility="invisible"
-                android:text="10"
-                android:textSize="20sp"
+            >
+            <com.circle8.circleOne.Utils.TouchImageView
+                android:id="@+id/img_receipt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:textColor="@color/black"/>
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_card_with_black_and_blue"/>
 
-            <ImageView
-                android:id="@+id/imgCenter"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_logo_white"/>
-            <TextView
-                android:id="@+id/txtpoint"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="CirclOne Points"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:textSize="11sp"
-                android:layout_gravity="center"/>
-        </LinearLayout>
+                android:layout_gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/txtValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:visibility="invisible"
+                    android:text="10"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"/>
+
+                <ImageView
+                    android:id="@+id/imgCenter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_logo_white"/>
+                <TextView
+                    android:id="@+id/txtpoint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CirclOne Points"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:textSize="11sp"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/txtTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:text="A"
+            android:textColor="@color/black"
+            android:textSize="31sp" />
+        <TextView
+            android:id="@+id/txtBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
+            android:text="A"
+            android:rotation="180"
+            android:textColor="@color/black"
+            android:textSize="31sp" />
 
     </FrameLayout>
-
     <ImageView
-        android:id="@+id/btn_dissmiss"
-        android:layout_margin="5dp"
-        android:src="@drawable/ic_close"
+        android:id="@+id/imgClose"
         android:layout_width="wrap_content"
-        android:layout_gravity="left"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"
+        android:layout_gravity="top|right"
+        android:src="@drawable/ic_close_transparent"/>
+
 </FrameLayout>

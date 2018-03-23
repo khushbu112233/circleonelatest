@@ -1,5 +1,6 @@
 package com.circle8.circleOne.Activity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,10 +12,10 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -102,8 +103,29 @@ public class RewardsPointsActivity extends Fragment implements View.OnClickListe
         activityRewardsPointsBinding.imgLuckyDraw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                popupWindow = popupWindowsort();
-                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                final Dialog dialog = new Dialog(getActivity());
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(false);
+
+                dialog.setContentView(R.layout.start_dialog_layout);
+
+
+                TextView dialogButton = (TextView) dialog.findViewById(R.id.txtStart);
+                dialogButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+
+                        Intent i =new Intent(getActivity(),LuckyDrawActivity.class);
+                        startActivity(i);
+
+                    }
+                });
+
+                dialog.show();
+
+                // popupWindow = popupWindowsort();
+                //popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
             }
         });
@@ -141,7 +163,7 @@ public class RewardsPointsActivity extends Fragment implements View.OnClickListe
 
         popupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
         // popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.white));
-        popupWindow.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
+        popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
 
         // set the listview as popup content
 

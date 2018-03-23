@@ -8,13 +8,11 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
-import android.graphics.Rect;
 import android.graphics.Shader;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -24,85 +22,64 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.circle8.circleOne.Adapter.PrizeAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
+import com.circle8.circleOne.Model.Prize;
 import com.circle8.circleOne.PrefUtils;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.TimeReceiver;
 import com.circle8.circleOne.Utils.Timer_Service;
 import com.circle8.circleOne.Utils.Utility;
-import com.circle8.circleOne.databinding.TokenActivityLayoutBinding;
+import com.circle8.circleOne.databinding.PrizeMainLayoutBinding;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by ample-arch on 2/23/2018.
+ * Created by ample-arch on 3/22/2018.
  */
 
-public class TokenActivity extends AppCompatActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
-    TokenActivityLayoutBinding tokenActivityLayoutBinding;
-    String date_time;
-    Calendar calendar;
-    SimpleDateFormat simpleDateFormat;
-    // EditText et_hours;
+public class PrizeActivity extends AppCompatActivity {
+    PrizeMainLayoutBinding prizeMainLayoutBinding;
+    PrizeAdapter prizeAdapter;
     public static String  UserId= "";
     LoginSession session;
+    ArrayList<Prize> prizeList = new ArrayList<>();
+
+    String date_time;
+    Calendar calendar;
+    private static final int MAX_TIME = 86410;
+    SimpleDateFormat simpleDateFormat;
+    // EditText et_hours;
     private PrefUtils prefUtils;
     private CountDownTimer countDownTimer;
     private int timeToStart;
     private TimerState timerState;
-    private static final int MAX_TIME = 86410;
     private PopupWindow popupWindow;
-    String progress_change;
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tokenActivityLayoutBinding = DataBindingUtil.setContentView(this,R.layout.token_activity_layout);
+        prizeMainLayoutBinding = DataBindingUtil.setContentView(this, R.layout.prize_main_layout);
+        prizeAdapter = new PrizeAdapter(PrizeActivity.this,prizeList);
+        prizeMainLayoutBinding.lstPrize.setAdapter(prizeAdapter);
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         UserId = user.get(LoginSession.KEY_USERID);
-
-        tokenActivityLayoutBinding.imageLeft.setOnClickListener(this);
-        tokenActivityLayoutBinding.imageRight.setOnClickListener(this);
-        tokenActivityLayoutBinding.sliderZoom.setOnSeekBarChangeListener(this);
-
-        tokenActivityLayoutBinding.sliderZoom.setMax(Pref.getValue(TokenActivity.this,"Rewards_Points_Remain",0));
-
-        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
-        p.addRule(RelativeLayout.CENTER_VERTICAL, tokenActivityLayoutBinding.sliderZoom.getId());
-        Rect thumbRect = tokenActivityLayoutBinding.sliderZoom.getSeekBarThumb().getBounds();
-        if(Pref.getValue(TokenActivity.this,"Rewards_Points_Remain",0)<10)
-        {
-            p.setMargins(thumbRect.centerX() + 20, 0, 0, 0);
-        }else {
-            p.setMargins(thumbRect.centerX() + 10, 0, 0, 0);
-        }
-        tokenActivityLayoutBinding.txtSeekValue.setLayoutParams(p);
-        tokenActivityLayoutBinding.txtSeekValue.setText(String.valueOf(Pref.getValue(TokenActivity.this,"Rewards_Points_Remain",0)) + "");
-        tokenActivityLayoutBinding.txt4.setText(String.valueOf(Pref.getValue(TokenActivity.this,"Rewards_Points_Remain",0)) + "");
-
         prefUtils = new PrefUtils(getApplicationContext());
-        tokenActivityLayoutBinding.imgPrize.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new HttpAsyncTaskprizeHistoryAll().execute(Utility.BASE_URL + "RewardsGame/RewardsPointsToToken");
-            }
-        });
 
-
+        new HttpAsyncTaskprizeHistory().execute(Utility.BASE_URL + "RewardsGame/PrizeDistribution");
         TextView txt1 = (TextView) findViewById(R.id.txtDay1);
         int[] color = {Color.parseColor("#dfc977"), Color.parseColor("#ffffff")};
         float[] position = {0, 1};
@@ -110,19 +87,28 @@ public class TokenActivity extends AppCompatActivity implements View.OnClickList
         LinearGradient lin_grad0 = new LinearGradient(0, 0, 0, 200, color, position, tile_mode0);
         Shader shader_gradient0 = lin_grad0;
         txt1.getPaint().setShader(shader_gradient0);
-        tokenActivityLayoutBinding.txtDay2.getPaint().setShader(shader_gradient0);
-        tokenActivityLayoutBinding.txtHour1.getPaint().setShader(shader_gradient0);
-        tokenActivityLayoutBinding.txtHour2.getPaint().setShader(shader_gradient0);
-        tokenActivityLayoutBinding.txtMinute1.getPaint().setShader(shader_gradient0);
-        tokenActivityLayoutBinding.txtMinute2.getPaint().setShader(shader_gradient0);
-        tokenActivityLayoutBinding.txtSecond1.getPaint().setShader(shader_gradient0);
-        tokenActivityLayoutBinding.txtSecond2.getPaint().setShader(shader_gradient0);
-        tokenActivityLayoutBinding.imgBack.setOnClickListener(new View.OnClickListener() {
+        prizeMainLayoutBinding.imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+
+        prizeMainLayoutBinding.imgrightDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow = popupWindowsort();
+                popupWindow.showAtLocation(view, Gravity.TOP | Gravity.RIGHT, 0, 0);
+
+            }
+        });
+        prizeMainLayoutBinding.txtDay2.getPaint().setShader(shader_gradient0);
+        prizeMainLayoutBinding.txtHour1.getPaint().setShader(shader_gradient0);
+        prizeMainLayoutBinding.txtHour2.getPaint().setShader(shader_gradient0);
+        prizeMainLayoutBinding.txtMinute1.getPaint().setShader(shader_gradient0);
+        prizeMainLayoutBinding.txtMinute2.getPaint().setShader(shader_gradient0);
+        prizeMainLayoutBinding.txtSecond1.getPaint().setShader(shader_gradient0);
+        prizeMainLayoutBinding.txtSecond2.getPaint().setShader(shader_gradient0);
 
         if (timerState == TimerState.STOPPED) {
             prefUtils.setStartedTime((int) getNow());
@@ -133,7 +119,7 @@ public class TokenActivity extends AppCompatActivity implements View.OnClickList
 
         int int_hours = 1;
 
-        if (int_hours<=24) {
+        if (int_hours <= 24) {
 
 
             //et_hours.setEnabled(false);
@@ -146,24 +132,16 @@ public class TokenActivity extends AppCompatActivity implements View.OnClickList
 
             Intent intent_service = new Intent(getApplicationContext(), Timer_Service.class);
             startService(intent_service);
-        }else {
-            Toast.makeText(getApplicationContext(),"Please select the value below 24 hours",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Please select the value below 24 hours", Toast.LENGTH_SHORT).show();
         }
 
-        tokenActivityLayoutBinding.imgrightDrawer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                popupWindow = popupWindowsort();
-                popupWindow.showAtLocation(view, Gravity.TOP | Gravity.RIGHT, 0, 0);
-
-            }
-        });
     }
 
     private PopupWindow popupWindowsort() {
 
         // initialize a pop up window type
-        popupWindow = new PopupWindow(TokenActivity.this);
+        popupWindow = new PopupWindow(PrizeActivity.this);
 
         LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -193,8 +171,8 @@ public class TokenActivity extends AppCompatActivity implements View.OnClickList
         rltHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Pref.setValue(TokenActivity.this,"History","2");
-                Intent i = new Intent(TokenActivity.this,PrizeHistoryActivity.class);
+                Pref.setValue(PrizeActivity.this, "History", "2");
+                Intent i = new Intent(PrizeActivity.this, PrizeHistoryActivity.class);
                 startActivity(i);
             }
         });
@@ -211,7 +189,6 @@ public class TokenActivity extends AppCompatActivity implements View.OnClickList
 
         return popupWindow;
     }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -278,60 +255,60 @@ public class TokenActivity extends AppCompatActivity implements View.OnClickList
 
 
         int days = (int) TimeUnit.SECONDS.toDays(timeToStart);
-        long hours = TimeUnit.SECONDS.toHours(timeToStart) - (days *24);
-        long minute = TimeUnit.SECONDS.toMinutes(timeToStart) - (TimeUnit.SECONDS.toHours(timeToStart)* 60);
-        long second = TimeUnit.SECONDS.toSeconds(timeToStart) - (TimeUnit.SECONDS.toMinutes(timeToStart) *60);
+        long hours = TimeUnit.SECONDS.toHours(timeToStart) - (days * 24);
+        long minute = TimeUnit.SECONDS.toMinutes(timeToStart) - (TimeUnit.SECONDS.toHours(timeToStart) * 60);
+        long second = TimeUnit.SECONDS.toSeconds(timeToStart) - (TimeUnit.SECONDS.toMinutes(timeToStart) * 60);
 
         //timerText.setText(String.valueOf(day+ ":" + hours + ":" + minute + ":" + second));
         String day = String.valueOf(days);
-        String hour = hours +"";
-        String min = minute +"";
-        String sec = second +"";
+        String hour = hours + "";
+        String min = minute + "";
+        String sec = second + "";
         try {
             if (day.length() >= 2) {
-                tokenActivityLayoutBinding.txtDay1.setText(day.substring(0, 1));
-                tokenActivityLayoutBinding.txtDay2.setText(day.substring(1, 2));
+                prizeMainLayoutBinding.txtDay1.setText(day.substring(0, 1));
+                prizeMainLayoutBinding.txtDay2.setText(day.substring(1, 2));
             } else {
-                tokenActivityLayoutBinding.txtDay1.setText("0");
-                tokenActivityLayoutBinding.txtDay2.setText(day);
+                prizeMainLayoutBinding.txtDay1.setText("0");
+                prizeMainLayoutBinding.txtDay2.setText(day);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
         try {
             if (hour.length() >= 2) {
-                tokenActivityLayoutBinding.txtHour1.setText(hour.substring(0, 1));
-                tokenActivityLayoutBinding.txtHour2.setText(hour.substring(1, 2));
+                prizeMainLayoutBinding.txtHour1.setText(hour.substring(0, 1));
+                prizeMainLayoutBinding.txtHour2.setText(hour.substring(1, 2));
             } else {
-                tokenActivityLayoutBinding.txtHour1.setText("0");
-                tokenActivityLayoutBinding.txtHour2.setText(hour);
+                prizeMainLayoutBinding.txtHour1.setText("0");
+                prizeMainLayoutBinding.txtHour2.setText(hour);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
         try {
             if (min.length() >= 2) {
-                tokenActivityLayoutBinding.txtMinute1.setText(min.substring(0, 1));
-                tokenActivityLayoutBinding.txtMinute2.setText(min.substring(1, 2));
+                prizeMainLayoutBinding.txtMinute1.setText(min.substring(0, 1));
+                prizeMainLayoutBinding.txtMinute2.setText(min.substring(1, 2));
             } else {
-                tokenActivityLayoutBinding.txtMinute1.setText("0");
-                tokenActivityLayoutBinding.txtMinute2.setText(min);
+                prizeMainLayoutBinding.txtMinute1.setText("0");
+                prizeMainLayoutBinding.txtMinute2.setText(min);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
         try {
             if (sec.length() >= 2) {
-                tokenActivityLayoutBinding.txtSecond1.setText(sec.substring(0, 1));
-                tokenActivityLayoutBinding.txtSecond2.setText(sec.substring(1, 2));
+                prizeMainLayoutBinding.txtSecond1.setText(sec.substring(0, 1));
+                prizeMainLayoutBinding.txtSecond2.setText(sec.substring(1, 2));
             } else {
-                tokenActivityLayoutBinding.txtSecond1.setText("0");
-                tokenActivityLayoutBinding.txtSecond2.setText(sec);
+                prizeMainLayoutBinding.txtSecond1.setText("0");
+                prizeMainLayoutBinding.txtSecond2.setText(sec);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
@@ -377,77 +354,13 @@ public class TokenActivity extends AppCompatActivity implements View.OnClickList
         STOPPED,
         RUNNING
     }
-
-    @Override
-    public void onClick(View view) {
-        switch(view.getId()) {
-            case R.id.imageLeft:
-                // Do something
-                tokenActivityLayoutBinding.sliderZoom.setProgress(tokenActivityLayoutBinding.sliderZoom.getProgress()-5);
-                break;
-
-            case R.id.imageRight:
-                // Do something
-                tokenActivityLayoutBinding.sliderZoom.setProgress(tokenActivityLayoutBinding.sliderZoom.getProgress()+5);
-                break;
-        }
-    }
-
-    /*public Drawable getThumb(int progress) {
-        ((TextView) thumbView.findViewById(R.id.tvProgress)).setText(progress + "");
-
-        thumbView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        Bitmap bitmap = Bitmap.createBitmap(thumbView.getMeasuredWidth(), thumbView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        thumbView.layout(0, 0, thumbView.getMeasuredWidth(), thumbView.getMeasuredHeight());
-        thumbView.draw(canvas);
-
-        return new BitmapDrawable(getResources(), bitmap);
-    }*/
-
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-       /* int val = (progress * (seekBar.getWidth() - 2 * seekBar.getThumbOffset())) / seekBar.getMax();
-        _testText.setText("" + progress);
-        _testText.setX(seekBar.getX() + val + seekBar.getThumbOffset() / 2);
-*/
-        // tokenActivityLayoutBinding.sliderZoom.setThumb(getThumb(progress));
-
-        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
-        p.addRule(RelativeLayout.CENTER_VERTICAL, seekBar.getId());
-        Rect thumbRect = tokenActivityLayoutBinding.sliderZoom.getSeekBarThumb().getBounds();
-        if(progress<10)
-        {
-            p.setMargins(thumbRect.centerX() + 20, 0, 0, 0);
-        }else {
-            p.setMargins(thumbRect.centerX() + 10, 0, 0, 0);
-        }
-        tokenActivityLayoutBinding.txtSeekValue.setLayoutParams(p);
-        progress_change = String.valueOf(progress);
-        tokenActivityLayoutBinding.txtSeekValue.setText(String.valueOf(progress) + "");
-        tokenActivityLayoutBinding.txt4.setText(String.valueOf(progress) + "");
-
-    }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-
-    }
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-
-    }
-
-    private class HttpAsyncTaskprizeHistoryAll extends AsyncTask<String, Void, String> {
+    private class HttpAsyncTaskprizeHistory extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(TokenActivity.this);
+            dialog = new ProgressDialog(PrizeActivity.this);
             dialog.setMessage("Fetching event...");
             dialog.show();
         }
@@ -455,43 +368,41 @@ public class TokenActivity extends AppCompatActivity implements View.OnClickList
         @Override
         protected String doInBackground(String... urls) {
             JSONObject jsonObject = new JSONObject();
-            try {
+            /*try {
                 jsonObject.accumulate("userid",   UserId);
-                jsonObject.accumulate("No_Of_Tokens",progress_change);
             } catch (JSONException e) {
                 e.printStackTrace();
-            }
-            return Utility.POST2(urls[0],jsonObject);
+            }*/
+            return Utility.GET(urls[0]);
         }
 
         @Override
         protected void onPostExecute(String result) {
-            Log.e("response_Token", "" + result);
+            Log.e("response_prize_All", "" + result);
             dialog.dismiss();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
-            /*new RedeemActivity.HttpAsyncTaskGetPushCard().execute(Utility.BASE_URL + "RewardsGame/GetPushedCards");
             try {
                 JSONObject response = new JSONObject(result);
-
+                prizeList.clear();
                 JSONArray jsonArray = response.getJSONArray("prize_details");
-                prizeHistorysAll.clear();
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject iCon = jsonArray.getJSONObject(i);
-                    PrizeHistory prizeHistoryModel = new PrizeHistory();
+                    Prize prizeModel = new Prize();
 
                     //prizeHistoryModel.setUserId(iCon.getString("userid"));
-                    prizeHistoryModel.setPrize_ID(iCon.getString("Prize_ID"));
-                    prizeHistoryModel.setPrize_Name(iCon.getString("Prize_Name"));
-                    prizeHistoryModel.setPrize_Image(iCon.getString("Prize_Image"));
-                    prizeHistoryModel.setCard_Name_1(iCon.getString("Card_Name_1"));
-                    prizeHistoryModel.setCard_Name_2(iCon.getString("Card_Name_2"));
-                    prizeHistorysAll.add(prizeHistoryModel);
+                    prizeModel.setPrize_ID(iCon.getString("Prize_ID"));
+                    prizeModel.setPrize_Name(iCon.getString("Prize_Name"));
+                    prizeModel.setPrize_Image(iCon.getString("Prize_Image"));
+                    prizeModel.setCard_Name_1(iCon.getString("Card_Name_1"));
+                    prizeModel.setCard_Name_2(iCon.getString("Card_Name_2"));
+                    prizeList.add(prizeModel);
 
                 }
-
+                prizeAdapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 e.printStackTrace();
-            }*/
+            }
         }
     }
+
 }
