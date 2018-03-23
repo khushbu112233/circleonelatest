@@ -185,7 +185,7 @@ public class PrivateDialogActivity extends BaseDialogActivity {
     @Override
     protected void checkMessageSendingPossibility() {
         boolean enable = dataManager.getFriendDataManager().existsByUserId(opponentUser.getId()) && isNetworkAvailable();
-        checkMessageSendingPossibility(enable);
+        checkMessageSendingPossibility(true);
     }
 
     @OnClick(R.id.toolbar)
@@ -238,10 +238,12 @@ public class PrivateDialogActivity extends BaseDialogActivity {
     private void setOnlineStatus(QMUser user) {
         if (user != null) {
             if (friendListHelper != null) {
-                String offlineStatus = getString(R.string.last_seen, DateUtils.toTodayYesterdayShortDateWithoutYear2(user.getLastRequestAt().getTime()),
-                        DateUtils.formatDateSimpleTime(user.getLastRequestAt().getTime()));
-                setActionBarSubtitle(
-                        OnlineStatusUtils.getOnlineStatus(this, friendListHelper.isUserOnline(user.getId()), offlineStatus));
+                try {
+                    String offlineStatus = getString(R.string.last_seen, DateUtils.toTodayYesterdayShortDateWithoutYear2(user.getLastRequestAt().getTime()),
+                            DateUtils.formatDateSimpleTime(user.getLastRequestAt().getTime()));
+                    setActionBarSubtitle(
+                            OnlineStatusUtils.getOnlineStatus(this, friendListHelper.isUserOnline(user.getId()), offlineStatus));
+                }catch (Exception e){}
             }
         }
     }

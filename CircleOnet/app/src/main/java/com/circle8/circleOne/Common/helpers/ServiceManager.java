@@ -103,6 +103,22 @@ public class ServiceManager {
     }
 
     public Observable<QBUser> login(final String socialProvider, final String accessToken, final String accessTokenSecret) {
+
+        QBPushManager.getInstance().addListener(new QBPushManager.QBSubscribeListener() {
+            @Override
+            public void onSubscriptionCreated() {
+            }
+
+            @Override
+            public void onSubscriptionError(Exception e, int i) {
+            }
+
+            @Override
+            public void onSubscriptionDeleted(boolean b) {
+              //  logoutInternal(subscriber);
+            }
+        });
+
         Observable<QBUser> result = authService.login(socialProvider, accessToken, accessTokenSecret).subscribeOn(Schedulers.io())
                 .map(new Func1<QBUser, QBUser>() {
                     @Override
