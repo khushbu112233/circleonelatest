@@ -82,6 +82,16 @@ public class RedeemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         redeemActivityLayoutBinding = DataBindingUtil.setContentView(this, R.layout.redeem_activity_layout);
         new HttpAsyncTaskprizeHistoryAll().execute(Utility.BASE_URL + "RewardsGame/PrizeHistory");
+
+        clickOfRedeem = new ClickOfRedeem() {
+
+            @Override
+            public void OnClickRedeem(String str) {
+               // if(!prizeId.contains(str)) {
+                    prizeId.add(str);
+                //}
+            }
+        };
         redeemListAdapter = new RedeemListAdapter(RedeemActivity.this, prizeHistorysAll);
         redeemListAdapter.onItemclickRedeem(clickOfRedeem);
         redeemActivityLayoutBinding.lstRedeem.setAdapter(redeemListAdapter);
@@ -107,15 +117,6 @@ public class RedeemActivity extends AppCompatActivity {
 
 
 
-        clickOfRedeem = new ClickOfRedeem() {
-
-            @Override
-            public void OnClickRedeem(String str) {
-                if(!prizeId.contains(str)) {
-                    prizeId.add(str);
-                }
-            }
-        };
         redeemActivityLayoutBinding.imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
