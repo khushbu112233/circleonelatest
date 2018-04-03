@@ -28,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.circle8.circleOne.Adapter.GridViewRedeemAdapter;
 import com.circle8.circleOne.Adapter.RedeemListAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Interface.ClickOfRedeem;
@@ -73,6 +74,7 @@ public class RedeemActivity extends AppCompatActivity {
     private static final int MAX_TIME = 86410;
     ArrayList<String> prizeId = new ArrayList<>();
     ArrayList<PushCardsDetail> pushCardDetailList = new ArrayList<>();
+    GridViewRedeemAdapter gridViewRedeemAdapter;
     public static ArrayList<PrizeHistory> prizeHistorysAll = new ArrayList<>();
     public static String  UserId= "";
     ClickOfRedeem clickOfRedeem;
@@ -81,10 +83,14 @@ public class RedeemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         redeemActivityLayoutBinding = DataBindingUtil.setContentView(this, R.layout.redeem_activity_layout);
+        session = new LoginSession(getApplicationContext());
+        HashMap<String, String> user = session.getUserDetails();
+        UserId = user.get(LoginSession.KEY_USERID);
+
+        new HttpAsyncTaskGetPushCard().execute(Utility.BASE_URL + "RewardsGame/GetPushedCards");
         new HttpAsyncTaskprizeHistoryAll().execute(Utility.BASE_URL + "RewardsGame/PrizeHistory");
 
         clickOfRedeem = new ClickOfRedeem() {
-
             @Override
             public void OnClickRedeem(String str) {
                // if(!prizeId.contains(str)) {
@@ -92,6 +98,8 @@ public class RedeemActivity extends AppCompatActivity {
                 //}
             }
         };
+        gridViewRedeemAdapter = new GridViewRedeemAdapter(RedeemActivity.this , pushCardDetailList);
+        redeemActivityLayoutBinding.gdView1.setAdapter(gridViewRedeemAdapter);
         redeemListAdapter = new RedeemListAdapter(RedeemActivity.this, prizeHistorysAll);
         redeemListAdapter.onItemclickRedeem(clickOfRedeem);
         redeemActivityLayoutBinding.lstRedeem.setAdapter(redeemListAdapter);
@@ -103,9 +111,6 @@ public class RedeemActivity extends AppCompatActivity {
         //   redeemActivityLayoutBinding.llActivity.startAnimation(slide_up);
         prefUtils = new PrefUtils(getApplicationContext());
 
-        session = new LoginSession(getApplicationContext());
-        HashMap<String, String> user = session.getUserDetails();
-        UserId = user.get(LoginSession.KEY_USERID);
 
         TextView txt1 = (TextView) findViewById(R.id.txtDay1);
         int[] color = {Color.parseColor("#dfc977"), Color.parseColor("#ffffff")};
@@ -123,12 +128,13 @@ public class RedeemActivity extends AppCompatActivity {
                 finish();
             }
         });
+        /*
         redeemActivityLayoutBinding.txtRedeem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new HttpAsyncTaskRedeem().execute();
+                new HttpAsyncTaskRedeem().execute(Utility.BASE_URL+"RewardsGame/Redeemed_Prizes");
             }
-        });
+        });*/
         redeemActivityLayoutBinding.txtDay2.getPaint().setShader(shader_gradient0);
         redeemActivityLayoutBinding.txtHour1.getPaint().setShader(shader_gradient0);
         redeemActivityLayoutBinding.txtHour2.getPaint().setShader(shader_gradient0);
@@ -405,7 +411,7 @@ public class RedeemActivity extends AppCompatActivity {
         protected String doInBackground(String... urls) {
             JSONObject jsonObject = new JSONObject();
             try {
-                jsonObject.accumulate("userid",   UserId);
+                jsonObject.accumulate("userid",UserId);
                 jsonObject.accumulate("Prize_ID",prizeId);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -415,10 +421,10 @@ public class RedeemActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            Log.e("response_prize_All", "" + result);
+            Log.e("response_prize_All3", "" + result);
             dialog.dismiss();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
-            new HttpAsyncTaskGetPushCard().execute(Utility.BASE_URL + "RewardsGame/GetPushedCards");
+
             try {
                 JSONObject response = new JSONObject(result);
 
@@ -470,7 +476,6 @@ public class RedeemActivity extends AppCompatActivity {
             Log.e("response_prize_All", "" + result);
             dialog.dismiss();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
-            new HttpAsyncTaskGetPushCard().execute(Utility.BASE_URL + "RewardsGame/GetPushedCards");
             try {
                 JSONObject response = new JSONObject(result);
 
@@ -538,7 +543,8 @@ public class RedeemActivity extends AppCompatActivity {
                     pushCardDetailList.add(pushCardModel);
 
                 }
-                setCardValue();
+                gridViewRedeemAdapter.notifyDataSetChanged();
+               // setCardValue();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -546,7 +552,7 @@ public class RedeemActivity extends AppCompatActivity {
         }
     }
 
-    private void setCardValue() {
+    /*private void setCardValue() {
         redeemActivityLayoutBinding.txt1.setText(pushCardDetailList.get(0).getCard_Name());
         redeemActivityLayoutBinding.txtTop1.setText(pushCardDetailList.get(0).getCard_Name());
         redeemActivityLayoutBinding.txt2.setText(pushCardDetailList.get(1).getCard_Name());
@@ -599,5 +605,5 @@ public class RedeemActivity extends AppCompatActivity {
         redeemActivityLayoutBinding.txtTop25.setText(pushCardDetailList.get(24).getCard_Name());
 
 
-    }
+    }*/
 }

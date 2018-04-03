@@ -85,7 +85,7 @@
 
                 <ImageView
                     android:id="@+id/imgNotification"
-                    android:src="@drawable/ic_notification_blue"
+                    android:src="@drawable/ic_chat"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_centerHorizontal="true"/>
@@ -95,7 +95,7 @@
                 android:id="@+id/tvNotification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Notification"
+                android:text="O-Chat"
                 android:layout_centerInParent="true"
                 android:textColor="@color/colorPrimary"
                 android:layout_below="@+id/frameNoti"

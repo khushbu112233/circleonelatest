@@ -45,7 +45,6 @@ import com.circle8.circleOne.Activity.AddManuallyActivity;
 import com.circle8.circleOne.Activity.AddQRActivity;
 import com.circle8.circleOne.Activity.DashboardActivity;
 import com.circle8.circleOne.Activity.ManuallyActivity;
-import com.circle8.circleOne.Activity.Notification;
 import com.circle8.circleOne.Activity.RewardsPointsActivity;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Helper.ReferralCodeSession;
@@ -447,10 +446,13 @@ public class DashboardFragment extends Fragment
             public void onClick(View view) {
                 callSubPAge("OnTapNotification","Dashboard");
 
-                fragment = new Notification();
+                /*fragment = new Notification();
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
                         .addToBackStack(null)
-                        .commit();
+                        .commit();*/
+
+                Intent intent = new Intent(getContext(), com.circle8.circleOne.ui.activities.authorization.SplashActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -847,7 +849,7 @@ public class DashboardFragment extends Fragment
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-              dismissProgress();
+            dismissProgress();
             //fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
@@ -862,7 +864,7 @@ public class DashboardFragment extends Fragment
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
                         finish();*/
-                         //Toast.makeText(getContext(), ImgName, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getContext(), ImgName, Toast.LENGTH_LONG).show();
                         ImgName1 = ImgName;
                         Intent iPut = new Intent(context, AddManuallyActivity.class);
                         iPut.putExtra("ScanTextArray", scanTextArray);

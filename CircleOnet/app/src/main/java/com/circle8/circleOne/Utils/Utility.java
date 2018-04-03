@@ -86,14 +86,15 @@ public class Utility
     public static String DEVELOPMENT_IMAGE = "http://circle8.asia:8082/";
     public static String PRODUCTION_IMAGE = "http://circle8.asia/App_imgLib/";
 
-    //    public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
+    // public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
     // public static final String MERCHANT_BASE_URL = "http://circle8.asia:8082/Onet.svc/Merchant/";
-    //  public static final String REWARDS_BASE_URL = "http://circle8.asia:8082/Onet.svc/Rewards/";
+    // public static final String REWARDS_BASE_URL = "http://circle8.asia:8082/Onet.svc/Rewards/";
     public static RelativeLayout rlProgressDialog;
     /**
      * Uat for 8082
      */
-    //  public static final String BASE_IMAGE_URL = "http://circle8.asia:8082/";
+
+    // public static final String BASE_IMAGE_URL = "http://circle8.asia:8082/";
     //khushbu last commented
     //// public static final String BASE_URL = "http://circle8.asia:8082/Onet.svc/";
 
@@ -101,7 +102,7 @@ public class Utility
      * Development for 8081
      */
     //  public static final String BASE_IMAGE_URL = "http://circle8.asia:8083/";
-//    public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
+    //  public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
 
 
     /**
@@ -109,7 +110,7 @@ public class Utility
      */
   //  public static final String BASE_IMAGE_URL = "http://circle8.asia/App_imgLib/";
     public static final String BASE_IMAGE_URL = UAT_IMAGE;
-    public static final String BASE_URL = DEVELOPMENT;
+    public static final String BASE_URL = UAT;
 
     // public static final String BASE_URL = "http://circle8.asia:8082/Onet.svc/";
 
