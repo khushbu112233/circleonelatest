@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <FrameLayout
+        android:id="@+id/frame_card1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgMain"
+                android:layout_width="60dp"
+                android:layout_height="90dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_card_with_black_and_blue"
+                />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txtTop1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dp"
+            android:text="A"
+            android:textColor="@color/black"
+            android:textSize="10sp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/txt1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="A"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_marginLeft="25dp">
+
+            <ImageView
+                android:id="@+id/img1"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="0"
+                android:src="@drawable/ic_coin_redeem" />
+            <TextView
+                android:id="@+id/txti1"
+                android:layout_width="15dp"
+                android:layout_height="10dp"
+                android:text="0"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:layout_gravity="top|right"
+                android:textColor="@color/black"
+                android:textSize="8sp" />
+
+        </FrameLayout>
+    </FrameLayout>
+</LinearLayout>
