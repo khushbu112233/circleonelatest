@@ -1451,7 +1451,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
     }
 
     private void onTimerFinish() {
-        Toast.makeText(this, "Countdown timer finished!", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "Countdown timer finished!", Toast.LENGTH_SHORT).show();
         prefUtils.setStartedTime(0);
         timeToStart = MAX_TIME;
         updatingUI();

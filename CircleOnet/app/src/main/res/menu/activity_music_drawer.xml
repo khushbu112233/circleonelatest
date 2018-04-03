@@ -25,7 +25,7 @@
     <group android:id="@+id/chat" android:checkableBehavior="single">
         <item
             android:id="@+id/nav_chat"
-            android:icon="@drawable/ic_manage_cards"
+            android:icon="@drawable/ic_chat"
             android:title="Chat" />
     </group>
 
