@@ -70,7 +70,7 @@
                 <com.circle8.circleOne.Utils.CircularTextView
                     android:layout_marginLeft="83dp"
                     android:layout_marginTop="35dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:id="@+id/txtNotificationCountAction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

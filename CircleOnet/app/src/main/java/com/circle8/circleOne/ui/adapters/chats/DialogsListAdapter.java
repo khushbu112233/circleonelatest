@@ -18,6 +18,8 @@ import com.quickblox.q_municate_user_service.model.QMUser;
 import java.util.Iterator;
 import java.util.List;
 
+import static com.circle8.circleOne.Activity.DashboardActivity.ChatCount;
+
 public class DialogsListAdapter extends BaseListAdapter<DialogWrapper> {
 
     private static final String TAG = DialogsListAdapter.class.getSimpleName();
@@ -64,7 +66,8 @@ public class DialogsListAdapter extends BaseListAdapter<DialogWrapper> {
         }
 
         long totalCount = dialogWrapper.getTotalCount();
-
+        //ChatCount = totalCount+"";
+        Log.e("ChatCount1",""+ChatCount);
         if (totalCount > ConstsCore.ZERO_INT_VALUE) {
             viewHolder.unreadMessagesTextView.setText(totalCount + ConstsCore.EMPTY_STRING);
             viewHolder.unreadMessagesTextView.setVisibility(View.VISIBLE);

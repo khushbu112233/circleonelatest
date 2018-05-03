@@ -59,12 +59,12 @@ public class DialogsListLoader extends BaseLoader<List<DialogWrapper>> {
 
     @Override
     protected List<DialogWrapper> getItems() {
-        Log.d(TAG, "getItems() chatDialogs startRow= " + startRow + ", perPage= " + perPage + ", loadAll= " + loadAll);
+        Log.e(TAG, "getItems() chatDialogs startRow= " + startRow + ", perPage= " + perPage + ", loadAll= " + loadAll);
 
         List<QBChatDialog> chatDialogs = loadAll ? dataManager.getQBChatDialogDataManager().getAllSorted() :
                 dataManager.getQBChatDialogDataManager().getSkippedSorted(startRow, perPage);
-
-        Log.d(TAG, "getItems() chatDialogs size= " + chatDialogs.size());
+        //DashboardActivity.ChatCount = chatDialogs.size()+"";
+        Log.e(TAG, "getItems() chatDialogs size= " + chatDialogs.size());
 
         List<DialogWrapper> dialogWrappers = new ArrayList<>(chatDialogs.size());
        /* for (QBChatDialog chatDialog : chatDialogs) {

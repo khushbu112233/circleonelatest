@@ -11,10 +11,6 @@ import android.util.Log;
 import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.circle8.circleOne.R;
-import com.circle8.circleOne.ui.activities.base.BaseActivity;
-import com.circle8.circleOne.ui.activities.main.MainActivity;
-import com.circle8.circleOne.ui.fragments.dialogs.UserAgreementDialogFragment;
 import com.circle8.circleOne.Common.AuthUtils;
 import com.circle8.circleOne.Common.StringObfuscator;
 import com.circle8.circleOne.Common.helpers.FacebookHelper;
@@ -22,6 +18,9 @@ import com.circle8.circleOne.Common.helpers.FirebaseAuthHelper;
 import com.circle8.circleOne.Common.helpers.FlurryAnalyticsHelper;
 import com.circle8.circleOne.Common.helpers.GoogleAnalyticsHelper;
 import com.circle8.circleOne.Common.helpers.ServiceManager;
+import com.circle8.circleOne.R;
+import com.circle8.circleOne.ui.activities.base.BaseActivity;
+import com.circle8.circleOne.ui.fragments.dialogs.UserAgreementDialogFragment;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
@@ -226,7 +225,6 @@ public abstract class BaseAuthActivity extends BaseActivity {
 
     protected void performLoginSuccessAction(QBUser user) {
         startMainActivity(user);
-
         // send analytics data
         GoogleAnalyticsHelper.pushAnalyticsData(this, user, "User Sign In");
         FlurryAnalyticsHelper.pushAnalyticsData(this);

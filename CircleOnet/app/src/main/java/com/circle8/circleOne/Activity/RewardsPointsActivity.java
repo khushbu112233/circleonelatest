@@ -114,11 +114,10 @@ public class RewardsPointsActivity extends Fragment implements View.OnClickListe
                 dialogButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dialog.dismiss();
 
                         Intent i =new Intent(getActivity(),LuckyDrawActivity.class);
                         startActivity(i);
-
+                        dialog.dismiss();
                     }
                 });
 

@@ -20,6 +20,7 @@ public class QbDialogHolder {
     public static synchronized QbDialogHolder getInstance() {
         if (instance == null) {
             instance = new QbDialogHolder();
+
         }
         return instance;
     }
@@ -99,8 +100,10 @@ public class QbDialogHolder {
 
     public void updateDialog(String dialogId, QBChatMessage qbChatMessage){
         QBChatDialog updatedDialog = getChatDialogById(dialogId);
+
         updatedDialog.setLastMessage(qbChatMessage.getBody());
         updatedDialog.setLastMessageDateSent(qbChatMessage.getDateSent());
+        //DashboardActivity.ChatCount = updatedDialog.getUnreadMessageCount()+"";
         updatedDialog.setUnreadMessageCount(updatedDialog.getUnreadMessageCount() != null
                 ? updatedDialog.getUnreadMessageCount() + 1 : 1);
         updatedDialog.setLastMessageUserId(qbChatMessage.getSenderId());

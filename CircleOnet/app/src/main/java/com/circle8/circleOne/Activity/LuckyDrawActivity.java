@@ -198,69 +198,7 @@ public class LuckyDrawActivity extends AppCompatActivity {
 
         luckyDrawLayoutBinding.txtDesc.setText(stringArrayList.get(pos));
 
-        if (timerState == TimerState.STOPPED) {
-            prefUtils.setStartedTime((int) getNow());
-            startTimer();
-            timerState = TimerState.RUNNING;
-        }
 
-
-        timer = new CountDownTimer(4000, 4000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-            }
-            @Override
-            public void onFinish() {
-                try{
-                    if(pos==stringArrayList.size()-1)
-                    {
-                        pos=0;
-                    }else {
-                        pos++;
-                    }
-                    if(pos==0)
-                    {
-                        luckyDrawLayoutBinding.imgLeft.setClickable(false);
-                        luckyDrawLayoutBinding.imgRight.setClickable(true);
-                    }else if(pos==1)
-                    {
-                        luckyDrawLayoutBinding.imgLeft.setClickable(true);
-                        luckyDrawLayoutBinding.imgRight.setClickable(true);
-                    }else if(pos==stringArrayList.size()-1)
-                    {
-                        luckyDrawLayoutBinding.imgLeft.setClickable(true);
-                        luckyDrawLayoutBinding.imgRight.setClickable(false);
-                    }
-
-                    luckyDrawLayoutBinding.txtDesc.setText(stringArrayList.get(pos));
-                    timer.start();
-                }catch(Exception e){
-                    Log.e("Error", "Error: " + e.toString());
-                }
-            }
-        }.start();
-
-
-
-
-        int int_hours = 1;
-
-        if (int_hours<=24) {
-
-
-            //et_hours.setEnabled(false);
-            // btn_start.setEnabled(false);
-
-
-            calendar = Calendar.getInstance();
-            simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
-            date_time = simpleDateFormat.format(calendar.getTime());
-
-            Intent intent_service = new Intent(getApplicationContext(), Timer_Service.class);
-            startService(intent_service);
-        }else {
-            Toast.makeText(getApplicationContext(),"Please select the value below 24 hours",Toast.LENGTH_SHORT).show();
-        }
 
         luckyDrawLayoutBinding.llTemp.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
@@ -1412,6 +1350,67 @@ public class LuckyDrawActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //initializing a countdown timer
+        if (timerState == TimerState.STOPPED) {
+            prefUtils.setStartedTime((int) getNow());
+            startTimer();
+            timerState = TimerState.RUNNING;
+        }
+
+
+        timer = new CountDownTimer(4000, 4000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
+            @Override
+            public void onFinish() {
+                try{
+                    if(pos==stringArrayList.size()-1)
+                    {
+                        pos=0;
+                    }else {
+                        pos++;
+                    }
+                    if(pos==0)
+                    {
+                        luckyDrawLayoutBinding.imgLeft.setClickable(false);
+                        luckyDrawLayoutBinding.imgRight.setClickable(true);
+                    }else if(pos==1)
+                    {
+                        luckyDrawLayoutBinding.imgLeft.setClickable(true);
+                        luckyDrawLayoutBinding.imgRight.setClickable(true);
+                    }else if(pos==stringArrayList.size()-1)
+                    {
+                        luckyDrawLayoutBinding.imgLeft.setClickable(true);
+                        luckyDrawLayoutBinding.imgRight.setClickable(false);
+                    }
+
+                    luckyDrawLayoutBinding.txtDesc.setText(stringArrayList.get(pos));
+                    timer.start();
+                }catch(Exception e){
+                    Log.e("Error", "Error: " + e.toString());
+                }
+            }
+        }.start();
+
+
+
+
+        int int_hours = 1;
+
+        if (int_hours<=24) {
+
+
+            //et_hours.setEnabled(false);
+            // btn_start.setEnabled(false);
+            calendar = Calendar.getInstance();
+            simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+            date_time = simpleDateFormat.format(calendar.getTime());
+
+            Intent intent_service = new Intent(getApplicationContext(), Timer_Service.class);
+            startService(intent_service);
+        }else {
+            Toast.makeText(getApplicationContext(),"Please select the value below 24 hours",Toast.LENGTH_SHORT).show();
+        }
         initTimer();
         updatingUI();
         removeAlarmManager();

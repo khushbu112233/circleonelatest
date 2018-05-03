@@ -45,7 +45,7 @@ import com.circle8.circleOne.Activity.AddManuallyActivity;
 import com.circle8.circleOne.Activity.AddQRActivity;
 import com.circle8.circleOne.Activity.DashboardActivity;
 import com.circle8.circleOne.Activity.ManuallyActivity;
-import com.circle8.circleOne.Activity.RewardsPointsActivity;
+import com.circle8.circleOne.Activity.Notification;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Helper.ReferralCodeSession;
 import com.circle8.circleOne.R;
@@ -90,6 +90,7 @@ import javax.crypto.NoSuchPaddingException;
 import static android.app.Activity.RESULT_OK;
 import static android.graphics.Color.WHITE;
 import static com.circle8.circleOne.Activity.AddManuallyActivity.BitMapToString;
+import static com.circle8.circleOne.Activity.DashboardActivity.ChatCount;
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.callMainPage;
@@ -175,6 +176,15 @@ public class DashboardFragment extends Fragment
         else {
             fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
             fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setText(DashboardActivity.NotificationCount);
+        }
+        Log.e("ChatCount",""+ChatCount);
+        if(ChatCount.equals("0"))
+        {
+            fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setVisibility(View.GONE);
+        }else
+        {
+            fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setVisibility(View.VISIBLE);
+            fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setText(ChatCount);
         }
 
         searchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -441,10 +451,10 @@ public class DashboardFragment extends Fragment
                 return false;
             }
         });
-        fragmentDashboardLayoutBinding.includeNotiRewardShare.rlNotification.setOnClickListener(new View.OnClickListener() {
+        fragmentDashboardLayoutBinding.includeNotiRewardShare.rlChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callSubPAge("OnTapNotification","Dashboard");
+                callSubPAge("OnTapChat","Dashboard");
 
                 /*fragment = new Notification();
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
@@ -493,7 +503,7 @@ public class DashboardFragment extends Fragment
                 }
             }
         });
-        fragmentDashboardLayoutBinding.includeNotiRewardShare.rlReward.setOnClickListener(new View.OnClickListener() {
+        fragmentDashboardLayoutBinding.includeNotiRewardShare.rlNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 /*String shareBody = "I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional networks a step further. Use the code '" + refer +
@@ -503,9 +513,13 @@ public class DashboardFragment extends Fragment
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, User_name);
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));*/
-                callSubPAge("OnTapRewards","Dashboard");
+                callSubPAge("OnTapNotification","Dashboard");
 
-                fragment = new RewardsPointsActivity();
+               /* fragment = new RewardsPointsActivity();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                        .addToBackStack(null)
+                        .commit();*/
+                fragment = new Notification();
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
                         .addToBackStack(null)
                         .commit();

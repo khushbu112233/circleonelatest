@@ -52,6 +52,7 @@ public class UserAgreementDialogFragment extends DialogFragment {
 
     @OnClick(R.id.user_agreement_textview)
     public void openUserAgreement(View view) {
+
         UserAgreementActivity.start(getActivity());
     }
 }

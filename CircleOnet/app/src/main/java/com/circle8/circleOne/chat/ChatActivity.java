@@ -81,11 +81,11 @@ public class ChatActivity extends BaseActivity implements OnImagePickedListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        Log.v(TAG, "onCreate ChatActivity on Thread ID = " + Thread.currentThread().getId());
+        Log.e(TAG, "onCreate ChatActivity on Thread ID = " + Thread.currentThread().getId());
 
         qbChatDialog = (QBChatDialog) getIntent().getSerializableExtra(EXTRA_DIALOG_ID);
 
-        Log.v(TAG, "deserialized dialog = " + qbChatDialog);
+        Log.e(TAG, "deserialized dialog = " + qbChatDialog.getUnreadMessageCount());
         qbChatDialog.initForChat(QBChatService.getInstance());
 
         chatMessageListener = new ChatMessageListener();

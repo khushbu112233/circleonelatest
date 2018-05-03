@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.ContentProviderOperation;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -25,6 +26,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -70,8 +72,6 @@ import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.chat.ChatHelper;
 import com.circle8.circleOne.chat.qb.QbDialogHolder;
 import com.circle8.circleOne.databinding.ActivityDashboardBinding;
-import com.circle8.circleOne.ui.activities.authorization.*;
-import com.circle8.circleOne.ui.activities.settings.SettingsActivity;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -93,6 +93,11 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.plus.Plus;
 import com.google.firebase.auth.FirebaseAuth;
 import com.linkedin.platform.LISessionManager;
+import com.quickblox.chat.QBRestChatService;
+import com.quickblox.chat.model.QBChatDialog;
+import com.quickblox.core.QBEntityCallback;
+import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.core.request.QBRequestGetBuilder;
 import com.quickblox.messages.services.SubscribeService;
 import com.quickblox.q_municate_db.utils.ErrorUtils;
 import com.quickblox.sample.core.utils.SharedPrefsHelper;
@@ -143,7 +148,8 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
     public static Location mLastLocation;
     static TextView textView;
     static ImageView imgDrawer, imgLogo;
-    public static String NotificationCount = "0", UserId= "";
+    public static String NotificationCount = "0",ChatCount="0" ,UserId= "";
+    public static int Total;
     private boolean netCheck = false;
     private NfcAdapter mNfcAdapter;
     public static final byte[] MIME_TEXT1 = "application/com.amplearch.circleone".getBytes();
@@ -160,7 +166,15 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
 
     private FacebookHelper facebookHelper;
     private FirebaseAuthHelper firebaseAuthHelper;
-
+    String DisplayName = "ample";
+    String MobileNumber = "123456";
+    String HomeNumber = "1111";
+    String WorkNumber = "2222";
+    String emailID = "email@nomail.com";
+    String companyTest = "bad";
+    String jobTitle = "android";
+    byte[] photoByteArray;
+    Uri uri = Uri.parse("android.resource://com.circle8.circleOne/drawable/back_logo");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -234,6 +248,10 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
             public void onClick(View view) {
                 callMainPage("LeftMenu");
                 drawer.openDrawer(Gravity.START);
+                /*boolean result = Utility.checkWriteContactPermission(DashboardActivity.this);
+                if (result) {
+                    contactAdd();
+                }*/
             }
         });
 
@@ -285,22 +303,29 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                     Intent intent = new Intent(DashboardActivity.this, ConnectFragment.class);
                     startActivity(intent);
                     navigationView.getMenu().getItem(5).setCheckable(false);
-                }else if(id == R.id.nav_events)
+                }else if(id==R.id.nav_rewards)
                 {
                     navigationView.getMenu().getItem(6).setCheckable(true);
-                    Intent intent = new Intent(DashboardActivity.this, EventsActivity.class);
+                    Intent intent = new Intent(DashboardActivity.this, RewardsPointsActivity1.class);
                     startActivity(intent);
                     navigationView.getMenu().getItem(6).setCheckable(false);
-                }else if(id == R.id.nav_circle)
+
+                }else if(id == R.id.nav_events)
                 {
                     navigationView.getMenu().getItem(7).setCheckable(true);
-                    Intent intent = new Intent(DashboardActivity.this, GroupsActivity.class);
+                    Intent intent = new Intent(DashboardActivity.this, EventsActivity.class);
                     startActivity(intent);
                     navigationView.getMenu().getItem(7).setCheckable(false);
+                }else if(id == R.id.nav_circle)
+                {
+                    navigationView.getMenu().getItem(8).setCheckable(true);
+                    Intent intent = new Intent(DashboardActivity.this, GroupsActivity.class);
+                    startActivity(intent);
+                    navigationView.getMenu().getItem(8).setCheckable(false);
                 }else if(id == R.id.nav_invite)
                 {
                     callSubPAge("Invite","LeftMenu");
-                    navigationView.getMenu().getItem(8).setCheckable(true);
+                    navigationView.getMenu().getItem(9).setCheckable(true);
                     String shareBody = "I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional networks a step further. Use the code '" + refer +
                             "' for a quick and simple registration! https://circle8.asia/mobileApp.html";
                     Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -310,36 +335,36 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                     startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
                  /*    Intent intent = new Intent(DashboardActivity.this, RewardsPointsActivity.class);
                     startActivity(intent);*/
-                    navigationView.getMenu().getItem(8).setCheckable(false);
+                    navigationView.getMenu().getItem(9).setCheckable(false);
                 }else if(id == R.id.nav_history)
                 {
 
-                    navigationView.getMenu().getItem(9).setCheckable(true);
+                    navigationView.getMenu().getItem(10).setCheckable(true);
                     Intent intent = new Intent(DashboardActivity.this, HistoryActivity.class);
                     startActivity(intent);
-                    navigationView.getMenu().getItem(9).setCheckable(false);
+                    navigationView.getMenu().getItem(10).setCheckable(false);
                 }else if(id == R.id.nav_subscription)
                 {
-                    navigationView.getMenu().getItem(10).setCheckable(true);
+                    navigationView.getMenu().getItem(11).setCheckable(true);
                     Intent intent = new Intent(DashboardActivity.this, SubscriptionActivity.class);
                     startActivity(intent);
-                    navigationView.getMenu().getItem(10).setCheckable(false);
+                    navigationView.getMenu().getItem(11).setCheckable(false);
                 }else if(id == R.id.nav_help)
                 {
-                    navigationView.getMenu().getItem(11).setCheckable(true);
+                    navigationView.getMenu().getItem(12).setCheckable(true);
                     Intent intent = new Intent(DashboardActivity.this, Help2Activity.class);
                     startActivity(intent);
-                    navigationView.getMenu().getItem(11).setCheckable(false);
+                    navigationView.getMenu().getItem(12).setCheckable(false);
                 }else if(id == R.id.nav_contact_us)
                 {
-                    navigationView.getMenu().getItem(12).setCheckable(true);
+                    navigationView.getMenu().getItem(13).setCheckable(true);
 
                     Intent intent = new Intent(DashboardActivity.this, ContactUsActivity.class);
                     startActivity(intent);
-                    navigationView.getMenu().getItem(12).setCheckable(false);
+                    navigationView.getMenu().getItem(13).setCheckable(false);
                 }else if(id == R.id.nav_logout)
                 {
-                    navigationView.getMenu().getItem(13).setCheckable(true);
+                    navigationView.getMenu().getItem(14).setCheckable(true);
 
                     CustomProgressDialog("Logout",DashboardActivity.this);
 
@@ -406,13 +431,13 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                         @Override
                         public void onNext(Void aVoid) {
                             setResult(RESULT_OK);
-                          //  hideProgress();
-                          //  finish();
+                            //  hideProgress();
+                            //  finish();
                         }
                     });
 
                     LISessionManager.getInstance(getApplicationContext()).clearSession();
-                    navigationView.getMenu().getItem(13).setCheckable(false);
+                    navigationView.getMenu().getItem(14).setCheckable(false);
                 }
 
 
@@ -476,6 +501,7 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
             }
         });
 
+        getCountOfChat();
         if (netCheck == false){
             netCheck = Utility.isNetworkAvailable(getApplicationContext());
             Utility.freeMemory();
@@ -572,6 +598,142 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
 
             }
             Pref.setValue(DashboardActivity.this,"manualdone","0");
+        }
+
+
+    }
+
+    public void getCountOfChat() {
+        QBRequestGetBuilder requestBuilder = new QBRequestGetBuilder();
+        requestBuilder.setLimit(100);
+
+        QBRestChatService.getChatDialogs(null, requestBuilder).performAsync(new QBEntityCallback<ArrayList<QBChatDialog>>() {
+            @Override
+            public void onSuccess(ArrayList<QBChatDialog> result, Bundle params) {
+                int totalEntries = params.getInt("total_entries");
+
+                ChatCount=totalEntries+"";
+                        //result.get(0).getUnreadMessageCount()+"";
+                Log.e("ChatCount",""+result.get(0)+"    "+ChatCount +"   "+params);
+            }
+
+            @Override
+            public void onError(QBResponseException responseException) {
+
+            }
+        });
+
+/*
+        QBChatDialog updatedDialog = (QBChatDialog) getChatDialogById(Pref.getValue(DashboardActivity.this,"ForChatQID",""));
+        ChatCount = updatedDialog.getUnreadMessageCount()+"";
+        Log.e("ChatCount",""+ChatCount);
+*/
+    }
+
+    private void contactAdd() {
+        ArrayList <ContentProviderOperation> ops = new ArrayList < ContentProviderOperation > ();
+
+        ops.add(ContentProviderOperation.newInsert(
+                ContactsContract.RawContacts.CONTENT_URI)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
+                .build());
+
+        //------------------------------------------------------ Names
+        if (DisplayName != null) {
+            ops.add(ContentProviderOperation.newInsert(
+                    ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(ContactsContract.Data.MIMETYPE,
+                            ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+                    .withValue(
+                            ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME,
+                            DisplayName).build());
+        }
+
+        //------------------------------------------------------ Mobile Number
+        if (MobileNumber != null) {
+            ops.add(ContentProviderOperation.
+                    newInsert(ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(ContactsContract.Data.MIMETYPE,
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                    .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, MobileNumber)
+                    .withValue(ContactsContract.CommonDataKinds.Phone.TYPE,
+                            ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)
+                    .build());
+        }
+        /*Drawable d=getDrawable(R.drawable.luckydraw_logo1);
+        Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        photoByteArray = stream.toByteArray();
+        if (photoByteArray != null) {
+            ops.add(ContentProviderOperation.
+                    newInsert(ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(ContactsContract.Data.MIMETYPE,
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                    .withValue(ContactsContract.CommonDataKinds.Phone.PHOTO_THUMBNAIL_URI,photoByteArray)
+                    .withValue(ContactsContract.CommonDataKinds.Phone.TYPE,
+                            ContactsContract.CommonDataKinds.Phone.TYPE_CUSTOM)
+                    .build());
+        }*/
+        //------------------------------------------------------ Home Numbers
+        if (HomeNumber != null) {
+            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(ContactsContract.Data.MIMETYPE,
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                    .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, HomeNumber)
+                    .withValue(ContactsContract.CommonDataKinds.Phone.TYPE,
+                            ContactsContract.CommonDataKinds.Phone.TYPE_HOME)
+                    .build());
+        }
+
+        //------------------------------------------------------ Work Numbers
+        if (WorkNumber != null) {
+            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(ContactsContract.Data.MIMETYPE,
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                    .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, WorkNumber)
+                    .withValue(ContactsContract.CommonDataKinds.Phone.TYPE,
+                            ContactsContract.CommonDataKinds.Phone.TYPE_WORK)
+                    .build());
+        }
+
+        //------------------------------------------------------ Email
+        if (emailID != null) {
+            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(ContactsContract.Data.MIMETYPE,
+                            ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)
+                    .withValue(ContactsContract.CommonDataKinds.Email.DATA, emailID)
+                    .withValue(ContactsContract.CommonDataKinds.Email.TYPE, ContactsContract.CommonDataKinds.Email.TYPE_WORK)
+                    .build());
+        }
+
+        //------------------------------------------------------ Organization
+        if (!companyTest.equals("") && !jobTitle.equals("")) {
+            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(ContactsContract.Data.MIMETYPE,
+                            ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE)
+                    .withValue(ContactsContract.CommonDataKinds.Organization.COMPANY, companyTest)
+                    .withValue(ContactsContract.CommonDataKinds.Organization.TYPE, ContactsContract.CommonDataKinds.Organization.TYPE_WORK)
+                    .withValue(ContactsContract.CommonDataKinds.Organization.TITLE, jobTitle)
+                    .withValue(ContactsContract.CommonDataKinds.Organization.TYPE, ContactsContract.CommonDataKinds.Organization.TYPE_WORK)
+                    .build());
+        }
+
+        // Asking the Contact provider to create a new contact
+        try {
+            getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
+        } catch (Exception e) {
+
+            Log.e("ExeMessage",""+e.getMessage());
+            Toast.makeText(DashboardActivity.this, "Exception: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -1400,32 +1562,34 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                     if (success.equals("1"))
                     {
                         NotificationCount = Count;
+                        Total = Integer.parseInt(NotificationCount) +Integer.parseInt(ChatCount);
                         //NotificationCount = "2";
+
                         // Toast.makeText(getApplicationContext(), NotificationCount, Toast.LENGTH_LONG).show();
-                        if (NotificationCount.equals("0")) {
+                        if (Total==0) {
                             DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
                             activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
 
                         }
                         else {
                             DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
-                            DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setText(DashboardActivity.NotificationCount);
+                            DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setText(NotificationCount);
                             activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
-                            activityDashboardBinding.includefooter.txtNotificationCountAction.setText(NotificationCount);
+                            activityDashboardBinding.includefooter.txtNotificationCountAction.setText(Total+"");
                             if (getCurrentFragment() instanceof DashboardFragment){
                                 activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
 
                             }
 
                         }
-                        activityDashboardBinding.includefooter.txtNotificationCountAction.setText(NotificationCount);
+                        activityDashboardBinding.includefooter.txtNotificationCountAction.setText(Total+"");
 
                     }
                     else
                     {
                         activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
                         NotificationCount = "0";
-                        activityDashboardBinding.includefooter.txtNotificationCountAction.setText(NotificationCount);
+                        activityDashboardBinding.includefooter.txtNotificationCountAction.setText(Total+"");
                         DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
                         //  Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
@@ -1493,7 +1657,7 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                 DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
 
             }
-            activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
+            activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
 
 
         }
@@ -1555,7 +1719,7 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                 DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
 
             }
-            activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
+            activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
 
         }
         else {

@@ -151,7 +151,7 @@ dependencies {
     implementation project(':linkedin-sdk')
     // Required for OneSignal
     implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
-    implementation 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:multidex:1.0.1'
     implementation 'com.android.support:appcompat-v7:26.+'
     implementation 'com.android.support:design:26.+'
     implementation 'com.android.support:support-v4:26.+'
@@ -223,7 +223,7 @@ dependencies {
         exclude group: 'com.intellij', module: 'annotations'
     }
 
-   /* compile "com.nostra13.universalimageloader:universal-image-loader:${rootProject.universalImageLoaderVersion}"*/
+    /* compile "com.nostra13.universalimageloader:universal-image-loader:${rootProject.universalImageLoaderVersion}"*/
     compile "com.afollestad.material-dialogs:core:${rootProject.materialDialogsVersion}"
     compile "com.timehop.stickyheadersrecyclerview:library:${rootProject.stickylistheadersRecyclerViewVersion}@aar"
     compile "com.rockerhieu.emojicon:library:${rootProject.emojiconVersion}"

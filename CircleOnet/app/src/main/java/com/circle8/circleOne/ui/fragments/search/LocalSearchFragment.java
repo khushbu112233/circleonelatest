@@ -314,7 +314,7 @@ public class LocalSearchFragment extends BaseLoaderFragment<List<DialogSearchWra
 
         @Override
         protected List<DialogSearchWrapper> getItems() {
-            Log.d(TAG, "getItems() chatDialogs startRow= " + startRow + ", perPage= " + perPage + ", loadAll= " + loadAll);
+            Log.e(TAG, "getItems() chatDialogs startRow= " + startRow + ", perPage= " + perPage + ", loadAll= " + loadAll);
 
             List<QBChatDialog> dialogsList = loadAll ? dataManager.getQBChatDialogDataManager().getAllSorted() :
                     dataManager.getQBChatDialogDataManager().getSkippedSorted(startRow, perPage);

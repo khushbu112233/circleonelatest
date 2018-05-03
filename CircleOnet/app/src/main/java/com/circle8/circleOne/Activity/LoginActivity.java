@@ -28,7 +28,6 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -61,7 +60,6 @@ import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.chat.ChatHelper;
 import com.circle8.circleOne.databinding.ActivityLoginBinding;
 import com.circle8.circleOne.ui.activities.authorization.BaseAuthActivity;
-import com.circle8.circleOne.ui.activities.base.BaseActivity;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -149,8 +147,6 @@ import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 import static com.circle8.circleOne.Utils.Validation.validateLogin;
-import static com.circle8.circleOne.ui.activities.authorization.BaseAuthActivity.serviceManager;
-import static com.circle8.circleOne.ui.activities.base.BaseActivity.appSharedHelper;
 
 public class LoginActivity extends BaseAuthActivity implements
         View.OnClickListener,
@@ -206,7 +202,7 @@ public class LoginActivity extends BaseAuthActivity implements
     ReferralCodeSession referralCodeSession;
     private static final int CONTACT_PICKER_REQUEST = 991;
     private static final int PERMISSION_REQUEST_CONTACT = 111;
-    String Q_ID = "";
+    public static String Q_ID = "";
     String UserID = "";
     Boolean netCheck= false;
     public static ActivityLoginBinding activityLoginBinding;
@@ -863,6 +859,7 @@ public class LoginActivity extends BaseAuthActivity implements
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
+                    Log.e("json",""+jsonObject.toString());
                     String Success = jsonObject.getString("Success").toString();
                     String Message = jsonObject.getString("Message").toString();
 
@@ -931,6 +928,8 @@ public class LoginActivity extends BaseAuthActivity implements
                         //   fingerPrintSession.createLoginSession(UserID, "", userName, "", "");
 
                         JSONObject jsonArray = jsonObject.getJSONObject("profile");
+                        Log.e("jsonArray",""+jsonArray);
+
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
                         UserID = jsonArray.getString("userid");
                         profileid = jsonArray.getString("profileid");
@@ -945,6 +944,7 @@ public class LoginActivity extends BaseAuthActivity implements
                         String Connection_Limit = jsonArray.getString("Connection_Limit");
                         String Connection_Left = jsonArray.getString("Connection_Left");
                         Q_ID = jsonArray.getString("Q_ID");
+                        Pref.setValue(LoginActivity.this,"ForChatQID",Q_ID);
                         Pref.setValue(LoginActivity.this,"UserFirstName",FirstName);
                         Pref.setValue(LoginActivity.this,"ReferrenceCode",jsonArray.getString("ReferrenceCode"));
                         Pref.setValue(LoginActivity.this,"UserLastName",LastName);
@@ -1000,6 +1000,7 @@ public class LoginActivity extends BaseAuthActivity implements
                                                         @Override
                                                         public void onSuccess(Void result, Bundle bundle) {
                                                             SharedPrefsHelper.getInstance().saveQbUser(qbUser);
+                                                            Log.e("result",""+result);
                                                             //  Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
                                                             // DialogsActivity.start(LoginActivity.this);
                                                             // finish();
