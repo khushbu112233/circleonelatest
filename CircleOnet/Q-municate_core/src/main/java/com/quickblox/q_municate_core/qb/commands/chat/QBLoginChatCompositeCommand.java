@@ -28,8 +28,10 @@ public class QBLoginChatCompositeCommand extends CompositeServiceCommand {
     public static void start(Context context) {
         Log.i(TAG, "start");
         setIsRunning(true);
-        Intent intent = new Intent(QBServiceConsts.LOGIN_CHAT_COMPOSITE_ACTION, null, context, QBService.class);
-        context.startService(intent);
+        try {
+            Intent intent = new Intent(QBServiceConsts.LOGIN_CHAT_COMPOSITE_ACTION, null, context, QBService.class);
+            context.startService(intent);
+        }catch (Exception  e){}
     }
 
     @Override

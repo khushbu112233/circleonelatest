@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.circle8.circleOne.Activity.DashboardActivity;
+import com.circle8.circleOne.Fragments.DashboardFragment;
 import com.circle8.circleOne.Fragments.SortFragment;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.FriendConnection;
@@ -27,8 +29,12 @@ import com.circle8.circleOne.Common.helpers.ImportFriendsHelper;
 import com.circle8.circleOne.Common.image.ImageLoaderUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.quickblox.chat.QBRestChatService;
 import com.quickblox.chat.model.QBChatDialog;
 import com.quickblox.chat.model.QBDialogType;
+import com.quickblox.core.QBEntityCallback;
+import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.core.request.QBRequestGetBuilder;
 import com.quickblox.q_municate_core.core.command.Command;
 import com.quickblox.q_municate_core.models.AppSession;
 import com.quickblox.q_municate_core.models.UserCustomData;
@@ -53,6 +59,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.circle8.circleOne.Activity.DashboardActivity.ChatCount;
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
@@ -106,7 +113,46 @@ public class MainActivity extends BaseLoggableActivity {
         HashMap<String, String> user = session.getUserDetails();
         UserId = user.get(LoginSession.KEY_USERID);
         new HttpAsyncTask().execute(Utility.BASE_URL+"GetFriendConnection");
+        DashboardActivity.getCountOfChat();
+        DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setText(ChatCount);
+
     }
+
+   /* public static void getCountOfChat() {
+        QBRequestGetBuilder requestBuilder = new QBRequestGetBuilder();
+        requestBuilder.setLimit(100);
+
+        QBRestChatService.getChatDialogs(null, requestBuilder).performAsync(new QBEntityCallback<ArrayList<QBChatDialog>>() {
+            @Override
+            public void onSuccess(ArrayList<QBChatDialog> result, Bundle params) {
+                int totalEntries = params.getInt("total_entries");
+
+                // ChatCount=totalEntries+"";
+                //result.get(0).getUnreadMessageCount()+"";
+
+                int count = 0;
+                for (int i = 0; i < result.size(); i++) {
+                    count += result.get(i).getUnreadMessageCount();
+                }
+                ChatCount = count+"";
+
+
+                Log.e("ChatCount",""+result.get(0)+"    "+ChatCount +"   "+params);
+            }
+
+            @Override
+            public void onError(QBResponseException responseException) {
+
+            }
+        });
+
+*//*
+        QBChatDialog updatedDialog = (QBChatDialog) getChatDialogById(Pref.getValue(DashboardActivity.this,"ForChatQID",""));
+        ChatCount = updatedDialog.getUnreadMessageCount()+"";
+        Log.e("ChatCount",""+ChatCount);
+*//*
+    }
+*/
 
     public static String POST(String url) {
         InputStream inputStream = null;
