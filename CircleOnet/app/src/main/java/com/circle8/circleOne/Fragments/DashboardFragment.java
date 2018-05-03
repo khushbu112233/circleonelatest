@@ -91,6 +91,7 @@ import static android.app.Activity.RESULT_OK;
 import static android.graphics.Color.WHITE;
 import static com.circle8.circleOne.Activity.AddManuallyActivity.BitMapToString;
 import static com.circle8.circleOne.Activity.DashboardActivity.ChatCount;
+import static com.circle8.circleOne.Activity.DashboardActivity.getCountOfChat;
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.callMainPage;
@@ -178,6 +179,8 @@ public class DashboardFragment extends Fragment
             fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setText(DashboardActivity.NotificationCount);
         }
         Log.e("ChatCount",""+ChatCount);
+        getCountOfChat();
+
         if(ChatCount.equals("0"))
         {
             fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setVisibility(View.GONE);

@@ -90,6 +90,7 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.maps.model.Dash;
 import com.google.android.gms.plus.Plus;
 import com.google.firebase.auth.FirebaseAuth;
 import com.linkedin.platform.LISessionManager;
@@ -569,9 +570,13 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
             if (activityDashboardBinding.includefooter.txtNotificationCountAction.getText().toString().equals("0")){
                 activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
                 DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setVisibility(View.GONE);
+
             }else {
                 activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
                 DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setVisibility(View.VISIBLE);
+
 
             }
 
@@ -592,18 +597,21 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
             if (activityDashboardBinding.includefooter.txtNotificationCountAction.getText().toString().equals("0")){
                 activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
                 DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
-            }else {
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setVisibility(View.GONE);
+
+            }
+            else {
                 activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
                 DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setVisibility(View.VISIBLE);
+
 
             }
             Pref.setValue(DashboardActivity.this,"manualdone","0");
         }
-
-
     }
 
-    public void getCountOfChat() {
+    public static void getCountOfChat() {
         QBRequestGetBuilder requestBuilder = new QBRequestGetBuilder();
         requestBuilder.setLimit(100);
 
@@ -620,7 +628,9 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                     count += result.get(i).getUnreadMessageCount();
                 }
                 ChatCount = count+"";
-                Log.e("ChatCount",""+ChatCount+"    "+ChatCount +"   "+params);
+
+
+                Log.e("ChatCount",""+result.get(0)+"    "+ChatCount +"   "+params);
             }
 
             @Override
@@ -1147,6 +1157,7 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
     protected void onResume() {
         super.onResume();
 
+        getCountOfChat();
         if (!done) {
             HashMap<String, String> user = session.getUserDetails();
 
@@ -1310,9 +1321,12 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
             if (activityDashboardBinding.includefooter.txtNotificationCountAction.getText().toString().equals("0")){
                 activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
                 DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setVisibility(View.GONE);
+
             }else {
                 activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
                 DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setVisibility(View.VISIBLE);
 
             }
 
@@ -1399,9 +1413,13 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                         if (activityDashboardBinding.includefooter.txtNotificationCountAction.getText().toString().equals("0")){
                             activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
                             DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
+                            DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setVisibility(View.GONE);
+
                         }else {
                             activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
                             DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
+                            DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setVisibility(View.VISIBLE);
+
 
                         }
                     }
@@ -1454,9 +1472,13 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                 if (activityDashboardBinding.includefooter.txtNotificationCountAction.getText().toString().equals("0")){
                     activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
                     DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
+                    DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setVisibility(View.GONE);
+
                 }else {
                     activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
                     DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
+                    DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setVisibility(View.VISIBLE);
+
 
                 }
 
@@ -1480,9 +1502,13 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                 if (activityDashboardBinding.includefooter.txtNotificationCountAction.getText().toString().equals("0")){
                     activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
                     DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
+                    DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setVisibility(View.GONE);
+
                 }else {
                     activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
                     DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
+                    DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setVisibility(View.VISIBLE);
+
 
                 }
                 activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
@@ -1507,9 +1533,13 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                 if (activityDashboardBinding.includefooter.txtNotificationCountAction.getText().toString().equals("0")){
                     activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
                     DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
+                    DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setVisibility(View.GONE);
+
                 }else {
                     activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
                     DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
+                    DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setVisibility(View.VISIBLE);
+
 
                 }
                 Pref.setValue(DashboardActivity.this, "current_frag", "3");
@@ -1573,11 +1603,13 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
 
                         // Toast.makeText(getApplicationContext(), NotificationCount, Toast.LENGTH_LONG).show();
                         if (Total==0) {
+                            DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setVisibility(View.GONE);
                             DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
                             activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
 
                         }
                         else {
+                            DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setVisibility(View.VISIBLE);
                             DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
                             DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setText(NotificationCount);
                             activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
@@ -1593,11 +1625,33 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                     }
                     else
                     {
-                        activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
-                        NotificationCount = "0";
-                        activityDashboardBinding.includefooter.txtNotificationCountAction.setText(Total+"");
-                        DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
-                        //  Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                        Total = Integer.parseInt(ChatCount);
+                        DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setText(ChatCount);
+                        if (ChatCount.equalsIgnoreCase("0")){
+                            DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setVisibility(View.GONE);
+                            activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
+                            NotificationCount = "0";
+                            activityDashboardBinding.includefooter.txtNotificationCountAction.setText(Total+"");
+                            DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
+                            //  Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+
+                        }
+                        else {
+                            DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setVisibility(View.VISIBLE);
+
+                            activityDashboardBinding.includefooter.txtNotificationCountAction.setText(Total + "");
+
+                            activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
+                            NotificationCount = "0";
+                            activityDashboardBinding.includefooter.txtNotificationCountAction.setText(Total+"");
+                            DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
+                            //  Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+
+                        }
+                        if (getCurrentFragment() instanceof DashboardFragment){
+                            activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
+
+                        }
                     }
                 }
             }
