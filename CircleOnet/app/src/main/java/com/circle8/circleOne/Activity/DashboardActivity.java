@@ -612,9 +612,15 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
             public void onSuccess(ArrayList<QBChatDialog> result, Bundle params) {
                 int totalEntries = params.getInt("total_entries");
 
-                ChatCount=totalEntries+"";
+               // ChatCount=totalEntries+"";
                         //result.get(0).getUnreadMessageCount()+"";
-                Log.e("ChatCount",""+result.get(0)+"    "+ChatCount +"   "+params);
+
+                int count = 0;
+                for (int i = 0; i < result.size(); i++) {
+                    count += result.get(i).getUnreadMessageCount();
+                }
+                ChatCount = count+"";
+                Log.e("ChatCount",""+ChatCount+"    "+ChatCount +"   "+params);
             }
 
             @Override
