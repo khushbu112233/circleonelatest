@@ -42,6 +42,11 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.ApplicationUtils.MyApplication;
+import com.circle8.circleOne.Common.AuthUtils;
+import com.circle8.circleOne.Common.KeyboardUtils;
+import com.circle8.circleOne.Common.MediaUtils;
+import com.circle8.circleOne.Common.ValidationUtils;
+import com.circle8.circleOne.Common.helpers.ServiceManager;
 import com.circle8.circleOne.Helper.CustomSharedPreference;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Helper.ProfileSession;
@@ -54,11 +59,16 @@ import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.chat.ChatHelper;
 import com.circle8.circleOne.databinding.ActivityRegisterBinding;
+import com.circle8.circleOne.ui.activities.authorization.BaseAuthActivity;
 import com.google.gson.Gson;
 import com.hbb20.CountryCodePicker;
+import com.quickblox.auth.session.QBSessionManager;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.core.helper.StringifyArrayList;
+import com.quickblox.q_municate_core.models.LoginType;
+import com.quickblox.q_municate_db.managers.DataManager;
+import com.quickblox.q_municate_user_service.model.QMUser;
 import com.quickblox.sample.core.ui.dialog.ProgressDialogFragment;
 import com.quickblox.sample.core.utils.SharedPrefsHelper;
 import com.quickblox.users.QBUsers;
@@ -109,13 +119,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+import rx.Observable;
+import rx.Observer;
+
 import static com.circle8.circleOne.Activity.LoginActivity.pushToken;
 import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 import static com.circle8.circleOne.Utils.Validation.validate;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, AsyncRequest.OnAsyncRequestComplete
+public class RegisterActivity extends BaseAuthActivity implements View.OnClickListener, AsyncRequest.OnAsyncRequestComplete
 {
     String final_ImgBase64 = "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";
     private String UrlRegister = Utility.BASE_URL+"Registration";
@@ -146,9 +159,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     ProfileSession profileSession;
     private String arrowCards = "RIGHT";
     SharedPreferences prefs = null;
+    private File destination = null;
+    private File file1 = null;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    protected int getContentResId() {
+        return R.layout.activity_register;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         activityRegisterBinding = DataBindingUtil.setContentView(this,R.layout.activity_register);
@@ -695,6 +715,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 Bitmap bitmap = null;
 
                 try {
+                    file1 = MediaUtils.getCreatedFileFromUri(result.getUri());
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result.getUri()));
                     if (bitmap.equals("") || bitmap == null) {
                         bitmap=BitmapFactory.decodeFile(getRealPathFromURI(result.getUri()));
@@ -721,7 +742,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     else {
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
                     }
-                    File destination = new File(Environment.getExternalStorageDirectory(),
+                    destination = new File(Environment.getExternalStorageDirectory(),
                             System.currentTimeMillis() + ".jpg");
 
                     FileOutputStream fo;
@@ -1136,7 +1157,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
             return POST2(urls[0],jsonObject);
         }
-
+        Observable<QMUser> qmUserObservable;
         @Override
         protected void onPostExecute(String result) {
 //            dialog.dismiss();
@@ -1151,7 +1172,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         dismissProgress();
                         //  Toast.makeText(getBaseContext(), "LoggedIn Successfully..", Toast.LENGTH_LONG).show();
                         //   fingerPrintSession.createLoginSession(UserID, "", userName, "", "");
-
+                        login();
                         JSONObject jsonArray = jsonObject.getJSONObject("profile");
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
                         UserID = jsonArray.getString("userid");
@@ -1191,6 +1212,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 tags.add("dev");
                                 user.setTags(tags);
 
+
+
+
                                 try {
                                     QBUsers.signUp(user).performAsync(new QBEntityCallback<QBUser>() {
                                         @Override
@@ -1199,6 +1223,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                             user.setPassword("circle@123");
                                             new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
                                             SharedPrefsHelper.getInstance().saveQbUser(user);
+                                            if (file1 != null) {
+                                                qmUserObservable = ServiceManager.getInstance().updateUser(user, file1);
+                                            }
                                         }
 
                                         @Override
@@ -1474,6 +1501,54 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         }
     }
+
+    private void login() {
+        KeyboardUtils.hideKeyboard(this);
+
+        BaseAuthActivity.loginType = LoginType.EMAIL;
+
+        String userEmail = activityRegisterBinding.etEmail.getText().toString();
+        String userPassword = "circle@123";
+
+        if (new ValidationUtils(this).isLoginDataValid(emailTextInputLayout, passwordTextInputLayout,
+                userEmail, userPassword)) {
+
+            //showProgress();
+            boolean ownerUser =   QBSessionManager.getInstance().getSessionParameters() != null && userEmail.equals(QBSessionManager.getInstance().getSessionParameters().getUserEmail());
+            if (!ownerUser) {
+                DataManager.getInstance().clearAllTables();
+            }
+
+            login(userEmail, userPassword);
+        }
+    }
+
+    protected void login(String userEmail, final String userPassword) {
+        appSharedHelper.saveFirstAuth(true);
+        appSharedHelper.saveSavedRememberMe(true);
+        appSharedHelper.saveUsersImportInitialized(true);
+        QBUser user = new QBUser(null, userPassword, userEmail);
+
+        serviceManager.login(user).subscribe(new Observer<QBUser>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d("TAG", "onError" + e.getMessage());
+                //hideProgress();
+                AuthUtils.parseExceptionMessage(RegisterActivity.this, e.getMessage());
+            }
+
+            @Override
+            public void onNext(QBUser qbUser) {
+                performLoginSuccessAction(qbUser);
+            }
+        });
+    }
+
 
     public void askForContactPermission()
     {
