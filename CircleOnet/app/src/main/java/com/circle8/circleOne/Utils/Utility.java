@@ -91,14 +91,14 @@ public class Utility
      * Development for 8081
      */
     //  public static final String BASE_IMAGE_URL = "http://circle8.asia:8083/";
-//    public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
+    public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
 
 
     /**
      *Production  for 8999
      */
     public static final String BASE_IMAGE_URL = "http://circle8.asia/App_imgLib/";
-    public static final String BASE_URL = "http://circle8.asia:8081/Onet.svc/";
+   // public static final String BASE_URL = "http://circle8.asia:8081/Onet.svc/";
 
     // public static final String BASE_URL = "http://circle8.asia:8082/Onet.svc/";
 

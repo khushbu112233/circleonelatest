@@ -158,4 +158,11 @@
     <string name="your_playlists">Your Playlists</string>
     <string name="let_me_go">Let Me Go</string>
 
+    <string-array name="location_array">
+        <item>Select Location</item>
+        <item>Ahmedabad</item>
+        <item>Pune</item>
+        <item>Mumbai</item>
+    </string-array>
+
 </resources>

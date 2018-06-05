@@ -29,6 +29,13 @@
             android:title="New Card Request" />
     </group>
 
+    <group android:id="@+id/fourteen" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_promotion"
+            android:icon="@drawable/ic_new_card"
+            android:title="Promotion" />
+    </group>
+
     <group android:id="@+id/five" android:checkableBehavior="single">
         <item
             android:id="@+id/nav_connect"
