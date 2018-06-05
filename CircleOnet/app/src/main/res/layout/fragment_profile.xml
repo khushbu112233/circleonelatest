@@ -1,33 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
-      <RelativeLayout
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:id="@+id/rltFragmentProfile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/rltFragmentProfile"
         android:background="@color/white"
-        android:fitsSystemWindows="true">
+        android:descendantFocusability="blocksDescendants"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
 
         <android.support.v4.view.ViewPager
-            android:clickable="true"
-            app:layout_scrollFlags="scroll|snap"
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="245dp" />
+            android:layout_height="245dp"
+            android:clickable="true"
+            app:layout_scrollFlags="scroll|snap" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true">
 
-            <android.support.design.widget.CoordinatorLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
+            <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/main_content"
                 android:layout_width="match_parent"
@@ -35,21 +34,21 @@
                 android:orientation="vertical">
 
                 <android.support.design.widget.AppBarLayout
-                    android:background="@android:color/transparent"
                     android:id="@+id/appbar"
-                    android:visibility="visible"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
                     android:theme="@style/NoActionbar"
+                    android:visibility="visible"
                     app:expanded="false">
 
                     <android.support.v4.view.ViewPager
-                        android:alpha="0.0"
-                        android:clickable="true"
-                        app:layout_scrollFlags="scroll|snap"
                         android:id="@+id/viewPager1"
                         android:layout_width="match_parent"
-                        android:layout_height="245dp" />
+                        android:layout_height="245dp"
+                        android:alpha="0.0"
+                        android:clickable="true"
+                        app:layout_scrollFlags="scroll|snap" />
 
                 </android.support.design.widget.AppBarLayout>
 
@@ -72,33 +71,35 @@
                             app:layout_collapseMode="none"
                             app:layout_scrollFlags="snap">
 
-                           <include layout="@layout/include_frame1"
-                               android:id="@+id/include_frame1"></include>
+                            <include
+                                android:id="@+id/include_frame1"
+                                layout="@layout/include_frame1"></include>
 
-                            <include layout="@layout/include_frame2"
-                                android:id="@+id/include_frame2"></include>
+                            <include
+                                android:id="@+id/include_frame2"
+                                layout="@layout/include_frame2"></include>
                         </RelativeLayout>
 
                         <LinearLayout
-                            android:background="@color/white"
-                            android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:background="@color/white"
+                            android:orientation="vertical">
 
                             <LinearLayout
                                 android:id="@+id/llProfileNameBox"
-                                android:layout_marginRight="15dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="15dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="15dp"
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_marginRight="20dp"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:src="@drawable/new_profile1"/>
+                                    android:layout_marginRight="20dp"
+                                    android:src="@drawable/new_profile1" />
 
                                 <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/tvProfileName"
@@ -114,18 +115,18 @@
 
                             <LinearLayout
                                 android:id="@+id/llNameBox"
-                                android:layout_marginRight="15dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="15dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="15dp"
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_marginRight="20dp"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:src="@drawable/ic_acc_blue"/>
+                                    android:layout_marginRight="20dp"
+                                    android:src="@drawable/ic_acc_blue" />
 
                                 <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/tvName"
@@ -142,31 +143,31 @@
                                     android:layout_height="wrap_content">
 
                                     <ImageView
-                                        android:tint="@color/colorPrimary"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_gravity="right"
                                         android:id="@+id/imgQR"
-                                        android:layout_marginLeft="8dp"
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
-                                        android:src="@drawable/ic_qr_white"/>
+                                        android:layout_alignParentRight="true"
+                                        android:layout_gravity="right"
+                                        android:layout_marginLeft="8dp"
+                                        android:src="@drawable/ic_qr_white"
+                                        android:tint="@color/colorPrimary" />
                                 </RelativeLayout>
                             </LinearLayout>
 
                             <LinearLayout
                                 android:id="@+id/llCompanyBox"
-                                android:layout_marginRight="15dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="15dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="15dp"
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_marginRight="20dp"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:src="@drawable/ic_group_blue"/>
+                                    android:layout_marginRight="20dp"
+                                    android:src="@drawable/ic_group_blue" />
 
                                 <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/tvCompanyName"
@@ -182,18 +183,18 @@
 
                             <LinearLayout
                                 android:id="@+id/llIndustryBox"
-                                android:layout_marginRight="15dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="15dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="15dp"
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_marginRight="20dp"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:src="@drawable/ic_branding"/>
+                                    android:layout_marginRight="20dp"
+                                    android:src="@drawable/ic_branding" />
 
                                 <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/textIndustry"
@@ -208,250 +209,251 @@
 
                             <LinearLayout
                                 android:id="@+id/llDesignationBox"
-                                android:layout_marginRight="15dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="15dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="15dp"
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_marginRight="20dp"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:src="@drawable/ic_ceo"/>
+                                    android:layout_marginRight="20dp"
+                                    android:src="@drawable/ic_ceo" />
 
                                 <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/tvDesi"
-                                    android:textAlignment="center"
-                                    android:gravity="center"
-                                    android:textColor="#6b6c6e"
-                                    android:textSize="13sp"
-                                    android:text="Designation"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="match_parent" />
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Designation"
+                                    android:textAlignment="center"
+                                    android:textColor="#6b6c6e"
+                                    android:textSize="13sp" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:id="@+id/llAssociationBox"
-                                android:layout_marginRight="15dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="15dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="15dp"
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_marginRight="20dp"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:src="@drawable/ic_association"/>
+                                    android:layout_marginRight="20dp"
+                                    android:src="@drawable/ic_association" />
 
                                 <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/tvAssociation"
-                                    android:textAlignment="center"
-                                    android:gravity="center"
-                                    android:textColor="#6b6c6e"
-                                    android:textSize="13sp"
-                                    android:text="Association"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="match_parent" />
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Association"
+                                    android:textAlignment="center"
+                                    android:textColor="#6b6c6e"
+                                    android:textSize="13sp" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:id="@+id/lnrMap"
-                                android:layout_marginRight="15dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="15dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="15dp"
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_marginRight="20dp"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:src="@drawable/ic_location_blue"/>
+                                    android:layout_marginRight="20dp"
+                                    android:src="@drawable/ic_location_blue" />
 
                                 <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/tvAddress"
-                                    android:textColor="#6b6c6e"
-                                    android:textSize="13sp"
-                                    android:text="Address"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:text="Address"
+                                    android:textColor="#6b6c6e"
+                                    android:textSize="13sp" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:id="@+id/lnrWebsite"
-                                android:layout_marginRight="15dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="15dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="15dp"
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_marginRight="20dp"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:src="@drawable/ic_web_blue"/>
+                                    android:layout_marginRight="20dp"
+                                    android:src="@drawable/ic_web_blue" />
 
                                 <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/tvWebsite"
-                                    android:textAlignment="center"
-                                    android:gravity="center"
-                                    android:textColor="#6b6c6e"
-                                    android:textSize="13sp"
-                                    android:text="www.website.com"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="match_parent" />
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="www.website.com"
+                                    android:textAlignment="center"
+                                    android:textColor="#6b6c6e"
+                                    android:textSize="13sp" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:id="@+id/llMailBox"
-                                android:layout_marginRight="15dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="15dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="15dp"
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_marginRight="20dp"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:src="@drawable/ic_mail_blue"/>
+                                    android:layout_marginRight="20dp"
+                                    android:src="@drawable/ic_mail_blue" />
 
                                 <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/tvMail"
-                                    android:textAlignment="center"
-                                    android:gravity="center"
-                                    android:textColor="#6b6c6e"
-                                    android:textSize="13sp"
-                                    android:text="Email Address"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="match_parent" />
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Email Address"
+                                    android:textAlignment="center"
+                                    android:textColor="#6b6c6e"
+                                    android:textSize="13sp" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:id="@+id/llMailBox1"
-                                android:layout_marginRight="15dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="15dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="15dp"
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_marginRight="20dp"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:src="@drawable/ic_mail_blue"/>
+                                    android:layout_marginRight="20dp"
+                                    android:src="@drawable/ic_mail_blue" />
 
                                 <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/tvMail1"
-                                    android:textAlignment="center"
-                                    android:gravity="center"
-                                    android:textColor="#6b6c6e"
-                                    android:textSize="13sp"
-                                    android:text="Email Address"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="match_parent" />
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Email Address"
+                                    android:textAlignment="center"
+                                    android:textColor="#6b6c6e"
+                                    android:textSize="13sp" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:id="@+id/lnrMob"
-                                android:layout_marginRight="15dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="15dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="15dp"
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_marginRight="20dp"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:src="@drawable/ic_mob_blue"/>
+                                    android:layout_marginRight="20dp"
+                                    android:src="@drawable/ic_mob_blue" />
 
                                 <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/tvMob"
-                                    android:textAlignment="center"
-                                    android:gravity="center"
-                                    android:textColor="#6b6c6e"
-                                    android:textSize="13sp"
-                                    android:text="Personal Phone No."
                                     android:layout_width="wrap_content"
-                                    android:layout_height="match_parent" />
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Personal Phone No."
+                                    android:textAlignment="center"
+                                    android:textColor="#6b6c6e"
+                                    android:textSize="13sp" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:id="@+id/lnrWork"
-                                android:layout_marginRight="15dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="15dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="15dp"
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_marginRight="20dp"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:src="@drawable/ic_phone_blue"/>
+                                    android:layout_marginRight="20dp"
+                                    android:src="@drawable/ic_phone_blue" />
 
                                 <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/tvWork"
-                                    android:textAlignment="center"
-                                    android:gravity="center"
-                                    android:textColor="#6b6c6e"
-                                    android:textSize="13sp"
-                                    android:text="Work Phone No."
                                     android:layout_width="wrap_content"
-                                    android:layout_height="match_parent" />
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Work Phone No."
+                                    android:textAlignment="center"
+                                    android:textColor="#6b6c6e"
+                                    android:textSize="13sp" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:id="@+id/lnrFax"
-                                android:layout_marginRight="15dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="15dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="15dp"
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_marginRight="20dp"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:src="@drawable/ic_fax_blue"/>
+                                    android:layout_marginRight="20dp"
+                                    android:src="@drawable/ic_fax_blue" />
 
                                 <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/tvFax"
-                                    android:textAlignment="center"
-                                    android:gravity="center"
-                                    android:textColor="#6b6c6e"
-                                    android:textSize="13sp"
-                                    android:text="Fax"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="match_parent" />
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Fax"
+                                    android:textAlignment="center"
+                                    android:textColor="#6b6c6e"
+                                    android:textSize="13sp" />
                             </LinearLayout>
 
                             <LinearLayout
-                                android:tag="sticky"
-                                android:background="@color/white"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical">
+                                android:background="@color/white"
+                                android:orientation="vertical"
+                                android:tag="sticky">
+
                                 <LinearLayout
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:gravity="center"
-                                    android:background="@color/white"
                                     android:id="@+id/tabs1"
                                     android:layout_width="match_parent"
                                     android:layout_height="40dip"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_marginTop="10dp"
+                                    android:background="@color/white"
+                                    android:gravity="center"
                                     android:orientation="horizontal">
 
                                     <com.facebook.login.widget.LoginButton
@@ -465,41 +467,45 @@
 
                                     <ImageView
                                         android:id="@+id/fbUrl"
+                                        android:layout_width="38dp"
+                                        android:layout_height="38dp"
                                         android:layout_marginLeft="30dp"
                                         android:layout_weight="1"
                                         android:padding="6dp"
-                                        android:layout_width="38dp"
-                                        android:layout_height="38dp"
-                                        android:src="@drawable/icon_fb"/>
+                                        android:src="@drawable/icon_fb" />
+
                                     <ImageView
                                         android:id="@+id/linkedInUrl"
-                                        android:layout_weight="1"
-                                        android:padding="5dp"
                                         android:layout_width="38dp"
                                         android:layout_height="38dp"
-                                        android:src="@drawable/icon_linkedin_gray"/>
+                                        android:layout_weight="1"
+                                        android:padding="5dp"
+                                        android:src="@drawable/icon_linkedin_gray" />
+
                                     <ImageView
                                         android:id="@+id/twitterUrl"
-                                        android:layout_weight="1"
-                                        android:padding="5dp"
                                         android:layout_width="38dp"
                                         android:layout_height="38dp"
-                                        android:src="@drawable/icon_twitter"/>
+                                        android:layout_weight="1"
+                                        android:padding="5dp"
+                                        android:src="@drawable/icon_twitter" />
+
                                     <ImageView
                                         android:id="@+id/googleUrl"
-                                        android:layout_weight="1"
-                                        android:padding="5dp"
                                         android:layout_width="38dp"
                                         android:layout_height="38dp"
-                                        android:src="@drawable/icon_google"/>
+                                        android:layout_weight="1"
+                                        android:padding="5dp"
+                                        android:src="@drawable/icon_google" />
+
                                     <ImageView
                                         android:id="@+id/youtubeUrl"
+                                        android:layout_width="38dp"
+                                        android:layout_height="38dp"
                                         android:layout_marginRight="30dp"
                                         android:layout_weight="1"
                                         android:padding="5dp"
-                                        android:layout_width="38dp"
-                                        android:layout_height="38dp"
-                                        android:src="@drawable/icon_utube_gray"/>
+                                        android:src="@drawable/icon_utube_gray" />
 
                                 </LinearLayout>
 
@@ -508,116 +514,120 @@
                                     android:layout_height="1dp"
                                     android:background="@color/colorPrimary"></View>
                             </LinearLayout>
-                            <com.circle8.circleOne.Utils.orkebyTextView
-                                android:layout_marginTop="10dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_centerVertical="true"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="13sp"
-                                android:text="Personal Profile"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent" />
 
                             <com.circle8.circleOne.Utils.orkebyTextView
-                               android:id="@+id/txtPersonalProfileDetails"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginRight="20dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_centerVertical="true"
-                                android:textColor="@android:color/black"
-                                android:textSize="13sp"
-                                android:text="Personal Profile Details"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent" />
+                                android:layout_height="match_parent"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="10dp"
+                                android:text="Personal Profile"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="13sp" />
+
+                            <com.circle8.circleOne.Utils.orkebyTextView
+                                android:id="@+id/txtPersonalProfileDetails"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginTop="5dp"
+                                android:text="Personal Profile Details"
+                                android:textColor="@android:color/black"
+                                android:textSize="13sp" />
+
                             <com.circle8.circleOne.Utils.orkebyTextView
                                 android:id="@+id/txtPersonalProfileLinkname"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginRight="20dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_centerVertical="true"
-                                android:textColor="@android:color/black"
-                                android:textSize="13sp"
-                                android:text=""
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent" />
-                            <com.circle8.circleOne.Utils.orkebyTextView
-                                android:id="@+id/txtPersonalProfileLinkUrl"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginRight="20dp"
-                                android:layout_marginLeft="20dp"
+                                android:layout_height="match_parent"
                                 android:layout_centerVertical="true"
-                                android:textColor="@android:color/black"
-                                android:textSize="13sp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginTop="5dp"
                                 android:text=""
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent" />
+                                android:textColor="@android:color/black"
+                                android:textSize="13sp" />
 
                             <com.circle8.circleOne.Utils.orkebyTextView
-                                android:layout_marginTop="10dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_centerVertical="true"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="13sp"
-                                android:text="Company Profile"
+                                android:id="@+id/txtPersonalProfileLinkUrl"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent" />
+                                android:layout_height="match_parent"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginTop="5dp"
+                                android:text=""
+                                android:textColor="@android:color/black"
+                                android:textSize="13sp" />
+
+                            <com.circle8.circleOne.Utils.orkebyTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="10dp"
+                                android:text="Company Profile"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="13sp" />
 
                             <com.circle8.circleOne.Utils.orkebyTextView
                                 android:id="@+id/txtCompanyProfiles"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginRight="20dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_centerVertical="true"
-                                android:textColor="@android:color/black"
-                                android:textSize="13sp"
-                                android:text="Company Profile Details"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent" />
+                                android:layout_height="match_parent"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginTop="5dp"
+                                android:text="Company Profile Details"
+                                android:textColor="@android:color/black"
+                                android:textSize="13sp" />
 
                             <com.circle8.circleOne.Utils.orkebyTextView
                                 android:id="@+id/txtCompanyProfileLinkname"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginRight="20dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_centerVertical="true"
-                                android:textColor="@android:color/black"
-                                android:textSize="13sp"
-                                android:text=""
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent" />
+                                android:layout_height="match_parent"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginTop="5dp"
+                                android:text=""
+                                android:textColor="@android:color/black"
+                                android:textSize="13sp" />
+
                             <com.circle8.circleOne.Utils.orkebyTextView
                                 android:id="@+id/txtCompanyProfileLinkUrl"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginRight="20dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_centerVertical="true"
-                                android:textColor="@android:color/black"
-                                android:textSize="13sp"
-                                android:text=""
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent" />
+                                android:layout_height="match_parent"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginTop="5dp"
+                                android:text=""
+                                android:textColor="@android:color/black"
+                                android:textSize="13sp" />
 
                             <com.circle8.circleOne.Utils.orkebyTextView
                                 android:id="@+id/lblAttachment"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_centerVertical="true"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="13sp"
-                                android:text="Attachment"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent" />
+                                android:layout_height="match_parent"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="10dp"
+                                android:text="Attachment"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="13sp" />
 
                             <com.circle8.circleOne.Utils.orkebyTextView
                                 android:id="@+id/txtAttachment"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginRight="20dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_centerVertical="true"
-                                android:textColor="@android:color/black"
-                                android:textSize="13sp"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent" />
+                                android:layout_height="match_parent"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginTop="5dp"
+                                android:textColor="@android:color/black"
+                                android:textSize="13sp" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -625,157 +635,167 @@
 
                                 <com.circle8.circleOne.Utils.orkebyTextView
                                     android:id="@+id/txtTestLbl"
-                                    android:layout_marginTop="15dp"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_centerVertical="true"
-                                    android:textColor="@color/colorPrimary"
-                                    android:textSize="13sp"
-                                    android:text="Testimonial (choose from your contact)"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="match_parent" />
+                                    android:layout_height="match_parent"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginTop="15dp"
+                                    android:text="Testimonial (choose from your contact)"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textSize="13sp" />
 
                                 <ImageView
-                                    android:scaleType="fitEnd"
-                                    android:layout_toRightOf="@+id/txtTestLbl"
-                                    android:layout_marginRight="10dp"
-                                    android:layout_centerVertical="true"
-                                    android:layout_toLeftOf="@+id/txtMore"
                                     android:id="@+id/imgAdd"
-                                    android:layout_marginLeft="15dp"
-                                    android:tint="@color/colorPrimary"
                                     android:layout_width="22dp"
                                     android:layout_height="22dp"
-                                    android:src="@android:drawable/ic_input_add"/>
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="15dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_toLeftOf="@+id/txtMore"
+                                    android:layout_toRightOf="@+id/txtTestLbl"
+                                    android:scaleType="fitEnd"
+                                    android:src="@android:drawable/ic_input_add"
+                                    android:tint="@color/colorPrimary" />
 
                                 <TextView
-                                    android:layout_alignParentRight="true"
-                                    android:layout_centerVertical="true"
                                     android:id="@+id/txtMore"
-                                    android:layout_marginRight="10dp"
-                                    android:textAlignment="textEnd"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginRight="10dp"
                                     android:text="More.."
-                                    android:textColor="@color/colorPrimary"/>
+                                    android:textAlignment="textEnd"
+                                    android:textColor="@color/colorPrimary" />
                             </RelativeLayout>
 
                             <com.circle8.circleOne.Utils.orkebyTextView
-                                android:visibility="visible"
                                 android:id="@+id/txtTestimonial"
-                                android:layout_marginTop="0dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_centerVertical="true"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginRight="20dp"
-                                android:layout_centerVertical="true"
-                                android:textSize="13sp"
+                                android:layout_marginTop="0dp"
                                 android:textColor="@android:color/black"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent" />
+                                android:textSize="13sp"
+                                android:visibility="visible" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
 
                                 <com.circle8.circleOne.Utils.ExpandableHeightListView
-                                    android:nestedScrollingEnabled="true"
-                                    android:layout_marginTop="5dp"
-                                    tools:listitem="@layout/testimonial_row"
                                     android:id="@+id/lstTestimonial"
-                                    android:layout_marginRight="20dp"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_centerVertical="true"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginRight="20dp"
+                                    android:layout_marginTop="5dp"
+                                    android:nestedScrollingEnabled="true"
+                                    tools:listitem="@layout/testimonial_row">
 
                                 </com.circle8.circleOne.Utils.ExpandableHeightListView>
 
                             </RelativeLayout>
+
                             <com.circle8.circleOne.Utils.orkebyTextView
                                 android:id="@+id/txtAssociation"
-                                android:layout_marginTop="15dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_centerVertical="true"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="13sp"
-                                android:text="Association"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent" />
+                                android:layout_height="match_parent"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="15dp"
+                                android:text="Association"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="13sp" />
+
                             <RelativeLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content">
+
                                 <com.circle8.circleOne.Utils.orkebyTextView
-                                    android:visibility="visible"
                                     android:id="@+id/txtNoAssociation"
-                                    android:layout_marginTop="5dp"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_centerVertical="true"
-                                    android:textSize="13sp"
-                                    android:textColor="@android:color/black"
-                                    android:text="You do not have any associations"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="match_parent" />
-                                <android.support.v7.widget.RecyclerView
+                                    android:layout_height="match_parent"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="20dp"
                                     android:layout_marginTop="5dp"
-                                    android:visibility="gone"
-                                    android:scrollbarThumbHorizontal="@color/colorPrimary"
-                                    android:fadeScrollbars="false"
+                                    android:text="You do not have any associations"
+                                    android:textColor="@android:color/black"
+                                    android:textSize="13sp"
+                                    android:visibility="visible" />
+
+                                <android.support.v7.widget.RecyclerView
                                     android:id="@+id/recyclerAssociation"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:scrollbars="horizontal"
-                                    android:layout_toLeftOf="@+id/imgAddGroupFriend"
-                                    android:layout_marginRight="10dp"
-                                    android:layout_marginLeft="20dp"/>
-                                <com.circle8.circleOne.Utils.cgTextView
-                                    android:layout_marginRight="10dp"
                                     android:layout_marginLeft="20dp"
+                                    android:layout_marginRight="10dp"
                                     android:layout_marginTop="5dp"
+                                    android:layout_toLeftOf="@+id/imgAddGroupFriend"
+                                    android:fadeScrollbars="false"
+                                    android:scrollbarThumbHorizontal="@color/colorPrimary"
+                                    android:scrollbars="horizontal"
+                                    android:visibility="gone" />
+
+                                <com.circle8.circleOne.Utils.cgTextView
+                                    android:id="@+id/txtAssociationList"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/txtAssociationList"/>
-                            </RelativeLayout>
-                            <com.circle8.circleOne.Utils.orkebyTextView
-                                android:layout_marginTop="10dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_centerVertical="true"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="13sp"
-                                android:text="Preferred Event Industries"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent" />
-                            <RelativeLayout
-                                android:layout_marginBottom="20dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-                                <com.circle8.circleOne.Utils.orkebyTextView
-                                    android:visibility="visible"
-                                    android:id="@+id/txtNoEvent"
-                                    android:layout_marginTop="5dp"
                                     android:layout_marginLeft="20dp"
-                                    android:layout_centerVertical="true"
-                                    android:textSize="13sp"
-                                    android:textColor="@android:color/black"
-                                    android:text="You do not have any preferred events"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_marginTop="5dp" />
+                            </RelativeLayout>
+
+                            <com.circle8.circleOne.Utils.orkebyTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="10dp"
+                                android:text="Preferred Event Industries"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="13sp" />
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="20dp">
+
+                                <com.circle8.circleOne.Utils.orkebyTextView
+                                    android:id="@+id/txtNoEvent"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="match_parent" />
-                                <android.support.v7.widget.RecyclerView
-                                    android:visibility="gone"
-                                    android:scrollbarThumbHorizontal="@color/colorPrimary"
-                                    android:fadeScrollbars="false"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="20dp"
                                     android:layout_marginTop="5dp"
+                                    android:text="You do not have any preferred events"
+                                    android:textColor="@android:color/black"
+                                    android:textSize="13sp"
+                                    android:visibility="visible" />
+
+                                <android.support.v7.widget.RecyclerView
                                     android:id="@+id/recyclerEvents"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:scrollbars="horizontal"
-                                    android:layout_toLeftOf="@+id/imgAddGroupFriend"
-                                    android:layout_marginRight="10dp"
-                                    android:layout_marginLeft="20dp"/>
-                                <com.circle8.circleOne.Utils.cgTextView
-                                    android:layout_marginRight="10dp"
                                     android:layout_marginLeft="20dp"
+                                    android:layout_marginRight="10dp"
                                     android:layout_marginTop="5dp"
+                                    android:layout_toLeftOf="@+id/imgAddGroupFriend"
+                                    android:fadeScrollbars="false"
+                                    android:scrollbarThumbHorizontal="@color/colorPrimary"
+                                    android:scrollbars="horizontal"
+                                    android:visibility="gone" />
+
+                                <com.circle8.circleOne.Utils.cgTextView
+                                    android:id="@+id/txtEventsListfinal"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/txtEventsListfinal"/>
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_marginTop="5dp" />
                             </RelativeLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -798,61 +818,63 @@
             android:id="@+id/rlProgressDialog"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:background="@color/colorPrimary"
             android:layout_centerInParent="true"
-            android:visibility="gone"
-            android:layout_marginRight="50dp"
             android:layout_marginLeft="50dp"
-            android:elevation="20dp">
+            android:layout_marginRight="50dp"
+            android:background="@color/colorPrimary"
+            android:elevation="20dp"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_centerVertical="true"
+                android:orientation="horizontal"
                 android:weightSum="1">
 
                 <RelativeLayout
-                    android:layout_centerInParent="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginRight="15dp"
                     android:layout_weight="0.6"
-                    android:gravity="right"
-                    android:layout_marginRight="15dp">
+                    android:gravity="right">
 
                     <ImageView
-                        android:layout_centerInParent="true"
                         android:id="@+id/imgConnecting1"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/round1" />
-                    <ImageView
                         android:layout_centerInParent="true"
+                        android:src="@drawable/round1" />
+
+                    <ImageView
                         android:id="@+id/imgConnecting2"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/round2" />
-                    <ImageView
                         android:layout_centerInParent="true"
+                        android:src="@drawable/round2" />
+
+                    <ImageView
                         android:id="@+id/imgConnecting3"
                         android:layout_width="8dp"
                         android:layout_height="8dp"
+                        android:layout_centerInParent="true"
                         android:src="@drawable/round3" />
                 </RelativeLayout>
 
                 <TextView
                     android:id="@+id/txtProgressing"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="0dp"
-                    android:textSize="15dp"
-                    android:layout_below="@+id/imgConnecting"
-                    android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Connecting."
+                    android:layout_below="@+id/imgConnecting"
+                    android:layout_centerHorizontal="true"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="0.4"/>
+                    android:layout_marginTop="0dp"
+                    android:layout_weight="0.4"
+                    android:text="Connecting."
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
             </LinearLayout>
         </RelativeLayout>
 

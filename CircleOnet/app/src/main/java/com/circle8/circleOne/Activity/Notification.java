@@ -100,6 +100,7 @@ public class Notification extends Fragment
         pageno = 1;
         allTags.clear();
         allTagsList.clear();
+        listSize = 0;
         listNotification.setStackFromBottom(false);
         new HttpAsyncTask().execute(Utility.BASE_URL+"Notification");
     }
@@ -152,6 +153,7 @@ public class Notification extends Fragment
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            pageno++;
 
             return POST2(urls[0],jsonObject);
         }
