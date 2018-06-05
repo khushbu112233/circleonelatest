@@ -105,6 +105,7 @@ import com.quickblox.sample.core.utils.SharedPrefsHelper;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.twitter.sdk.android.Twitter;
 
+import org.jivesoftware.smack.chat.Chat;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -1614,6 +1615,7 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                             DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setText(NotificationCount);
                             activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
                             activityDashboardBinding.includefooter.txtNotificationCountAction.setText(Total+"");
+                            DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setText(ChatCount+"");
                             if (getCurrentFragment() instanceof DashboardFragment){
                                 activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
 

@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.circle8.circleOne.Fragments.DashboardFragment;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.ui.activities.base.BaseActivity;
 import com.circle8.circleOne.ui.adapters.base.BaseListAdapter;
@@ -70,6 +71,7 @@ public class DialogsListAdapter extends BaseListAdapter<DialogWrapper> {
         Log.e("ChatCount1",""+ChatCount);
         if (totalCount > ConstsCore.ZERO_INT_VALUE) {
             viewHolder.unreadMessagesTextView.setText(totalCount + ConstsCore.EMPTY_STRING);
+            DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtChatCountAction1.setText(totalCount + ConstsCore.EMPTY_STRING);
             viewHolder.unreadMessagesTextView.setVisibility(View.VISIBLE);
         } else {
             viewHolder.unreadMessagesTextView.setVisibility(View.GONE);
@@ -118,7 +120,6 @@ public class DialogsListAdapter extends BaseListAdapter<DialogWrapper> {
                 break;
             }
         }
-
     }
 
     private static class ViewHolder {
