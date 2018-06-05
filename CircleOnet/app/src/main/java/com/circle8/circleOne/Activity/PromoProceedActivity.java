@@ -72,7 +72,7 @@ public class PromoProceedActivity extends AppCompatActivity {
                 }
                 else {
                     quantity = edtQuantity.getText().toString();
-                    location = spnLocation.getSelectedItem().toString();
+                    location = String.valueOf(spnLocation.getSelectedItemPosition());
 
                     new HttpAsyncTask().execute(Utility.BASE_URL+"Promotion");
 
