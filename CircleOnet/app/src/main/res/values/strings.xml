@@ -159,7 +159,7 @@
     <string name="let_me_go">Let Me Go</string>
 
     <string-array name="location_array">
-        <item>Select Location</item>
+        <item>Pickup Location</item>
         <item>EVENTUS \n20 Sin Ming Lane #08-61 Singapore 573968</item>
         <item>Print22 Pte Ltd \n53 Amoy Street Singapore 069879</item>
     </string-array>

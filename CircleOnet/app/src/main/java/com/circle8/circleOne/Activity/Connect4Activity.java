@@ -96,7 +96,7 @@ public class Connect4Activity extends AppCompatActivity {
             //  txtCongratulations.setVisibility(View.GONE);
             activityConnect4Binding.txtAsk.setVisibility(View.GONE);
             if (!connection_status.equalsIgnoreCase("")){
-                activityConnect4Binding.txtLink.setText("You are already in connection with this person");
+                activityConnect4Binding.txtLink.setText("You are in connection with this person");
             }
             else {
                 activityConnect4Binding.txtLink.setText("You have no established connections");

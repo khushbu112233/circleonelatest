@@ -1,16 +1,20 @@
 package com.circle8.circleOne.Activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -70,7 +74,7 @@ public class PromoProceedActivity extends AppCompatActivity {
                 if (edtQuantity.getText().toString().equalsIgnoreCase("")){
                     Toast.makeText(getApplicationContext(), "Please enter quantity", Toast.LENGTH_LONG).show();
                 }
-                else if (spnLocation.getSelectedItem().toString().equalsIgnoreCase("Select Location")){
+                else if (spnLocation.getSelectedItem().toString().equalsIgnoreCase("Pickup Location")){
                     Toast.makeText(getApplicationContext(), "Please select location", Toast.LENGTH_LONG).show();
                 }
                 else {
@@ -136,7 +140,29 @@ public class PromoProceedActivity extends AppCompatActivity {
                     String success = response.getString("success");
 
                     if (success.equalsIgnoreCase("1")){
-                        Toast.makeText(getApplicationContext(), "Your request has been sent successfully, we will get in touch with you soon.", Toast.LENGTH_LONG).show();
+
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PromoProceedActivity.this);
+                        alertDialogBuilder.setTitle("Success");
+                        alertDialogBuilder.setMessage("Your request has been sent successfully, we will get in touch with you soon.");
+                                alertDialogBuilder.setPositiveButton("Ok",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface arg0, int arg1) {
+                                                finish();
+                                            }
+                                        });
+
+
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+                        final Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        LinearLayout.LayoutParams positiveButtonLL = (LinearLayout.LayoutParams) positiveButton.getLayoutParams();
+                        positiveButtonLL.gravity = Gravity.CENTER;
+                        positiveButton.setLayoutParams(positiveButtonLL);
+
+
+
+                       // Toast.makeText(getApplicationContext(), "Your request has been sent successfully, we will get in touch with you soon.", Toast.LENGTH_LONG).show();
                     }else {
                         Toast.makeText(getApplicationContext(), "Request not sent", Toast.LENGTH_LONG).show();
 
