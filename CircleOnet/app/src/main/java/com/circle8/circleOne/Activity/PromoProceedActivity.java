@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,6 +51,8 @@ public class PromoProceedActivity extends AppCompatActivity {
         imgBack = findViewById(R.id.imgBack);
         session = new LoginSession(getApplicationContext());
 
+        edtQuantity.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         ArrayAdapter<CharSequence> adapterCountry = ArrayAdapter.createFromResource(this,
                 R.array.location_array, R.layout.spinner_item);
 // Specify the layout to use when the list of choices appears
