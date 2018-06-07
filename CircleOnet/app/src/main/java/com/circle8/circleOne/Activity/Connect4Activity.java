@@ -27,7 +27,7 @@ public class Connect4Activity extends AppCompatActivity {
     String userName1 = "", userName2 = "", userName3 = "", userName4 = "", userName5 = "", userName6 = "", userName7 = "";
     String userPhoto1 = "", userPhoto2 = "", userPhoto3 = "", userPhoto4 = "", userPhoto5 = "", userPhoto6 = "", userPhoto7 = "";
     String userProfileId1 = "", userProfileId2 = "", userProfileId3 = "", userProfileId4 = "", userProfileId5 = "",
-            userProfileId6 = "", userProfileId7 = "";
+            userProfileId6 = "", userProfileId7 = "", connection_status = "";
     Stripe stripe;
     Card card;
     Token tok;
@@ -68,6 +68,7 @@ public class Connect4Activity extends AppCompatActivity {
         userName7 = intent.getStringExtra("userName7");
         userPhoto7 = intent.getStringExtra("userPhoto7");
         userProfileId7 = intent.getStringExtra("userProfileId7");
+        connection_status = intent.getStringExtra("connection_status");
 
         activityConnect4Binding.txtProfileName.setText(profileName);
 
@@ -94,7 +95,12 @@ public class Connect4Activity extends AppCompatActivity {
             Utility.freeMemory();
             //  txtCongratulations.setVisibility(View.GONE);
             activityConnect4Binding.txtAsk.setVisibility(View.GONE);
-            activityConnect4Binding.txtLink.setText("You have no established connections");
+            if (!connection_status.equalsIgnoreCase("")){
+                activityConnect4Binding.txtLink.setText("You are already in connection with this person");
+            }
+            else {
+                activityConnect4Binding.txtLink.setText("You have no established connections");
+            }
             activityConnect4Binding.imgLevel1.setVisibility(View.INVISIBLE);
             activityConnect4Binding.imgLevel2.setVisibility(View.INVISIBLE);
             activityConnect4Binding.imgLevel3.setVisibility(View.INVISIBLE);
