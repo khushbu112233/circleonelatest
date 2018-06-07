@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#d5e3e1"
     tools:context=".Activity.PromotionActivity">
 
     <RelativeLayout
@@ -37,7 +38,7 @@
 
     <ImageView
         android:layout_below="@+id/rlTabBar"
-        android:background="@drawable/promo"
+        android:src="@drawable/promo"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -45,8 +46,8 @@
         android:id="@+id/imgProceed"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="18dp"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"/>
 

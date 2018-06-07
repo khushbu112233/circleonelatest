@@ -133,9 +133,9 @@ public class PromoProceedActivity extends AppCompatActivity {
                     String success = response.getString("success");
 
                     if (success.equalsIgnoreCase("1")){
-                        Toast.makeText(getApplicationContext(), "Promotion details submitted successfully", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Your request has been sent successfully, we will get in touch with you soon.", Toast.LENGTH_LONG).show();
                     }else {
-                        Toast.makeText(getApplicationContext(), "Promotion details not submitted", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Request not sent", Toast.LENGTH_LONG).show();
 
                     }
                 }
