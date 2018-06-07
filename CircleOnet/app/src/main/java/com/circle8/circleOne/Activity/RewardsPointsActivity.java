@@ -99,8 +99,8 @@ public class RewardsPointsActivity extends Fragment implements View.OnClickListe
         activityRewardsPointsBinding.imgLuckyDraw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i =new Intent(getActivity(),LuckyDrawActivity.class);
-                startActivity(i);
+               /* Intent i =new Intent(getActivity(),LuckyDrawActivity.class);
+                startActivity(i);*/
             }
         });
 
